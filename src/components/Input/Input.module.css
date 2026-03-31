@@ -14,6 +14,19 @@
   box-sizing: border-box;
 }
 
+/**
+ * 有前缀：左侧与上下同宽（--su-input-pad-y），收紧「图标前」空白；
+ * 右侧仍用常规横向 padding。仅后缀时保持默认 var(--su-padding)。
+ */
+.inputWrapper.hasPrefix:not(.hasSuffix) {
+  padding: var(--su-input-pad-y) var(--su-input-pad-x) var(--su-input-pad-y)
+    var(--su-input-pad-y);
+}
+
+.inputWrapper.hasPrefix.hasSuffix {
+  padding: var(--su-input-pad-y);
+}
+
 .inputWrapper:focus-within {
   border-color: var(--su-info-500);
   box-shadow: var(--su-input-focus-shadow);
@@ -37,7 +50,7 @@
 
 .inputWrapper.primary:focus-within {
   border-color: var(--su-primary-500);
-  box-shadow: 0 0 0 3px rgba(252, 238, 10, 0.22);
+  box-shadow: var(--su-ring-primary);
 }
 
 .inputWrapper.secondary:focus-within {
@@ -96,11 +109,18 @@
   color: var(--su-text-muted);
 }
 
-/* 图标与输入文字之间只保留一段间距（避免原 gap + input padding 叠成过宽） */
+/* 收紧图标与文字间距（由 Input 注入 --su-input-affix-gap，按尺寸 2～5px） */
 .prefix {
-  margin-inline-end: 0.5em;
+  margin-inline-end: var(--su-input-affix-gap, 4px);
 }
 
 .suffix {
-  margin-inline-start: 0.5em;
+  margin-inline-start: var(--su-input-affix-gap, 4px);
+}
+
+/* 消除行内 SVG 底部空隙，避免图标区视觉上偏“散” */
+.prefix :is(svg),
+.suffix :is(svg) {
+  display: block;
+  flex-shrink: 0;
 }

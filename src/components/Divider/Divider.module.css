@@ -1,0 +1,170 @@
+.root {
+  flex-shrink: 0;
+  border: none;
+  margin: 0;
+  padding: 0;
+  background: var(--su-border-default);
+  color: var(--su-border-default);
+}
+
+/* ========== 横向 ========== */
+.horizontal {
+  width: 100%;
+  height: 1px;
+  min-height: 1px;
+}
+
+.horizontal.dashed {
+  height: 0;
+  min-height: 0;
+  background: none;
+  border-top: 1px dashed var(--su-border-default);
+}
+
+.horizontal.dotted {
+  height: 0;
+  min-height: 0;
+  background: none;
+  border-top: 1px dotted var(--su-border-strong);
+}
+
+/* ========== 纵向（父级需 flex + 方向 row） ========== */
+.vertical {
+  width: 1px;
+  min-width: 1px;
+  height: auto;
+  align-self: stretch;
+  min-height: 1.25em;
+}
+
+.vertical.dashed {
+  width: 0;
+  min-width: 0;
+  border-left: 1px dashed var(--su-border-default);
+  background: none;
+}
+
+.vertical.dotted {
+  width: 0;
+  min-width: 0;
+  border-left: 1px dotted var(--su-border-strong);
+  background: none;
+}
+
+/* ========== 外边距 ========== */
+.spacingNone.horizontal {
+  margin-block: 0;
+}
+
+.spacingSm.horizontal {
+  margin-block: 8px;
+}
+
+.spacingMd.horizontal {
+  margin-block: 16px;
+}
+
+.spacingLg.horizontal {
+  margin-block: 24px;
+}
+
+.spacingNone.vertical {
+  margin-inline: 0;
+}
+
+.spacingSm.vertical {
+  margin-inline: 8px;
+}
+
+.spacingMd.vertical {
+  margin-inline: 12px;
+}
+
+.spacingLg.vertical {
+  margin-inline: 16px;
+}
+
+/* ========== 带文案（仅横向） ========== */
+.withLabel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  background: none;
+  height: auto;
+  min-height: 0;
+}
+
+.line {
+  flex: 1;
+  height: 0;
+  border: none;
+  border-top: 1px solid var(--su-border-default);
+  margin: 0;
+  min-width: 0;
+}
+
+.withLabel.dashed .line {
+  border-top-style: dashed;
+}
+
+.withLabel.dotted .line {
+  border-top-style: dotted;
+  border-top-color: var(--su-border-strong);
+}
+
+.text {
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--su-text-muted);
+  line-height: 1.4;
+}
+
+.alignStart .line:first-child {
+  flex: 0 0 0;
+  min-width: 0;
+  border: none;
+}
+
+.alignStart .line:last-child {
+  flex: 1;
+}
+
+.alignEnd .line:first-child {
+  flex: 1;
+}
+
+.alignEnd .line:last-child {
+  flex: 0 0 0;
+  min-width: 0;
+  border: none;
+}
+
+.alignCenter .line {
+  flex: 1;
+}
+
+/* 更弱一级的分割色 */
+.colorSubtle.horizontal:not(.dashed):not(.dotted):not(.withLabel) {
+  background: var(--su-border-subtle);
+  color: var(--su-border-subtle);
+}
+
+.colorSubtle.horizontal.dashed,
+.colorSubtle.horizontal.dotted {
+  border-top-color: var(--su-border-subtle);
+}
+
+.colorSubtle.vertical.dashed,
+.colorSubtle.vertical.dotted {
+  border-left-color: var(--su-border-subtle);
+}
+
+.colorSubtle .line {
+  border-top-color: var(--su-border-subtle);
+}
+
+.colorSubtle .text {
+  color: var(--su-text-subtle);
+}

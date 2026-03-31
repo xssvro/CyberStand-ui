@@ -94,7 +94,7 @@ export const componentDocs: ComponentDoc[] = [
       },
       {
         title: '带图标',
-        code: `<Input prefix={<IconSearch size={18} />} placeholder="搜索..." />
+        code: `<Input prefix={<IconSearch size={16} />} placeholder="搜索..." />
 <Input suffix="@" placeholder="邮箱" />`,
       },
       {
@@ -178,6 +178,46 @@ toast.info('提示');`,
     error: (e) => String(e),
   }
 );`,
+      },
+    ],
+  },
+  {
+    name: 'Divider',
+    title: 'Divider / Separator 分割线',
+    description:
+      'Divider 为视觉分割（默认可弱化无障碍）；Separator 为语义分割（role="separator"）。支持横纵、线型、间距与带文案横向分割。',
+    aiDocPath: '/src/components/Divider/Divider.ai.md',
+    examples: [
+      {
+        title: '横向：线型与颜色',
+        code: `<Divider />
+<Divider variant="dashed" />
+<Divider variant="dotted" spacing="sm" />
+<Divider color="subtle" spacing="md" />`,
+      },
+      {
+        title: '横向：带文案与 titleAlign',
+        code: `<Divider>默认居中</Divider>
+<Divider titleAlign="start">靠左</Divider>
+<Divider titleAlign="end" variant="dashed">靠右</Divider>`,
+      },
+      {
+        title: '纵向：配合 flex 行布局',
+        code: `<div style={{ display: 'flex', flexDirection: 'row', alignItems: 'stretch', minHeight: 100, gap: 12 }}>
+  <span>区域 A</span>
+  <Divider orientation="vertical" />
+  <span>区域 B</span>
+  <Separator orientation="vertical" spacing="sm" />
+  <span>区域 C（Separator 语义分割）</span>
+</div>`,
+      },
+      {
+        title: 'Separator 与 Divider decorative',
+        code: `{/* 菜单项之间：读屏可识别分隔 */}
+<Separator spacing="sm" />
+
+{/* 等价于 */}
+<Divider decorative={false} spacing="sm" />`,
       },
     ],
   },

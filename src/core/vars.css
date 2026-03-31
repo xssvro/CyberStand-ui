@@ -1,101 +1,94 @@
 /**
- * CyberStand UI — 赛博朋克向主题（多端共用 CSS Variables）
- * 夜城黄主色、珊瑚点缀 #e66054、信息蓝 #21aadd、深冷色底
+ * CyberStand UI — CSS Variables
+ * 默认：浅色日间（冷灰底 + 《阿基拉》警示红主色 + 青蓝信息 + 珊瑚次要）
+ * data-theme="dark"：赛博夜城（夜城黄主色 #fcee0a、深冷色底，与改前一致）
  */
 
 :root {
-  /* ========== 主色：夜之城黄（Samurai / 品牌色） ========== */
-  --su-primary-50: #1c1a0f;
-  --su-primary-100: #2d2814;
-  --su-primary-200: #3f3818;
-  --su-primary-300: #5c501f;
-  --su-primary-400: #e6d200;
-  --su-primary-500: #f5e82e;
-  --su-primary-600: #fcee0a;
-  --su-primary-700: #fff78a;
-  --su-primary-800: #fffcc2;
-  --su-primary-900: #fffde8;
-  --su-on-primary: #0a0b0f;
+  /* ========== 主色：《阿基拉》— 日间为克制深玫红 / 酒红（白底可读） ========== */
+  --su-primary-50: #fff5f5;
+  --su-primary-100: #ffe4e8;
+  --su-primary-200: #fecdd6;
+  --su-primary-300: #fda4b5;
+  --su-primary-400: #fb7189;
+  --su-primary-500: #e11d48;
+  --su-primary-600: #9f1239;
+  --su-primary-700: #881337;
+  --su-primary-800: #6b0f2b;
+  --su-primary-900: #3c0514;
+  --su-on-primary: #fffafb;
 
-  /* ========== 次要色：珊瑚 #e66054 ========== */
-  --su-secondary-50: #1a0f0d;
-  --su-secondary-100: #2d1814;
-  --su-secondary-200: #40201a;
-  --su-secondary-300: #5c2e24;
-  --su-secondary-400: #f0908a;
-  --su-secondary-500: #ec7568;
-  --su-secondary-600: #e66054;
-  --su-secondary-700: #d85445;
-  --su-secondary-800: #f4b0a8;
-  --su-secondary-900: #fcd9d5;
+  /* ========== 次要色：珊瑚（日间略压暗，保证与灰底对比） ========== */
+  --su-secondary-50: #fef2f2;
+  --su-secondary-100: #fee2e2;
+  --su-secondary-200: #fecaca;
+  --su-secondary-300: #fca5a5;
+  --su-secondary-400: #f87171;
+  --su-secondary-500: #e66054;
+  --su-secondary-600: #c24133;
+  --su-secondary-700: #b91c1c;
+  --su-secondary-800: #7f1d1d;
+  --su-secondary-900: #450a0a;
 
-  /* ========== 成功：毒液绿 ========== */
-  --su-success-50: #0d1f14;
-  --su-success-100: #123220;
-  --su-success-200: #1a452c;
-  --su-success-500: #00ff88;
-  --su-success-600: #00cc6a;
-  --su-success-700: #5fffb0;
+  /* ========== 成功 / 警告 / 错误 / 信息（日间饱和适中） ========== */
+  --su-success-50: #ecfdf5;
+  --su-success-100: #d1fae5;
+  --su-success-200: #a7f3d0;
+  --su-success-500: #059669;
+  --su-success-600: #047857;
+  --su-success-700: #065f46;
 
-  /* ========== 警告：灼热橙 ========== */
-  --su-warning-50: #1f1408;
-  --su-warning-100: #33220c;
-  --su-warning-200: #4a300f;
-  --su-warning-500: #ff9f1c;
-  --su-warning-600: #e8860c;
-  --su-warning-700: #ffc14d;
+  --su-warning-50: #fffbeb;
+  --su-warning-100: #fef3c7;
+  --su-warning-200: #fde68a;
+  --su-warning-500: #d97706;
+  --su-warning-600: #b45309;
+  --su-warning-700: #92400e;
 
-  /* ========== 错误：同珊瑚系（略加重） ========== */
-  --su-error-50: #1a0f0d;
-  --su-error-100: #2d1814;
-  --su-error-200: #40201a;
-  --su-error-500: #ec7568;
-  --su-error-600: #e66054;
-  --su-error-700: #f4a898;
+  --su-error-50: #fef2f2;
+  --su-error-100: #fee2e2;
+  --su-error-200: #fecaca;
+  --su-error-500: #dc2626;
+  --su-error-600: #b91c1c;
+  --su-error-700: #991b1b;
 
-  /* ========== 信息：蓝 #21aadd ========== */
-  --su-info-50: #0a141e;
-  --su-info-100: #0f1f2e;
-  --su-info-200: #152a3d;
-  --su-info-500: #21aadd;
-  --su-info-600: #1789bd;
-  --su-info-700: #7dd3f5;
+  --su-info-50: #f0f9ff;
+  --su-info-100: #e0f2fe;
+  --su-info-200: #bae6fd;
+  --su-info-500: #0284c7;
+  --su-info-600: #0369a1;
+  --su-info-700: #0c4a6e;
 
-  /* ========== 中性：冷钢灰 ========== */
-  --su-gray-50: #12141c;
-  --su-gray-100: #181b26;
-  --su-gray-200: #222633;
-  --su-gray-300: #2e3444;
-  --su-gray-400: #5c6578;
-  --su-gray-500: #8892a8;
-  --su-gray-600: #a8b0c4;
-  --su-gray-700: #c8cedc;
-  --su-gray-800: #e0e4ee;
-  --su-gray-900: #f0f2f8;
+  /* ========== 中性：冷灰 slate（日间） ========== */
+  --su-gray-50: #f8fafc;
+  --su-gray-100: #f1f5f9;
+  --su-gray-200: #e2e8f0;
+  --su-gray-300: #cbd5e1;
+  --su-gray-400: #94a3b8;
+  --su-gray-500: #64748b;
+  --su-gray-600: #475569;
+  --su-gray-700: #334155;
+  --su-gray-800: #1e293b;
+  --su-gray-900: #0f172a;
 
-  /* ========== 功能色 — 暗色底 5 级阶（由深→浅，层次更清晰、过渡柔和） ========== */
-  --su-bg-page: #05060b;
-  --su-bg-default: #0b0e16;
-  --su-bg-subtle: #10141e;
-  --su-bg-muted: #161b27;
-  --su-bg-elevated: #1e2533;
-  /** 浮层（Toast、下拉等）：比 elevated 更亮一档，便于与普通内容区底色区分 */
-  --su-bg-floating: #3a475c;
-  /** 代码块 / 嵌套最深底 */
-  --su-bg-code: #080a12;
+  /* ========== 表面与文案（浅色默认） ========== */
+  --su-bg-page: #eef1f6;
+  --su-bg-default: #f8fafc;
+  --su-bg-subtle: #f1f5f9;
+  --su-bg-muted: #e8edf3;
+  --su-bg-elevated: #ffffff;
+  --su-bg-floating: #ffffff;
+  --su-bg-code: #f0f4f8;
 
-  /**
-   * 通用文案：与冷色底板同系的 slate（略偏蓝），和边框里的 rgb(200,220,255) 一致
-   * 不再使用暖米灰旧色
-   */
-  --su-text-default: #cdd5e3;
-  --su-text-muted: #94a0b3;
-  --su-text-subtle: #6b7585;
-  /** 重点说明：橘黄 */
-  --su-text-emphasis: #f9d15c;
-  --su-text-inverse: #0a0b0f;
+  --su-text-default: #1e293b;
+  --su-text-muted: #64748b;
+  --su-text-subtle: #94a3b8;
+  --su-text-emphasis: #9f1239;
+  --su-text-inverse: #f8fafc;
 
-  /* ========== Typography 字号 / 行高（与 Typography 组件一致，可全局覆盖） ========== */
+  --su-doc-code-fg: #0e7490;
+
+  /* ========== Typography 字号 / 行高（主题无关） ========== */
   --su-type-display-size: clamp(2rem, 4.5vw, 2.75rem);
   --su-type-display-line: 1.15;
   --su-type-display-weight: 700;
@@ -133,22 +126,190 @@
   --su-type-blockquote-line: 1.65;
   --su-type-link-size: inherit;
 
-  /** 半透明描边，比实色线更柔和 */
-  --su-border-subtle: rgba(200, 215, 255, 0.045);
-  --su-border-default: rgba(200, 220, 255, 0.1);
-  --su-border-strong: rgba(220, 235, 255, 0.16);
+  --su-border-subtle: #e2e8f0;
+  --su-border-default: #cbd5e1;
+  --su-border-strong: #94a3b8;
 
-  /* 焦点环：信息蓝辉光 */
-  --su-focus-ring-color: rgba(33, 170, 221, 0.45);
-  --su-focus-ring-glow: 0 0 14px rgba(33, 170, 221, 0.32);
-  --su-input-focus-shadow: 0 0 0 3px rgba(33, 170, 221, 0.22);
+  --su-focus-ring-color: rgba(2, 132, 199, 0.4);
+  --su-focus-ring-glow: 0 0 12px rgba(2, 132, 199, 0.22);
+  --su-input-focus-shadow: 0 0 0 3px rgba(2, 132, 199, 0.18);
 
-  /* ========== 动画 ========== */
   --su-transition-fast: 150ms ease;
   --su-transition-normal: 250ms ease;
   --su-transition-slow: 350ms ease;
 
-  /* ========== 阴影（更轻、带微弱高光边，柔化层次） ========== */
+  --su-shadow-sm:
+    0 1px 2px rgba(15, 23, 42, 0.06),
+    0 0 0 1px rgba(15, 23, 42, 0.04);
+  --su-shadow-md:
+    0 4px 14px -2px rgba(15, 23, 42, 0.08),
+    0 0 0 1px rgba(15, 23, 42, 0.05);
+  --su-shadow-lg:
+    0 12px 28px -6px rgba(15, 23, 42, 0.12),
+    0 0 0 1px rgba(159, 18, 57, 0.07);
+  --su-shadow-xl:
+    0 20px 40px -10px rgba(15, 23, 42, 0.14),
+    0 0 0 1px rgba(159, 18, 57, 0.08);
+
+  /** 主色焦点环（Input primary 等） */
+  --su-ring-primary: 0 0 0 3px rgba(159, 18, 57, 0.22);
+
+  --su-z-base: 0;
+  --su-z-dropdown: 1000;
+  --su-z-sticky: 1020;
+  --su-z-fixed: 1030;
+  --su-z-modal-backdrop: 1040;
+  --su-z-modal: 1050;
+  --su-z-popover: 1060;
+  --su-z-tooltip: 1070;
+
+  /**
+   * 按钮专用（浅色 · 阿基拉主色实心 / soft / 线色）
+   */
+  --su-btn-primary-solid-bg: #8b1532;
+  --su-btn-primary-solid-hover: #72112a;
+  --su-btn-primary-solid-fg: #fff8f9;
+  --su-btn-primary-soft-bg: #fce8ed;
+  --su-btn-primary-soft-hover: #f9d9e1;
+  --su-btn-primary-soft-fg: #5c0f24;
+  --su-btn-primary-line: #8b1532;
+  --su-btn-primary-outline-hover-bg: #fdf4f6;
+
+  --su-btn-secondary-solid-bg: #5c4946;
+  --su-btn-secondary-solid-hover: #4f3f3c;
+  --su-btn-secondary-solid-fg: #faf8f7;
+  --su-btn-secondary-soft-bg: #ebe4e3;
+  --su-btn-secondary-soft-hover: #e0d6d4;
+  --su-btn-secondary-soft-fg: #3d302e;
+  --su-btn-secondary-line: #5c4946;
+  --su-btn-secondary-outline-hover-bg: #f5f1f0;
+
+  --su-btn-success-solid-bg: #3d4840;
+  --su-btn-success-solid-hover: #343d36;
+  --su-btn-success-solid-fg: #f4f5f4;
+  --su-btn-success-soft-bg: #e2e6e3;
+  --su-btn-success-soft-hover: #d5dad6;
+  --su-btn-success-soft-fg: #2a322d;
+  --su-btn-success-line: #3d4840;
+  --su-btn-success-outline-hover-bg: #eef1ee;
+
+  --su-btn-warning-solid-bg: #5e4f3d;
+  --su-btn-warning-solid-hover: #524535;
+  --su-btn-warning-solid-fg: #faf9f6;
+  --su-btn-warning-soft-bg: #ebe6df;
+  --su-btn-warning-soft-hover: #e0dad1;
+  --su-btn-warning-soft-fg: #3a3228;
+  --su-btn-warning-line: #5e4f3d;
+  --su-btn-warning-outline-hover-bg: #f5f3ee;
+
+  --su-btn-error-solid-bg: #5c3d3a;
+  --su-btn-error-solid-hover: #4f3532;
+  --su-btn-error-solid-fg: #fdf9f8;
+  --su-btn-error-soft-bg: #ebe0df;
+  --su-btn-error-soft-hover: #e0d2d0;
+  --su-btn-error-soft-fg: #3d2a28;
+  --su-btn-error-line: #5c3d3a;
+  --su-btn-error-outline-hover-bg: #f7f1f0;
+
+  --su-btn-info-solid-bg: #3e4c54;
+  --su-btn-info-solid-hover: #364249;
+  --su-btn-info-solid-fg: #f5f7f8;
+  --su-btn-info-soft-bg: #e2e8ec;
+  --su-btn-info-soft-hover: #d5dee4;
+  --su-btn-info-soft-fg: #2a3338;
+  --su-btn-info-line: #3e4c54;
+  --su-btn-info-outline-hover-bg: #eef2f5;
+}
+
+/* ========== 赛博夜间：完整覆盖色板与阴影 ========== */
+[data-theme='dark'] {
+  /* 主色：夜之城黄（深色模式非阿基拉，保持赛博黄锚点） */
+  --su-primary-50: #1c1a0f;
+  --su-primary-100: #2d2814;
+  --su-primary-200: #3f3818;
+  --su-primary-300: #5c501f;
+  --su-primary-400: #e6d200;
+  --su-primary-500: #f5e82e;
+  --su-primary-600: #fcee0a;
+  --su-primary-700: #fff78a;
+  --su-primary-800: #fffcc2;
+  --su-primary-900: #fffde8;
+  --su-on-primary: #0a0b0f;
+
+  --su-secondary-50: #1a0f0d;
+  --su-secondary-100: #2d1814;
+  --su-secondary-200: #40201a;
+  --su-secondary-300: #5c2e24;
+  --su-secondary-400: #f0908a;
+  --su-secondary-500: #ec7568;
+  --su-secondary-600: #e66054;
+  --su-secondary-700: #d85445;
+  --su-secondary-800: #f4b0a8;
+  --su-secondary-900: #fcd9d5;
+
+  --su-success-50: #0d1f14;
+  --su-success-100: #123220;
+  --su-success-200: #1a452c;
+  --su-success-500: #00ff88;
+  --su-success-600: #00cc6a;
+  --su-success-700: #5fffb0;
+
+  --su-warning-50: #1f1408;
+  --su-warning-100: #33220c;
+  --su-warning-200: #4a300f;
+  --su-warning-500: #ff9f1c;
+  --su-warning-600: #e8860c;
+  --su-warning-700: #ffc14d;
+
+  --su-error-50: #1a0f0d;
+  --su-error-100: #2d1814;
+  --su-error-200: #40201a;
+  --su-error-500: #ec7568;
+  --su-error-600: #e66054;
+  --su-error-700: #f4a898;
+
+  --su-info-50: #0a141e;
+  --su-info-100: #0f1f2e;
+  --su-info-200: #152a3d;
+  --su-info-500: #21aadd;
+  --su-info-600: #1789bd;
+  --su-info-700: #7dd3f5;
+
+  --su-gray-50: #12141c;
+  --su-gray-100: #181b26;
+  --su-gray-200: #222633;
+  --su-gray-300: #2e3444;
+  --su-gray-400: #5c6578;
+  --su-gray-500: #8892a8;
+  --su-gray-600: #a8b0c4;
+  --su-gray-700: #c8cedc;
+  --su-gray-800: #e0e4ee;
+  --su-gray-900: #f0f2f8;
+
+  --su-bg-page: #05060b;
+  --su-bg-default: #0b0e16;
+  --su-bg-subtle: #10141e;
+  --su-bg-muted: #161b27;
+  --su-bg-elevated: #1e2533;
+  --su-bg-floating: #3a475c;
+  --su-bg-code: #080a12;
+
+  --su-text-default: #cdd5e3;
+  --su-text-muted: #94a0b3;
+  --su-text-subtle: #6b7585;
+  --su-text-emphasis: #f9d15c;
+  --su-text-inverse: #0a0b0f;
+
+  --su-doc-code-fg: #a8daf5;
+
+  --su-border-subtle: rgba(200, 215, 255, 0.045);
+  --su-border-default: rgba(200, 220, 255, 0.1);
+  --su-border-strong: rgba(220, 235, 255, 0.16);
+
+  --su-focus-ring-color: rgba(33, 170, 221, 0.45);
+  --su-focus-ring-glow: 0 0 14px rgba(33, 170, 221, 0.32);
+  --su-input-focus-shadow: 0 0 0 3px rgba(33, 170, 221, 0.22);
+
   --su-shadow-sm:
     0 1px 2px rgba(0, 0, 0, 0.28),
     0 0 0 1px rgba(255, 255, 255, 0.028);
@@ -163,51 +324,69 @@
     0 22px 48px -10px rgba(0, 0, 0, 0.48),
     0 0 0 1px rgba(230, 96, 84, 0.07);
 
-  /* ========== Z-Index ========== */
-  --su-z-base: 0;
-  --su-z-dropdown: 1000;
-  --su-z-sticky: 1020;
-  --su-z-fixed: 1030;
-  --su-z-modal-backdrop: 1040;
-  --su-z-modal: 1050;
-  --su-z-popover: 1060;
-  --su-z-tooltip: 1070;
-}
+  --su-ring-primary: 0 0 0 3px rgba(252, 238, 10, 0.22);
 
-/* 与 :root 一致；可在此覆盖「非 2077」主题 */
-[data-theme='light'] {
-  --su-bg-default: #f4f5f8;
-  --su-bg-subtle: #e8eaf0;
-  --su-bg-muted: #dce0ea;
-  --su-bg-elevated: #ffffff;
-  --su-bg-page: #eef0f5;
-  --su-bg-code: #1a1d26;
-  --su-text-default: #2a303c;
-  --su-text-muted: #5a6270;
-  --su-text-subtle: #7a828f;
-  --su-text-emphasis: #c9a218;
-  --su-border-default: #c8d0e0;
-  --su-border-strong: #a8b4c8;
-  --su-border-subtle: #e0e4ee;
-}
+  /* 夜间：按钮回到赛博语义色 */
+  --su-btn-primary-solid-bg: var(--su-primary-600);
+  --su-btn-primary-solid-hover: var(--su-primary-700);
+  --su-btn-primary-solid-fg: var(--su-on-primary);
+  --su-btn-primary-soft-bg: var(--su-primary-100);
+  --su-btn-primary-soft-hover: var(--su-primary-200);
+  --su-btn-primary-soft-fg: var(--su-primary-700);
+  --su-btn-primary-line: var(--su-primary-600);
+  --su-btn-primary-outline-hover-bg: var(--su-primary-50);
 
-[data-theme='dark'] {
-  --su-bg-page: #05060b;
-  --su-bg-default: #0b0e16;
-  --su-bg-subtle: #10141e;
-  --su-bg-muted: #161b27;
-  --su-bg-elevated: #1e2533;
-  --su-bg-code: #080a12;
-  --su-text-default: #cdd5e3;
-  --su-text-muted: #94a0b3;
-  --su-text-subtle: #6b7585;
-  --su-text-emphasis: #f9d15c;
-  --su-border-subtle: rgba(200, 215, 255, 0.045);
-  --su-border-default: rgba(200, 220, 255, 0.1);
-  --su-border-strong: rgba(220, 235, 255, 0.16);
+  --su-btn-secondary-solid-bg: var(--su-secondary-600);
+  --su-btn-secondary-solid-hover: var(--su-secondary-700);
+  --su-btn-secondary-solid-fg: #ffffff;
+  --su-btn-secondary-soft-bg: var(--su-secondary-100);
+  --su-btn-secondary-soft-hover: var(--su-secondary-200);
+  --su-btn-secondary-soft-fg: var(--su-secondary-700);
+  --su-btn-secondary-line: var(--su-secondary-600);
+  --su-btn-secondary-outline-hover-bg: var(--su-secondary-50);
+
+  --su-btn-success-solid-bg: var(--su-success-600);
+  --su-btn-success-solid-hover: var(--su-success-700);
+  --su-btn-success-solid-fg: #0a0b0f;
+  --su-btn-success-soft-bg: var(--su-success-100);
+  --su-btn-success-soft-hover: var(--su-success-200);
+  --su-btn-success-soft-fg: var(--su-success-700);
+  --su-btn-success-line: var(--su-success-500);
+  --su-btn-success-outline-hover-bg: var(--su-success-50);
+
+  --su-btn-warning-solid-bg: var(--su-warning-600);
+  --su-btn-warning-solid-hover: var(--su-warning-700);
+  --su-btn-warning-solid-fg: #0a0b0f;
+  --su-btn-warning-soft-bg: var(--su-warning-100);
+  --su-btn-warning-soft-hover: var(--su-warning-200);
+  --su-btn-warning-soft-fg: var(--su-warning-700);
+  --su-btn-warning-line: var(--su-warning-500);
+  --su-btn-warning-outline-hover-bg: var(--su-warning-50);
+
+  --su-btn-error-solid-bg: var(--su-error-600);
+  --su-btn-error-solid-hover: var(--su-error-700);
+  --su-btn-error-solid-fg: #0a0b0f;
+  --su-btn-error-soft-bg: var(--su-error-100);
+  --su-btn-error-soft-hover: var(--su-error-200);
+  --su-btn-error-soft-fg: var(--su-error-700);
+  --su-btn-error-line: var(--su-error-500);
+  --su-btn-error-outline-hover-bg: var(--su-error-50);
+
+  --su-btn-info-solid-bg: var(--su-info-600);
+  --su-btn-info-solid-hover: var(--su-info-700);
+  --su-btn-info-solid-fg: #0a0b0f;
+  --su-btn-info-soft-bg: var(--su-info-100);
+  --su-btn-info-soft-hover: var(--su-info-200);
+  --su-btn-info-soft-fg: var(--su-info-700);
+  --su-btn-info-line: var(--su-info-500);
+  --su-btn-info-outline-hover-bg: var(--su-info-50);
 }
 
 html {
+  color-scheme: light;
+}
+
+html[data-theme='dark'] {
   color-scheme: dark;
 }
 

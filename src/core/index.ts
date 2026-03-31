@@ -12,3 +12,10 @@ export {
   getSizeVars,
   getRadiusVar,
 } from './stand';
+
+export {
+  THEME_STORAGE_KEY,
+  applyTheme,
+  getStoredTheme,
+  type ThemeMode,
+} from './theme';

@@ -6,6 +6,7 @@ import { Input } from '../components/Input';
 import { Card } from '../components/Card';
 import { toast } from '../components/Toast';
 import { Typography, TypographyLink } from '../components/Typography';
+import { Divider, Separator } from '../components/Divider';
 import { IconDataNode, IconSearch } from '../icons';
 
 // 导入 AI 文档内容
@@ -14,6 +15,7 @@ import InputAiMd from '../components/Input/Input.ai.md?raw';
 import CardAiMd from '../components/Card/Card.ai.md?raw';
 import ToastAiMd from '../components/Toast/Toast.ai.md?raw';
 import TypographyAiMd from '../components/Typography/Typography.ai.md?raw';
+import DividerAiMd from '../components/Divider/Divider.ai.md?raw';
 
 /** Toast 为命令式 API，无预览组件，仅占位以通过文档路由校验 */
 const ToastDocPlaceholder: React.FC = () => null;
@@ -25,6 +27,7 @@ const componentMap: Record<string, React.ComponentType<any>> = {
   Card,
   Toast: ToastDocPlaceholder,
   Typography,
+  Divider,
 };
 
 // AI 文档映射
@@ -34,6 +37,7 @@ const aiDocMap: Record<string, string> = {
   Card: CardAiMd,
   Toast: ToastAiMd,
   Typography: TypographyAiMd,
+  Divider: DividerAiMd,
 };
 
 /** 按表格竖线拆分单元格，忽略反引号对内的 |（避免类型列里的联合类型拆坏） */
@@ -360,6 +364,70 @@ export const ComponentPage: React.FC = () => {
     }
   };
 
+  const renderDividerExamples = (_example: Example, idx: number) => {
+    const col = (node: React.ReactNode) => (
+      <div className="flex flex-col gap-0 max-w-lg">{node}</div>
+    );
+    switch (idx) {
+      case 0:
+        return col(
+          <>
+            <Typography variant="bodySmall" color="muted" noMargin>
+              solid / dashed / dotted / subtle
+            </Typography>
+            <Divider />
+            <Divider variant="dashed" />
+            <Divider variant="dotted" spacing="sm" />
+            <Divider color="subtle" spacing="md" />
+          </>
+        );
+      case 1:
+        return col(
+          <>
+            <Divider>默认居中</Divider>
+            <Divider titleAlign="start">靠左</Divider>
+            <Divider titleAlign="end" variant="dashed">
+              靠右
+            </Divider>
+          </>
+        );
+      case 2:
+        return (
+          <div
+            className="flex flex-row items-stretch gap-3 min-h-[100px] max-w-xl rounded-lg border border-[var(--su-border-default)] p-3"
+            style={{ borderColor: 'var(--su-border-default)' }}
+          >
+            <span className="text-sm">区域 A</span>
+            <Divider orientation="vertical" />
+            <span className="text-sm">区域 B</span>
+            <Separator orientation="vertical" spacing="sm" />
+            <span className="text-sm text-[var(--su-text-muted)]">
+              区域 C（Separator）
+            </span>
+          </div>
+        );
+      case 3:
+        return col(
+          <>
+            <Typography variant="caption" color="muted" noMargin>
+              下方为 Separator（读屏可识别分隔）
+            </Typography>
+            <Separator spacing="sm" />
+            <Typography variant="caption" color="muted" noMargin>
+              与将 Divider 的 decorative 设为 false 等价
+            </Typography>
+            <Divider decorative={false} spacing="sm" />
+          </>
+        );
+      default:
+        return col(
+          <Typography variant="body" color="muted">
+            无该示例索引
+          </Typography>
+        );
+    }
+  };
+
   const renderTypographyExamples = (_example: Example, idx: number) => {
     const box = (children: React.ReactNode) => (
       <div className="flex flex-col gap-4 max-w-xl">{children}</div>
@@ -603,7 +671,7 @@ export const ComponentPage: React.FC = () => {
         {doc.name === 'Input' && (
           <div className="flex flex-col gap-3 max-w-md">
             <Input placeholder="请输入" />
-            <Input prefix={<IconSearch size={18} />} placeholder="搜索" />
+            <Input prefix={<IconSearch size={16} />} placeholder="搜索" />
             <Input type="password" placeholder="密码" />
           </div>
         )}
@@ -619,6 +687,7 @@ export const ComponentPage: React.FC = () => {
           </div>
         )}
         {doc.name === 'Typography' && renderTypographyExamples(example, idx)}
+        {doc.name === 'Divider' && renderDividerExamples(example, idx)}
         {doc.name === 'Toast' && (
           <div className="flex flex-col gap-4">
             {idx === 0 && (

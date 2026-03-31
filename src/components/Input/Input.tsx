@@ -1,7 +1,33 @@
 import React, { forwardRef } from 'react';
-import type { StandProps } from '../../core/stand';
+import type { Size, StandProps } from '../../core/stand';
 import { getSizeVars, getRadiusVar } from '../../core/stand';
 import styles from './Input.module.css';
+
+/** 前缀与输入文字之间间距（略大于贴边，避免图标与占位挤在一起） */
+const INPUT_AFFIX_GAP: Record<Size, string> = {
+  xs: '3px',
+  sm: '4px',
+  md: '6px',
+  lg: '6px',
+  xl: '8px',
+};
+
+/** 与 getSizeVars 一致：纵向 / 横向 padding 变量 */
+const INPUT_PAD_Y: Record<Size, string> = {
+  xs: '4px',
+  sm: '6px',
+  md: '8px',
+  lg: '12px',
+  xl: '16px',
+};
+
+const INPUT_PAD_X: Record<Size, string> = {
+  xs: '8px',
+  sm: '12px',
+  md: '16px',
+  lg: '20px',
+  xl: '24px',
+};
 
 export interface InputProps extends Omit<StandProps, 'variant'> {
   /** 输入框值 */
@@ -77,6 +103,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       styles[color],
       disabled && styles.disabled,
       readOnly && styles.readOnly,
+      prefix && styles.hasPrefix,
+      prefix && suffix && styles.hasSuffix,
       className,
     ]
       .filter(Boolean)
@@ -92,6 +120,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         style={{
           ...sizeVars,
           '--su-radius': radiusVar,
+          '--su-input-affix-gap': INPUT_AFFIX_GAP[size],
+          '--su-input-pad-y': INPUT_PAD_Y[size],
+          '--su-input-pad-x': INPUT_PAD_X[size],
           ...style,
         } as React.CSSProperties}
       >

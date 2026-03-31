@@ -70,57 +70,57 @@
 }
 
 .solid.primary {
-  background: var(--su-primary-600);
-  color: var(--su-on-primary);
+  background: var(--su-btn-primary-solid-bg);
+  color: var(--su-btn-primary-solid-fg);
 }
 
 .solid.primary:hover:not(:disabled) {
-  background: var(--su-primary-700);
+  background: var(--su-btn-primary-solid-hover);
 }
 
 .solid.secondary {
-  background: var(--su-secondary-600);
-  color: white;
+  background: var(--su-btn-secondary-solid-bg);
+  color: var(--su-btn-secondary-solid-fg);
 }
 
 .solid.secondary:hover:not(:disabled) {
-  background: var(--su-secondary-700);
+  background: var(--su-btn-secondary-solid-hover);
 }
 
 .solid.success {
-  background: var(--su-success-600);
-  color: white;
+  background: var(--su-btn-success-solid-bg);
+  color: var(--su-btn-success-solid-fg);
 }
 
 .solid.success:hover:not(:disabled) {
-  background: var(--su-success-700);
+  background: var(--su-btn-success-solid-hover);
 }
 
 .solid.warning {
-  background: var(--su-warning-600);
-  color: white;
+  background: var(--su-btn-warning-solid-bg);
+  color: var(--su-btn-warning-solid-fg);
 }
 
 .solid.warning:hover:not(:disabled) {
-  background: var(--su-warning-700);
+  background: var(--su-btn-warning-solid-hover);
 }
 
 .solid.error {
-  background: var(--su-error-600);
-  color: white;
+  background: var(--su-btn-error-solid-bg);
+  color: var(--su-btn-error-solid-fg);
 }
 
 .solid.error:hover:not(:disabled) {
-  background: var(--su-error-700);
+  background: var(--su-btn-error-solid-hover);
 }
 
 .solid.info {
-  background: var(--su-info-600);
-  color: white;
+  background: var(--su-btn-info-solid-bg);
+  color: var(--su-btn-info-solid-fg);
 }
 
 .solid.info:hover:not(:disabled) {
-  background: var(--su-info-700);
+  background: var(--su-btn-info-solid-hover);
 }
 
 /* Soft - 柔和 */
@@ -134,57 +134,57 @@
 }
 
 .soft.primary {
-  background: var(--su-primary-100);
-  color: var(--su-primary-700);
+  background: var(--su-btn-primary-soft-bg);
+  color: var(--su-btn-primary-soft-fg);
 }
 
 .soft.primary:hover:not(:disabled) {
-  background: var(--su-primary-200);
+  background: var(--su-btn-primary-soft-hover);
 }
 
 .soft.secondary {
-  background: var(--su-secondary-100);
-  color: var(--su-secondary-700);
+  background: var(--su-btn-secondary-soft-bg);
+  color: var(--su-btn-secondary-soft-fg);
 }
 
 .soft.secondary:hover:not(:disabled) {
-  background: var(--su-secondary-200);
+  background: var(--su-btn-secondary-soft-hover);
 }
 
 .soft.success {
-  background: var(--su-success-100);
-  color: var(--su-success-700);
+  background: var(--su-btn-success-soft-bg);
+  color: var(--su-btn-success-soft-fg);
 }
 
 .soft.success:hover:not(:disabled) {
-  background: var(--su-success-200);
+  background: var(--su-btn-success-soft-hover);
 }
 
 .soft.warning {
-  background: var(--su-warning-100);
-  color: var(--su-warning-700);
+  background: var(--su-btn-warning-soft-bg);
+  color: var(--su-btn-warning-soft-fg);
 }
 
 .soft.warning:hover:not(:disabled) {
-  background: var(--su-warning-200);
+  background: var(--su-btn-warning-soft-hover);
 }
 
 .soft.error {
-  background: var(--su-error-100);
-  color: var(--su-error-700);
+  background: var(--su-btn-error-soft-bg);
+  color: var(--su-btn-error-soft-fg);
 }
 
 .soft.error:hover:not(:disabled) {
-  background: var(--su-error-200);
+  background: var(--su-btn-error-soft-hover);
 }
 
 .soft.info {
-  background: var(--su-info-100);
-  color: var(--su-info-700);
+  background: var(--su-btn-info-soft-bg);
+  color: var(--su-btn-info-soft-fg);
 }
 
 .soft.info:hover:not(:disabled) {
-  background: var(--su-info-200);
+  background: var(--su-btn-info-soft-hover);
 }
 
 /* Outlined - 描边 */
@@ -202,57 +202,57 @@
 }
 
 .outlined.primary {
-  border-color: var(--su-primary-600);
-  color: var(--su-primary-600);
+  border-color: var(--su-btn-primary-line);
+  color: var(--su-btn-primary-line);
 }
 
 .outlined.primary:hover:not(:disabled) {
-  background: var(--su-primary-50);
+  background: var(--su-btn-primary-outline-hover-bg);
 }
 
 .outlined.secondary {
-  border-color: var(--su-secondary-600);
-  color: var(--su-secondary-600);
+  border-color: var(--su-btn-secondary-line);
+  color: var(--su-btn-secondary-line);
 }
 
 .outlined.secondary:hover:not(:disabled) {
-  background: var(--su-secondary-50);
+  background: var(--su-btn-secondary-outline-hover-bg);
 }
 
 .outlined.success {
-  border-color: var(--su-success-600);
-  color: var(--su-success-600);
+  border-color: var(--su-btn-success-line);
+  color: var(--su-btn-success-line);
 }
 
 .outlined.success:hover:not(:disabled) {
-  background: var(--su-success-50);
+  background: var(--su-btn-success-outline-hover-bg);
 }
 
 .outlined.warning {
-  border-color: var(--su-warning-600);
-  color: var(--su-warning-600);
+  border-color: var(--su-btn-warning-line);
+  color: var(--su-btn-warning-line);
 }
 
 .outlined.warning:hover:not(:disabled) {
-  background: var(--su-warning-50);
+  background: var(--su-btn-warning-outline-hover-bg);
 }
 
 .outlined.error {
-  border-color: var(--su-error-600);
-  color: var(--su-error-600);
+  border-color: var(--su-btn-error-line);
+  color: var(--su-btn-error-line);
 }
 
 .outlined.error:hover:not(:disabled) {
-  background: var(--su-error-50);
+  background: var(--su-btn-error-outline-hover-bg);
 }
 
 .outlined.info {
-  border-color: var(--su-info-600);
-  color: var(--su-info-600);
+  border-color: var(--su-btn-info-line);
+  color: var(--su-btn-info-line);
 }
 
 .outlined.info:hover:not(:disabled) {
-  background: var(--su-info-50);
+  background: var(--su-btn-info-outline-hover-bg);
 }
 
 /* Ghost - 幽灵 */
@@ -270,27 +270,27 @@
 }
 
 .ghost.primary {
-  color: var(--su-primary-600);
+  color: var(--su-btn-primary-line);
 }
 
 .ghost.secondary {
-  color: var(--su-secondary-600);
+  color: var(--su-btn-secondary-line);
 }
 
 .ghost.success {
-  color: var(--su-success-600);
+  color: var(--su-btn-success-line);
 }
 
 .ghost.warning {
-  color: var(--su-warning-600);
+  color: var(--su-btn-warning-line);
 }
 
 .ghost.error {
-  color: var(--su-error-600);
+  color: var(--su-btn-error-line);
 }
 
 .ghost.info {
-  color: var(--su-info-600);
+  color: var(--su-btn-info-line);
 }
 
 /* Link - 链接 */
@@ -311,27 +311,27 @@
 }
 
 .link.primary {
-  color: var(--su-primary-600);
+  color: var(--su-btn-primary-line);
 }
 
 .link.secondary {
-  color: var(--su-secondary-600);
+  color: var(--su-btn-secondary-line);
 }
 
 .link.success {
-  color: var(--su-success-600);
+  color: var(--su-btn-success-line);
 }
 
 .link.warning {
-  color: var(--su-warning-600);
+  color: var(--su-btn-warning-line);
 }
 
 .link.error {
-  color: var(--su-error-600);
+  color: var(--su-btn-error-line);
 }
 
 .link.info {
-  color: var(--su-info-600);
+  color: var(--su-btn-info-line);
 }
 
 /* 加载状态 */
