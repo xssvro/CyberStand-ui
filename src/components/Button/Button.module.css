@@ -1,0 +1,367 @@
+.button {
+  /* 基础样式 */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: var(--su-padding);
+  font-size: var(--su-font-size);
+  font-weight: 500;
+  line-height: 1.5;
+  border-radius: var(--su-radius);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition:
+    background-color var(--su-transition-fast),
+    border-color var(--su-transition-fast),
+    color var(--su-transition-fast),
+    box-shadow var(--su-transition-fast),
+    transform 0.12s ease,
+    opacity var(--su-transition-fast);
+  outline: none;
+  position: relative;
+  white-space: nowrap;
+  user-select: none;
+  height: var(--su-height);
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+}
+
+.button:focus-visible {
+  box-shadow:
+    0 0 0 2px var(--su-focus-ring-color),
+    var(--su-focus-ring-glow);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.link:active:not(:disabled) {
+  transform: none;
+  opacity: 0.85;
+}
+
+.solid:active:not(:disabled) {
+  filter: brightness(0.94);
+}
+
+/* 块级按钮 */
+.block {
+  width: 100%;
+}
+
+/* ========== 变体样式 ========== */
+
+/* Solid - 实心 */
+.solid {
+  border-color: transparent;
+}
+
+.solid.default {
+  background: var(--su-bg-muted);
+  color: var(--su-text-default);
+}
+
+.solid.primary {
+  background: var(--su-primary-600);
+  color: var(--su-on-primary);
+}
+
+.solid.primary:hover:not(:disabled) {
+  background: var(--su-primary-700);
+}
+
+.solid.secondary {
+  background: var(--su-secondary-600);
+  color: white;
+}
+
+.solid.secondary:hover:not(:disabled) {
+  background: var(--su-secondary-700);
+}
+
+.solid.success {
+  background: var(--su-success-600);
+  color: white;
+}
+
+.solid.success:hover:not(:disabled) {
+  background: var(--su-success-700);
+}
+
+.solid.warning {
+  background: var(--su-warning-600);
+  color: white;
+}
+
+.solid.warning:hover:not(:disabled) {
+  background: var(--su-warning-700);
+}
+
+.solid.error {
+  background: var(--su-error-600);
+  color: white;
+}
+
+.solid.error:hover:not(:disabled) {
+  background: var(--su-error-700);
+}
+
+.solid.info {
+  background: var(--su-info-600);
+  color: white;
+}
+
+.solid.info:hover:not(:disabled) {
+  background: var(--su-info-700);
+}
+
+/* Soft - 柔和 */
+.soft {
+  border-color: transparent;
+}
+
+.soft.default {
+  background: var(--su-bg-muted);
+  color: var(--su-text-default);
+}
+
+.soft.primary {
+  background: var(--su-primary-100);
+  color: var(--su-primary-700);
+}
+
+.soft.primary:hover:not(:disabled) {
+  background: var(--su-primary-200);
+}
+
+.soft.secondary {
+  background: var(--su-secondary-100);
+  color: var(--su-secondary-700);
+}
+
+.soft.secondary:hover:not(:disabled) {
+  background: var(--su-secondary-200);
+}
+
+.soft.success {
+  background: var(--su-success-100);
+  color: var(--su-success-700);
+}
+
+.soft.success:hover:not(:disabled) {
+  background: var(--su-success-200);
+}
+
+.soft.warning {
+  background: var(--su-warning-100);
+  color: var(--su-warning-700);
+}
+
+.soft.warning:hover:not(:disabled) {
+  background: var(--su-warning-200);
+}
+
+.soft.error {
+  background: var(--su-error-100);
+  color: var(--su-error-700);
+}
+
+.soft.error:hover:not(:disabled) {
+  background: var(--su-error-200);
+}
+
+.soft.info {
+  background: var(--su-info-100);
+  color: var(--su-info-700);
+}
+
+.soft.info:hover:not(:disabled) {
+  background: var(--su-info-200);
+}
+
+/* Outlined - 描边 */
+.outlined {
+  background: transparent;
+}
+
+.outlined.default {
+  border-color: var(--su-border-strong);
+  color: var(--su-text-default);
+}
+
+.outlined.default:hover:not(:disabled) {
+  background: var(--su-bg-muted);
+}
+
+.outlined.primary {
+  border-color: var(--su-primary-600);
+  color: var(--su-primary-600);
+}
+
+.outlined.primary:hover:not(:disabled) {
+  background: var(--su-primary-50);
+}
+
+.outlined.secondary {
+  border-color: var(--su-secondary-600);
+  color: var(--su-secondary-600);
+}
+
+.outlined.secondary:hover:not(:disabled) {
+  background: var(--su-secondary-50);
+}
+
+.outlined.success {
+  border-color: var(--su-success-600);
+  color: var(--su-success-600);
+}
+
+.outlined.success:hover:not(:disabled) {
+  background: var(--su-success-50);
+}
+
+.outlined.warning {
+  border-color: var(--su-warning-600);
+  color: var(--su-warning-600);
+}
+
+.outlined.warning:hover:not(:disabled) {
+  background: var(--su-warning-50);
+}
+
+.outlined.error {
+  border-color: var(--su-error-600);
+  color: var(--su-error-600);
+}
+
+.outlined.error:hover:not(:disabled) {
+  background: var(--su-error-50);
+}
+
+.outlined.info {
+  border-color: var(--su-info-600);
+  color: var(--su-info-600);
+}
+
+.outlined.info:hover:not(:disabled) {
+  background: var(--su-info-50);
+}
+
+/* Ghost - 幽灵 */
+.ghost {
+  background: transparent;
+  border-color: transparent;
+}
+
+.ghost:hover:not(:disabled) {
+  background: var(--su-bg-muted);
+}
+
+.ghost.default {
+  color: var(--su-text-default);
+}
+
+.ghost.primary {
+  color: var(--su-primary-600);
+}
+
+.ghost.secondary {
+  color: var(--su-secondary-600);
+}
+
+.ghost.success {
+  color: var(--su-success-600);
+}
+
+.ghost.warning {
+  color: var(--su-warning-600);
+}
+
+.ghost.error {
+  color: var(--su-error-600);
+}
+
+.ghost.info {
+  color: var(--su-info-600);
+}
+
+/* Link - 链接 */
+.link {
+  background: transparent;
+  border-color: transparent;
+  text-decoration: underline;
+  text-underline-offset: 0.32em;
+  text-decoration-thickness: 1px;
+}
+
+.link:hover:not(:disabled) {
+  text-decoration: none;
+}
+
+.link.default {
+  color: var(--su-text-default);
+}
+
+.link.primary {
+  color: var(--su-primary-600);
+}
+
+.link.secondary {
+  color: var(--su-secondary-600);
+}
+
+.link.success {
+  color: var(--su-success-600);
+}
+
+.link.warning {
+  color: var(--su-warning-600);
+}
+
+.link.error {
+  color: var(--su-error-600);
+}
+
+.link.info {
+  color: var(--su-info-600);
+}
+
+/* 加载状态 */
+.loading {
+  pointer-events: none;
+}
+
+.spinner {
+  width: 1em;
+  height: 1em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.content {
+  display: inline-flex;
+  align-items: center;
+}
+
+.leftIcon,
+.rightIcon {
+  display: inline-flex;
+  align-items: center;
+  font-size: 1.2em;
+}

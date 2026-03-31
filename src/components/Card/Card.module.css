@@ -1,0 +1,114 @@
+.card {
+  background: var(--su-bg-default);
+  border-radius: var(--su-radius);
+  overflow: hidden;
+  transition: all var(--su-transition-fast);
+  display: flex;
+  flex-direction: column;
+}
+
+/* 阴影 */
+.shadow-none {
+  box-shadow: none;
+}
+
+.shadow-sm {
+  box-shadow: var(--su-shadow-sm);
+}
+
+.shadow-md {
+  box-shadow: var(--su-shadow-md);
+}
+
+.shadow-lg {
+  box-shadow: var(--su-shadow-lg);
+}
+
+.shadow-xl {
+  box-shadow: var(--su-shadow-xl);
+}
+
+/* 边框 */
+.bordered {
+  border: 1px solid var(--su-border-default);
+}
+
+/* 悬浮效果 */
+.hoverable:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--su-shadow-lg);
+}
+
+/* 点击态 */
+.clickable {
+  cursor: pointer;
+}
+
+.clickable:hover {
+  border-color: var(--su-border-strong);
+}
+
+.clickable:active {
+  transform: scale(0.995);
+}
+
+/* 禁用态 */
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 头部 */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--su-border-subtle);
+  gap: 12px;
+}
+
+.headerMain {
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--su-text-default);
+  line-height: 1.4;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--su-text-muted);
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
+.extra {
+  flex-shrink: 0;
+}
+
+/* 内容区 */
+.body {
+  padding: 20px;
+  flex: 1;
+}
+
+/* 简洁卡片（无头部时） */
+.card:not(:has(.header)) .body {
+  padding: 20px;
+}
+
+/* 页脚 */
+.footer {
+  padding: 12px 20px;
+  border-top: 1px solid var(--su-border-subtle);
+  background: var(--su-bg-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}

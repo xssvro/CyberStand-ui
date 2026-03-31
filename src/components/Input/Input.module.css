@@ -1,0 +1,106 @@
+.inputWrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  padding: var(--su-padding);
+  font-size: var(--su-font-size);
+  border-radius: var(--su-radius);
+  border: 1px solid var(--su-border-default);
+  background: var(--su-bg-default);
+  color: var(--su-text-default);
+  transition: all var(--su-transition-fast);
+  width: 100%;
+  min-height: var(--su-height);
+  box-sizing: border-box;
+}
+
+.inputWrapper:focus-within {
+  border-color: var(--su-info-500);
+  box-shadow: var(--su-input-focus-shadow);
+}
+
+.inputWrapper.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--su-bg-muted);
+}
+
+.inputWrapper.readOnly {
+  background: var(--su-bg-subtle);
+}
+
+/* 颜色状态 */
+.inputWrapper.default:focus-within {
+  border-color: var(--su-info-500);
+  box-shadow: var(--su-input-focus-shadow);
+}
+
+.inputWrapper.primary:focus-within {
+  border-color: var(--su-primary-500);
+  box-shadow: 0 0 0 3px rgba(252, 238, 10, 0.22);
+}
+
+.inputWrapper.secondary:focus-within {
+  border-color: var(--su-secondary-500);
+  box-shadow: 0 0 0 3px rgba(230, 96, 84, 0.22);
+}
+
+.inputWrapper.success:focus-within {
+  border-color: var(--su-success-500);
+  box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.2);
+}
+
+.inputWrapper.warning:focus-within {
+  border-color: var(--su-warning-500);
+  box-shadow: 0 0 0 3px rgba(255, 159, 28, 0.22);
+}
+
+.inputWrapper.error:focus-within {
+  border-color: var(--su-error-500);
+  box-shadow: 0 0 0 3px rgba(255, 0, 85, 0.22);
+}
+
+.inputWrapper.info:focus-within {
+  border-color: var(--su-info-500);
+  box-shadow: var(--su-input-focus-shadow);
+}
+
+.input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  min-width: 0;
+}
+
+.input::placeholder {
+  color: var(--su-text-subtle);
+}
+
+.input:disabled {
+  cursor: not-allowed;
+}
+
+.prefix,
+.suffix {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--su-text-muted);
+}
+
+/* 图标与输入文字之间只保留一段间距（避免原 gap + input padding 叠成过宽） */
+.prefix {
+  margin-inline-end: 0.5em;
+}
+
+.suffix {
+  margin-inline-start: 0.5em;
+}

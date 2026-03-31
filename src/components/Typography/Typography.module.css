@@ -1,0 +1,316 @@
+.root {
+  margin: 0;
+  color: var(--su-text-default);
+  font-family: inherit;
+}
+
+/* 默认块级间距（MUI / Ant 常见：标题下密、段落间略疏） */
+.root:not(.noMargin).variant-display,
+.root:not(.noMargin).variant-h1 {
+  margin-bottom: 0.35em;
+}
+
+.root:not(.noMargin).variant-h2,
+.root:not(.noMargin).variant-h3,
+.root:not(.noMargin).variant-h4,
+.root:not(.noMargin).variant-h5,
+.root:not(.noMargin).variant-h6 {
+  margin-top: 0.85em;
+  margin-bottom: 0.35em;
+}
+
+.root:not(.noMargin).variant-h2:first-child,
+.root:not(.noMargin).variant-h3:first-child,
+.root:not(.noMargin).variant-h4:first-child,
+.root:not(.noMargin).variant-h5:first-child,
+.root:not(.noMargin).variant-h6:first-child {
+  margin-top: 0;
+}
+
+.root:not(.noMargin).variant-subtitle {
+  margin-top: -0.25em;
+  margin-bottom: 0.75em;
+}
+
+.root:not(.noMargin).variant-lead,
+.root:not(.noMargin).variant-bodyLarge,
+.root:not(.noMargin).variant-body,
+.root:not(.noMargin).variant-bodySmall {
+  margin-bottom: 0.75em;
+}
+
+.root:not(.noMargin).variant-blockquote {
+  margin: 0 0 0.75em;
+}
+
+.root:not(.noMargin).variant-caption,
+.root:not(.noMargin).variant-overline,
+.root:not(.noMargin).variant-label {
+  margin-bottom: 0.35em;
+}
+
+.root:not(.noMargin).variant-code {
+  margin: 0 0.15em;
+}
+
+/* ========== Variants ========== */
+.variant-display {
+  font-size: var(--su-type-display-size);
+  line-height: var(--su-type-display-line);
+  font-weight: var(--su-type-display-weight);
+  letter-spacing: -0.02em;
+}
+
+.variant-h1 {
+  font-size: var(--su-type-h1-size);
+  line-height: var(--su-type-h1-line);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.variant-h2 {
+  font-size: var(--su-type-h2-size);
+  line-height: var(--su-type-h2-line);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+.variant-h3 {
+  font-size: var(--su-type-h3-size);
+  line-height: var(--su-type-h3-line);
+  font-weight: 600;
+}
+
+.variant-h4 {
+  font-size: var(--su-type-h4-size);
+  line-height: var(--su-type-h4-line);
+  font-weight: 600;
+}
+
+.variant-h5 {
+  font-size: var(--su-type-h5-size);
+  line-height: var(--su-type-h5-line);
+  font-weight: 600;
+}
+
+.variant-h6 {
+  font-size: var(--su-type-h6-size);
+  line-height: var(--su-type-h6-line);
+  font-weight: 600;
+}
+
+.variant-subtitle {
+  font-size: var(--su-type-subtitle-size);
+  line-height: var(--su-type-subtitle-line);
+  font-weight: 500;
+  color: var(--su-text-muted);
+}
+
+.variant-lead {
+  font-size: var(--su-type-lead-size);
+  line-height: var(--su-type-lead-line);
+  font-weight: 400;
+}
+
+.variant-bodyLarge {
+  font-size: var(--su-type-body-lg-size);
+  line-height: var(--su-type-body-line);
+}
+
+.variant-body {
+  font-size: var(--su-type-body-size);
+  line-height: var(--su-type-body-line);
+}
+
+.variant-bodySmall {
+  font-size: var(--su-type-body-sm-size);
+  line-height: var(--su-type-body-line);
+}
+
+.variant-caption {
+  font-size: var(--su-type-caption-size);
+  line-height: var(--su-type-caption-line);
+}
+
+.variant-label {
+  font-size: var(--su-type-label-size);
+  line-height: var(--su-type-label-line);
+  font-weight: var(--su-type-label-weight);
+  display: inline-block;
+}
+
+.variant-overline {
+  font-size: var(--su-type-overline-size);
+  line-height: var(--su-type-overline-line);
+  font-weight: var(--su-type-overline-weight);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.variant-code {
+  font-size: var(--su-type-code-size);
+  line-height: var(--su-type-code-line);
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  padding: 0.15em 0.45em;
+  border-radius: 4px;
+  background: var(--su-bg-code);
+  color: var(--su-info-700);
+  border: 1px solid var(--su-border-subtle);
+}
+
+.variant-blockquote {
+  font-size: var(--su-type-blockquote-size);
+  line-height: var(--su-type-blockquote-line);
+  padding: 0.65em 0 0.65em 1em;
+  border-left: 3px solid var(--su-info-500);
+  background: rgba(33, 170, 221, 0.06);
+  border-radius: 0 4px 4px 0;
+  color: var(--su-text-muted);
+}
+
+.variant-link {
+  font-size: var(--su-type-link-size);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  transition: color 0.15s ease, opacity 0.15s ease;
+}
+
+.variant-link:hover {
+  opacity: 0.92;
+}
+
+/* ========== Semantic colors ========== */
+.color-default {
+  color: var(--su-text-default);
+}
+
+.color-muted {
+  color: var(--su-text-muted);
+}
+
+.color-subtle {
+  color: var(--su-text-subtle);
+}
+
+.color-emphasis {
+  color: var(--su-text-emphasis);
+}
+
+.color-inverse {
+  color: var(--su-text-inverse);
+}
+
+.color-primary {
+  color: var(--su-primary-600);
+}
+
+.color-secondary {
+  color: var(--su-secondary-500);
+}
+
+.color-info {
+  color: var(--su-info-500);
+}
+
+.color-success {
+  color: var(--su-success-500);
+}
+
+.color-warning {
+  color: var(--su-warning-500);
+}
+
+.color-error {
+  color: var(--su-error-500);
+}
+
+/* ========== Align / weight ========== */
+.align-start {
+  text-align: start;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.align-end {
+  text-align: end;
+}
+
+.align-justify {
+  text-align: justify;
+}
+
+.weight-normal {
+  font-weight: 400;
+}
+
+.weight-medium {
+  font-weight: 500;
+}
+
+.weight-semibold {
+  font-weight: 600;
+}
+
+.weight-bold {
+  font-weight: 700;
+}
+
+/* ========== Truncate / clamp ========== */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lineClamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ========== Copyable ========== */
+.copyWrap {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 8px;
+  max-width: 100%;
+}
+
+.copyWrapBlock {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  max-width: 100%;
+}
+
+.copyBtn {
+  flex-shrink: 0;
+  margin: 0;
+  padding: 2px 6px;
+  border: none;
+  border-radius: 4px;
+  background: rgba(33, 170, 221, 0.12);
+  color: var(--su-info-500);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  line-height: 1.4;
+  transition: background 0.15s ease;
+}
+
+.copyBtn:hover {
+  background: rgba(33, 170, 221, 0.2);
+}
+
+.copyBtn:focus-visible {
+  outline: 2px solid var(--su-focus-ring-color);
+  outline-offset: 2px;
+}
+
+.copyBtnDone {
+  color: var(--su-success-500);
+  background: rgba(0, 255, 136, 0.1);
+}
