@@ -37,7 +37,10 @@ type InputHtmlPassthrough = Pick<
   | 'aria-labelledby'
   | 'aria-label'
   | 'aria-required'
+  | 'aria-controls'
+  | 'aria-activedescendant'
   | 'role'
+  | 'onKeyDown'
 >;
 
 export interface InputProps extends Omit<StandProps, 'variant'>, InputHtmlPassthrough {
@@ -67,7 +70,7 @@ export interface InputProps extends Omit<StandProps, 'variant'>, InputHtmlPassth
   minLength?: number;
   /** 名称 */
   name?: string;
-  /** 自动完成 */
+  /** 自动完成；未传时为 `off`，减少浏览器自动填充与怪色背景 */
   autoComplete?: string;
   /** 输入模式 */
   pattern?: string;
@@ -152,7 +155,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           maxLength={maxLength}
           minLength={minLength}
           name={name}
-          autoComplete={autoComplete}
+          autoComplete={autoComplete ?? 'off'}
           pattern={pattern}
           className={styles.input}
           {...props}

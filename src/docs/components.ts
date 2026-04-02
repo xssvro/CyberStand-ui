@@ -188,33 +188,37 @@ export const componentDocs: ComponentDoc[] = [
     title: 'Form 整表容器',
     category: '表单',
     description:
-      '原生 form + 轻量 Context：默认 layout / size / disabled 下发给子级 FormField；字段级仍可覆盖。不绑定 react-hook-form。',
+      '原生 form + Context：下发 layout / size / disabled；默认 noValidate，与 FormField 控件下方 error 配合。可嵌套 FormSection、FormData 提交；RHF/Zod 见 Form.ai.md。',
     aiDocPath: '/src/components/Form/Form.ai.md',
     examples: [
       {
-        title: '整表 + 提交',
+        title: '整表：说明 + 主次按钮',
         code: `<Form
   className="max-w-lg w-full"
   onSubmit={(e) => {
     e.preventDefault();
-    // fetch / 状态管理
+    const fd = new FormData(e.currentTarget);
+    console.log(Object.fromEntries(fd.entries()));
   }}
 >
-  <FormField label="名称" required>
-    <Input name="name" placeholder="项目名" required />
+  <FormField label="名称" description="对内展示用" required>
+    <Input name="name" placeholder="2～32 个字符" />
   </FormField>
   <FormField label="描述">
     <Textarea name="desc" rows={3} placeholder="选填" />
   </FormField>
   <Stack direction="row" gap="sm" justify="end">
-    <Button type="submit" color="primary">
+    <Button type="button" variant="ghost" size="sm">
+      取消
+    </Button>
+    <Button type="submit" color="primary" size="sm">
       保存
     </Button>
   </Stack>
 </Form>`,
       },
       {
-        title: '上下文：横向布局',
+        title: '上下文：横向 layout + labelWidth',
         code: `<Form layout="horizontal" className="max-w-xl w-full">
   <FormField label="用户名" labelWidth={96} required>
     <Input name="user" placeholder="唯一标识" />
@@ -225,22 +229,106 @@ export const componentDocs: ComponentDoc[] = [
 </Form>`,
       },
       {
-        title: '上下文：统一小尺寸',
+        title: '上下文：整表 size="sm"',
         code: `<Form size="sm" className="max-w-md w-full">
   <FormField label="标题">
-    <Input placeholder="sm 输入框" />
+    <Input name="title" placeholder="sm 输入框" />
   </FormField>
   <FormField label="类型">
-    <Select placeholder="请选择" options={[{ value: 'a', label: 'A' }]} />
+    <Select
+      name="kind"
+      placeholder="请选择"
+      options={[
+        { value: 'a', label: '类型 A' },
+        { value: 'b', label: '类型 B' },
+      ]}
+    />
   </FormField>
 </Form>`,
       },
       {
-        title: '整表禁用',
+        title: '整表 disabled（提交中预览）',
         code: `<Form disabled className="max-w-md w-full">
   <FormField label="只读项">
-    <Input defaultValue="不可编辑" />
+    <Input name="ro" defaultValue="不可编辑" />
   </FormField>
+</Form>`,
+      },
+      {
+        title: '嵌套 FormSection（多区块）',
+        code: `<Form
+  className="max-w-xl w-full"
+  onSubmit={(e) => {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    console.log(Object.fromEntries(fd.entries()));
+  }}
+>
+  <FormSection title="基本信息" description="带 * 为必填">
+    <FormField label="显示名称" required>
+      <Input name="displayName" placeholder="2～32 个字符" />
+    </FormField>
+    <FormField label="类型">
+      <Select
+        name="kind"
+        placeholder="请选择"
+        options={[
+          { value: 'app', label: '应用' },
+          { value: 'api', label: '接口' },
+        ]}
+      />
+    </FormField>
+  </FormSection>
+
+  <FormSection title="联系方式" description="至少填一项">
+    <FormField label="邮箱">
+      <Input type="email" name="email" placeholder="you@example.com" />
+    </FormField>
+    <FormField label="手机">
+      <Input type="tel" name="phone" placeholder="选填" />
+    </FormField>
+  </FormSection>
+
+  <Stack direction="row" gap="sm" justify="end">
+    <Button type="button" variant="ghost" size="sm">
+      取消
+    </Button>
+    <Button type="submit" color="primary" size="sm">
+      创建
+    </Button>
+  </Stack>
+</Form>`,
+      },
+      {
+        title: '提交前校验 + FormField error（无气泡）',
+        code: `const [errors, setErrors] = useState<{ name?: string }>({});
+
+<Form
+  className="max-w-md w-full"
+  onSubmit={(e) => {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    const name = String(fd.get('name') ?? '').trim();
+    if (!name) {
+      setErrors({ name: '请填写名称' });
+      return;
+    }
+    setErrors({});
+    // 调用接口…
+  }}
+>
+  <FormField label="名称" required error={errors.name}>
+    <Input
+      name="name"
+      placeholder="项目名称"
+      onChange={() => setErrors((prev) => ({ ...prev, name: undefined }))}
+    />
+  </FormField>
+  <Stack direction="row" gap="sm" justify="end">
+    <Button type="submit" color="primary" size="sm">
+      提交
+    </Button>
+  </Stack>
 </Form>`,
       },
     ],
@@ -280,7 +368,7 @@ export const componentDocs: ComponentDoc[] = [
     title: 'Select 选择器',
     category: '表单',
     description:
-      '自定义 Listbox + Portal 下拉，样式与 Input 对齐；支持 options、Select.Option、renderValue/renderOption 与 placement。',
+      '自定义 Listbox + Portal 下拉，样式与 Input 对齐；支持 searchable 筛选、options、Select.Option、renderValue/renderOption 与 placement。',
     aiDocPath: '/src/components/Select/Select.ai.md',
     examples: [
       {
@@ -324,6 +412,22 @@ export const componentDocs: ComponentDoc[] = [
       </div>
     );
   }}
+/>`,
+      },
+      {
+        title: 'searchable 可搜索',
+        code: `<Select
+  searchable
+  searchPlaceholder="输入城市名筛选"
+  placeholder="选择城市"
+  className="max-w-md w-full"
+  options={[
+    { value: 'bj', label: '北京' },
+    { value: 'sh', label: '上海' },
+    { value: 'gz', label: '广州' },
+    { value: 'sz', label: '深圳' },
+    { value: 'hz', label: '杭州' },
+  ]}
 />`,
       },
     ],

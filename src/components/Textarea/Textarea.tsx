@@ -34,6 +34,7 @@ export interface TextareaProps extends Omit<StandProps, 'variant'>, TextareaHtml
   maxLength?: number;
   minLength?: number;
   name?: string;
+  /** 未传时为 `off` */
   autoComplete?: string;
   /** vertical | none | both */
   resize?: 'vertical' | 'none' | 'both';
@@ -109,7 +110,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           maxLength={maxLength}
           minLength={minLength}
           name={name}
-          autoComplete={autoComplete}
+          autoComplete={autoComplete ?? 'off'}
           className={joinClasses(styles.textarea, resizeClass)}
           {...props}
         />

@@ -34,7 +34,7 @@ import { FormField, Label } from 'stand-ui/components';
 | `label` | `ReactNode` | — | 标签；无标签时不渲染 `<label>` |
 | `id` | `string` | 自动生成 | 赋给子控件，并与标签 `htmlFor` 一致 |
 | `description` | `ReactNode` | — | 辅助说明，`id` 为 `{id}-description` |
-| `error` | `ReactNode` | — | 错误文案；有值时 `aria-invalid`；对 Input/Textarea/Select/Switch 注入 `color="error"`，对 CheckboxGroup/RadioGroup 注入 `invalid` |
+| `error` | `ReactNode` | — | 错误文案，**渲染在控件下方**（非浏览器气泡）；有值时 `aria-invalid`；对 Input/Textarea/Select/Switch 注入 `color="error"`，对 CheckboxGroup/RadioGroup 注入 `invalid`。配合 **`Form`**（默认 **`noValidate`**）可避免原生必填气泡 |
 | `required` | `boolean` | `false` | 标签旁红色 `*`（装饰；请在控件上设真实 `required`） |
 | `layout` | `vertical` \| `horizontal` | 见下 | 默认 **`vertical`**；若在 **`Form`** 内且未传本属性，则继承 **`Form` 的 `layout`** |
 | `labelWidth` | `string` \| `number` | — | 仅 `horizontal`；数字视为 px，写入 `--su-form-label-width`（默认约 `7.5rem`） |

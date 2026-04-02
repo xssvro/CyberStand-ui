@@ -137,6 +137,23 @@ function SelectDocDemo({ idx }: { idx: number }) {
           />
         </div>
       );
+    case 4:
+      return (
+        <div className="max-w-md w-full">
+          <Select
+            searchable
+            searchPlaceholder="输入城市名筛选"
+            placeholder="选择城市"
+            options={[
+              { value: 'bj', label: '北京' },
+              { value: 'sh', label: '上海' },
+              { value: 'gz', label: '广州' },
+              { value: 'sz', label: '深圳' },
+              { value: 'hz', label: '杭州' },
+            ]}
+          />
+        </div>
+      );
     default:
       return (
         <Typography variant="body" color="muted">
@@ -219,6 +236,8 @@ function SwitchDocDemo({ idx }: { idx: number }) {
 }
 
 function FormDocDemo({ idx }: { idx: number }) {
+  const [fieldErrors, setFieldErrors] = useState<{ name?: string }>({});
+
   switch (idx) {
     case 0:
       return (
@@ -229,14 +248,17 @@ function FormDocDemo({ idx }: { idx: number }) {
             toast('已拦截提交（演示）');
           }}
         >
-          <FormField label="名称" required>
-            <Input name="name" placeholder="项目名" required />
+          <FormField label="名称" description="对内展示用" required>
+            <Input name="name" placeholder="2～32 个字符" />
           </FormField>
           <FormField label="描述">
             <Textarea name="desc" rows={3} placeholder="选填" />
           </FormField>
           <Stack direction="row" gap="sm" justify="end">
-            <Button type="submit" color="primary">
+            <Button type="button" variant="ghost" size="sm">
+              取消
+            </Button>
+            <Button type="submit" color="primary" size="sm">
               保存
             </Button>
           </Stack>
@@ -257,10 +279,17 @@ function FormDocDemo({ idx }: { idx: number }) {
       return (
         <Form size="sm" className="max-w-md w-full">
           <FormField label="标题">
-            <Input placeholder="sm 输入框" />
+            <Input name="title" placeholder="sm 输入框" />
           </FormField>
           <FormField label="类型">
-            <Select placeholder="请选择" options={[{ value: 'a', label: 'A' }]} />
+            <Select
+              name="kind"
+              placeholder="请选择"
+              options={[
+                { value: 'a', label: '类型 A' },
+                { value: 'b', label: '类型 B' },
+              ]}
+            />
           </FormField>
         </Form>
       );
@@ -268,8 +297,81 @@ function FormDocDemo({ idx }: { idx: number }) {
       return (
         <Form disabled className="max-w-md w-full">
           <FormField label="只读项">
-            <Input defaultValue="不可编辑" />
+            <Input name="ro" defaultValue="不可编辑" />
           </FormField>
+        </Form>
+      );
+    case 4:
+      return (
+        <Form
+          className="max-w-xl w-full"
+          onSubmit={(e) => {
+            e.preventDefault();
+            toast('已拦截提交（演示）');
+          }}
+        >
+          <FormSection title="基本信息" description="带 * 为必填">
+            <FormField label="显示名称" required>
+              <Input name="displayName" placeholder="2～32 个字符" />
+            </FormField>
+            <FormField label="类型">
+              <Select
+                name="kind"
+                placeholder="请选择"
+                options={[
+                  { value: 'app', label: '应用' },
+                  { value: 'api', label: '接口' },
+                ]}
+              />
+            </FormField>
+          </FormSection>
+          <FormSection title="联系方式" description="至少填一项">
+            <FormField label="邮箱">
+              <Input type="email" name="email" placeholder="you@example.com" />
+            </FormField>
+            <FormField label="手机">
+              <Input type="tel" name="phone" placeholder="选填" />
+            </FormField>
+          </FormSection>
+          <Stack direction="row" gap="sm" justify="end">
+            <Button type="button" variant="ghost" size="sm">
+              取消
+            </Button>
+            <Button type="submit" color="primary" size="sm">
+              创建
+            </Button>
+          </Stack>
+        </Form>
+      );
+    case 5:
+      return (
+        <Form
+          className="max-w-md w-full"
+          onSubmit={(e) => {
+            e.preventDefault();
+            const fd = new FormData(e.currentTarget);
+            const name = String(fd.get('name') ?? '').trim();
+            if (!name) {
+              setFieldErrors({ name: '请填写名称' });
+              toast.error('校验未通过');
+              return;
+            }
+            setFieldErrors({});
+            toast('校验通过（演示）');
+          }}
+        >
+          <FormField label="名称" required error={fieldErrors.name}>
+            <Input
+              name="name"
+              placeholder="留空点提交可看到下方错误"
+              onChange={() => setFieldErrors((prev) => ({ ...prev, name: undefined }))}
+            />
+          </FormField>
+          <Stack direction="row" gap="sm" justify="end">
+            <Button type="submit" color="primary" size="sm">
+              提交
+            </Button>
+          </Stack>
         </Form>
       );
     default:
@@ -1342,7 +1444,7 @@ export const ComponentPage: React.FC = () => {
         {doc.name === 'Checkbox' && <CheckboxDocDemo idx={idx} />}
         {doc.name === 'Radio' && <RadioDocDemo idx={idx} />}
         {doc.name === 'Switch' && <SwitchDocDemo idx={idx} />}
-        {doc.name === 'Form' && <FormDocDemo idx={idx} />}
+        {doc.name === 'Form' && <FormDocDemo key={idx} idx={idx} />}
         {doc.name === 'FormSection' && <FormSectionDocDemo idx={idx} />}
         {doc.name === 'Card' && (
           <div className="max-w-md">

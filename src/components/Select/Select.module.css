@@ -25,7 +25,7 @@
   padding: var(--su-padding);
   margin: 0;
   box-sizing: border-box;
-  border: 1px solid var(--su-border-default);
+  border: 1px solid var(--su-border-field);
   border-radius: var(--su-radius);
   background: var(--su-bg-default);
   color: var(--su-text-default);
@@ -131,15 +131,46 @@
   overflow-x: hidden;
   background: var(--su-bg-elevated);
   border: 1px solid var(--su-border-subtle);
-  border-radius: var(--su-radius, 6px);
+  border-radius: var(--su-radius, 5px);
   box-shadow:
     0 8px 24px rgba(15, 23, 42, 0.07),
     0 2px 8px rgba(15, 23, 42, 0.04);
 }
 
+/* searchable：外层定高，内层列表单独滚动 */
+.listboxStack {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px;
+  overflow: hidden;
+}
+
+.searchWrap {
+  flex-shrink: 0;
+  width: 100%;
+  padding: 0 2px;
+  box-sizing: border-box;
+}
+
+.searchField {
+  width: 100%;
+}
+
+.optionsScroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  box-sizing: border-box;
+}
+
 .option {
   padding: 6px 8px;
-  border-radius: max(2px, calc(var(--su-radius, 6px) - 2px));
+  border-radius: max(2px, calc(var(--su-radius, 5px) - 2px));
   cursor: pointer;
   font-size: var(--su-font-size);
   line-height: 1.45;

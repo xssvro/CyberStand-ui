@@ -5,7 +5,7 @@
   padding: var(--su-padding);
   font-size: var(--su-font-size);
   border-radius: var(--su-radius);
-  border: 1px solid var(--su-border-default);
+  border: 1px solid var(--su-border-field);
   background: var(--su-bg-default);
   color: var(--su-text-default);
   transition:
@@ -89,6 +89,16 @@
 
 .textarea::placeholder {
   color: var(--su-text-subtle);
+}
+
+.textarea:-webkit-autofill,
+.textarea:-webkit-autofill:hover,
+.textarea:-webkit-autofill:focus,
+.textarea:-webkit-autofill:active {
+  -webkit-text-fill-color: var(--su-text-default);
+  caret-color: var(--su-text-default);
+  box-shadow: 0 0 0 1000px var(--su-bg-default) inset;
+  transition: background-color 99999s ease-out;
 }
 
 .textarea:disabled {

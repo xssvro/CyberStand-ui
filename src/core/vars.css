@@ -132,6 +132,8 @@
 
   --su-border-subtle: #e2e8f0;
   --su-border-default: #cbd5e1;
+  /** 表单控件 / FormSection：须在 su-bg-default、su-bg-subtle 上能辨边；过浅会与灰底融在一起 */
+  --su-border-field: #c5d1e3;
   --su-border-strong: #94a3b8;
 
   --su-focus-ring-color: rgba(2, 132, 199, 0.4);
@@ -324,6 +326,8 @@
 
   --su-border-subtle: rgba(200, 215, 255, 0.045);
   --su-border-default: rgba(200, 220, 255, 0.1);
+  /** 深色下表单轮廓略强于 default，避免与表面糊成一片 */
+  --su-border-field: rgba(215, 230, 255, 0.14);
   --su-border-strong: rgba(220, 235, 255, 0.16);
 
   --su-focus-ring-color: rgba(33, 170, 221, 0.45);

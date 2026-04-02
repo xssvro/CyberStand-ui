@@ -20,7 +20,7 @@ import { Button } from 'stand-ui/components/Button';
 | `size` | `Size`（xs / sm / md / lg / xl） | `'md'` | 按钮尺寸 |
 | `color` | `Color`（default、primary…） | `'primary'` | 颜色主题 |
 | `variant` | `Variant`（solid、soft…） | `'solid'` | 样式变体 |
-| `radius` | `Radius`（none～full） | `'md'` | 圆角；**默认 `'md'` 时按 `size` 阶梯**（xs 约 3px → xl 约 10px），显式传入其它 `radius` 仍用全局刻度 |
+| `radius` | `Radius`（none～full） | `'md'` | 圆角；**默认 `'md'` 时按 `size` 阶梯**（xs/sm 约 3px → xl 约 9px），显式传入其它 `radius` 仍用全局刻度 |
 | `disabled` | `boolean` | `false` | 是否禁用 |
 | `loading` | `boolean` | `false` | 是否加载中 |
 | `block` | `boolean` | `false` | 是否块级宽度100% |

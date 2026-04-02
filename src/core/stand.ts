@@ -61,9 +61,9 @@ export const getRadiusVar = (radius: Radius = 'md'): string => {
   const radiusMap: Record<Radius, string> = {
     'none': '0',
     'sm': '3px',
-    'md': '6px',
-    'lg': '8px',
-    'xl': '12px',
+    'md': '5px',
+    'lg': '7px',
+    'xl': '10px',
     'full': '9999px',
   };
   return radiusMap[radius];

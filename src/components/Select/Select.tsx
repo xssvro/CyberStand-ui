@@ -12,6 +12,7 @@ import React, {
 import { createPortal } from 'react-dom';
 import type { StandProps } from '../../core/stand';
 import { getSizeVars, getRadiusVar } from '../../core/stand';
+import { Input } from '../Input/Input';
 import styles from './Select.module.css';
 
 const CHEVRON_SVG = encodeURIComponent(
@@ -76,6 +77,7 @@ export interface SelectProps extends Omit<StandProps, 'variant'>, SelectHtmlPass
   disabled?: boolean;
   required?: boolean;
   name?: string;
+  /** 写在隐藏域；未传时为 `off` */
   autoComplete?: string;
   placeholder?: string;
   /** 与 `children`（`Select.Option` 或原生 `<option>`）二选一 */
@@ -97,6 +99,14 @@ export interface SelectProps extends Omit<StandProps, 'variant'>, SelectHtmlPass
   renderOption?: (ctx: SelectRenderOptionContext) => React.ReactNode;
   /** 无选项时的列表区内容 */
   empty?: React.ReactNode;
+  /** 下拉内展示搜索框并按关键字筛选（`value` 与 string/number 类型 `label` 子串匹配，可自定义 `filterOption`） */
+  searchable?: boolean;
+  /** 搜索框占位符 */
+  searchPlaceholder?: string;
+  /**
+   * 自定义筛选；`queryLower` 为用户输入去首尾空白并 `toLowerCase()` 后的字符串。
+   */
+  filterOption?: (queryLower: string, option: SelectOptionData) => boolean;
 }
 
 function joinClasses(...parts: Array<string | false | undefined>): string {
@@ -151,6 +161,16 @@ function normalizeOptions(
     }
   });
   return out;
+}
+
+function defaultFilterOption(queryLower: string, option: SelectOptionData): boolean {
+  if (!queryLower) return true;
+  if (option.value.toLowerCase().includes(queryLower)) return true;
+  const lab = option.label;
+  if (typeof lab === 'string' || typeof lab === 'number') {
+    return String(lab).toLowerCase().includes(queryLower);
+  }
+  return false;
 }
 
 function createSyntheticChangeEvent(
@@ -279,6 +299,9 @@ const SelectInner = forwardRef<HTMLButtonElement, SelectProps>(function SelectIn
     renderValue,
     renderOption,
     empty,
+    searchable = false,
+    searchPlaceholder = '搜索…',
+    filterOption,
     className = '',
     style,
     ...ariaProps
@@ -286,7 +309,19 @@ const SelectInner = forwardRef<HTMLButtonElement, SelectProps>(function SelectIn
   ref
 ) {
   const listId = useId().replace(/:/g, '');
+  const optionsListId = `${listId}-options`;
   const opts = useMemo(() => normalizeOptions(options, children), [options, children]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const optionsScrollRef = useRef<HTMLDivElement>(null);
+
+  const displayOpts = useMemo(() => {
+    if (!searchable) return opts;
+    const raw = searchQuery.trim().toLowerCase();
+    if (!raw) return opts;
+    const fn = filterOption ?? defaultFilterOption;
+    return opts.filter((o) => fn(raw, o));
+  }, [opts, searchable, searchQuery, filterOption]);
 
   const isControlled = valueProp !== undefined;
   const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue ?? '');
@@ -321,27 +356,30 @@ const SelectInner = forwardRef<HTMLButtonElement, SelectProps>(function SelectIn
 
   const openAt = useCallback(() => {
     if (disabled || opts.length === 0) return;
+    const list = displayOpts;
+    const selInList = list.findIndex((o) => o.value === value);
     const start =
-      selectedIndex >= 0 && !opts[selectedIndex]?.disabled
-        ? selectedIndex
-        : firstEnabledIndex(opts);
+      selInList >= 0 && !list[selInList]?.disabled
+        ? selInList
+        : firstEnabledIndex(list);
     setActiveIndex(start);
     setOpen(true);
-  }, [disabled, opts, selectedIndex]);
+  }, [disabled, opts.length, displayOpts, value]);
 
   const close = useCallback(() => {
     setOpen(false);
+    setSearchQuery('');
     triggerRef.current?.focus({ preventScroll: true });
   }, []);
 
   const commit = useCallback(
     (index: number) => {
-      const o = opts[index];
+      const o = displayOpts[index];
       if (!o || o.disabled) return;
       setValue(o.value);
       close();
     },
-    [opts, setValue, close]
+    [displayOpts, setValue, close]
   );
 
   useLayoutEffect(() => {
@@ -385,9 +423,38 @@ const SelectInner = forwardRef<HTMLButtonElement, SelectProps>(function SelectIn
   }, [open, close]);
 
   useLayoutEffect(() => {
-    if (!open || opts.length === 0) return;
-    scrollActiveOptionIntoList(listRef.current, `${listId}-opt-${activeIndex}`);
-  }, [open, activeIndex, listId, opts.length]);
+    if (!open || displayOpts.length === 0) return;
+    const scrollRoot = searchable ? optionsScrollRef.current : listRef.current;
+    scrollActiveOptionIntoList(scrollRoot, `${listId}-opt-${activeIndex}`);
+  }, [open, activeIndex, listId, displayOpts.length, searchable]);
+
+  const handleSearchQueryChange = useCallback(
+    (v: string) => {
+      setSearchQuery(v);
+      const raw = v.trim().toLowerCase();
+      const list =
+        raw === ''
+          ? opts
+          : opts.filter((o) => (filterOption ?? defaultFilterOption)(raw, o));
+      if (raw === '') {
+        const idx = opts.findIndex((o) => o.value === value);
+        setActiveIndex(
+          idx >= 0 && !opts[idx]?.disabled ? idx : firstEnabledIndex(opts)
+        );
+      } else {
+        setActiveIndex(firstEnabledIndex(list));
+      }
+    },
+    [opts, value, filterOption]
+  );
+
+  useLayoutEffect(() => {
+    if (!open || !searchable) return;
+    const id = requestAnimationFrame(() => {
+      searchInputRef.current?.focus({ preventScroll: true });
+    });
+    return () => cancelAnimationFrame(id);
+  }, [open, searchable]);
 
   const onTriggerKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
     if (disabled) return;
@@ -395,23 +462,23 @@ const SelectInner = forwardRef<HTMLButtonElement, SelectProps>(function SelectIn
       case 'ArrowDown':
         e.preventDefault();
         if (!open) openAt();
-        else setActiveIndex((i) => nextEnabledIndex(opts, i, 1));
+        else setActiveIndex((i) => nextEnabledIndex(displayOpts, i, 1));
         break;
       case 'ArrowUp':
         e.preventDefault();
         if (!open) openAt();
-        else setActiveIndex((i) => nextEnabledIndex(opts, i, -1));
+        else setActiveIndex((i) => nextEnabledIndex(displayOpts, i, -1));
         break;
       case 'Home':
         if (open) {
           e.preventDefault();
-          setActiveIndex(nextEnabledIndex(opts, 0, 1));
+          setActiveIndex(nextEnabledIndex(displayOpts, 0, 1));
         }
         break;
       case 'End':
         if (open) {
           e.preventDefault();
-          setActiveIndex(nextEnabledIndex(opts, opts.length - 1, -1));
+          setActiveIndex(nextEnabledIndex(displayOpts, displayOpts.length - 1, -1));
         }
         break;
       case 'Enter':
@@ -432,6 +499,41 @@ const SelectInner = forwardRef<HTMLButtonElement, SelectProps>(function SelectIn
         break;
       case 'Tab':
         if (open) close();
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (disabled) return;
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        setActiveIndex((i) => nextEnabledIndex(displayOpts, i, 1));
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        setActiveIndex((i) => nextEnabledIndex(displayOpts, i, -1));
+        break;
+      case 'Home':
+        e.preventDefault();
+        setActiveIndex(nextEnabledIndex(displayOpts, 0, 1));
+        break;
+      case 'End':
+        e.preventDefault();
+        setActiveIndex(nextEnabledIndex(displayOpts, displayOpts.length - 1, -1));
+        break;
+      case 'Enter':
+        e.preventDefault();
+        commit(activeIndex);
+        break;
+      case 'Escape':
+        e.preventDefault();
+        close();
+        break;
+      case 'Tab':
+        close();
         break;
       default:
         break;
@@ -462,59 +564,102 @@ const SelectInner = forwardRef<HTMLButtonElement, SelectProps>(function SelectIn
     <span className={styles.valueText}>{displayLabel}</span>
   );
 
-  const listbox = (
+  const listRadiusStyle = { ['--su-radius' as string]: radiusVar } as React.CSSProperties;
+
+  const optionNodes =
+    opts.length === 0 ? (
+      <div className={styles.empty}>{empty ?? '暂无选项'}</div>
+    ) : displayOpts.length === 0 ? (
+      <div className={styles.empty}>无匹配选项</div>
+    ) : (
+      displayOpts.map((opt, index) => {
+        const selected = opt.value === value;
+        const active = index === activeIndex;
+        const optId = `${listId}-opt-${index}`;
+        const row = renderOption
+          ? renderOption({
+              option: opt,
+              index,
+              selected,
+              active,
+              disabled: !!opt.disabled,
+            })
+          : opt.label;
+
+        return (
+          <div
+            key={`${index}-${opt.value}`}
+            id={optId}
+            role="option"
+            aria-selected={selected}
+            aria-disabled={opt.disabled || undefined}
+            data-disabled={opt.disabled ? '' : undefined}
+            className={joinClasses(
+              styles.option,
+              selected && styles.optionSelected,
+              active && !opt.disabled && styles.optionActive,
+              opt.disabled && styles.optionDisabled,
+              itemClassName
+            )}
+            onMouseEnter={() => {
+              if (!opt.disabled) setActiveIndex(index);
+            }}
+            onMouseDown={(e) => {
+              e.preventDefault();
+              if (!opt.disabled) commit(index);
+            }}
+          >
+            {row}
+          </div>
+        );
+      })
+    );
+
+  const listbox = searchable ? (
+    <div
+      ref={listRef}
+      id={listId}
+      role="group"
+      className={joinClasses(styles.listbox, styles.listboxStack, contentClassName)}
+      style={listRadiusStyle}
+    >
+      <div className={styles.searchWrap} onMouseDown={(e) => e.preventDefault()}>
+        <Input
+          ref={searchInputRef}
+          className={styles.searchField}
+          type="search"
+          size="sm"
+          color={color}
+          disabled={disabled}
+          value={searchQuery}
+          placeholder={searchPlaceholder}
+          onChange={handleSearchQueryChange}
+          onKeyDown={handleSearchKeyDown}
+          aria-controls={optionsListId}
+          aria-activedescendant={
+            open && displayOpts.length > 0 ? `${listId}-opt-${activeIndex}` : undefined
+          }
+          autoComplete="off"
+        />
+      </div>
+      <div
+        ref={optionsScrollRef}
+        id={optionsListId}
+        role="listbox"
+        className={styles.optionsScroll}
+      >
+        {optionNodes}
+      </div>
+    </div>
+  ) : (
     <div
       ref={listRef}
       id={listId}
       role="listbox"
       className={joinClasses(styles.listbox, contentClassName)}
-      style={{ ['--su-radius' as string]: radiusVar } as React.CSSProperties}
+      style={listRadiusStyle}
     >
-      {opts.length === 0 ? (
-        <div className={styles.empty}>{empty ?? '暂无选项'}</div>
-      ) : (
-        opts.map((opt, index) => {
-          const selected = opt.value === value;
-          const active = index === activeIndex;
-          const optId = `${listId}-opt-${index}`;
-          const row = renderOption
-            ? renderOption({
-                option: opt,
-                index,
-                selected,
-                active,
-                disabled: !!opt.disabled,
-              })
-            : opt.label;
-
-          return (
-            <div
-              key={`${index}-${opt.value}`}
-              id={optId}
-              role="option"
-              aria-selected={selected}
-              aria-disabled={opt.disabled || undefined}
-              data-disabled={opt.disabled ? '' : undefined}
-              className={joinClasses(
-                styles.option,
-                selected && styles.optionSelected,
-                active && !opt.disabled && styles.optionActive,
-                opt.disabled && styles.optionDisabled,
-                itemClassName
-              )}
-              onMouseEnter={() => {
-                if (!opt.disabled) setActiveIndex(index);
-              }}
-              onMouseDown={(e) => {
-                e.preventDefault();
-                if (!opt.disabled) commit(index);
-              }}
-            >
-              {row}
-            </div>
-          );
-        })
-      )}
+      {optionNodes}
     </div>
   );
 
@@ -536,7 +681,7 @@ const SelectInner = forwardRef<HTMLButtonElement, SelectProps>(function SelectIn
           name={name}
           value={value}
           required={required}
-          autoComplete={autoComplete}
+          autoComplete={autoComplete ?? 'off'}
           aria-hidden
         />
       )}
@@ -547,8 +692,12 @@ const SelectInner = forwardRef<HTMLButtonElement, SelectProps>(function SelectIn
         className={styles.trigger}
         aria-haspopup="listbox"
         aria-expanded={open}
-        aria-controls={listId}
-        aria-activedescendant={open && opts.length > 0 ? `${listId}-opt-${activeIndex}` : undefined}
+        aria-controls={open ? (searchable ? optionsListId : listId) : undefined}
+        aria-activedescendant={
+          open && displayOpts.length > 0 && !searchable
+            ? `${listId}-opt-${activeIndex}`
+            : undefined
+        }
         aria-required={required || undefined}
         onMouseDown={(e) => {
           if (disabled) return;

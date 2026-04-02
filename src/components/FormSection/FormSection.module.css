@@ -1,8 +1,8 @@
 .root {
   margin: 0;
   min-width: 0;
-  border: 1px solid var(--su-border-subtle);
-  border-radius: 6px;
+  border: 1px solid var(--su-border-field);
+  border-radius: 5px;
   background: var(--su-bg-subtle);
   padding: 12px 14px;
 }

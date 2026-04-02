@@ -20,6 +20,7 @@ function joinClasses(...parts: Array<string | false | undefined>): string {
   return parts.filter(Boolean).join(' ');
 }
 
+/** 默认 `noValidate`：关闭浏览器原生校验气泡；必填请用 `FormField` 的 `error` 或提交前自行校验。传 `noValidate={false}` 可恢复原生行为。 */
 export const Form = forwardRef<HTMLFormElement, FormProps>(function Form(
   {
     layout = 'vertical',
@@ -27,6 +28,7 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(function Form(
     disabled = false,
     children,
     className = '',
+    noValidate = true,
     ...rest
   },
   ref
@@ -42,7 +44,12 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(function Form(
 
   return (
     <FormContext.Provider value={value}>
-      <form ref={ref} className={joinClasses(styles.root, className)} {...rest}>
+      <form
+        ref={ref}
+        className={joinClasses(styles.root, className)}
+        noValidate={noValidate}
+        {...rest}
+      >
         {children}
       </form>
     </FormContext.Provider>

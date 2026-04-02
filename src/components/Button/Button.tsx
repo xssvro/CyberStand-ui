@@ -10,10 +10,10 @@ function resolveButtonRadius(size: Size, radius: Radius): string {
   }
   const bySize: Record<Size, string> = {
     xs: '3px',
-    sm: '4px',
-    md: '6px',
-    lg: '8px',
-    xl: '10px',
+    sm: '3px',
+    md: '5px',
+    lg: '7px',
+    xl: '9px',
   };
   return bySize[size];
 }

@@ -31,7 +31,8 @@ import { Textarea } from 'stand-ui/components';
 | `onChange` | `(value, e) => void` | — | |
 | `size` / `color` / `radius` | 同 Stand | `md` / `default` / `md` | |
 | `disabled` / `readOnly` / `required` | `boolean` | — | |
-| `maxLength` / `minLength` / `name` / `autoComplete` | — | — | 透传 `textarea` |
+| `maxLength` / `minLength` / `name` | — | — | 透传 `textarea` |
+| `autoComplete` | `string` | **`off`** | 未传时默认关闭自动填充 |
 
 无障碍相关 **`id` / `aria-*`** 透传至原生 **`textarea`**。
 

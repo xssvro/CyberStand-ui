@@ -34,7 +34,7 @@ const [value, setValue] = useState('');
 | `maxLength` | `number` | - | 最大长度 |
 | `minLength` | `number` | - | 最小长度 |
 | `name` | `string` | - | 表单 name 属性 |
-| `autoComplete` | `string` | - | 自动完成 |
+| `autoComplete` | `string` | **`off`** | 未传时默认关闭浏览器自动填充；登录等场景可显式传 `username`、`current-password` 等 |
 | `pattern` | `string` | - | 正则验证模式 |
 | `className` | `string` | - | 自定义类名 |
 | `style` | `CSSProperties` | - | 自定义样式 |
