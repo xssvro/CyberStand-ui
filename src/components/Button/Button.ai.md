@@ -20,7 +20,7 @@ import { Button } from 'stand-ui/components/Button';
 | `size` | `Size`（xs / sm / md / lg / xl） | `'md'` | 按钮尺寸 |
 | `color` | `Color`（default、primary…） | `'primary'` | 颜色主题 |
 | `variant` | `Variant`（solid、soft…） | `'solid'` | 样式变体 |
-| `radius` | `Radius`（none～full） | `'md'` | 圆角大小 |
+| `radius` | `Radius`（none～full） | `'md'` | 圆角；**默认 `'md'` 时按 `size` 阶梯**（xs 约 3px → xl 约 10px），显式传入其它 `radius` 仍用全局刻度 |
 | `disabled` | `boolean` | `false` | 是否禁用 |
 | `loading` | `boolean` | `false` | 是否加载中 |
 | `block` | `boolean` | `false` | 是否块级宽度100% |
@@ -115,7 +115,7 @@ import { Button } from 'stand-ui/components/Button';
 
 ## 按压与焦点
 
-- **按下**：实心按钮使用轻微缩放（`scale`）与 `brightness` 变暗；`link` 变体仅降低透明度，避免布局跳动。
+- **按下**：`:active` 时通过透明度略降（约 0.88，`link` 约 0.82）做按压反馈，无缩放、避免布局抖动。
 - **焦点**：`focus-visible` 时显示主题色描边环，便于键盘导航。
 
 ## 最佳实践

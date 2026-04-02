@@ -1,7 +1,22 @@
 import React from 'react';
-import type { StandProps } from '../../core/stand';
+import type { Radius, Size, StandProps } from '../../core/stand';
 import { getSizeVars, getRadiusVar } from '../../core/stand';
 import styles from './Button.module.css';
+
+/** 默认 `radius="md"` 时按高度阶梯收紧圆角，避免 xs/sm 上显得过圆 */
+function resolveButtonRadius(size: Size, radius: Radius): string {
+  if (radius !== 'md') {
+    return getRadiusVar(radius);
+  }
+  const bySize: Record<Size, string> = {
+    xs: '3px',
+    sm: '4px',
+    md: '6px',
+    lg: '8px',
+    xl: '10px',
+  };
+  return bySize[size];
+}
 
 export interface ButtonProps extends StandProps {
   /** 按钮内容 */
@@ -45,7 +60,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const sizeVars = getSizeVars(size);
-    const radiusVar = getRadiusVar(radius);
+    const radiusVar = resolveButtonRadius(size, radius);
     
     const classes = [
       styles.button,

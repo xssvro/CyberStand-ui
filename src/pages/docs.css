@@ -195,6 +195,21 @@
   letter-spacing: 0.5px;
 }
 
+/* 组件子分类（通用 / 表单 / 布局 / 反馈） */
+.docs-nav-category {
+  padding: 10px 20px 4px 24px;
+  margin-top: 2px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--su-text-subtle);
+  letter-spacing: 0.04em;
+}
+
+.nav-section + .docs-nav-category {
+  margin-top: 0;
+  padding-top: 4px;
+}
+
 .docs-main {
   flex: 1;
   margin-left: 260px;
@@ -614,6 +629,26 @@
   color: var(--su-text-default);
 }
 
+.component-list-grouped {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.component-category-block {
+  min-width: 0;
+}
+
+.component-category-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 16px;
+  padding-bottom: 10px;
+  color: var(--su-text-default);
+  border-bottom: 1px solid var(--su-border-subtle);
+  letter-spacing: 0.02em;
+}
+
 .component-list {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -634,7 +669,8 @@
   box-shadow: 0 0 20px rgba(33, 170, 221, 0.14);
 }
 
-.component-item h3 {
+.component-item h3,
+.component-item .component-item-title {
   font-size: 16px;
   margin: 0 0 8px;
   color: var(--su-text-default);

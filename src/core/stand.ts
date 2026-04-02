@@ -47,11 +47,11 @@ export interface StandProps {
 // 获取尺寸CSS变量
 export const getSizeVars = (size: Size = 'md'): Record<string, string> => {
   const sizes: Record<Size, Record<string, string>> = {
-    xs: { '--su-padding': '4px 8px', '--su-font-size': '12px', '--su-height': '24px' },
-    sm: { '--su-padding': '6px 12px', '--su-font-size': '14px', '--su-height': '32px' },
-    md: { '--su-padding': '8px 16px', '--su-font-size': '14px', '--su-height': '40px' },
-    lg: { '--su-padding': '12px 20px', '--su-font-size': '16px', '--su-height': '48px' },
-    xl: { '--su-padding': '16px 24px', '--su-font-size': '18px', '--su-height': '56px' },
+    xs: { '--su-padding': '3px 7px', '--su-font-size': '12px', '--su-height': '22px' },
+    sm: { '--su-padding': '5px 10px', '--su-font-size': '14px', '--su-height': '30px' },
+    md: { '--su-padding': '7px 12px', '--su-font-size': '14px', '--su-height': '36px' },
+    lg: { '--su-padding': '10px 16px', '--su-font-size': '16px', '--su-height': '44px' },
+    xl: { '--su-padding': '12px 20px', '--su-font-size': '18px', '--su-height': '52px' },
   };
   return sizes[size];
 };
@@ -60,10 +60,10 @@ export const getSizeVars = (size: Size = 'md'): Record<string, string> => {
 export const getRadiusVar = (radius: Radius = 'md'): string => {
   const radiusMap: Record<Radius, string> = {
     'none': '0',
-    'sm': '4px',
-    'md': '8px',
-    'lg': '12px',
-    'xl': '16px',
+    'sm': '3px',
+    'md': '6px',
+    'lg': '8px',
+    'xl': '12px',
     'full': '9999px',
   };
   return radiusMap[radius];

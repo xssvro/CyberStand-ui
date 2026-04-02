@@ -94,7 +94,7 @@ import { Button } from 'stand-ui/components/Button';
 新增组件要在文档站出现，需完成以下步骤（缺一可能导致 404 或无预览）：
 
 1. **`src/docs/components.ts`**  
-   - 在 `componentDocs` 数组中追加一项：`name`（路由段，与文件夹名一致）、`title`、`description`、`aiDocPath`、`examples`（多组 `title` + `code` 字符串）。
+   - 在 `componentDocs` 数组中追加一项：`name`（路由段，与文件夹名一致）、`title`、**`category`**（`通用` | `表单` | `布局` | `反馈`，侧边栏与首页按 `COMPONENT_DOC_CATEGORY_ORDER` 分组）、`description`、`aiDocPath`、`examples`（多组 `title` + `code` 字符串）。
 
 2. **`src/pages/ComponentPage.tsx`**  
    - `import` 组件（若需预览）。  

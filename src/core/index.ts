@@ -14,6 +14,13 @@ export {
 } from './stand';
 
 export {
+  buildGapStyle,
+  LAYOUT_SPACING_PX,
+  resolveSpacing,
+  type LayoutSpacing,
+} from './layoutSpacing';
+
+export {
   THEME_STORAGE_KEY,
   applyTheme,
   getStoredTheme,

@@ -1,0 +1,141 @@
+.root {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+}
+
+.root.disabled {
+  opacity: 0.5;
+}
+
+.track {
+  position: relative;
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  border-radius: 9999px;
+  /* 关闭态：灰阶略加深 + 混入 info 青蓝，更「凉」且与页面底区分更明显 */
+  background: color-mix(in srgb, var(--su-info-200) 36%, var(--su-gray-300));
+  box-shadow: var(--su-shadow-sm);
+  transition:
+    background-color var(--su-transition-fast),
+    box-shadow var(--su-transition-fast);
+}
+
+.track:focus {
+  outline: none;
+}
+
+.track:focus-visible {
+  box-shadow: var(--su-shadow-sm), var(--su-input-focus-shadow);
+}
+
+.track[data-checked='true'] {
+  background: var(--su-primary-600);
+  box-shadow: inset 0 0 0 1px var(--su-primary-700);
+}
+
+.track[data-checked='true']:focus-visible {
+  box-shadow: inset 0 0 0 1px var(--su-primary-700), var(--su-input-focus-shadow);
+}
+
+/* 关闭 + 错误：在同一冷灰底倾向下叠一点错误色 */
+.track[data-error='true']:not([data-checked='true']) {
+  background: color-mix(in srgb, var(--su-error-200) 40%, color-mix(in srgb, var(--su-info-200) 36%, var(--su-gray-300)));
+  box-shadow: var(--su-shadow-sm);
+}
+
+.track[data-error='true']:not([data-checked='true']):focus-visible {
+  box-shadow: var(--su-shadow-sm), var(--su-input-focus-shadow);
+}
+
+.track[data-checked='true'][data-error='true'] {
+  background: var(--su-error-500);
+  box-shadow:
+    0 1px 2px color-mix(in srgb, var(--su-error-700) 28%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, var(--su-error-700) 38%, transparent);
+}
+
+.track[data-checked='true'][data-error='true']:focus-visible {
+  box-shadow:
+    0 1px 2px color-mix(in srgb, var(--su-error-700) 28%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, var(--su-error-700) 38%, transparent),
+    var(--su-input-focus-shadow);
+}
+
+.track:disabled,
+.track[aria-readonly='true'] {
+  cursor: not-allowed;
+}
+
+.track.sizeMd {
+  width: 36px;
+  height: 20px;
+}
+
+.track.sizeSm {
+  width: 32px;
+  height: 18px;
+}
+
+.thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  display: block;
+  border-radius: 50%;
+  /* 关闭态：偏亮灰，与冷灰轨道拉开阶调；浅色用高亮灰，深色用中亮灰 */
+  background: color-mix(in srgb, var(--su-gray-50) 52%, var(--su-gray-100));
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--su-gray-900) 10%, transparent);
+  transition:
+    transform var(--su-transition-fast),
+    box-shadow var(--su-transition-fast),
+    background-color var(--su-transition-fast);
+  pointer-events: none;
+}
+
+:global([data-theme='dark']) .thumb {
+  background: var(--su-gray-600);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+/* 开启态滑块：扁平实心圆 + 无模糊描边，避免「浮起来」的投影 */
+.track[data-checked='true'] .thumb {
+  background: var(--su-on-primary);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--su-gray-900) 8%, transparent);
+}
+
+:global([data-theme='dark']) .track[data-checked='true'] .thumb {
+  background: var(--su-on-primary);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--su-gray-900) 28%, transparent);
+}
+
+.track.sizeMd .thumb {
+  width: 16px;
+  height: 16px;
+}
+
+.track.sizeMd[data-checked='true'] .thumb {
+  transform: translateX(16px);
+}
+
+.track.sizeSm .thumb {
+  width: 14px;
+  height: 14px;
+}
+
+.track.sizeSm[data-checked='true'] .thumb {
+  transform: translateX(14px);
+}
+
+.text {
+  flex: 1;
+  min-width: 0;
+  padding-top: 1px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--su-text-default);
+}

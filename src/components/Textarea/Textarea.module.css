@@ -1,0 +1,104 @@
+/* 与 Input 外层语义对齐：同 token、同 color 阶梯 */
+.wrapper {
+  display: flex;
+  align-items: stretch;
+  padding: var(--su-padding);
+  font-size: var(--su-font-size);
+  border-radius: var(--su-radius);
+  border: 1px solid var(--su-border-default);
+  background: var(--su-bg-default);
+  color: var(--su-text-default);
+  transition:
+    border-color var(--su-transition-fast),
+    box-shadow var(--su-transition-fast);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.wrapper:focus-within {
+  border-color: var(--su-info-500);
+  box-shadow: var(--su-input-focus-shadow);
+}
+
+.wrapper.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--su-bg-muted);
+}
+
+.wrapper.readOnly {
+  background: var(--su-bg-subtle);
+}
+
+.wrapper.default:focus-within {
+  border-color: var(--su-info-500);
+  box-shadow: var(--su-input-focus-shadow);
+}
+
+.wrapper.primary:focus-within {
+  border-color: var(--su-primary-500);
+  box-shadow: var(--su-ring-primary);
+}
+
+.wrapper.secondary:focus-within {
+  border-color: var(--su-secondary-500);
+  box-shadow: 0 0 0 3px rgba(230, 96, 84, 0.22);
+}
+
+.wrapper.success:focus-within {
+  border-color: var(--su-success-500);
+  box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.2);
+}
+
+.wrapper.warning:focus-within {
+  border-color: var(--su-warning-500);
+  box-shadow: 0 0 0 3px rgba(255, 159, 28, 0.22);
+}
+
+.wrapper.error:focus-within {
+  border-color: var(--su-error-500);
+  box-shadow: 0 0 0 3px rgba(255, 0, 85, 0.22);
+}
+
+.wrapper.info:focus-within {
+  border-color: var(--su-info-500);
+  box-shadow: var(--su-input-focus-shadow);
+}
+
+.wrapper.error:not(.disabled):not(.readOnly) {
+  border-color: var(--su-error-500);
+}
+
+.textarea {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  min-height: var(--su-textarea-min-height, 96px);
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  line-height: 1.55;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  resize: vertical;
+  vertical-align: top;
+}
+
+.textarea::placeholder {
+  color: var(--su-text-subtle);
+}
+
+.textarea:disabled {
+  cursor: not-allowed;
+}
+
+.textarea.resizeNone {
+  resize: none;
+}
+
+.textarea.resizeBoth {
+  resize: both;
+}

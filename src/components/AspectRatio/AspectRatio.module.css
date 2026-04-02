@@ -1,0 +1,36 @@
+.root {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: var(--su-aspect-ratio);
+  overflow: hidden;
+}
+
+.inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 0;
+}
+
+.inner :global(img),
+.inner :global(video) {
+  width: 100%;
+  height: 100%;
+  object-fit: var(--su-aspect-object-fit, cover);
+}
+
+.inner :global(picture) {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.inner :global(picture) :global(img) {
+  width: 100%;
+  height: 100%;
+  object-fit: var(--su-aspect-object-fit, cover);
+}

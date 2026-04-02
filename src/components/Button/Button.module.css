@@ -16,7 +16,6 @@
     border-color var(--su-transition-fast),
     color var(--su-transition-fast),
     box-shadow var(--su-transition-fast),
-    transform 0.12s ease,
     opacity var(--su-transition-fast);
   outline: none;
   position: relative;
@@ -40,16 +39,11 @@
 }
 
 .button:active:not(:disabled) {
-  transform: scale(0.98);
+  opacity: 0.88;
 }
 
 .link:active:not(:disabled) {
-  transform: none;
-  opacity: 0.85;
-}
-
-.solid:active:not(:disabled) {
-  filter: brightness(0.94);
+  opacity: 0.82;
 }
 
 /* 块级按钮 */

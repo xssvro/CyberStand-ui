@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { componentDocs } from '../docs/components';
+import { getComponentDocsGrouped } from '../docs/components';
 import {
   IconAiChip,
   IconBraces,
@@ -158,16 +158,23 @@ export const Home: React.FC = () => {
 
       <section className="components-preview">
         <h2>组件列表</h2>
-        <div className="component-list">
-          {componentDocs.map(doc => (
-            <Link 
-              key={doc.name} 
-              to={`/component/${doc.name}`}
-              className="component-item"
-            >
-              <h3>{doc.title}</h3>
-              <p>{doc.description}</p>
-            </Link>
+        <div className="component-list-grouped">
+          {getComponentDocsGrouped().map((group) => (
+            <div key={group.category} className="component-category-block">
+              <h3 className="component-category-title">{group.category}</h3>
+              <div className="component-list">
+                {group.docs.map((doc) => (
+                  <Link
+                    key={doc.name}
+                    to={`/component/${doc.name}`}
+                    className="component-item"
+                  >
+                    <h4 className="component-item-title">{doc.title}</h4>
+                    <p>{doc.description}</p>
+                  </Link>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       </section>

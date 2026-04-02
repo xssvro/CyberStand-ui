@@ -78,6 +78,11 @@
   box-shadow: var(--su-input-focus-shadow);
 }
 
+/* 校验错误：非聚焦时也保持描边提示（与 FormField error 联动） */
+.inputWrapper.error:not(.disabled):not(.readOnly) {
+  border-color: var(--su-error-500);
+}
+
 .input {
   flex: 1;
   border: none;

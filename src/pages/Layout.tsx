@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useState } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
-import { componentDocs } from '../docs/components';
+import { getComponentDocsGrouped } from '../docs/components';
 import { Toaster } from '../components/Toast';
 import { applyTheme, getStoredTheme, type ThemeMode } from '../core/theme';
 import { IconHome } from '../icons';
@@ -48,14 +48,19 @@ export const Layout: React.FC = () => {
             首页
           </Link>
           <div className="nav-section">组件</div>
-          {componentDocs.map(doc => (
-            <Link
-              key={doc.name}
-              to={`/component/${doc.name}`}
-              className={currentPath === `/component/${doc.name}` ? 'active' : ''}
-            >
-              {doc.title}
-            </Link>
+          {getComponentDocsGrouped().map((group) => (
+            <React.Fragment key={group.category}>
+              <div className="docs-nav-category">{group.category}</div>
+              {group.docs.map((doc) => (
+                <Link
+                  key={doc.name}
+                  to={`/component/${doc.name}`}
+                  className={currentPath === `/component/${doc.name}` ? 'active' : ''}
+                >
+                  {doc.title}
+                </Link>
+              ))}
+            </React.Fragment>
           ))}
         </nav>
       </aside>

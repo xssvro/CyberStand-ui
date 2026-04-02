@@ -2,42 +2,337 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { componentDocs, type Example } from '../docs/components';
 import { Button } from '../components/Button';
+import { FormField, Label } from '../components/FormField';
+import { Checkbox, CheckboxGroup } from '../components/Checkbox';
 import { Input } from '../components/Input';
+import { Radio, RadioGroup } from '../components/Radio';
+import { Select } from '../components/Select';
+import { Textarea } from '../components/Textarea';
+import { Switch } from '../components/Switch';
+import { FormSection } from '../components/FormSection';
 import { Card } from '../components/Card';
 import { toast } from '../components/Toast';
 import { Typography, TypographyLink } from '../components/Typography';
 import { Divider, Separator } from '../components/Divider';
+import { AspectRatio } from '../components/AspectRatio';
+import { Flex, Grid, Space, Stack } from '../components/Layout';
 import { IconDataNode, IconSearch } from '../icons';
 
 // 导入 AI 文档内容
 import ButtonAiMd from '../components/Button/Button.ai.md?raw';
 import InputAiMd from '../components/Input/Input.ai.md?raw';
+import FormFieldAiMd from '../components/FormField/FormField.ai.md?raw';
 import CardAiMd from '../components/Card/Card.ai.md?raw';
 import ToastAiMd from '../components/Toast/Toast.ai.md?raw';
 import TypographyAiMd from '../components/Typography/Typography.ai.md?raw';
 import DividerAiMd from '../components/Divider/Divider.ai.md?raw';
+import LayoutAiMd from '../components/Layout/Layout.ai.md?raw';
+import AspectRatioAiMd from '../components/AspectRatio/AspectRatio.ai.md?raw';
+import TextareaAiMd from '../components/Textarea/Textarea.ai.md?raw';
+import SelectAiMd from '../components/Select/Select.ai.md?raw';
+import CheckboxAiMd from '../components/Checkbox/Checkbox.ai.md?raw';
+import RadioAiMd from '../components/Radio/Radio.ai.md?raw';
+import SwitchAiMd from '../components/Switch/Switch.ai.md?raw';
+import FormSectionAiMd from '../components/FormSection/FormSection.ai.md?raw';
+
+/** 文档预览：固定 SVG，避免外链占位图失效 */
+const ASPECT_RATIO_DEMO_IMG_SRC =
+  'data:image/svg+xml,' +
+  encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400"><rect fill="#0ea5e9" width="800" height="400"/><rect fill="#e11d48" x="120" y="60" width="560" height="280" rx="12"/></svg>'
+  );
 
 /** Toast 为命令式 API，无预览组件，仅占位以通过文档路由校验 */
 const ToastDocPlaceholder: React.FC = () => null;
 
+/** 布局工具为多个导出组件，仅占位以通过文档路由校验 */
+const LayoutDocPlaceholder: React.FC = () => null;
+
+function TextareaDocDemo({ idx }: { idx: number }) {
+  switch (idx) {
+    case 0:
+      return (
+        <Stack gap="md" className="max-w-xl w-full">
+          <Textarea placeholder="纵向可拖拽调整高度…" rows={3} />
+          <Textarea resize="none" placeholder="禁止拖拽" rows={2} />
+        </Stack>
+      );
+    case 1:
+      return (
+        <Stack gap="md" className="max-w-xl w-full">
+          <Textarea size="sm" rows={2} placeholder="sm" />
+          <Textarea size="lg" rows={2} placeholder="lg" />
+          <Textarea color="error" rows={2} placeholder="error 描边" />
+        </Stack>
+      );
+    case 2:
+      return (
+        <FormField label="备注" description="选填" className="max-w-lg w-full">
+          <Textarea rows={3} placeholder="补充说明" />
+        </FormField>
+      );
+    default:
+      return (
+        <Typography variant="body" color="muted">
+          无该示例索引
+        </Typography>
+      );
+  }
+}
+
+function SelectDocDemo({ idx }: { idx: number }) {
+  switch (idx) {
+    case 0:
+      return (
+        <div className="max-w-md w-full">
+          <Select
+            placeholder="请选择"
+            options={[
+              { value: 'a', label: '选项 A' },
+              { value: 'b', label: '选项 B' },
+            ]}
+          />
+        </div>
+      );
+    case 1:
+      return (
+        <div className="max-w-md w-full">
+          <Select placeholder="请选择">
+            <option value="x">手写选项 X</option>
+            <option value="y">手写选项 Y</option>
+          </Select>
+        </div>
+      );
+    case 2:
+      return (
+        <FormField label="地区" error="请选择" className="max-w-lg w-full">
+          <Select placeholder="请选择" options={[{ value: 'sh', label: '上海' }]} />
+        </FormField>
+      );
+    case 3:
+      return (
+        <div className="max-w-md w-full">
+          <Select
+            placeholder="套餐"
+            options={[
+              { value: 'free', label: '免费版', meta: { hint: '适合体验' } },
+              { value: 'pro', label: '专业版', meta: { hint: '全功能' } },
+            ]}
+            renderOption={({ option, selected }) => {
+              const hint = (option.meta as { hint?: string } | undefined)?.hint;
+              return (
+                <div>
+                  <div>
+                    {option.label}
+                    {selected ? ' ✓' : ''}
+                  </div>
+                  <Typography variant="caption" color="muted" noMargin>
+                    {hint}
+                  </Typography>
+                </div>
+              );
+            }}
+          />
+        </div>
+      );
+    default:
+      return (
+        <Typography variant="body" color="muted">
+          无该示例索引
+        </Typography>
+      );
+  }
+}
+
+function CheckboxDocDemo({ idx }: { idx: number }) {
+  const [skills, setSkills] = useState<string[]>(['ts']);
+  const [notify, setNotify] = useState<string[]>([]);
+
+  switch (idx) {
+    case 0:
+      return <Checkbox defaultChecked label="同意条款" />;
+    case 1:
+      return (
+        <CheckboxGroup name="skill-doc" value={skills} onValueChange={setSkills}>
+          <Checkbox value="ts" label="TypeScript" />
+          <Checkbox value="rust" label="Rust" />
+        </CheckboxGroup>
+      );
+    case 2:
+      return (
+        <FormField label="通知方式" error="至少选一项" className="max-w-lg w-full">
+          <CheckboxGroup name="notify-doc" value={notify} onValueChange={setNotify}>
+            <Checkbox value="email" label="邮件" />
+            <Checkbox value="sms" label="短信" />
+          </CheckboxGroup>
+        </FormField>
+      );
+    default:
+      return (
+        <Typography variant="body" color="muted">
+          无该示例索引
+        </Typography>
+      );
+  }
+}
+
+function SwitchDocDemo({ idx }: { idx: number }) {
+  const [on, setOn] = useState(false);
+
+  switch (idx) {
+    case 0:
+      return (
+        <Stack gap="md" className="max-w-md w-full">
+          <Switch defaultChecked onCheckedChange={() => {}} />
+          <Switch label="启用邮件通知" />
+        </Stack>
+      );
+    case 1:
+      return (
+        <Stack direction="row" gap="lg" align="center" className="flex-wrap">
+          <Switch size="sm" defaultChecked />
+          <Switch size="md" defaultChecked />
+        </Stack>
+      );
+    case 2:
+      return (
+        <Stack gap="md" className="max-w-md w-full">
+          <Switch disabled defaultChecked label="禁用（开）" />
+          <Switch readOnly defaultChecked label="只读（开）" />
+        </Stack>
+      );
+    case 3:
+      return (
+        <FormField label="同意条款" error="请开启开关" className="max-w-md w-full">
+          <Switch checked={on} onCheckedChange={(v) => setOn(v)} />
+        </FormField>
+      );
+    default:
+      return (
+        <Typography variant="body" color="muted">
+          无该示例索引
+        </Typography>
+      );
+  }
+}
+
+function FormSectionDocDemo({ idx }: { idx: number }) {
+  switch (idx) {
+    case 0:
+      return (
+        <FormSection title="联系方式" description="至少填写一项" className="max-w-lg w-full">
+          <FormField label="邮箱">
+            <Input type="email" placeholder="you@example.com" />
+          </FormField>
+          <FormField label="手机">
+            <Input type="tel" placeholder="选填" />
+          </FormField>
+        </FormSection>
+      );
+    case 1:
+      return (
+        <FormSection
+          as="div"
+          title="偏好设置"
+          description="可随时在设置中修改"
+          className="max-w-lg w-full"
+        >
+          <FormField label="主题">
+            <Select placeholder="请选择" options={[{ value: 'dark', label: '深色' }]} />
+          </FormField>
+        </FormSection>
+      );
+    case 2:
+      return (
+        <FormSection title="已归档" disabled className="max-w-lg w-full">
+          <FormField label="备注">
+            <Input placeholder="不可编辑" />
+          </FormField>
+        </FormSection>
+      );
+    default:
+      return (
+        <Typography variant="body" color="muted">
+          无该示例索引
+        </Typography>
+      );
+  }
+}
+
+function RadioDocDemo({ idx }: { idx: number }) {
+  const [plan, setPlan] = useState('pro');
+  const [tier, setTier] = useState('b');
+  const [pkg, setPkg] = useState('basic');
+
+  switch (idx) {
+    case 0:
+      return (
+        <RadioGroup name="plan-doc" value={plan} onValueChange={setPlan}>
+          <Radio value="free" label="免费版" />
+          <Radio value="pro" label="专业版" />
+        </RadioGroup>
+      );
+    case 1:
+      return (
+        <RadioGroup name="tier-doc" value={tier} horizontal onValueChange={setTier}>
+          <Radio value="a" label="A" />
+          <Radio value="b" label="B" />
+        </RadioGroup>
+      );
+    case 2:
+      return (
+        <FormField label="套餐" error="请选择一项" className="max-w-lg w-full">
+          <RadioGroup name="pkg-doc" value={pkg} onValueChange={setPkg}>
+            <Radio value="basic" label="基础" />
+            <Radio value="pro" label="专业" />
+          </RadioGroup>
+        </FormField>
+      );
+    default:
+      return (
+        <Typography variant="body" color="muted">
+          无该示例索引
+        </Typography>
+      );
+  }
+}
+
 // 动态导入组件
-const componentMap: Record<string, React.ComponentType<any>> = {
+const componentMap: Record<string, React.ElementType> = {
   Button,
   Input,
+  FormField,
   Card,
   Toast: ToastDocPlaceholder,
   Typography,
   Divider,
+  AspectRatio,
+  Textarea,
+  Select,
+  Checkbox,
+  Radio,
+  Switch,
+  FormSection,
+  Layout: LayoutDocPlaceholder,
 };
 
 // AI 文档映射
 const aiDocMap: Record<string, string> = {
   Button: ButtonAiMd,
   Input: InputAiMd,
+  FormField: FormFieldAiMd,
   Card: CardAiMd,
   Toast: ToastAiMd,
   Typography: TypographyAiMd,
   Divider: DividerAiMd,
+  AspectRatio: AspectRatioAiMd,
+  Textarea: TextareaAiMd,
+  Select: SelectAiMd,
+  Checkbox: CheckboxAiMd,
+  Radio: RadioAiMd,
+  Switch: SwitchAiMd,
+  FormSection: FormSectionAiMd,
+  Layout: LayoutAiMd,
 };
 
 /** 按表格竖线拆分单元格，忽略反引号对内的 |（避免类型列里的联合类型拆坏） */
@@ -428,6 +723,305 @@ export const ComponentPage: React.FC = () => {
     }
   };
 
+  const renderFormFieldExamples = (_example: Example, idx: number) => {
+    switch (idx) {
+      case 0:
+        return (
+          <Stack gap="xl" className="max-w-md w-full">
+            <FormField label="邮箱" description="用于登录与找回密码" required>
+              <Input type="email" placeholder="you@example.com" required />
+            </FormField>
+            <FormField label="昵称" error="2～16 个字符">
+              <Input placeholder="输入昵称" />
+            </FormField>
+          </Stack>
+        );
+      case 1:
+        return (
+          <FormField label="用户名" layout="horizontal" labelWidth={100} required>
+            <Input placeholder="唯一标识" required />
+          </FormField>
+        );
+      case 2:
+        return (
+          <Stack gap="sm" className="max-w-md w-full">
+            <Label htmlFor="demo-field-a">备注</Label>
+            <Input id="demo-field-a" placeholder="选填" />
+          </Stack>
+        );
+      case 3:
+        return (
+          <Stack gap="lg" className="max-w-md w-full">
+            <FormField label="推送通知" description="关闭后不再收到消息">
+              <Switch defaultChecked />
+            </FormField>
+            <FormField label="公开资料" error="请先阅读并同意条款">
+              <Switch />
+            </FormField>
+          </Stack>
+        );
+      default:
+        return (
+          <Typography variant="body" color="muted">
+            无该示例索引
+          </Typography>
+        );
+    }
+  };
+
+  const renderAspectRatioExamples = (_example: Example, idx: number) => {
+    switch (idx) {
+      case 0:
+        return (
+          <Stack gap="xl" className="max-w-xl w-full">
+            <Stack gap="sm">
+              <Typography variant="caption" color="muted">
+                16 : 9
+              </Typography>
+              <AspectRatio
+                ratio={16 / 9}
+                className="w-full rounded-lg overflow-hidden border border-[var(--su-border-default)]"
+              >
+                <div
+                  className="h-full w-full"
+                  style={{
+                    background:
+                      'linear-gradient(135deg, var(--su-info-500), var(--su-primary-600))',
+                  }}
+                  aria-hidden
+                />
+              </AspectRatio>
+            </Stack>
+            <Stack gap="sm">
+              <Typography variant="caption" color="muted">
+                1 : 1
+              </Typography>
+              <AspectRatio
+                ratio={1}
+                className="w-32 rounded-md overflow-hidden border border-[var(--su-border-default)]"
+              >
+                <div
+                  className="h-full w-full"
+                  style={{ background: 'var(--su-bg-muted)' }}
+                  aria-hidden
+                />
+              </AspectRatio>
+            </Stack>
+          </Stack>
+        );
+      case 1:
+        return (
+          <Stack gap="xl" className="max-w-2xl w-full">
+            <Stack gap="sm">
+              <Typography variant="caption" color="muted">
+                cover（裁切铺满）
+              </Typography>
+              <AspectRatio
+                ratio={16 / 9}
+                objectFit="cover"
+                className="w-full max-w-md rounded-md overflow-hidden"
+              >
+                <img src={ASPECT_RATIO_DEMO_IMG_SRC} alt="" />
+              </AspectRatio>
+            </Stack>
+            <Stack gap="sm">
+              <Typography variant="caption" color="muted">
+                contain（完整显示）
+              </Typography>
+              <AspectRatio
+                ratio={16 / 9}
+                objectFit="contain"
+                className="w-full max-w-md rounded-md overflow-hidden bg-[var(--su-bg-muted)]"
+              >
+                <img src={ASPECT_RATIO_DEMO_IMG_SRC} alt="" />
+              </AspectRatio>
+            </Stack>
+          </Stack>
+        );
+      case 2:
+        return (
+          <div
+            className="max-w-2xl w-full overflow-hidden rounded-lg border border-[var(--su-border-default)] bg-[var(--su-bg-elevated)]"
+            style={{ boxShadow: 'var(--su-shadow-sm)' }}
+          >
+            <AspectRatio ratio="4 / 3" className="w-full">
+              <div
+                className="h-full w-full flex items-center justify-center text-sm text-[var(--su-text-muted)]"
+                style={{ background: 'var(--su-bg-subtle)' }}
+              >
+                4 : 3 占位区
+              </div>
+            </AspectRatio>
+            <div className="p-4 border-t border-[var(--su-border-subtle)]">
+              <Typography variant="bodySmall" noMargin>
+                正文与上方比例区分离（比例区通栏无 Card body 内边距）
+              </Typography>
+            </div>
+          </div>
+        );
+      default:
+        return (
+          <Stack gap="md">
+            <Typography variant="body" color="muted">
+              无该示例索引
+            </Typography>
+          </Stack>
+        );
+    }
+  };
+
+  const renderLayoutExamples = (_example: Example, idx: number) => {
+    switch (idx) {
+      case 0:
+        return (
+          <Stack gap="xl" className="max-w-2xl w-full">
+            <Stack gap="sm">
+              <Typography variant="caption" color="muted">
+                主轴两头对齐 + 换行
+              </Typography>
+              <Flex
+                gap="md"
+                justify="between"
+                align="center"
+                wrap
+                className="w-full rounded-lg border border-[var(--su-border-default)] p-3"
+              >
+                <Typography variant="bodySmall" color="muted" noMargin>
+                  左侧说明
+                </Typography>
+                <Button size="sm">操作</Button>
+              </Flex>
+            </Stack>
+            <Stack gap="sm">
+              <Typography variant="caption" color="muted">
+                纵向 gap
+              </Typography>
+              <Flex direction="column" gap="sm" align="start" className="text-sm text-[var(--su-text-muted)]">
+                <span>第一行</span>
+                <span>第二行</span>
+              </Flex>
+            </Stack>
+          </Stack>
+        );
+      case 1:
+        return (
+          <Stack gap="xl" className="max-w-sm w-full">
+            <Stack gap="md" fullWidth>
+              <Typography variant="caption" color="muted">
+                登录
+              </Typography>
+              <Input placeholder="邮箱" />
+              <Input type="password" placeholder="密码" />
+              <Button color="primary" block>
+                登录
+              </Button>
+            </Stack>
+            <Stack gap="sm">
+              <Typography variant="caption" color="muted">
+                次要操作（横向）
+              </Typography>
+              <Stack direction="row" gap="sm" align="center">
+                <Button size="xs" variant="soft">
+                  忘记密码
+                </Button>
+                <Button size="xs" variant="ghost">
+                  注册
+                </Button>
+              </Stack>
+            </Stack>
+          </Stack>
+        );
+      case 2:
+        return (
+          <Stack gap="xl" className="max-w-3xl w-full">
+            <Stack gap="sm">
+              <Typography variant="caption" color="muted">
+                三等分
+              </Typography>
+              <Grid columns={3} gap="md" className="w-full">
+                <Card>一</Card>
+                <Card>二</Card>
+                <Card>三</Card>
+              </Grid>
+            </Stack>
+            <Stack gap="sm">
+              <Typography variant="caption" color="muted">
+                minChildWidth + auto-fit 拉满
+              </Typography>
+              <Grid minChildWidth={140} autoRepeat="fit" gap="sm" className="w-full">
+                <Button size="sm">A</Button>
+                <Button size="sm">B</Button>
+                <Button size="sm">C</Button>
+                <Button size="sm">D</Button>
+              </Grid>
+            </Stack>
+            <Stack gap="sm">
+              <Typography variant="caption" color="muted">
+                固定行高下限
+              </Typography>
+              <Grid columns={2} autoRows="minmax(72px, auto)" gap="sm" className="w-full">
+                <Card>区域 A</Card>
+                <Card>区域 B</Card>
+              </Grid>
+            </Stack>
+          </Stack>
+        );
+      case 3:
+        return (
+          <Stack gap="xl" className="max-w-2xl w-full">
+            <Stack gap="sm">
+              <Typography variant="caption" color="muted">
+                换行工具条
+              </Typography>
+              <Space wrap size="sm" className="w-full">
+                <Button size="xs">新建</Button>
+                <Button size="xs" variant="soft">
+                  导入
+                </Button>
+                <Button size="xs" variant="ghost">
+                  更多
+                </Button>
+              </Space>
+            </Stack>
+            <Stack gap="sm">
+              <Typography variant="caption" color="muted">
+                split + 竖线
+              </Typography>
+              <Space
+                align="stretch"
+                size="sm"
+                split={<Divider orientation="vertical" spacing="none" />}
+              >
+                <Typography variant="caption" color="muted" noMargin>
+                  首页
+                </Typography>
+                <Typography variant="caption" color="muted" noMargin>
+                  文档
+                </Typography>
+              </Space>
+            </Stack>
+            <Stack gap="sm">
+              <Typography variant="caption" color="muted">
+                纵向排列
+              </Typography>
+              <Space direction="vertical" size="sm" align="start">
+                <span className="text-sm text-[var(--su-text-muted)]">上一项</span>
+                <span className="text-sm text-[var(--su-text-muted)]">下一项</span>
+              </Space>
+            </Stack>
+          </Stack>
+        );
+      default:
+        return (
+          <Stack gap="md">
+            <Typography variant="body" color="muted">
+              无该示例索引
+            </Typography>
+          </Stack>
+        );
+    }
+  };
+
   const renderTypographyExamples = (_example: Example, idx: number) => {
     const box = (children: React.ReactNode) => (
       <div className="flex flex-col gap-4 max-w-xl">{children}</div>
@@ -675,6 +1269,13 @@ export const ComponentPage: React.FC = () => {
             <Input type="password" placeholder="密码" />
           </div>
         )}
+        {doc.name === 'FormField' && renderFormFieldExamples(example, idx)}
+        {doc.name === 'Textarea' && <TextareaDocDemo idx={idx} />}
+        {doc.name === 'Select' && <SelectDocDemo idx={idx} />}
+        {doc.name === 'Checkbox' && <CheckboxDocDemo idx={idx} />}
+        {doc.name === 'Radio' && <RadioDocDemo idx={idx} />}
+        {doc.name === 'Switch' && <SwitchDocDemo idx={idx} />}
+        {doc.name === 'FormSection' && <FormSectionDocDemo idx={idx} />}
         {doc.name === 'Card' && (
           <div className="max-w-md">
             <Card 
@@ -688,6 +1289,8 @@ export const ComponentPage: React.FC = () => {
         )}
         {doc.name === 'Typography' && renderTypographyExamples(example, idx)}
         {doc.name === 'Divider' && renderDividerExamples(example, idx)}
+        {doc.name === 'AspectRatio' && renderAspectRatioExamples(example, idx)}
+        {doc.name === 'Layout' && renderLayoutExamples(example, idx)}
         {doc.name === 'Toast' && (
           <div className="flex flex-col gap-4">
             {idx === 0 && (

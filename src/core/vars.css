@@ -18,6 +18,10 @@
   --su-primary-900: #3c0514;
   --su-on-primary: #fffafb;
 
+  /* Checkbox 选中对勾：与主色 / 错误底保证对比（日间主色深、对勾浅） */
+  --su-checkbox-checked-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23ffffff' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 8l3 3 7-7'/%3E%3C/svg%3E");
+  --su-checkbox-error-checked-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23ffffff' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 8l3 3 7-7'/%3E%3C/svg%3E");
+
   /* ========== 次要色：珊瑚（日间略压暗，保证与灰底对比） ========== */
   --su-secondary-50: #fef2f2;
   --su-secondary-100: #fee2e2;
@@ -138,6 +142,18 @@
   --su-transition-normal: 250ms ease;
   --su-transition-slow: 350ms ease;
 
+  /* 布局间距（Flex / Grid / Stack / Space） */
+  --su-space-0: 0;
+  --su-space-1: 4px;
+  --su-space-2: 8px;
+  --su-space-3: 12px;
+  --su-space-4: 16px;
+  --su-space-5: 20px;
+  --su-space-6: 24px;
+  --su-space-8: 32px;
+  --su-space-10: 40px;
+  --su-space-12: 48px;
+
   --su-shadow-sm:
     0 1px 2px rgba(15, 23, 42, 0.06),
     0 0 0 1px rgba(15, 23, 42, 0.04);
@@ -235,6 +251,10 @@
   --su-primary-800: #fffcc2;
   --su-primary-900: #fffde8;
   --su-on-primary: #0a0b0f;
+
+  /* Checkbox：夜间主色为亮黄，对勾改深色（同 --su-on-primary），避免白勾贴黄底不可读 */
+  --su-checkbox-checked-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%230a0b0f' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 8l3 3 7-7'/%3E%3C/svg%3E");
+  --su-checkbox-error-checked-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%230a0b0f' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 8l3 3 7-7'/%3E%3C/svg%3E");
 
   --su-secondary-50: #1a0f0d;
   --su-secondary-100: #2d1814;

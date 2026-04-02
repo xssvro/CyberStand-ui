@@ -1,0 +1,181 @@
+.wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  font-size: var(--su-font-size);
+  border-radius: var(--su-radius);
+  width: 100%;
+  min-height: var(--su-height);
+  box-sizing: border-box;
+  position: relative;
+}
+
+.wrapper.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  min-height: var(--su-height);
+  padding: var(--su-padding);
+  margin: 0;
+  box-sizing: border-box;
+  border: 1px solid var(--su-border-default);
+  border-radius: var(--su-radius);
+  background: var(--su-bg-default);
+  color: var(--su-text-default);
+  font-size: inherit;
+  font-family: inherit;
+  line-height: inherit;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+  transition:
+    border-color var(--su-transition-fast),
+    box-shadow var(--su-transition-fast);
+}
+
+.trigger:disabled {
+  cursor: not-allowed;
+  background: var(--su-bg-muted);
+}
+
+.trigger:focus-visible {
+  border-color: var(--su-info-500);
+  box-shadow: var(--su-input-focus-shadow);
+}
+
+.wrapper.default .trigger:focus-visible {
+  border-color: var(--su-info-500);
+  box-shadow: var(--su-input-focus-shadow);
+}
+
+.wrapper.primary .trigger:focus-visible {
+  border-color: var(--su-primary-500);
+  box-shadow: var(--su-ring-primary);
+}
+
+.wrapper.secondary .trigger:focus-visible {
+  border-color: var(--su-secondary-500);
+  box-shadow: 0 0 0 3px rgba(230, 96, 84, 0.22);
+}
+
+.wrapper.success .trigger:focus-visible {
+  border-color: var(--su-success-500);
+  box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.2);
+}
+
+.wrapper.warning .trigger:focus-visible {
+  border-color: var(--su-warning-500);
+  box-shadow: 0 0 0 3px rgba(255, 159, 28, 0.22);
+}
+
+.wrapper.error .trigger:focus-visible {
+  border-color: var(--su-error-500);
+  box-shadow: 0 0 0 3px rgba(255, 0, 85, 0.22);
+}
+
+.wrapper.info .trigger:focus-visible {
+  border-color: var(--su-info-500);
+  box-shadow: var(--su-input-focus-shadow);
+}
+
+.wrapper.error:not(.disabled) .trigger {
+  border-color: var(--su-error-500);
+}
+
+.triggerInner {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.placeholder {
+  color: var(--su-text-muted);
+}
+
+.valueText {
+  color: var(--su-text-default);
+}
+
+.chevron {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  background-image: var(--su-select-chevron);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 16px 16px;
+  opacity: 0.72;
+  transition: transform var(--su-transition-fast);
+}
+
+.wrapper.open .chevron {
+  transform: rotate(180deg);
+}
+
+/* 下拉：与触发器同一圆角 token（由 TS 注入 --su-radius），整体更收敛 */
+.listbox {
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+  box-sizing: border-box;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--su-bg-elevated);
+  border: 1px solid var(--su-border-subtle);
+  border-radius: var(--su-radius, 6px);
+  box-shadow:
+    0 8px 24px rgba(15, 23, 42, 0.07),
+    0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.option {
+  padding: 6px 8px;
+  border-radius: max(2px, calc(var(--su-radius, 6px) - 2px));
+  cursor: pointer;
+  font-size: var(--su-font-size);
+  line-height: 1.45;
+  color: var(--su-text-default);
+  outline: none;
+  transition:
+    background var(--su-transition-fast),
+    color var(--su-transition-fast);
+}
+
+.option:hover:not([data-disabled]) {
+  background: var(--su-bg-subtle);
+}
+
+.optionActive:not(.optionDisabled) {
+  background: var(--su-gray-100);
+  color: var(--su-text-default);
+}
+
+.optionSelected {
+  font-weight: 600;
+}
+
+.optionSelected:not(.optionActive):not(.optionDisabled) {
+  background: transparent;
+}
+
+.optionDisabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.empty {
+  padding: var(--su-space-4) var(--su-space-3);
+  font-size: var(--su-font-size);
+  color: var(--su-text-muted);
+  text-align: center;
+}

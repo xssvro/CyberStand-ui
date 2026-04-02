@@ -5,31 +5,42 @@ import styles from './Input.module.css';
 
 /** 前缀与输入文字之间间距（略大于贴边，避免图标与占位挤在一起） */
 const INPUT_AFFIX_GAP: Record<Size, string> = {
-  xs: '3px',
-  sm: '4px',
-  md: '6px',
-  lg: '6px',
-  xl: '8px',
+  xs: '2px',
+  sm: '3px',
+  md: '5px',
+  lg: '5px',
+  xl: '6px',
 };
 
 /** 与 getSizeVars 一致：纵向 / 横向 padding 变量 */
 const INPUT_PAD_Y: Record<Size, string> = {
-  xs: '4px',
-  sm: '6px',
-  md: '8px',
-  lg: '12px',
-  xl: '16px',
+  xs: '3px',
+  sm: '5px',
+  md: '7px',
+  lg: '10px',
+  xl: '12px',
 };
 
 const INPUT_PAD_X: Record<Size, string> = {
-  xs: '8px',
-  sm: '12px',
-  md: '16px',
-  lg: '20px',
-  xl: '24px',
+  xs: '7px',
+  sm: '10px',
+  md: '12px',
+  lg: '16px',
+  xl: '20px',
 };
 
-export interface InputProps extends Omit<StandProps, 'variant'> {
+type InputHtmlPassthrough = Pick<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  | 'id'
+  | 'aria-invalid'
+  | 'aria-describedby'
+  | 'aria-labelledby'
+  | 'aria-label'
+  | 'aria-required'
+  | 'role'
+>;
+
+export interface InputProps extends Omit<StandProps, 'variant'>, InputHtmlPassthrough {
   /** 输入框值 */
   value?: string;
   /** 默认值 */
@@ -153,3 +164,4 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 );
 
 Input.displayName = 'Input';
+

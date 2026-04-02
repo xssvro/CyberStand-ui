@@ -1,0 +1,48 @@
+.root {
+  margin: 0;
+  min-width: 0;
+  border: 1px solid var(--su-border-subtle);
+  border-radius: 6px;
+  background: var(--su-bg-subtle);
+  padding: 12px 14px;
+}
+
+.root.asFieldset:disabled {
+  opacity: 0.55;
+}
+
+.legend {
+  padding: 0;
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--su-text-default);
+}
+
+.title {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--su-text-default);
+}
+
+.description {
+  margin: -4px 0 10px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--su-text-muted);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.asDiv.disabled {
+  opacity: 0.55;
+  pointer-events: none;
+}

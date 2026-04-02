@@ -1,0 +1,71 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+}
+
+.root.disabled {
+  opacity: 0.65;
+}
+
+.horizontal {
+  display: grid;
+  grid-template-columns: var(--su-form-label-width, 7.5rem) minmax(0, 1fr);
+  gap: 8px 16px;
+  align-items: start;
+}
+
+.horizontal .labelWrap {
+  padding-top: 8px;
+}
+
+.horizontal .controlCol {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--su-text-default);
+  cursor: default;
+}
+
+.label[for] {
+  cursor: pointer;
+}
+
+.label.disabled {
+  color: var(--su-text-muted);
+  cursor: not-allowed;
+}
+
+.requiredMark {
+  color: var(--su-error-500);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.description {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--su-text-muted);
+}
+
+.error {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--su-error-500);
+}
+
+.control {
+  min-width: 0;
+}
