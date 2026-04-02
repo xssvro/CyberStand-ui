@@ -40,8 +40,8 @@
 
 | # | 项 | 状态 | 备注 |
 |---|----|------|------|
-| 10 | **`Form`（轻量上下文）** — `layout` / `size`、提交区约定，不绑 RHF | **未开始** | — |
-| 11 | **文档与示例** — 各控件与 `FormField` 组合、`*.ai.md`、文档站注册 | **部分完成** | `Switch`、`FormSection` 已独立注册；仍缺轻量 **`Form`** 与「整表组合」专项示例 |
+| 10 | **`Form`（轻量上下文）** — `layout` / `size`、提交区约定，不绑 RHF | **已完成** | `src/components/Form/`；`FormField` 继承上下文 |
+| 11 | **文档与示例** — 各控件与 `FormField` 组合、`*.ai.md`、文档站注册 | **已完成** | **`Form.ai.md`**、文档站 `/component/Form`；整表 + 横向 + `size` + 禁用示例 |
 
 ---
 
@@ -60,15 +60,14 @@
 
 `FormField`（+ Label）→ `Input` → `Textarea` → `Select` → `Checkbox`/`Radio` → **`Switch`** → **`Form`** 与分组组件。
 
-**当前断点**：第三阶段已完成；第四阶段 **`Form` 上下文** 与整表示例、第五阶段集成文档仍待选做。
+**当前断点**：第四阶段已完成；第五阶段集成文档（RHF / Zod 等）仍待选做。
 
 ---
 
 ## 下一步建议（可改计划时同步本文）
 
-1. 轻量 **`Form`** 上下文（`layout` / `size`）与文档站 **整表示例**。  
-2. Select **可搜索**、日期、上传等按需排入第五阶段。  
-3. **RHF / Zod** 等仅文档 + 示例片段。
+1. Select **可搜索**、日期、上传等按需排入第五阶段。  
+2. **RHF / Zod** 等仅文档 + 示例片段。
 
 ---
 
@@ -76,7 +75,7 @@
 
 | 用途 | 路径 |
 |------|------|
-| 表单容器与标签 | `src/components/FormField/` |
+| 表单容器与标签 | `src/components/FormField/`、`src/components/Form/` |
 | 开关、分组 | `src/components/Switch/`、`src/components/FormSection/` |
 | 文档站注册 | `src/docs/components.ts`、`src/pages/ComponentPage.tsx` |
 | 尺寸与圆角 token | `src/core/stand.ts` |

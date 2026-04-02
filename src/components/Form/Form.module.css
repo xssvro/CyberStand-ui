@@ -1,0 +1,6 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--su-form-gap, var(--su-space-4, 16px));
+  min-width: 0;
+}

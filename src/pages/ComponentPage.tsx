@@ -9,6 +9,7 @@ import { Radio, RadioGroup } from '../components/Radio';
 import { Select } from '../components/Select';
 import { Textarea } from '../components/Textarea';
 import { Switch } from '../components/Switch';
+import { Form } from '../components/Form';
 import { FormSection } from '../components/FormSection';
 import { Card } from '../components/Card';
 import { toast } from '../components/Toast';
@@ -34,6 +35,7 @@ import CheckboxAiMd from '../components/Checkbox/Checkbox.ai.md?raw';
 import RadioAiMd from '../components/Radio/Radio.ai.md?raw';
 import SwitchAiMd from '../components/Switch/Switch.ai.md?raw';
 import FormSectionAiMd from '../components/FormSection/FormSection.ai.md?raw';
+import FormAiMd from '../components/Form/Form.ai.md?raw';
 
 /** 文档预览：固定 SVG，避免外链占位图失效 */
 const ASPECT_RATIO_DEMO_IMG_SRC =
@@ -216,6 +218,69 @@ function SwitchDocDemo({ idx }: { idx: number }) {
   }
 }
 
+function FormDocDemo({ idx }: { idx: number }) {
+  switch (idx) {
+    case 0:
+      return (
+        <Form
+          className="max-w-lg w-full"
+          onSubmit={(e) => {
+            e.preventDefault();
+            toast('已拦截提交（演示）');
+          }}
+        >
+          <FormField label="名称" required>
+            <Input name="name" placeholder="项目名" required />
+          </FormField>
+          <FormField label="描述">
+            <Textarea name="desc" rows={3} placeholder="选填" />
+          </FormField>
+          <Stack direction="row" gap="sm" justify="end">
+            <Button type="submit" color="primary">
+              保存
+            </Button>
+          </Stack>
+        </Form>
+      );
+    case 1:
+      return (
+        <Form layout="horizontal" className="max-w-xl w-full">
+          <FormField label="用户名" labelWidth={96} required>
+            <Input name="user" placeholder="唯一标识" />
+          </FormField>
+          <FormField label="邮箱" labelWidth={96}>
+            <Input type="email" name="email" placeholder="you@example.com" />
+          </FormField>
+        </Form>
+      );
+    case 2:
+      return (
+        <Form size="sm" className="max-w-md w-full">
+          <FormField label="标题">
+            <Input placeholder="sm 输入框" />
+          </FormField>
+          <FormField label="类型">
+            <Select placeholder="请选择" options={[{ value: 'a', label: 'A' }]} />
+          </FormField>
+        </Form>
+      );
+    case 3:
+      return (
+        <Form disabled className="max-w-md w-full">
+          <FormField label="只读项">
+            <Input defaultValue="不可编辑" />
+          </FormField>
+        </Form>
+      );
+    default:
+      return (
+        <Typography variant="body" color="muted">
+          无该示例索引
+        </Typography>
+      );
+  }
+}
+
 function FormSectionDocDemo({ idx }: { idx: number }) {
   switch (idx) {
     case 0:
@@ -312,6 +377,7 @@ const componentMap: Record<string, React.ElementType> = {
   Checkbox,
   Radio,
   Switch,
+  Form,
   FormSection,
   Layout: LayoutDocPlaceholder,
 };
@@ -332,6 +398,7 @@ const aiDocMap: Record<string, string> = {
   Radio: RadioAiMd,
   Switch: SwitchAiMd,
   FormSection: FormSectionAiMd,
+  Form: FormAiMd,
   Layout: LayoutAiMd,
 };
 
@@ -1275,6 +1342,7 @@ export const ComponentPage: React.FC = () => {
         {doc.name === 'Checkbox' && <CheckboxDocDemo idx={idx} />}
         {doc.name === 'Radio' && <RadioDocDemo idx={idx} />}
         {doc.name === 'Switch' && <SwitchDocDemo idx={idx} />}
+        {doc.name === 'Form' && <FormDocDemo idx={idx} />}
         {doc.name === 'FormSection' && <FormSectionDocDemo idx={idx} />}
         {doc.name === 'Card' && (
           <div className="max-w-md">

@@ -184,6 +184,68 @@ export const componentDocs: ComponentDoc[] = [
     ],
   },
   {
+    name: 'Form',
+    title: 'Form 整表容器',
+    category: '表单',
+    description:
+      '原生 form + 轻量 Context：默认 layout / size / disabled 下发给子级 FormField；字段级仍可覆盖。不绑定 react-hook-form。',
+    aiDocPath: '/src/components/Form/Form.ai.md',
+    examples: [
+      {
+        title: '整表 + 提交',
+        code: `<Form
+  className="max-w-lg w-full"
+  onSubmit={(e) => {
+    e.preventDefault();
+    // fetch / 状态管理
+  }}
+>
+  <FormField label="名称" required>
+    <Input name="name" placeholder="项目名" required />
+  </FormField>
+  <FormField label="描述">
+    <Textarea name="desc" rows={3} placeholder="选填" />
+  </FormField>
+  <Stack direction="row" gap="sm" justify="end">
+    <Button type="submit" color="primary">
+      保存
+    </Button>
+  </Stack>
+</Form>`,
+      },
+      {
+        title: '上下文：横向布局',
+        code: `<Form layout="horizontal" className="max-w-xl w-full">
+  <FormField label="用户名" labelWidth={96} required>
+    <Input name="user" placeholder="唯一标识" />
+  </FormField>
+  <FormField label="邮箱" labelWidth={96}>
+    <Input type="email" name="email" placeholder="you@example.com" />
+  </FormField>
+</Form>`,
+      },
+      {
+        title: '上下文：统一小尺寸',
+        code: `<Form size="sm" className="max-w-md w-full">
+  <FormField label="标题">
+    <Input placeholder="sm 输入框" />
+  </FormField>
+  <FormField label="类型">
+    <Select placeholder="请选择" options={[{ value: 'a', label: 'A' }]} />
+  </FormField>
+</Form>`,
+      },
+      {
+        title: '整表禁用',
+        code: `<Form disabled className="max-w-md w-full">
+  <FormField label="只读项">
+    <Input defaultValue="不可编辑" />
+  </FormField>
+</Form>`,
+      },
+    ],
+  },
+  {
     name: 'Textarea',
     title: 'Textarea 多行输入',
     category: '表单',

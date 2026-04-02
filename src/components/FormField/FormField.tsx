@@ -1,4 +1,5 @@
 import React from 'react';
+import { useFormContext } from '../Form/FormContext';
 import { CheckboxGroup } from '../Checkbox/CheckboxGroup';
 import { Input } from '../Input/Input';
 import { RadioGroup } from '../Radio/RadioGroup';
@@ -71,6 +72,17 @@ function isRadioGroup(el: React.ReactElement): boolean {
   return typeof t === 'function' && (t as { displayName?: string }).displayName === 'RadioGroup';
 }
 
+/** 支持 `size` 且可由 Form 上下文注入的单控件 */
+function supportsStandSize(el: React.ReactElement): boolean {
+  const t = el.type;
+  if (t === Input || t === Textarea || t === Select || t === Switch) return true;
+  if (typeof t === 'function') {
+    const n = (t as { displayName?: string }).displayName;
+    return n === 'Input' || n === 'Textarea' || n === 'Select' || n === 'Switch';
+  }
+  return false;
+}
+
 export const FormField = React.forwardRef<HTMLDivElement, FormFieldProps>(
   function FormField(
     {
@@ -79,15 +91,19 @@ export const FormField = React.forwardRef<HTMLDivElement, FormFieldProps>(
       description,
       error,
       required = false,
-      layout = 'vertical',
+      layout: layoutProp,
       labelWidth,
-      disabled = false,
+      disabled: disabledProp = false,
       children,
       className = '',
       style,
     },
     ref
   ) {
+    const formCtx = useFormContext();
+    const layout = layoutProp ?? formCtx?.layout ?? 'vertical';
+    const disabled = disabledProp || (formCtx?.disabled ?? false);
+
     const uid = React.useId();
     const baseId = idProp ?? `su-field-${sanitizeDomId(uid)}`;
     const groupLabelId = `${baseId}-label`;
@@ -106,6 +122,7 @@ export const FormField = React.forwardRef<HTMLDivElement, FormFieldProps>(
     const child = React.Children.only(children) as React.ReactElement<{
       id?: string;
       color?: string;
+      size?: string;
       disabled?: boolean;
       invalid?: boolean;
       'aria-invalid'?: boolean;
@@ -136,6 +153,10 @@ export const FormField = React.forwardRef<HTMLDivElement, FormFieldProps>(
 
     if (hasError && choiceGroup) {
       controlProps.invalid = true;
+    }
+
+    if (formCtx && child.props.size === undefined && supportsStandSize(child)) {
+      controlProps.size = formCtx.size;
     }
 
     const controlMerged = React.cloneElement(child, controlProps);

@@ -36,9 +36,9 @@ import { FormField, Label } from 'stand-ui/components';
 | `description` | `ReactNode` | — | 辅助说明，`id` 为 `{id}-description` |
 | `error` | `ReactNode` | — | 错误文案；有值时 `aria-invalid`；对 Input/Textarea/Select/Switch 注入 `color="error"`，对 CheckboxGroup/RadioGroup 注入 `invalid` |
 | `required` | `boolean` | `false` | 标签旁红色 `*`（装饰；请在控件上设真实 `required`） |
-| `layout` | `vertical` \| `horizontal` | `vertical` | 横向时标签在左、控件与说明在右；**无 `label` 时自动退回 vertical** |
+| `layout` | `vertical` \| `horizontal` | 见下 | 默认 **`vertical`**；若在 **`Form`** 内且未传本属性，则继承 **`Form` 的 `layout`** |
 | `labelWidth` | `string` \| `number` | — | 仅 `horizontal`；数字视为 px，写入 `--su-form-label-width`（默认约 `7.5rem`） |
-| `disabled` | `boolean` | `false` | 合并子节点 `disabled`，并弱化整项样式 |
+| `disabled` | `boolean` | 见下 | 默认 **`false`**；**`Form disabled`** 时为 **`true`**；与子节点 `disabled` 合并，并弱化整项样式 |
 | `children` | `ReactNode` | **必填** | **仅一个** React 元素：`Input` / `Textarea` / `Select` / `Switch` / `CheckboxGroup` / `RadioGroup` 等 |
 | `className` / `style` | — | — | 根容器 |
 
@@ -68,6 +68,25 @@ import { FormField, Label } from 'stand-ui/components';
   邮箱
 </Label>
 <Input id="email" />
+```
+
+---
+
+## 与 `Form` 上下文
+
+包在 **`Form`** 内时：
+
+- **`layout` / `disabled`**：字段未传则使用 **`Form`** 上的值；字段显式传入优先。
+- **`size`**：**`Input` / `Textarea` / `Select` / `Switch`** 若未设 **`size`**，会注入 **`Form` 的 `size`**；子控件已设 **`size`** 时不覆盖。
+
+```tsx
+import { Form } from 'stand-ui/components/Form';
+
+<Form layout="horizontal" size="sm" disabled={submitting}>
+  <FormField label="名称" labelWidth={88}>
+    <Input name="name" />
+  </FormField>
+</Form>
 ```
 
 ---
