@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Radius, Size, StandProps } from '../../core/stand';
 import { getSizeVars, getRadiusVar } from '../../core/stand';
+import { Spinner } from '../Spinner';
 import styles from './Button.module.css';
 
 /** 默认 `radius="md"` 时按高度阶梯收紧圆角，避免 xs/sm 上显得过圆 */
@@ -79,6 +80,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         type={type}
         className={classes}
         disabled={disabled || loading}
+        aria-busy={loading || undefined}
         onClick={onClick}
         style={{
           ...sizeVars,
@@ -87,7 +89,11 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         } as React.CSSProperties}
         {...props}
       >
-        {loading && <span className={styles.spinner} />}
+        {loading && (
+          <span className={styles.spinnerWrap} aria-hidden>
+            <Spinner size="inherit" color="current" aria-hidden />
+          </span>
+        )}
         {!loading && leftIcon && <span className={styles.leftIcon}>{leftIcon}</span>}
         <span className={styles.content}>{children}</span>
         {!loading && rightIcon && <span className={styles.rightIcon}>{rightIcon}</span>}

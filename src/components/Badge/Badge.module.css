@@ -1,0 +1,92 @@
+.wrap {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+  align-items: center;
+}
+
+.standalone {
+  display: inline-flex;
+  vertical-align: middle;
+  align-items: center;
+  justify-content: center;
+}
+
+.bubble {
+  box-sizing: border-box;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  border-radius: 9999px;
+  color: var(--su-on-primary);
+  border: 1px solid var(--su-border-subtle);
+}
+
+.wrap .bubble {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(40%, -40%);
+  z-index: 1;
+}
+
+.dotBubble {
+  min-width: 8px;
+  width: 8px;
+  height: 8px;
+  padding: 0;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.default {
+  background: var(--su-gray-600);
+  color: var(--su-text-inverse);
+  border-color: transparent;
+}
+
+.primary {
+  background: var(--su-primary-600);
+  border-color: transparent;
+}
+
+.secondary {
+  background: var(--su-secondary-600);
+  border-color: transparent;
+}
+
+.success {
+  background: var(--su-success-600);
+  border-color: transparent;
+}
+
+.warning {
+  background: var(--su-warning-600);
+  border-color: transparent;
+}
+
+.error {
+  background: var(--su-error-600);
+  border-color: transparent;
+}
+
+.info {
+  background: var(--su-info-600);
+  border-color: transparent;
+}

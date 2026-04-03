@@ -180,6 +180,12 @@
   --su-z-modal: 1050;
   --su-z-popover: 1060;
   --su-z-tooltip: 1070;
+  /** 全页/区块加载遮罩；低于 Toast，避免挡住全局通知 */
+  --su-z-loading: 9900;
+  /** 与 Toast 组件一致，集中管理避免与 Loading 层叠冲突 */
+  --su-z-toast: 9999;
+  /** Loading 遮罩背景（区块 / 全页）；与组件共用 */
+  --su-loading-mask-bg: rgba(15, 23, 42, 0.48);
 
   /**
    * 按钮专用（浅色 · 阿基拉主色实心 / soft / 线色）
@@ -329,6 +335,8 @@
   /** 深色下表单轮廓略强于 default，避免与表面糊成一片 */
   --su-border-field: rgba(215, 230, 255, 0.14);
   --su-border-strong: rgba(220, 235, 255, 0.16);
+
+  --su-loading-mask-bg: rgba(2, 4, 12, 0.72);
 
   --su-focus-ring-color: rgba(33, 170, 221, 0.45);
   --su-focus-ring-glow: 0 0 14px rgba(33, 170, 221, 0.32);

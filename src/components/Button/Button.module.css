@@ -333,19 +333,10 @@
   pointer-events: none;
 }
 
-.spinner {
-  width: 1em;
-  height: 1em;
-  border: 2px solid currentColor;
-  border-right-color: transparent;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+.spinnerWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .content {

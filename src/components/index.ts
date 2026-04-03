@@ -4,6 +4,18 @@
 export { Button } from './Button';
 export type { ButtonProps } from './Button';
 
+export { Badge } from './Badge';
+export type { BadgeProps } from './Badge';
+
+export { Tag } from './Tag';
+export type { TagProps, TagVariant } from './Tag';
+
+export { Spinner } from './Spinner';
+export type { SpinnerProps, SpinnerSize } from './Spinner';
+
+export { Loading } from './Loading';
+export type { LoadingProps } from './Loading';
+
 export { Input } from './Input';
 export type { InputProps } from './Input';
 

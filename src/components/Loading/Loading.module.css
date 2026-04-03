@@ -1,0 +1,101 @@
+.root {
+  position: relative;
+}
+
+/* 无 children 时保证遮罩有占位高度（非全屏） */
+.solo:not(.fullscreenRoot) {
+  min-height: 120px;
+}
+
+.fullscreenRoot {
+  position: fixed;
+  inset: 0;
+  z-index: var(--su-z-loading);
+  pointer-events: auto;
+}
+
+.fullscreenRoot .fullscreen {
+  position: absolute;
+}
+
+.withContent {
+  min-height: 0;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  box-sizing: border-box;
+  background: var(--su-loading-mask-bg, rgba(15, 23, 42, 0.48));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  pointer-events: auto;
+  opacity: 0;
+  animation: su-loading-overlay-in 220ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: var(--su-z-loading);
+}
+
+/* 轻量内容区：无卡片边框/重阴影，与 Toast 的弥散层次一致 */
+.inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  max-width: min(32ch, 100%);
+  opacity: 0;
+  transform: translateY(6px);
+  animation: su-loading-inner-in 0.32s cubic-bezier(0.22, 1, 0.36, 1) 0.05s forwards;
+}
+
+.spin {
+  flex-shrink: 0;
+}
+
+.tip {
+  font-size: var(--su-type-caption-size);
+  line-height: var(--su-type-caption-line);
+  /* 遮罩均为压暗底，固定浅字避免 dark 主题里 --su-text-inverse 变深导致不可读 */
+  color: rgba(248, 250, 252, 0.9);
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+  max-width: 28ch;
+}
+
+@keyframes su-loading-overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes su-loading-inner-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .inner {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -638,6 +638,174 @@ toast.info('提示');`,
     ],
   },
   {
+    name: 'Badge',
+    title: 'Badge 角标',
+    category: '反馈',
+    description: '数字角标或圆点，可锚定在按钮/图标上，也可无锚点独立展示',
+    aiDocPath: '/src/components/Badge/Badge.ai.md',
+    examples: [
+      {
+        title: '锚定在按钮上',
+        code: `<Badge count={5}>
+  <Button size="sm" variant="ghost" aria-label="通知">
+    铃
+  </Button>
+</Badge>
+<Badge count={0} showZero>
+  <Button size="sm" variant="ghost" aria-label="草稿">
+    稿
+  </Button>
+</Badge>`,
+      },
+      {
+        title: '圆点与无锚点',
+        code: `<Badge dot color="error">
+  <span>任务</span>
+</Badge>
+<Badge count={120} max={99} aria-label="未读 99+" />`,
+      },
+      {
+        title: '语义色',
+        code: `<Stack direction="row" gap="sm" className="flex-wrap">
+  <Badge count={2} color="primary">
+    <Button size="sm" variant="ghost">主色</Button>
+  </Badge>
+  <Badge count={3} color="success">
+    <Button size="sm" variant="ghost">成功</Button>
+  </Badge>
+  <Badge dot color="warning">
+    <Button size="sm" variant="ghost">警告点</Button>
+  </Badge>
+</Stack>`,
+      },
+    ],
+  },
+  {
+    name: 'Tag',
+    title: 'Tag 标签',
+    category: '反馈',
+    description: '块状标签：solid / soft / outlined，可选可关闭；与 Badge 角标区分',
+    aiDocPath: '/src/components/Tag/Tag.ai.md',
+    examples: [
+      {
+        title: '变体',
+        code: `<Space wrap size="sm">
+  <Tag>soft 默认</Tag>
+  <Tag variant="solid" color="primary">
+    solid
+  </Tag>
+  <Tag variant="outlined" color="info">
+    outlined
+  </Tag>
+</Space>`,
+      },
+      {
+        title: '可关闭',
+        code: `<Tag
+  closable
+  onClose={() => {
+    /* 从列表移除该项 */
+  }}
+>
+  筛选：已发布
+</Tag>`,
+      },
+      {
+        title: '筛选条组合',
+        code: `<Space wrap size="sm" align="center">
+  <Typography variant="caption" color="muted" noMargin>
+    已选
+  </Typography>
+  <Tag closable color="primary">
+    类型 A
+  </Tag>
+  <Tag closable>标签 B</Tag>
+</Space>`,
+      },
+    ],
+  },
+  {
+    name: 'Spinner',
+    title: 'Spinner 加载指示',
+    category: '反馈',
+    description: '旋转指示器；`Button` `loading` 内使用 `size="inherit"` 与文字对齐',
+    aiDocPath: '/src/components/Spinner/Spinner.ai.md',
+    examples: [
+      {
+        title: '尺寸',
+        code: `<Space wrap size="md" align="center">
+  <Spinner size="xs" />
+  <Spinner size="sm" />
+  <Spinner size="md" />
+  <Spinner size="lg" />
+</Space>`,
+      },
+      {
+        title: '语义色',
+        code: `<Space wrap size="md" align="center">
+  <Spinner color="primary" />
+  <Spinner color="success" />
+  <Spinner color="warning" />
+  <Spinner color="error" />
+</Space>`,
+      },
+      {
+        title: 'inherit 与字号',
+        code: `<Typography variant="h4" className="flex items-center gap-2">
+  <Spinner size="inherit" color="current" aria-hidden />
+  加载标题旁
+</Typography>`,
+      },
+    ],
+  },
+  {
+    name: 'Loading',
+    title: 'Loading 加载遮罩',
+    category: '反馈',
+    description: '包裹子树或全屏：`fullscreen` 时 fixed；z-index 低于 Toast',
+    aiDocPath: '/src/components/Loading/Loading.ai.md',
+    examples: [
+      {
+        title: '包裹内容',
+        code: `<Loading spinning tip="正在同步…">
+  <Card title="列表示意" className="min-h-[100px] w-full max-w-md">
+    <Typography variant="bodySmall" color="muted" noMargin>
+      遮罩盖在卡片上方
+    </Typography>
+  </Card>
+</Loading>`,
+      },
+      {
+        title: '独立占位（无 children）',
+        code: `<div className="max-w-md w-full">
+  <Loading spinning />
+</div>`,
+      },
+      {
+        title: '关闭旋转（仅内容）',
+        code: `<Loading spinning={false}>
+  <Card className="max-w-md">spinning=false 时不显示遮罩</Card>
+</Loading>`,
+      },
+      {
+        title: '全屏演示',
+        code: `const [open, setOpen] = useState(false);
+useEffect(() => {
+  if (!open) return;
+  const t = window.setTimeout(() => setOpen(false), 2200);
+  return () => window.clearTimeout(t);
+}, [open]);
+
+<>
+  <Button type="button" onClick={() => setOpen(true)}>
+    演示全屏加载约 2 秒
+  </Button>
+  {open ? <Loading fullscreen tip="请稍候…" /> : null}
+</>`,
+      },
+    ],
+  },
+  {
     name: 'Divider',
     title: 'Divider / Separator 分割线',
     category: '布局',

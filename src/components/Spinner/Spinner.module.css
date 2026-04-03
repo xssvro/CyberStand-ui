@@ -1,0 +1,81 @@
+.root {
+  display: inline-block;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  border-style: solid;
+  border-radius: 50%;
+  border-right-color: transparent;
+  animation: su-spin 0.9s linear infinite;
+  vertical-align: middle;
+}
+
+@keyframes su-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* sizes */
+.xs {
+  width: 12px;
+  height: 12px;
+  border-width: 2px;
+}
+
+.sm {
+  width: 14px;
+  height: 14px;
+  border-width: 2px;
+}
+
+.md {
+  width: 18px;
+  height: 18px;
+  border-width: 2px;
+}
+
+.lg {
+  width: 24px;
+  height: 24px;
+  border-width: 2.5px;
+}
+
+/* 与 Button 等行内文字同字号，随 1em 缩放 */
+.inherit {
+  width: 1em;
+  height: 1em;
+  border-width: 2px;
+}
+
+/* colors */
+.default {
+  border-color: var(--su-text-muted);
+}
+
+.primary {
+  border-color: var(--su-primary-600);
+}
+
+.secondary {
+  border-color: var(--su-secondary-600);
+}
+
+.success {
+  border-color: var(--su-success-600);
+}
+
+.warning {
+  border-color: var(--su-warning-600);
+}
+
+.error {
+  border-color: var(--su-error-600);
+}
+
+.info {
+  border-color: var(--su-info-600);
+}
+
+.current {
+  border-color: currentColor;
+}

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { componentDocs, type Example } from '../docs/components';
+import { Badge } from '../components/Badge';
 import { Button } from '../components/Button';
 import { FormField, Label } from '../components/FormField';
 import { Checkbox, CheckboxGroup } from '../components/Checkbox';
@@ -8,10 +9,13 @@ import { Input } from '../components/Input';
 import { Radio, RadioGroup } from '../components/Radio';
 import { Select } from '../components/Select';
 import { Textarea } from '../components/Textarea';
+import { Spinner } from '../components/Spinner';
 import { Switch } from '../components/Switch';
+import { Tag } from '../components/Tag';
 import { Form } from '../components/Form';
 import { FormSection } from '../components/FormSection';
 import { Card } from '../components/Card';
+import { Loading } from '../components/Loading';
 import { toast } from '../components/Toast';
 import { Typography, TypographyLink } from '../components/Typography';
 import { Divider, Separator } from '../components/Divider';
@@ -20,6 +24,7 @@ import { Flex, Grid, Space, Stack } from '../components/Layout';
 import { IconDataNode, IconSearch } from '../icons';
 
 // 导入 AI 文档内容
+import BadgeAiMd from '../components/Badge/Badge.ai.md?raw';
 import ButtonAiMd from '../components/Button/Button.ai.md?raw';
 import InputAiMd from '../components/Input/Input.ai.md?raw';
 import FormFieldAiMd from '../components/FormField/FormField.ai.md?raw';
@@ -31,11 +36,14 @@ import LayoutAiMd from '../components/Layout/Layout.ai.md?raw';
 import AspectRatioAiMd from '../components/AspectRatio/AspectRatio.ai.md?raw';
 import TextareaAiMd from '../components/Textarea/Textarea.ai.md?raw';
 import SelectAiMd from '../components/Select/Select.ai.md?raw';
+import SpinnerAiMd from '../components/Spinner/Spinner.ai.md?raw';
 import CheckboxAiMd from '../components/Checkbox/Checkbox.ai.md?raw';
 import RadioAiMd from '../components/Radio/Radio.ai.md?raw';
 import SwitchAiMd from '../components/Switch/Switch.ai.md?raw';
+import TagAiMd from '../components/Tag/Tag.ai.md?raw';
 import FormSectionAiMd from '../components/FormSection/FormSection.ai.md?raw';
 import FormAiMd from '../components/Form/Form.ai.md?raw';
+import LoadingAiMd from '../components/Loading/Loading.ai.md?raw';
 
 /** 文档预览：固定 SVG，避免外链占位图失效 */
 const ASPECT_RATIO_DEMO_IMG_SRC =
@@ -49,6 +57,27 @@ const ToastDocPlaceholder: React.FC = () => null;
 
 /** 布局工具为多个导出组件，仅占位以通过文档路由校验 */
 const LayoutDocPlaceholder: React.FC = () => null;
+
+/** Loading 全屏示例：自动关闭，避免挡住文档站 */
+function LoadingFullscreenDemo() {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    if (!visible) return undefined;
+    const id = window.setTimeout(() => setVisible(false), 2200);
+    return () => window.clearTimeout(id);
+  }, [visible]);
+  return (
+    <Stack gap="sm" className="max-w-md w-full">
+      <Typography variant="bodySmall" color="muted" noMargin>
+        全屏层 z-index 为 <code>--su-z-loading</code>，低于 Toast。
+      </Typography>
+      <Button type="button" color="primary" onClick={() => setVisible(true)}>
+        演示全屏加载约 2 秒
+      </Button>
+      {visible ? <Loading fullscreen tip="请稍候…" /> : null}
+    </Stack>
+  );
+}
 
 function TextareaDocDemo({ idx }: { idx: number }) {
   switch (idx) {
@@ -467,6 +496,7 @@ function RadioDocDemo({ idx }: { idx: number }) {
 // 动态导入组件
 const componentMap: Record<string, React.ElementType> = {
   Button,
+  Badge,
   Input,
   FormField,
   Card,
@@ -481,12 +511,16 @@ const componentMap: Record<string, React.ElementType> = {
   Switch,
   Form,
   FormSection,
+  Tag,
+  Spinner,
+  Loading,
   Layout: LayoutDocPlaceholder,
 };
 
 // AI 文档映射
 const aiDocMap: Record<string, string> = {
   Button: ButtonAiMd,
+  Badge: BadgeAiMd,
   Input: InputAiMd,
   FormField: FormFieldAiMd,
   Card: CardAiMd,
@@ -501,6 +535,9 @@ const aiDocMap: Record<string, string> = {
   Switch: SwitchAiMd,
   FormSection: FormSectionAiMd,
   Form: FormAiMd,
+  Tag: TagAiMd,
+  Spinner: SpinnerAiMd,
+  Loading: LoadingAiMd,
   Layout: LayoutAiMd,
 };
 
@@ -1461,6 +1498,132 @@ export const ComponentPage: React.FC = () => {
         {doc.name === 'Divider' && renderDividerExamples(example, idx)}
         {doc.name === 'AspectRatio' && renderAspectRatioExamples(example, idx)}
         {doc.name === 'Layout' && renderLayoutExamples(example, idx)}
+        {doc.name === 'Badge' && (
+          <div className="example-preview-inner flex flex-col gap-4 max-w-xl">
+            {idx === 0 && (
+              <div className="flex flex-wrap gap-4 items-center">
+                <Badge count={5}>
+                  <Button size="sm" variant="ghost" aria-label="通知">
+                    铃
+                  </Button>
+                </Badge>
+                <Badge count={0} showZero>
+                  <Button size="sm" variant="ghost" aria-label="草稿">
+                    稿
+                  </Button>
+                </Badge>
+              </div>
+            )}
+            {idx === 1 && (
+              <div className="flex flex-wrap gap-4 items-center">
+                <Badge dot color="error">
+                  <span>任务</span>
+                </Badge>
+                <Badge count={120} max={99} aria-label="未读 99+" />
+              </div>
+            )}
+            {idx === 2 && (
+              <Stack direction="row" gap="sm" className="flex-wrap items-center">
+                <Badge count={2} color="primary">
+                  <Button size="sm" variant="ghost">
+                    主色
+                  </Button>
+                </Badge>
+                <Badge count={3} color="success">
+                  <Button size="sm" variant="ghost">
+                    成功
+                  </Button>
+                </Badge>
+                <Badge dot color="warning">
+                  <Button size="sm" variant="ghost">
+                    警告点
+                  </Button>
+                </Badge>
+              </Stack>
+            )}
+          </div>
+        )}
+        {doc.name === 'Tag' && (
+          <div className="example-preview-inner flex flex-col gap-4 max-w-xl">
+            {idx === 0 && (
+              <Space wrap size="sm">
+                <Tag>soft 默认</Tag>
+                <Tag variant="solid" color="primary">
+                  solid
+                </Tag>
+                <Tag variant="outlined" color="info">
+                  outlined
+                </Tag>
+              </Space>
+            )}
+            {idx === 1 && (
+              <Tag closable onClose={() => undefined}>
+                筛选：已发布
+              </Tag>
+            )}
+            {idx === 2 && (
+              <Space wrap size="sm" align="center">
+                <Typography variant="caption" color="muted" noMargin>
+                  已选
+                </Typography>
+                <Tag closable color="primary">
+                  类型 A
+                </Tag>
+                <Tag closable>标签 B</Tag>
+              </Space>
+            )}
+          </div>
+        )}
+        {doc.name === 'Spinner' && (
+          <div className="example-preview-inner flex flex-col gap-4">
+            {idx === 0 && (
+              <Space wrap size="md" align="center">
+                <Spinner size="xs" />
+                <Spinner size="sm" />
+                <Spinner size="md" />
+                <Spinner size="lg" />
+              </Space>
+            )}
+            {idx === 1 && (
+              <Space wrap size="md" align="center">
+                <Spinner color="primary" />
+                <Spinner color="success" />
+                <Spinner color="warning" />
+                <Spinner color="error" />
+              </Space>
+            )}
+            {idx === 2 && (
+              <Typography variant="h4" className="flex items-center gap-2">
+                <Spinner size="inherit" color="current" aria-hidden />
+                加载标题旁
+              </Typography>
+            )}
+          </div>
+        )}
+        {doc.name === 'Loading' && (
+          <div className="example-preview-inner flex flex-col gap-4 max-w-xl w-full">
+            {idx === 0 && (
+              <Loading spinning tip="正在同步…">
+                <Card title="列表示意" className="min-h-[100px] w-full max-w-md">
+                  <Typography variant="bodySmall" color="muted" noMargin>
+                    遮罩盖在卡片上方
+                  </Typography>
+                </Card>
+              </Loading>
+            )}
+            {idx === 1 && (
+              <div className="max-w-md w-full">
+                <Loading spinning />
+              </div>
+            )}
+            {idx === 2 && (
+              <Loading spinning={false}>
+                <Card className="max-w-md">spinning=false 时不显示遮罩</Card>
+              </Loading>
+            )}
+            {idx === 3 && <LoadingFullscreenDemo />}
+          </div>
+        )}
         {doc.name === 'Toast' && (
           <div className="flex flex-col gap-4">
             {idx === 0 && (
