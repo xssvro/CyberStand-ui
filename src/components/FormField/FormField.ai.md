@@ -34,7 +34,10 @@ import { FormField, Label } from 'stand-ui/components';
 | `label` | `ReactNode` | — | 标签；无标签时不渲染 `<label>` |
 | `id` | `string` | 自动生成 | 赋给子控件，并与标签 `htmlFor` 一致 |
 | `description` | `ReactNode` | — | 辅助说明，`id` 为 `{id}-description` |
-| `error` | `ReactNode` | — | 错误文案，**渲染在控件下方**（非浏览器气泡）；有值时 `aria-invalid`；对 Input/Textarea/Select/Switch 注入 `color="error"`，对 CheckboxGroup/RadioGroup 注入 `invalid`。配合 **`Form`**（默认 **`noValidate`**）可避免原生必填气泡 |
+| `error` | `ReactNode` | — | 错误文案，**渲染在控件下方**。**若 `error !== undefined`**（含 `null`）则**优先于** **`rules`** 校验结果；未传 `error` 时展示 **`useForm` + `rules`** 产生的错误 |
+| `name` | `string` | — | 与 **`Form form={instance}`** 配套：字段名，须与子控件 **`name`**（或隐藏域）一致，参与 **`validateFields` / `setFields`** |
+| `rules` | **`FormRule[]`** | — | 声明式校验（Ant Design `rules` 子集）；需 **`name`** 且父级 **`Form`** 传入 **`form`**，详见 **`Form.ai.md`** |
+| `getValue` | `() => unknown` | — | 纯受控、**`FormData` 取不到**时在校验阶段提供当前值（如自定义 **`CheckboxGroup` 受控值**） |
 | `required` | `boolean` | `false` | 标签旁红色 `*`（装饰；请在控件上设真实 `required`） |
 | `layout` | `vertical` \| `horizontal` | 见下 | 默认 **`vertical`**；若在 **`Form`** 内且未传本属性，则继承 **`Form` 的 `layout`** |
 | `labelWidth` | `string` \| `number` | — | 仅 `horizontal`；数字视为 px，写入 `--su-form-label-width`（默认约 `7.5rem`） |

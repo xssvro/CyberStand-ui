@@ -40,7 +40,7 @@
 
 | # | 项 | 状态 | 备注 |
 |---|----|------|------|
-| 10 | **`Form`（轻量上下文）** — `layout` / `size`、提交区约定，不绑 RHF | **已完成** | `src/components/Form/`；`FormField` 继承上下文 |
+| 10 | **`Form`（轻量上下文）** — `layout` / `size`、提交区约定，不绑 RHF | **已完成** | `src/components/Form/`；`FormField` 继承上下文；已加 **`useForm` + `rules`**（类 Ant Design `Form.Item` 子集） |
 | 11 | **文档与示例** — 各控件与 `FormField` 组合、`*.ai.md`、文档站注册 | **已完成** | **`Form.ai.md`**、文档站 `/component/Form`；整表 + 横向 + `size` + 禁用示例 |
 
 ---

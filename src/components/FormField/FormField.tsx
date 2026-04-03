@@ -1,5 +1,7 @@
 import React from 'react';
+import type { FormRule } from '../Form/formRules';
 import { useFormContext } from '../Form/FormContext';
+import { useFormRulesStore } from '../Form/FormRulesContext';
 import { CheckboxGroup } from '../Checkbox/CheckboxGroup';
 import { Input } from '../Input/Input';
 import { RadioGroup } from '../Radio/RadioGroup';
@@ -18,8 +20,14 @@ export interface FormFieldProps {
   id?: string;
   /** 辅助说明（非错误） */
   description?: React.ReactNode;
-  /** 错误文案：`aria-invalid`；Input/Textarea/Select/Switch → `color="error"`；CheckboxGroup/RadioGroup → `invalid` */
+  /** 错误文案：`aria-invalid`；Input/Textarea/Select/Switch → `color="error"`；CheckboxGroup/RadioGroup → `invalid`。显式传入时覆盖 `rules` 校验结果（含 `null` 清空） */
   error?: React.ReactNode;
+  /** 与 `<Form form={instance}>` 配套：字段名，参与 `validateFields` 与 `getFieldsValue` */
+  name?: string;
+  /** 校验规则（Ant Design `rules` 子集）；需同时传 `name` 且父级为带 `form` 的 `Form` */
+  rules?: FormRule[];
+  /** 受控字段无法从 FormData 取值时，在校验阶段提供当前值 */
+  getValue?: () => unknown;
   /** 标签旁必填星号 */
   required?: boolean;
   /** 标签与控件布局 */
@@ -90,6 +98,9 @@ export const FormField = React.forwardRef<HTMLDivElement, FormFieldProps>(
       id: idProp,
       description,
       error,
+      name,
+      rules,
+      getValue,
       required = false,
       layout: layoutProp,
       labelWidth,
@@ -101,8 +112,15 @@ export const FormField = React.forwardRef<HTMLDivElement, FormFieldProps>(
     ref
   ) {
     const formCtx = useFormContext();
+    const rulesStore = useFormRulesStore();
     const layout = layoutProp ?? formCtx?.layout ?? 'vertical';
     const disabled = disabledProp || (formCtx?.disabled ?? false);
+
+    React.useEffect(() => {
+      if (!name || !rulesStore) return;
+      rulesStore.registerField(name, { rules: rules ?? [], getValue });
+      return () => rulesStore.unregisterField(name);
+    }, [name, rulesStore, rules, getValue]);
 
     const uid = React.useId();
     const baseId = idProp ?? `su-field-${sanitizeDomId(uid)}`;
@@ -111,7 +129,10 @@ export const FormField = React.forwardRef<HTMLDivElement, FormFieldProps>(
     const errorId = `${baseId}-error`;
 
     const hasDescription = description != null && description !== false;
-    const hasError = error != null && error !== false;
+    const ruleErr = name && rulesStore ? rulesStore.getFieldError(name) : undefined;
+    const mergedError = error !== undefined ? error : ruleErr;
+    const hasError =
+      mergedError != null && mergedError !== false && mergedError !== '';
 
     const describedBy = mergeDescribedBy(
       undefined,
@@ -185,7 +206,7 @@ export const FormField = React.forwardRef<HTMLDivElement, FormFieldProps>(
 
     const errorNode = hasError ? (
       <div id={errorId} className={styles.error} role="alert">
-        {error}
+        {mergedError}
       </div>
     ) : null;
 

@@ -2,7 +2,9 @@
 
 **Form** 是整表入口：原生 **`<form>`** + **`FormContext`**，向子树提供默认 **`layout` / `size` / `disabled`**。**`FormField`** 会读上下文；字段上显式写的属性优先。
 
-**不绑定** react-hook-form / Zod；下面同时给出「手写提交 + 校验」与「RHF」两种思路。实现以 `Form.tsx`、`FormContext.tsx`、`Form.module.css` 为准。
+可选 **`useForm()` + `form` + `rules`**：内置一套**类似 Ant Design `Form.Item` `rules`** 的声明式校验（**`validateFields` / `getFieldsValue` / `setFields` / `resetFields`**），无需安装 RHF。亦可继续用手写 **`error`** 或 **react-hook-form + Zod**。
+
+实现以 `Form.tsx`、`formStore.ts`、`formRules.ts`、`FormContext.tsx` 为准。
 
 ---
 
@@ -78,12 +80,101 @@ import {
 
 | 属性 | 类型 | 默认 | 说明 |
 |------|------|------|------|
-| `noValidate` | `boolean` | **`true`** | 关闭浏览器原生校验**气泡**。必填/格式错误请用 **`FormField` 的 `error`** 或在 **`onSubmit` 里校验**。需要原生 HTML5 气泡时传 **`noValidate={false}`**。 |
+| `noValidate` | `boolean` | **`true`** | 关闭浏览器原生校验**气泡**。必填/格式错误请用 **`FormField` 的 `error`**、**`rules`** 或在 **`onSubmit` 里校验**。需要原生 HTML5 气泡时传 **`noValidate={false}`**。 |
+| `form` | **`FormInstance`** | — | 由 **`useForm()`** 创建；**`await form.validateFields()`** 驱动 **`rules`**；显式 **`FormField` `error`** 优先于规则错误 |
 | `layout` | `vertical` \| `horizontal` | `vertical` | 子级 **`FormField`** 默认布局；单字段可 **`layout="horizontal"`** 覆盖 |
 | `size` | `Size` | `md` | 子级 **`Input` / `Textarea` / `Select` / `Switch`** 未自设 **`size`** 时注入 |
 | `disabled` | `boolean` | `false` | 与子项 **`disabled`** 合并（字段显式 **`disabled`** 仍为禁用） |
 | `className` / `style` | — | — | 根 **`form`**；常用 **`max-w-* w-full`** 限制最大宽度 |
 | `children` | `ReactNode` | 必填 | 任意结构；上下文仅对 **`Form` 子树**生效 |
+
+---
+
+## 内置 `rules` + `useForm`（类 Ant Design）
+
+### 流程
+
+1. **`const form = useForm()`**（每个表单一份实例，勿在 render 中重复创建多份）。
+2. **`<Form form={form} onSubmit={…}>`** 挂载后，实例与 DOM 上的 **`<form>`** 绑定。
+3. **`FormField`** 上 **`name`**（与控件 **`name`** 一致）+ **`rules`**；提交时 **`await form.validateFields()`**。
+4. 校验失败会 **`throw FormValidateError`**（含 **`errorFields`**、**`values`**）；通过时返回 **`getFieldsValue()`** 同结构的值对象。
+5. **纯受控**且不在 **`FormData`** 里出现的字段，给 **`FormField` 传 `getValue={() => state}`**。
+
+### `FormRule` 支持的能力（子集）
+
+| 键 | 说明 |
+|----|------|
+| `required` / `message` | 必填 |
+| `whitespace` | 为 true 时先 trim 再判空（配合 `required`） |
+| `len` / `min` / `max` | 字符串长度或数组长度；`type: 'number'` 时对数值比较 |
+| `pattern` | 正则 |
+| `type` | `'string'` \| `'number'` \| `'email'` \| `'url'` |
+| `validator` | `(rule, value) => string \| void` 或 async |
+
+多条规则用数组：**`rules={[{ required: true }, { min: 2 }]}`**，按顺序执行，**遇错即停**。
+
+### 示例
+
+```tsx
+import {
+  Button,
+  Form,
+  FormField,
+  FormValidateError,
+  Input,
+  useForm,
+} from 'stand-ui/components';
+
+function EmailForm() {
+  const form = useForm();
+  return (
+    <Form
+      form={form}
+      className="max-w-md w-full"
+      onSubmit={async (e) => {
+        e.preventDefault();
+        try {
+          const values = await form.validateFields();
+          console.log(values);
+        } catch (err) {
+          if (err instanceof FormValidateError) {
+            console.warn(err.errorFields);
+          }
+        }
+      }}
+    >
+      <FormField
+        label="邮箱"
+        name="email"
+        rules={[
+          { required: true, message: '请输入邮箱' },
+          { type: 'email', message: '格式不正确' },
+        ]}
+      >
+        <Input name="email" type="email" placeholder="you@example.com" />
+      </FormField>
+      <Button type="submit" color="primary" size="sm">
+        提交
+      </Button>
+    </Form>
+  );
+}
+```
+
+### `FormInstance` API
+
+| 方法 | 说明 |
+|------|------|
+| **`validateFields(nameList?)`** | 校验：不传参则校验所有已注册 **`name`**；传数组则只校验这些字段。成功返回 **`values`**，失败 **`throw FormValidateError`** |
+| **`getFieldsValue()`** | 从当前 **`<form>`** 的 **`FormData`** 汇总（多选同名键为数组） |
+| **`setFields({ email: { errors: ['自定义'] } })`** | 手动设错（首条文案展示在 **`FormField`**） |
+| **`resetFields(nameList?)`** | **`form.reset()`** 并清空对应（或全部）校验错误 |
+| **`getFieldError(name)`** / **`clearErrors()`** | 读单字段错 / 清空所有错 |
+
+### 与手写 `error`、`RHF` 的关系
+
+- **`FormField` 上传了 `error`（非 `undefined`）** 时，**不再展示 `rules` 产生的错误**（便于外部覆盖或对接 RHF 的 **`errors.xxx`**）。
+- **RHF + Zod** 仍可单独使用；本套 **`rules`** 为**零依赖**场景的轻量替代。
 
 ---
 
@@ -312,6 +403,6 @@ export function DemoForm() {
 
 | 内容 | 路径 |
 |------|------|
-| 组件 | `src/components/Form/` |
+| 组件 | `src/components/Form/`（含 **`formStore` / `formRules` / `useForm`**） |
 | 表单项 | `src/components/FormField/` |
 | 分组 | `src/components/FormSection/` |
