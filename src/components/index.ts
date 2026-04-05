@@ -16,6 +16,12 @@ export type { SpinnerProps, SpinnerSize } from './Spinner';
 export { Loading } from './Loading';
 export type { LoadingProps } from './Loading';
 
+export { Progress } from './Progress';
+export type { ProgressProps, ProgressSize } from './Progress';
+
+export { Skeleton } from './Skeleton';
+export type { SkeletonProps, SkeletonVariant } from './Skeleton';
+
 export { Input } from './Input';
 export type { InputProps } from './Input';
 

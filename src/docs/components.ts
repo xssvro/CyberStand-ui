@@ -806,6 +806,72 @@ useEffect(() => {
     ],
   },
   {
+    name: 'Progress',
+    title: 'Progress 进度条',
+    category: '反馈',
+    description:
+      'role=progressbar：value 0–100、不确定态、语义色与条纹；轨道圆角与表单控件一致。',
+    aiDocPath: '/src/components/Progress/Progress.ai.md',
+    examples: [
+      {
+        title: '确定进度',
+        code: `<Stack gap="md" className="max-w-md w-full">
+  <Progress value={0} />
+  <Progress value={35} />
+  <Progress value={100} color="success" />
+</Stack>`,
+      },
+      {
+        title: '尺寸与标签',
+        code: `<Stack gap="md" className="max-w-md w-full">
+  <Progress value={48} size="sm" showLabel />
+  <Progress value={64} size="md" showLabel color="info" />
+  <Progress value={82} size="lg" showLabel color="warning" />
+</Stack>`,
+      },
+      {
+        title: '条纹与不确定',
+        code: `<Stack gap="md" className="max-w-md w-full">
+  <Progress value={55} striped color="primary" />
+  <Progress indeterminate aria-label="正在上传" />
+</Stack>`,
+      },
+    ],
+  },
+  {
+    name: 'Skeleton',
+    title: 'Skeleton 骨架屏',
+    category: '反馈',
+    description: 'text / circle / rect 组合占位，active 扫光；与具体业务卡片解耦。',
+    aiDocPath: '/src/components/Skeleton/Skeleton.ai.md',
+    examples: [
+      {
+        title: '文本与多行',
+        code: `<Stack gap="md" className="max-w-md w-full">
+  <Skeleton variant="text" />
+  <Skeleton variant="text" rows={3} />
+</Stack>`,
+      },
+      {
+        title: '头像 + 段落（列表项）',
+        code: `<Flex gap="md" align="start" className="max-w-md w-full">
+  <Skeleton variant="circle" width={44} height={44} />
+  <Stack gap="sm" className="min-w-0 flex-1">
+    <Skeleton variant="text" width="55%" />
+    <Skeleton variant="text" rows={2} />
+  </Stack>
+</Flex>`,
+      },
+      {
+        title: '矩形块与静止',
+        code: `<Stack gap="md" className="max-w-md w-full">
+  <Skeleton variant="rect" height={96} rounded />
+  <Skeleton variant="rect" height={40} active={false} />
+</Stack>`,
+      },
+    ],
+  },
+  {
     name: 'Divider',
     title: 'Divider / Separator 分割线',
     category: '布局',

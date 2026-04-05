@@ -30,18 +30,77 @@
   height: 100vh;
   overflow-y: auto;
   z-index: 100;
+  /* Firefox：细条 + 与轨道融为一体的弱对比 */
+  scrollbar-width: thin;
+  scrollbar-color: var(--docs-sidebar-scroll-thumb) transparent;
 }
 
 [data-theme='light'] .docs-sidebar {
+  --docs-sidebar-scroll-thumb: color-mix(in srgb, var(--su-text-muted) 42%, transparent);
+  --docs-sidebar-scroll-thumb-hover: color-mix(in srgb, var(--su-text-default) 38%, transparent);
+  --docs-sidebar-scroll-thumb-active: color-mix(in srgb, var(--su-text-default) 52%, transparent);
   box-shadow:
     2px 0 20px rgba(15, 23, 42, 0.06),
     inset -1px 0 0 rgba(255, 255, 255, 0.9);
 }
 
 [data-theme='dark'] .docs-sidebar {
+  --docs-sidebar-scroll-thumb: color-mix(in srgb, var(--su-text-muted) 45%, transparent);
+  --docs-sidebar-scroll-thumb-hover: color-mix(in srgb, var(--su-gray-400) 55%, transparent);
+  --docs-sidebar-scroll-thumb-active: color-mix(in srgb, var(--su-gray-500) 65%, transparent);
   box-shadow:
     4px 0 32px rgba(0, 0, 0, 0.22),
     inset 1px 0 0 rgba(255, 255, 255, 0.04);
+}
+
+/* WebKit：不占宽的重型轨道；悬停 / 键盘焦点在侧栏内时再显示滑块 */
+.docs-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.docs-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.docs-sidebar::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background-color: transparent;
+  background-clip: padding-box;
+  border: 1px solid transparent;
+  transition: background-color 0.2s ease;
+}
+
+.docs-sidebar:hover::-webkit-scrollbar-thumb,
+.docs-sidebar:focus-within::-webkit-scrollbar-thumb {
+  background-color: var(--docs-sidebar-scroll-thumb);
+}
+
+.docs-sidebar:hover::-webkit-scrollbar-thumb:hover,
+.docs-sidebar:focus-within::-webkit-scrollbar-thumb:hover {
+  background-color: var(--docs-sidebar-scroll-thumb-hover);
+}
+
+.docs-sidebar:hover::-webkit-scrollbar-thumb:active,
+.docs-sidebar:focus-within::-webkit-scrollbar-thumb:active {
+  background-color: var(--docs-sidebar-scroll-thumb-active);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .docs-sidebar::-webkit-scrollbar-thumb {
+    transition: none;
+  }
+
+  .docs-sidebar::-webkit-scrollbar-thumb,
+  .docs-sidebar:focus-within::-webkit-scrollbar-thumb {
+    background-color: var(--docs-sidebar-scroll-thumb);
+  }
+}
+
+/* 触控 / 无悬停指针：始终显示细滑块，避免无法发现可滚动 */
+@media (hover: none) {
+  .docs-sidebar::-webkit-scrollbar-thumb {
+    background-color: var(--docs-sidebar-scroll-thumb);
+  }
 }
 
 .docs-logo {

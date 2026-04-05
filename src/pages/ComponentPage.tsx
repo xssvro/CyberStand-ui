@@ -16,6 +16,8 @@ import { Form } from '../components/Form';
 import { FormSection } from '../components/FormSection';
 import { Card } from '../components/Card';
 import { Loading } from '../components/Loading';
+import { Progress } from '../components/Progress';
+import { Skeleton } from '../components/Skeleton';
 import { toast } from '../components/Toast';
 import { Typography, TypographyLink } from '../components/Typography';
 import { Divider, Separator } from '../components/Divider';
@@ -44,6 +46,8 @@ import TagAiMd from '../components/Tag/Tag.ai.md?raw';
 import FormSectionAiMd from '../components/FormSection/FormSection.ai.md?raw';
 import FormAiMd from '../components/Form/Form.ai.md?raw';
 import LoadingAiMd from '../components/Loading/Loading.ai.md?raw';
+import ProgressAiMd from '../components/Progress/Progress.ai.md?raw';
+import SkeletonAiMd from '../components/Skeleton/Skeleton.ai.md?raw';
 
 /** 文档预览：固定 SVG，避免外链占位图失效 */
 const ASPECT_RATIO_DEMO_IMG_SRC =
@@ -514,6 +518,8 @@ const componentMap: Record<string, React.ElementType> = {
   Tag,
   Spinner,
   Loading,
+  Progress,
+  Skeleton,
   Layout: LayoutDocPlaceholder,
 };
 
@@ -538,6 +544,8 @@ const aiDocMap: Record<string, string> = {
   Tag: TagAiMd,
   Spinner: SpinnerAiMd,
   Loading: LoadingAiMd,
+  Progress: ProgressAiMd,
+  Skeleton: SkeletonAiMd,
   Layout: LayoutAiMd,
 };
 
@@ -1622,6 +1630,55 @@ export const ComponentPage: React.FC = () => {
               </Loading>
             )}
             {idx === 3 && <LoadingFullscreenDemo />}
+          </div>
+        )}
+        {doc.name === 'Progress' && (
+          <div className="example-preview-inner flex flex-col gap-4 max-w-md w-full">
+            {idx === 0 && (
+              <Stack gap="md" className="w-full">
+                <Progress value={0} />
+                <Progress value={35} />
+                <Progress value={100} color="success" />
+              </Stack>
+            )}
+            {idx === 1 && (
+              <Stack gap="md" className="w-full">
+                <Progress value={48} size="sm" showLabel />
+                <Progress value={64} size="md" showLabel color="info" />
+                <Progress value={82} size="lg" showLabel color="warning" />
+              </Stack>
+            )}
+            {idx === 2 && (
+              <Stack gap="md" className="w-full">
+                <Progress value={55} striped color="primary" />
+                <Progress indeterminate aria-label="正在上传" />
+              </Stack>
+            )}
+          </div>
+        )}
+        {doc.name === 'Skeleton' && (
+          <div className="example-preview-inner flex flex-col gap-4 max-w-md w-full">
+            {idx === 0 && (
+              <Stack gap="md" className="w-full">
+                <Skeleton variant="text" />
+                <Skeleton variant="text" rows={3} />
+              </Stack>
+            )}
+            {idx === 1 && (
+              <Flex gap="md" align="start" className="w-full">
+                <Skeleton variant="circle" width={44} height={44} />
+                <Stack gap="sm" className="min-w-0 flex-1">
+                  <Skeleton variant="text" width="55%" />
+                  <Skeleton variant="text" rows={2} />
+                </Stack>
+              </Flex>
+            )}
+            {idx === 2 && (
+              <Stack gap="md" className="w-full">
+                <Skeleton variant="rect" height={96} rounded />
+                <Skeleton variant="rect" height={40} active={false} />
+              </Stack>
+            )}
           </div>
         )}
         {doc.name === 'Toast' && (

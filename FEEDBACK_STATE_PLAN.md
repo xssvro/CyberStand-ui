@@ -34,8 +34,8 @@
 
 | # | 项 | 状态 | 备注 |
 |---|----|------|------|
-| 5 | **`Progress` / `ProgressBar`**（`value` 0–100、`indeterminate`、可选 `size` / `color`） | **未开始** | 原生 **`role="progressbar"`**、`aria-valuenow`；条纹/圆角与 `vars.css` 一致 |
-| 6 | **`Skeleton`**（`text` / `circle` / `rect`、行数、`animation`） | **未开始** | 列表/卡片占位；避免与具体业务卡片强耦合，保持组合式 |
+| 5 | **`Progress`**（`value` 0–100、`indeterminate`、可选 `size` / `color` / `striped`） | **已完成** | **`role="progressbar"`**；不确定态无 `aria-valuenow`；轨道圆角与系统一致 |
+| 6 | **`Skeleton`**（`text` / `circle` / `rect`、`rows`、`active`） | **已完成** | 组合占位；`prefers-reduced-motion` 下静止 |
 
 ---
 
@@ -94,5 +94,5 @@
 
 ## 下一步建议
 
-1. 第二阶段：**Progress**、**Skeleton**。  
+1. 第三阶段：**Alert**、**Callout**（或合并为 Alert 的 `appearance`）。  
 2. **Alert** 与 **Callout** 若高度重叠，可先实现 **Alert + `variant`/`layout`**，再拆 Callout，避免两套并行维护。
