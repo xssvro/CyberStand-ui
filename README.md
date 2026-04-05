@@ -25,17 +25,20 @@ npm run dev
 ### 使用组件
 
 ```tsx
-import { Button, Input, Card } from 'stand-ui/components';
+import { Button, Card, DatePicker, Input } from 'stand-ui/components';
 
 function App() {
   return (
     <Card title="示例">
       <Input placeholder="请输入" />
+      <DatePicker placeholder="选择日期" />
       <Button color="primary">提交</Button>
     </Card>
   );
 }
 ```
+
+运行 `npm run dev` 后，在文档站侧栏 **表单** 分组中可打开 **「DatePicker 日期选择」**，或直接访问路由 **`/component/DatePicker`**（与 `src/docs/components.ts` 中的 `name` 一致）。
 
 ## 项目结构
 
@@ -48,6 +51,7 @@ src/
 │   │   ├── Button.ai.md    # AI 使用文档（关键！）
 │   │   └── index.ts        # 组件入口
 │   ├── Input/
+│   ├── DatePicker/     # 日期选择（自研月历弹层）
 │   ├── Card/
 │   └── index.ts        # 组件总入口
 ├── core/               # 核心配置
@@ -141,6 +145,8 @@ import { Button } from 'stand-ui/components/Button';
 1. **组件预览** - 交互式查看组件效果
 2. **代码示例** - 复制即可使用
 3. **AI 文档** - 查看 .ai.md 完整内容
+
+组件入口由 **`src/docs/components.ts`** 的 `componentDocs` 驱动；侧栏与首页「组件列表」同源。新增组件须在此注册并在 `ComponentPage.tsx` 中配置预览（见 `COMPONENT_DEVELOPMENT.md`）。
 
 ## 许可证
 

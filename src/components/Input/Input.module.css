@@ -140,3 +140,29 @@
   display: block;
   flex-shrink: 0;
 }
+
+/* ========== 原生日期/时间：去掉右侧原生日历/时钟按钮；内部强调色仍用主色 ========== */
+.inputWrapper:has(
+    .input:is(
+      [type='date'],
+      [type='datetime-local'],
+      [type='month'],
+      [type='week'],
+      [type='time']
+    )
+  )
+  .input {
+  accent-color: var(--su-primary-500);
+}
+
+/* WebKit / Chromium / Safari：隐藏日历/时钟指示器 */
+.input:is([type='date'], [type='datetime-local'], [type='month'], [type='week'], [type='time'])::-webkit-calendar-picker-indicator {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
+
+/* Firefox */
+.input:is([type='date'], [type='datetime-local'], [type='month'], [type='week'], [type='time'])::-moz-calendar-picker-indicator {
+  display: none;
+}

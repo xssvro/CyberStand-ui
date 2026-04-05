@@ -8,6 +8,7 @@ import { Callout } from '../components/Callout';
 import { Empty } from '../components/Empty';
 import { FormField, Label } from '../components/FormField';
 import { Checkbox, CheckboxGroup } from '../components/Checkbox';
+import { DatePicker } from '../components/DatePicker';
 import { Input } from '../components/Input';
 import { Radio, RadioGroup } from '../components/Radio';
 import { Select } from '../components/Select';
@@ -34,6 +35,7 @@ import AlertAiMd from '../components/Alert/Alert.ai.md?raw';
 import BadgeAiMd from '../components/Badge/Badge.ai.md?raw';
 import ButtonAiMd from '../components/Button/Button.ai.md?raw';
 import InputAiMd from '../components/Input/Input.ai.md?raw';
+import DatePickerAiMd from '../components/DatePicker/DatePicker.ai.md?raw';
 import FormFieldAiMd from '../components/FormField/FormField.ai.md?raw';
 import CalloutAiMd from '../components/Callout/Callout.ai.md?raw';
 import EmptyAiMd from '../components/Empty/Empty.ai.md?raw';
@@ -274,6 +276,44 @@ function SelectDocDemo({ idx }: { idx: number }) {
             ]}
           />
         </div>
+      );
+    default:
+      return (
+        <Typography variant="body" color="muted">
+          无该示例索引
+        </Typography>
+      );
+  }
+}
+
+function DatePickerBasicDemo() {
+  const [d, setD] = useState('');
+  return (
+    <DatePicker
+      className="max-w-md w-full"
+      value={d}
+      onChange={(v) => setD(v)}
+      placeholder="选择日期"
+    />
+  );
+}
+
+function DatePickerDocDemo({ idx }: { idx: number }) {
+  switch (idx) {
+    case 0:
+      return <DatePickerBasicDemo />;
+    case 1:
+      return (
+        <Stack gap="md" className="max-w-md w-full">
+          <DatePicker min="2026-01-01" max="2026-12-31" placeholder="2026 年内" />
+          <DatePicker size="sm" color="primary" placeholder="小号主色环" />
+        </Stack>
+      );
+    case 2:
+      return (
+        <FormField label="截止日期" required className="max-w-md w-full">
+          <DatePicker name="due" placeholder="请选择" />
+        </FormField>
       );
     default:
       return (
@@ -590,6 +630,7 @@ const componentMap: Record<string, React.ElementType> = {
   Button,
   Badge,
   Input,
+  DatePicker,
   FormField,
   Card,
   Toast: ToastDocPlaceholder,
@@ -620,6 +661,7 @@ const aiDocMap: Record<string, string> = {
   Button: ButtonAiMd,
   Badge: BadgeAiMd,
   Input: InputAiMd,
+  DatePicker: DatePickerAiMd,
   FormField: FormFieldAiMd,
   Card: CardAiMd,
   Toast: ToastAiMd,
@@ -1573,15 +1615,41 @@ export const ComponentPage: React.FC = () => {
       <div className="example-preview">
         {doc.name === 'Button' && renderButtonExamples(example, idx)}
         {doc.name === 'Input' && (
-          <div className="flex flex-col gap-3 max-w-md">
-            <Input placeholder="请输入" />
-            <Input prefix={<IconSearch size={16} />} placeholder="搜索" />
-            <Input type="password" placeholder="密码" />
+          <div className="example-preview-inner max-w-md w-full">
+            {idx === 0 && <Input placeholder="请输入内容" />}
+            {idx === 1 && (
+              <Stack gap="md">
+                <Input prefix={<IconSearch size={16} />} placeholder="搜索..." />
+                <Input suffix="@" placeholder="邮箱" />
+              </Stack>
+            )}
+            {idx === 2 && (
+              <Stack gap="md">
+                <Input size="sm" placeholder="小尺寸" />
+                <Input size="md" placeholder="中尺寸" />
+                <Input size="lg" placeholder="大尺寸" />
+              </Stack>
+            )}
+            {idx === 3 && (
+              <Stack gap="md">
+                <Input type="password" placeholder="密码" />
+                <Input type="email" placeholder="邮箱" />
+                <Input type="number" placeholder="数字" />
+              </Stack>
+            )}
+            {idx === 4 && (
+              <Stack gap="md" className="w-full">
+                <Input type="date" name="demo-day" />
+                <Input type="datetime-local" name="demo-at" />
+                <Input type="date" min="2026-01-01" max="2026-12-31" name="demo-range" />
+              </Stack>
+            )}
           </div>
         )}
         {doc.name === 'FormField' && renderFormFieldExamples(example, idx)}
         {doc.name === 'Textarea' && <TextareaDocDemo idx={idx} />}
         {doc.name === 'Select' && <SelectDocDemo idx={idx} />}
+        {doc.name === 'DatePicker' && <DatePickerDocDemo idx={idx} />}
         {doc.name === 'Checkbox' && <CheckboxDocDemo idx={idx} />}
         {doc.name === 'Radio' && <RadioDocDemo idx={idx} />}
         {doc.name === 'Switch' && <SwitchDocDemo idx={idx} />}

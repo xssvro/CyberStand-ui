@@ -3,6 +3,7 @@ import type { FormRule } from '../Form/formRules';
 import { useFormContext } from '../Form/FormContext';
 import { useFormRulesStore } from '../Form/FormRulesContext';
 import { CheckboxGroup } from '../Checkbox/CheckboxGroup';
+import { DatePicker } from '../DatePicker/DatePicker';
 import { Input } from '../Input/Input';
 import { RadioGroup } from '../Radio/RadioGroup';
 import { Select } from '../Select/Select';
@@ -36,7 +37,7 @@ export interface FormFieldProps {
   labelWidth?: string | number;
   /** 整项禁用样式；会合并到子控件 `disabled` */
   disabled?: boolean;
-  /** 单个子节点：Input / Textarea / Select / Switch / CheckboxGroup / RadioGroup */
+  /** 单个子节点：Input / Textarea / Select / Switch / DatePicker / CheckboxGroup / RadioGroup */
   children: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
@@ -60,10 +61,16 @@ function mergeDescribedBy(
 
 function isColorField(el: React.ReactElement): boolean {
   const t = el.type;
-  if (t === Input || t === Textarea || t === Select || t === Switch) return true;
+  if (t === Input || t === Textarea || t === Select || t === Switch || t === DatePicker) return true;
   if (typeof t === 'function') {
     const n = (t as { displayName?: string }).displayName;
-    return n === 'Input' || n === 'Textarea' || n === 'Select' || n === 'Switch';
+    return (
+      n === 'Input' ||
+      n === 'Textarea' ||
+      n === 'Select' ||
+      n === 'Switch' ||
+      n === 'DatePicker'
+    );
   }
   return false;
 }
@@ -83,10 +90,16 @@ function isRadioGroup(el: React.ReactElement): boolean {
 /** 支持 `size` 且可由 Form 上下文注入的单控件 */
 function supportsStandSize(el: React.ReactElement): boolean {
   const t = el.type;
-  if (t === Input || t === Textarea || t === Select || t === Switch) return true;
+  if (t === Input || t === Textarea || t === Select || t === Switch || t === DatePicker) return true;
   if (typeof t === 'function') {
     const n = (t as { displayName?: string }).displayName;
-    return n === 'Input' || n === 'Textarea' || n === 'Select' || n === 'Switch';
+    return (
+      n === 'Input' ||
+      n === 'Textarea' ||
+      n === 'Select' ||
+      n === 'Switch' ||
+      n === 'DatePicker'
+    );
   }
   return false;
 }

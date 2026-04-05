@@ -37,6 +37,9 @@ export type { ResultProps, ResultStatus } from './Result';
 export { Input } from './Input';
 export type { InputProps } from './Input';
 
+export { DatePicker } from './DatePicker';
+export type { DatePickerProps } from './DatePicker';
+
 export { FormField, Label } from './FormField';
 export type { FormFieldLayout, FormFieldProps, LabelProps } from './FormField';
 

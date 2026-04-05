@@ -41,6 +41,9 @@ type InputHtmlPassthrough = Pick<
   | 'aria-activedescendant'
   | 'role'
   | 'onKeyDown'
+  | 'min'
+  | 'max'
+  | 'step'
 >;
 
 export interface InputProps extends Omit<StandProps, 'variant'>, InputHtmlPassthrough {
@@ -52,8 +55,23 @@ export interface InputProps extends Omit<StandProps, 'variant'>, InputHtmlPassth
   placeholder?: string;
   /** 值变化回调 */
   onChange?: (value: string, e: React.ChangeEvent<HTMLInputElement>) => void;
-  /** 输入类型 */
-  type?: 'text' | 'password' | 'email' | 'number' | 'tel' | 'url' | 'search';
+  /**
+   * 输入类型；`date` / `datetime-local` / `month` / `week` / `time` 保留原生值与键盘输入，
+   * 右侧原生日历/时钟图标已用 CSS 隐藏；需要点选月历请用 `DatePicker`。
+   */
+  type?:
+    | 'text'
+    | 'password'
+    | 'email'
+    | 'number'
+    | 'tel'
+    | 'url'
+    | 'search'
+    | 'date'
+    | 'datetime-local'
+    | 'time'
+    | 'month'
+    | 'week';
   /** 前置内容 */
   prefix?: React.ReactNode;
   /** 后置内容 */

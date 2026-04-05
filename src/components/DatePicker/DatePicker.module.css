@@ -1,0 +1,265 @@
+.root {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  font-size: var(--su-font-size);
+  border-radius: var(--su-radius);
+  width: 100%;
+  min-height: var(--su-height);
+  box-sizing: border-box;
+  position: relative;
+}
+
+.root.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  min-height: var(--su-height);
+  padding: var(--su-padding);
+  margin: 0;
+  box-sizing: border-box;
+  border: 1px solid var(--su-border-field);
+  border-radius: var(--su-radius);
+  background: var(--su-bg-default);
+  color: var(--su-text-default);
+  font-size: inherit;
+  font-family: inherit;
+  line-height: inherit;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+  transition:
+    border-color var(--su-transition-fast),
+    box-shadow var(--su-transition-fast);
+}
+
+.trigger:disabled {
+  cursor: not-allowed;
+  background: var(--su-bg-muted);
+}
+
+.trigger:focus-visible {
+  border-color: var(--su-info-500);
+  box-shadow: var(--su-input-focus-shadow);
+}
+
+.root.default .trigger:focus-visible {
+  border-color: var(--su-info-500);
+  box-shadow: var(--su-input-focus-shadow);
+}
+
+.root.primary .trigger:focus-visible {
+  border-color: var(--su-primary-500);
+  box-shadow: var(--su-ring-primary);
+}
+
+.root.secondary .trigger:focus-visible {
+  border-color: var(--su-secondary-500);
+  box-shadow: 0 0 0 3px rgba(230, 96, 84, 0.22);
+}
+
+.root.success .trigger:focus-visible {
+  border-color: var(--su-success-500);
+  box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.2);
+}
+
+.root.warning .trigger:focus-visible {
+  border-color: var(--su-warning-500);
+  box-shadow: 0 0 0 3px rgba(255, 159, 28, 0.22);
+}
+
+.root.error:not(.disabled) .trigger {
+  border-color: var(--su-error-500);
+}
+
+.root.error .trigger:focus-visible {
+  border-color: var(--su-error-500);
+  box-shadow: 0 0 0 3px rgba(255, 0, 85, 0.22);
+}
+
+.root.info .trigger:focus-visible {
+  border-color: var(--su-info-500);
+  box-shadow: var(--su-input-focus-shadow);
+}
+
+.triggerInner {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.placeholder {
+  color: var(--su-text-muted);
+}
+
+.valueText {
+  color: var(--su-text-default);
+}
+
+.calendarIcon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  color: var(--su-text-muted);
+  opacity: 0.85;
+}
+
+.root.open .calendarIcon {
+  color: var(--su-primary-500);
+  opacity: 1;
+}
+
+.panel {
+  margin: 0;
+  padding: var(--su-space-3);
+  box-sizing: border-box;
+  background: var(--su-bg-elevated);
+  border: 1px solid var(--su-border-subtle);
+  border-radius: var(--su-radius, 5px);
+  box-shadow:
+    0 8px 24px rgba(15, 23, 42, 0.12),
+    0 2px 8px rgba(15, 23, 42, 0.06);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--su-space-2);
+  margin-bottom: var(--su-space-3);
+}
+
+.monthLabel {
+  font-size: var(--su-font-size);
+  font-weight: 600;
+  color: var(--su-text-default);
+  flex: 1;
+  text-align: center;
+  min-width: 0;
+}
+
+.navBtn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  margin: 0;
+  border: 1px solid var(--su-border-default);
+  border-radius: max(2px, calc(var(--su-radius, 5px) - 1px));
+  background: var(--su-bg-subtle);
+  color: var(--su-text-default);
+  cursor: pointer;
+  outline: none;
+  transition:
+    background var(--su-transition-fast),
+    border-color var(--su-transition-fast);
+}
+
+.navBtn:hover:not(:disabled) {
+  background: var(--su-bg-muted);
+  border-color: var(--su-border-strong);
+}
+
+.navBtn:focus-visible {
+  border-color: var(--su-primary-500);
+  box-shadow: var(--su-ring-primary);
+}
+
+.navBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  margin-bottom: var(--su-space-1);
+}
+
+.weekday {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--su-text-muted);
+  text-align: center;
+  padding: 4px 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.dayBtn {
+  aspect-ratio: 1;
+  min-height: 36px;
+  max-height: 40px;
+  padding: 0;
+  margin: 0;
+  border: 1px solid transparent;
+  border-radius: max(2px, calc(var(--su-radius, 5px) - 1px));
+  background: transparent;
+  color: var(--su-text-default);
+  font-size: 0.8125rem;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+  transition:
+    background var(--su-transition-fast),
+    color var(--su-transition-fast),
+    border-color var(--su-transition-fast);
+}
+
+.dayBtn:hover:not(:disabled):not(.daySelected) {
+  background: var(--su-bg-subtle);
+}
+
+.dayBtn:focus-visible {
+  border-color: var(--su-primary-500);
+  box-shadow: 0 0 0 2px rgba(225, 29, 72, 0.15);
+}
+
+[data-theme='dark'] .dayBtn:focus-visible {
+  box-shadow: 0 0 0 2px rgba(252, 238, 10, 0.2);
+}
+
+.dayOutside {
+  color: var(--su-text-subtle);
+  opacity: 0.65;
+}
+
+.dayToday:not(.daySelected) {
+  border-color: var(--su-primary-400);
+  color: var(--su-text-default);
+}
+
+.daySelected {
+  background: var(--su-primary-500);
+  color: var(--su-on-primary);
+  font-weight: 600;
+  border-color: var(--su-primary-600);
+}
+
+.daySelected:hover:not(:disabled) {
+  background: var(--su-primary-600);
+  color: var(--su-on-primary);
+}
+
+.dayDisabled {
+  opacity: 0.32;
+  cursor: not-allowed;
+  pointer-events: none;
+}

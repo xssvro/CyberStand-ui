@@ -158,6 +158,11 @@ export const Home: React.FC = () => {
 
       <section className="components-preview">
         <h2>组件列表</h2>
+        <p className="components-preview-hint">
+          侧栏与下方列表均来自 <code>src/docs/components.ts</code>。日期场景可查看{' '}
+          <Link to="/component/DatePicker">DatePicker</Link>（自研月历弹层）与{' '}
+          <Link to="/component/Input">Input</Link> 的 <code>type=&quot;date&quot;</code>（无原生日历图标，纯输入）对照示例。
+        </p>
         <div className="component-list-grouped">
           {getComponentDocsGrouped().map((group) => (
             <div key={group.category} className="component-category-block">

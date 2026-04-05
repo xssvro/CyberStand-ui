@@ -688,6 +688,31 @@
   color: var(--su-text-default);
 }
 
+.components-preview-hint {
+  margin: -12px 0 28px;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--su-text-muted);
+  max-width: 72ch;
+}
+
+.components-preview-hint code {
+  font-size: 0.85em;
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  background: var(--su-bg-muted);
+  color: var(--su-text-default);
+}
+
+.components-preview-hint a {
+  color: var(--su-info-500);
+  text-decoration: none;
+}
+
+.components-preview-hint a:hover {
+  text-decoration: underline;
+}
+
 .component-list-grouped {
   display: flex;
   flex-direction: column;

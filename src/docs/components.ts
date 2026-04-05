@@ -111,7 +111,8 @@ export const componentDocs: ComponentDoc[] = [
     name: 'Input',
     title: 'Input 输入框',
     category: '表单',
-    description: '基础文本输入组件，支持多种类型和前后置内容',
+    description:
+      '基础文本输入组件，支持多种类型和前后置内容；date / time 等隐藏右侧原生按钮，内部强调色为主色',
     aiDocPath: '/src/components/Input/Input.ai.md',
     examples: [
       {
@@ -135,6 +136,46 @@ export const componentDocs: ComponentDoc[] = [
 <Input type="email" placeholder="邮箱" />
 <Input type="number" placeholder="数字" />`,
       },
+      {
+        title: '日期与时间（无右侧原生图标，主色 accent）',
+        code: `<Stack gap="md" className="max-w-md w-full">
+  <Input type="date" name="day" />
+  <Input type="datetime-local" name="at" />
+  <Input type="date" min="2026-01-01" max="2026-12-31" name="range" />
+</Stack>`,
+      },
+    ],
+  },
+  {
+    name: 'DatePicker',
+    title: 'DatePicker 日期选择',
+    category: '表单',
+    description:
+      '自研月历弹层（Portal + 与 Select 同源定位）；值 yyyy-mm-dd；选中日为主色实心，支持 min/max 与表单隐藏域 name',
+    aiDocPath: '/src/components/DatePicker/DatePicker.ai.md',
+    examples: [
+      {
+        title: '基础用法',
+        code: `const [d, setD] = useState('');
+<DatePicker value={d} onChange={(v) => setD(v)} placeholder="选择日期" />`,
+      },
+      {
+        title: '范围与尺寸',
+        code: `<Stack gap="md" className="max-w-md w-full">
+  <DatePicker
+    min="2026-01-01"
+    max="2026-12-31"
+    placeholder="2026 年内"
+  />
+  <DatePicker size="sm" color="primary" placeholder="小号主色环" />
+</Stack>`,
+      },
+      {
+        title: '与 FormField',
+        code: `<FormField label="截止日期" required className="max-w-md w-full">
+  <DatePicker name="due" placeholder="请选择" />
+</FormField>`,
+      },
     ],
   },
   {
@@ -142,7 +183,7 @@ export const componentDocs: ComponentDoc[] = [
     title: 'FormField / Label 表单项',
     category: '表单',
     description:
-      'FormField：标签、单控件槽、说明与错误；与 Input / Textarea / Select / Switch 联用注入 color=error；与 CheckboxGroup / RadioGroup 注入 invalid 与 aria-labelledby。',
+      'FormField：标签、单控件槽、说明与错误；与 Input / Textarea / Select / Switch / DatePicker 联用注入 color=error；与 CheckboxGroup / RadioGroup 注入 invalid 与 aria-labelledby。',
     aiDocPath: '/src/components/FormField/FormField.ai.md',
     examples: [
       {

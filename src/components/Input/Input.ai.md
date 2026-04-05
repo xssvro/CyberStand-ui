@@ -21,7 +21,7 @@ const [value, setValue] = useState('');
 | `defaultValue` | `string` | - | 默认值（非受控） |
 | `onChange` | `(value, event) => void` | - | 值变化回调 |
 | `placeholder` | `string` | - | 占位提示文字 |
-| `type` | `'text' \| 'password' \| 'email' \| 'number' \| 'tel' \| 'url' \| 'search'` | `'text'` | 输入类型 |
+| `type` | `'text' \| 'password' \| … \| 'date' \| 'datetime-local' \| 'time' \| 'month' \| 'week'` | `'text'` | 输入类型；日期/时间类**不显示**右侧原生日历/时钟图标（样式已隐藏），仍以 `accent-color` 主色修饰控件内部；要点选月历请用 **`DatePicker`**。 |
 | `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | 尺寸 |
 | `color` | `'default' \| 'primary' \| 'secondary' \| 'success' \| 'warning' \| 'error' \| 'info'` | `'default'` | 聚焦时的主题色 |
 | `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'` | 圆角 |
@@ -36,6 +36,7 @@ const [value, setValue] = useState('');
 | `name` | `string` | - | 表单 name 属性 |
 | `autoComplete` | `string` | **`off`** | 未传时默认关闭浏览器自动填充；登录等场景可显式传 `username`、`current-password` 等 |
 | `pattern` | `string` | - | 正则验证模式 |
+| `min` / `max` / `step` | `string` | - | 原生属性；`date` / `time` / `datetime-local` 等常用 `min`/`max` 限制可选范围 |
 | `className` | `string` | - | 自定义类名 |
 | `style` | `CSSProperties` | - | 自定义样式 |
 
@@ -87,7 +88,17 @@ const [showPwd, setShowPwd] = useState(false);
 <Input color="warning" placeholder="需要注意" />
 ```
 
-### 4. 搜索输入框
+### 4. 日期与时间（无右侧原生图标）
+
+`type="date"`、`datetime-local`、`month`、`week`、`time` 仍使用浏览器原生控件与值格式，但 **WebKit / Firefox 下的日历、时钟按钮已用 CSS 隐藏**，避免与自定义样式「叠两套图标」。内部仍设 `accent-color: var(--su-primary-500)` 以贴近主题（各浏览器可见部分略有差异）。需要**可点击的月历弹层**请用 **`DatePicker`**。
+
+```tsx
+<Input type="date" name="start" />
+<Input type="datetime-local" name="at" />
+<Input type="date" min="2026-01-01" max="2026-12-31" />
+```
+
+### 5. 搜索输入框
 ```tsx
 <Input
   type="search"
@@ -101,7 +112,7 @@ const [showPwd, setShowPwd] = useState(false);
 />
 ```
 
-### 5. 带标签的输入框（配合布局）
+### 6. 带标签的输入框（配合布局）
 ```tsx
 <div className="flex flex-col gap-1">
   <label className="text-sm text-gray-600">邮箱</label>
