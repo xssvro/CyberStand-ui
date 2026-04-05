@@ -23,7 +23,8 @@ const [open, setOpen] = useState(false);
 ## 行为说明
 
 - **Portal**：默认 `document.body`；`z-index` 为 **`--su-z-drawer`**（与 Modal 同级，后打开者在上层）。
-- **遮罩**：与 Modal 相同语义；`mask={false}` 时无底色与模糊，仍保留透明全屏层，可配合 `maskClosable`。
+- **遮罩**：与 Modal 相同语义；**不出现淡入淡出**，遮罩与模糊为即时显示。面板为 **translate 滑入 / 滑出**；打开时首帧闭合再下一帧加打开类以触发过渡；**关闭时**在 `open=false` 后仍短暂挂载 Portal，去掉打开类滑出，在 **`transitionend`（`transform`）** 或超时兜底后再卸载。
+- **`prefers-reduced-motion: reduce`**：跳过滑入/滑出，关闭时立即卸载。
 - **键盘**：`Escape` 关闭；`Tab` 在面板内循环。
 - **滚动**：与 Modal 共用 **`useOverlayScrollLock`**，锁定 `html` / `body` 及 **`[data-su-scroll-lock]`**（文档站主内容已挂载）。
 - **placement**：`left` | `right` | `top` | `bottom`，默认 `right`。左右用 **`width`**，上下用 **`height`**。

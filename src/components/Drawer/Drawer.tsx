@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useId, useRef } from 'react';
+import React, { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { getRadiusVar } from '../../core/stand';
 import { useOverlayScrollLock } from '../overlay/useOverlayScrollLock';
@@ -90,6 +90,10 @@ export const Drawer: React.FC<DrawerProps> = ({
 }) => {
   const titleId = useId();
   const panelRef = useRef<HTMLElement>(null);
+  /** Portal 是否在 DOM：打开时为 true，关闭后在滑出结束后再置 false */
+  const [mounted, setMounted] = useState(false);
+  /** 面板是否处于「展开」位姿（用于 CSS transform 过渡：打开先入画再滑入，关闭先滑出再卸载） */
+  const [panelEntered, setPanelEntered] = useState(false);
 
   const requestClose = useCallback(() => {
     onOpenChange?.(false);
@@ -100,10 +104,69 @@ export const Drawer: React.FC<DrawerProps> = ({
     afterOpenChange?.(open);
   }, [open, afterOpenChange]);
 
-  useOverlayScrollLock(open);
+  useOverlayScrollLock(open || mounted);
+
+  useLayoutEffect(() => {
+    if (!open) return;
+
+    setMounted(true);
+
+    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setPanelEntered(true);
+      return;
+    }
+
+    setPanelEntered(false);
+    let raf2 = 0;
+    const raf1 = window.requestAnimationFrame(() => {
+      raf2 = window.requestAnimationFrame(() => {
+        setPanelEntered(true);
+      });
+    });
+    return () => {
+      window.cancelAnimationFrame(raf1);
+      window.cancelAnimationFrame(raf2);
+    };
+  }, [open]);
+
+  useLayoutEffect(() => {
+    if (open) return;
+    if (!mounted) return;
+
+    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setMounted(false);
+      setPanelEntered(false);
+      return;
+    }
+
+    setPanelEntered(false);
+  }, [open, mounted]);
 
   useEffect(() => {
-    if (!open) return;
+    if (open || !mounted) return;
+    if (panelEntered) return;
+    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
+
+    const id = window.setTimeout(() => {
+      setMounted(false);
+    }, 400);
+    return () => window.clearTimeout(id);
+  }, [open, mounted, panelEntered]);
+
+  const onPanelTransitionEnd = useCallback(
+    (e: React.TransitionEvent<HTMLElement>) => {
+      if (e.target !== e.currentTarget) return;
+      if (e.propertyName !== 'transform' && e.propertyName !== '-webkit-transform') return;
+      if (open) return;
+      setMounted(false);
+    },
+    [open],
+  );
+
+  useEffect(() => {
+    if (!open || !panelEntered) return;
     const root = panelRef.current;
     if (!root) return;
 
@@ -157,7 +220,7 @@ export const Drawer: React.FC<DrawerProps> = ({
         previousFocus.focus({ preventScroll: true });
       }
     };
-  }, [open, keyboard, requestClose]);
+  }, [open, panelEntered, keyboard, requestClose]);
 
   const container =
     typeof getContainer === 'function' ? getContainer() : getContainer ?? document.body;
@@ -229,14 +292,14 @@ export const Drawer: React.FC<DrawerProps> = ({
 
   const panelClass =
     placement === 'left'
-      ? joinClasses(styles.panel, styles.panelLeft, open && styles.panelLeftOpen)
+      ? joinClasses(styles.panel, styles.panelLeft, panelEntered && styles.panelLeftOpen)
       : placement === 'top'
-        ? joinClasses(styles.panel, styles.panelTop, open && styles.panelTopOpen)
+        ? joinClasses(styles.panel, styles.panelTop, panelEntered && styles.panelTopOpen)
         : placement === 'bottom'
-          ? joinClasses(styles.panel, styles.panelBottom, open && styles.panelBottomOpen)
-          : joinClasses(styles.panel, styles.panelRight, open && styles.panelRightOpen);
+          ? joinClasses(styles.panel, styles.panelBottom, panelEntered && styles.panelBottomOpen)
+          : joinClasses(styles.panel, styles.panelRight, panelEntered && styles.panelRightOpen);
 
-  if (!open) return null;
+  if (!open && !mounted) return null;
 
   const node = (
     <div className={joinClasses(styles.root, className)} style={zStyle}>
@@ -244,7 +307,7 @@ export const Drawer: React.FC<DrawerProps> = ({
         className={joinClasses(styles.backdrop, !mask && styles.backdropPlain)}
         aria-hidden
         onMouseDown={(e) => {
-          if (!maskClosable) return;
+          if (!maskClosable || !open) return;
           if (e.target === e.currentTarget) {
             requestClose();
           }
@@ -261,6 +324,7 @@ export const Drawer: React.FC<DrawerProps> = ({
           className={joinClasses(panelClass, panelClassName)}
           style={{ ...panelVars, ...radiusStyle }}
           onMouseDown={(e) => e.stopPropagation()}
+          onTransitionEnd={onPanelTransitionEnd}
         >
           {showHeader ? (
             <div
