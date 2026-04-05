@@ -64,7 +64,7 @@ export const Layout: React.FC = () => {
           ))}
         </nav>
       </aside>
-      <main className="docs-main">
+      <main className="docs-main" data-su-scroll-lock>
         <Outlet />
       </main>
       <Toaster />

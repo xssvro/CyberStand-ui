@@ -1,9 +1,26 @@
 /* CyberStand UI 文档（变量来自 core/vars.css；浅色默认，data-theme=dark 为夜城） */
 
+/* 整页高度交给 #root；纵向滚动只在 .docs-main，避免 html 上常驻滚动条占位（不用 scrollbar-gutter: stable） */
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+  min-height: 100%;
+}
+
 /* ========== 布局 ========== */
 .docs-layout {
   display: flex;
-  min-height: 100vh;
+  flex-direction: column;
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
   background: var(--su-bg-page);
 }
 
@@ -271,10 +288,12 @@
 
 .docs-main {
   flex: 1;
+  min-height: 0;
   margin-left: 260px;
   min-width: 0;
   width: calc(100% - 260px);
-  min-height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
   background: var(--su-bg-default);
   box-shadow: inset 1px 0 0 var(--su-border-subtle);
   display: flex;
@@ -282,6 +301,49 @@
   align-items: center;
   padding: 32px 40px 48px;
   box-sizing: border-box;
+  /* Firefox：细滚动条，尽量不抢眼 */
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--su-text-muted) 38%, transparent) transparent;
+}
+
+/* WebKit：细轨道，悬停主内容区时再显示滑块（叠加感，少占视觉宽度） */
+.docs-main::-webkit-scrollbar {
+  width: 8px;
+}
+
+.docs-main::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.docs-main::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background-color: transparent;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.docs-main:hover::-webkit-scrollbar-thumb,
+.docs-main:focus-within::-webkit-scrollbar-thumb {
+  background-color: color-mix(in srgb, var(--su-text-muted) 42%, transparent);
+}
+
+[data-theme='dark'] .docs-main {
+  scrollbar-color: color-mix(in srgb, var(--su-text-muted) 45%, transparent) transparent;
+}
+
+[data-theme='dark'] .docs-main:hover::-webkit-scrollbar-thumb,
+[data-theme='dark'] .docs-main:focus-within::-webkit-scrollbar-thumb {
+  background-color: color-mix(in srgb, var(--su-gray-400) 50%, transparent);
+}
+
+@media (hover: none) {
+  .docs-main::-webkit-scrollbar-thumb {
+    background-color: color-mix(in srgb, var(--su-text-muted) 42%, transparent);
+  }
+
+  [data-theme='dark'] .docs-main::-webkit-scrollbar-thumb {
+    background-color: color-mix(in srgb, var(--su-gray-400) 50%, transparent);
+  }
 }
 
 /** 右侧正文：在可用宽度内水平居中，最大 900px */

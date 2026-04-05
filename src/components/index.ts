@@ -40,6 +40,9 @@ export type { InputProps } from './Input';
 export { DatePicker } from './DatePicker';
 export type { DatePickerProps } from './DatePicker';
 
+export { Modal, Modal as Dialog, MODAL_SCROLL_LOCK_SELECTOR } from './Modal';
+export type { ModalProps, ModalSize } from './Modal';
+
 export { FormField, Label } from './FormField';
 export type { FormFieldLayout, FormFieldProps, LabelProps } from './FormField';
 

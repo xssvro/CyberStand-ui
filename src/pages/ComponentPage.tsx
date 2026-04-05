@@ -20,6 +20,7 @@ import { Form } from '../components/Form';
 import { FormSection } from '../components/FormSection';
 import { Card } from '../components/Card';
 import { Loading } from '../components/Loading';
+import { Modal } from '../components/Modal';
 import { Progress } from '../components/Progress';
 import { Result } from '../components/Result';
 import { Skeleton } from '../components/Skeleton';
@@ -56,6 +57,7 @@ import TagAiMd from '../components/Tag/Tag.ai.md?raw';
 import FormSectionAiMd from '../components/FormSection/FormSection.ai.md?raw';
 import FormAiMd from '../components/Form/Form.ai.md?raw';
 import LoadingAiMd from '../components/Loading/Loading.ai.md?raw';
+import ModalAiMd from '../components/Modal/Modal.ai.md?raw';
 import ProgressAiMd from '../components/Progress/Progress.ai.md?raw';
 import SkeletonAiMd from '../components/Skeleton/Skeleton.ai.md?raw';
 
@@ -314,6 +316,113 @@ function DatePickerDocDemo({ idx }: { idx: number }) {
         <FormField label="截止日期" required className="max-w-md w-full">
           <DatePicker name="due" placeholder="请选择" />
         </FormField>
+      );
+    default:
+      return (
+        <Typography variant="body" color="muted">
+          无该示例索引
+        </Typography>
+      );
+  }
+}
+
+function ModalDocDemo({ idx }: { idx: number }) {
+  const [open, setOpen] = useState(false);
+  const [openSm, setOpenSm] = useState(false);
+  const [openWide, setOpenWide] = useState(false);
+  const [openTop, setOpenTop] = useState(false);
+  const [openNoMask, setOpenNoMask] = useState(false);
+
+  switch (idx) {
+    case 0:
+      return (
+        <div className="example-preview-inner">
+          <Button type="button" onClick={() => setOpen(true)}>
+            打开对话框
+          </Button>
+          <Modal
+            open={open}
+            onOpenChange={setOpen}
+            title="确认操作"
+            footer={
+              <>
+                <Button variant="ghost" size="sm" type="button" onClick={() => setOpen(false)}>
+                  取消
+                </Button>
+                <Button color="primary" size="sm" type="button" onClick={() => setOpen(false)}>
+                  确定
+                </Button>
+              </>
+            }
+          >
+            <Typography variant="body" noMargin>
+              确定要执行该操作吗？
+            </Typography>
+          </Modal>
+        </div>
+      );
+    case 1:
+      return (
+        <Stack gap="sm" className="max-w-md w-full">
+          <Button type="button" size="sm" variant="soft" onClick={() => setOpenSm(true)}>
+            小号 Modal
+          </Button>
+          <Modal open={openSm} onOpenChange={setOpenSm} title="小号" size="sm">
+            <Typography variant="bodySmall" color="muted" noMargin>
+              size=&quot;sm&quot; 最大宽度约 400px。
+            </Typography>
+          </Modal>
+          <Button type="button" size="sm" variant="soft" onClick={() => setOpenWide(true)}>
+            宽度 640px
+          </Button>
+          <Modal open={openWide} onOpenChange={setOpenWide} title="自定义宽度" width={640}>
+            <Typography variant="bodySmall" color="muted" noMargin>
+              width=&#123;640&#125;
+            </Typography>
+          </Modal>
+        </Stack>
+      );
+    case 2:
+      return (
+        <div className="example-preview-inner">
+          <Button type="button" variant="soft" onClick={() => setOpenTop(true)}>
+            靠上 + 禁止点遮罩关闭
+          </Button>
+          <Modal
+            open={openTop}
+            onOpenChange={setOpenTop}
+            title="靠上"
+            centered={false}
+            maskClosable={false}
+          >
+            <Typography variant="body" noMargin>
+              仅关闭钮或 Esc 可关。
+            </Typography>
+          </Modal>
+        </div>
+      );
+    case 3:
+      return (
+        <div className="example-preview-inner">
+          <Button type="button" variant="soft" onClick={() => setOpenNoMask(true)}>
+            非遮罩模式
+          </Button>
+          <Modal
+            open={openNoMask}
+            onOpenChange={setOpenNoMask}
+            title="无遮罩"
+            mask={false}
+            footer={
+              <Button size="sm" type="button" onClick={() => setOpenNoMask(false)}>
+                知道了
+              </Button>
+            }
+          >
+            <Typography variant="bodySmall" color="muted" noMargin>
+              无半透明与模糊；仍锁定背后滚动。点面板外空白可关闭。
+            </Typography>
+          </Modal>
+        </div>
       );
     default:
       return (
@@ -634,6 +743,7 @@ const componentMap: Record<string, React.ElementType> = {
   FormField,
   Card,
   Toast: ToastDocPlaceholder,
+  Modal,
   Typography,
   Divider,
   AspectRatio,
@@ -665,6 +775,7 @@ const aiDocMap: Record<string, string> = {
   FormField: FormFieldAiMd,
   Card: CardAiMd,
   Toast: ToastAiMd,
+  Modal: ModalAiMd,
   Typography: TypographyAiMd,
   Divider: DividerAiMd,
   AspectRatio: AspectRatioAiMd,
@@ -1650,6 +1761,7 @@ export const ComponentPage: React.FC = () => {
         {doc.name === 'Textarea' && <TextareaDocDemo idx={idx} />}
         {doc.name === 'Select' && <SelectDocDemo idx={idx} />}
         {doc.name === 'DatePicker' && <DatePickerDocDemo idx={idx} />}
+        {doc.name === 'Modal' && <ModalDocDemo idx={idx} />}
         {doc.name === 'Checkbox' && <CheckboxDocDemo idx={idx} />}
         {doc.name === 'Radio' && <RadioDocDemo idx={idx} />}
         {doc.name === 'Switch' && <SwitchDocDemo idx={idx} />}

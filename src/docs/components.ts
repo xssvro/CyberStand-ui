@@ -679,6 +679,68 @@ toast.info('提示');`,
     ],
   },
   {
+    name: 'Modal',
+    title: 'Modal / Dialog 对话框',
+    category: '反馈',
+    description:
+      '阻断式弹层：Portal、可选遮罩（mask）、主色阴影面板；Esc/遮罩或透明层/关闭钮、焦点陷阱与滚动锁定；z-index 为 --su-z-modal',
+    aiDocPath: '/src/components/Modal/Modal.ai.md',
+    examples: [
+      {
+        title: '基础：标题 + 正文 + 底栏',
+        code: `const [open, setOpen] = useState(false);
+
+<>
+  <Button type="button" onClick={() => setOpen(true)}>打开对话框</Button>
+  <Modal
+    open={open}
+    onOpenChange={setOpen}
+    title="确认操作"
+    footer={
+      <>
+        <Button variant="ghost" size="sm" type="button" onClick={() => setOpen(false)}>取消</Button>
+        <Button color="primary" size="sm" type="button" onClick={() => setOpen(false)}>确定</Button>
+      </>
+    }
+  >
+    <Typography variant="body" noMargin>确定要执行该操作吗？</Typography>
+  </Modal>
+</>`,
+      },
+      {
+        title: '尺寸与宽度',
+        code: `<Modal open={open} onOpenChange={setOpen} title="小号" size="sm">内容</Modal>
+<Modal open={open2} onOpenChange={setOpen2} title="自定义宽度" width={640}>宽面板</Modal>`,
+      },
+      {
+        title: '靠上展示 / 禁止点遮罩关闭',
+        code: `<Modal
+  open={open}
+  onOpenChange={setOpen}
+  title="靠上"
+  centered={false}
+  maskClosable={false}
+>
+  仅能通过关闭钮或 Esc 关闭（keyboard 默认开启）
+</Modal>`,
+      },
+      {
+        title: '非遮罩模式（无半透明底）',
+        code: `<Modal
+  open={open}
+  onOpenChange={setOpen}
+  title="无遮罩"
+  mask={false}
+  footer={<Button size="sm" type="button" onClick={() => setOpen(false)}>知道了</Button>}
+>
+  <Typography variant="bodySmall" color="muted" noMargin>
+    无模糊暗色底，仍锁定背后滚动；点空白处可关（maskClosable 默认 true）。
+  </Typography>
+</Modal>`,
+      },
+    ],
+  },
+  {
     name: 'Badge',
     title: 'Badge 角标',
     category: '反馈',
