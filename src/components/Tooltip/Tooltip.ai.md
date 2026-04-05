@@ -28,7 +28,7 @@ import { Button } from 'stand-ui/components/Button';
 |------|------|--------|------|
 | `title` | `React.ReactNode` | （必填） | 提示内容；空字符串不渲染气泡 |
 | `children` | `React.ReactNode` | （必填） | 触发区域 |
-| `placement` | `'top' \| 'bottom' \| 'left' \| 'right'` | `'top'` | 相对触发器优先方位 |
+| `placement` | `top` / `bottom` / `left` / `right` | `top` | 相对触发器优先方位 |
 | `disabled` | `boolean` | `false` | 为 true 时不显示 |
 | `mouseEnterDelay` | `number` | `100` | 显示前延迟（ms） |
 | `mouseLeaveDelay` | `number` | `60` | 隐藏前延迟（ms） |

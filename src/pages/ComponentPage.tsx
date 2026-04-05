@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { componentDocs, type Example } from '../docs/components';
 import { Alert, type AlertVariant } from '../components/Alert';
@@ -1181,9 +1181,13 @@ export const ComponentPage: React.FC = () => {
   const { name } = useParams<{ name: string }>();
   const [activeExample, setActiveExample] = useState(0);
 
-  const doc = componentDocs.find(d => d.name === name);
-  const Component = name ? componentMap[name] : null;
-  const aiDoc = name ? aiDocMap[name] || '' : '';
+  const doc = useMemo(
+    () => (name ? componentDocs.find((d) => d.name.toLowerCase() === name.toLowerCase()) : undefined),
+    [name],
+  );
+  const mapKey = doc?.name ?? '';
+  const Component = mapKey ? componentMap[mapKey] : null;
+  const aiDoc = mapKey ? aiDocMap[mapKey] || '' : '';
 
   if (!doc || !Component) {
     return <div>组件未找到</div>;

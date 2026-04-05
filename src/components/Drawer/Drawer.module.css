@@ -67,6 +67,7 @@
   margin: 0;
   padding: 0;
   border: 1px solid var(--su-border-subtle);
+  border-radius: 0;
   background: var(--su-bg-elevated);
   color: var(--su-text-default);
   box-shadow: var(--su-shadow-lg);
@@ -172,7 +173,7 @@
   margin: -6px -8px 0 0;
   padding: 0;
   border: none;
-  border-radius: max(2px, calc(var(--su-drawer-radius, 8px) - 2px));
+  border-radius: max(2px, calc(var(--su-radius-sm, 6px) - 2px));
   background: transparent;
   color: var(--su-text-muted);
   cursor: pointer;

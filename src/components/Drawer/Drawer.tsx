@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { getRadiusVar } from '../../core/stand';
 import { useOverlayScrollLock } from '../overlay/useOverlayScrollLock';
 import styles from './Drawer.module.css';
 
@@ -40,7 +39,6 @@ export interface DrawerProps {
   width?: number | string;
   /** 上下抽屉高度 */
   height?: number | string;
-  radius?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
   className?: string;
   panelClassName?: string;
   getContainer?: HTMLElement | (() => HTMLElement);
@@ -81,7 +79,6 @@ export const Drawer: React.FC<DrawerProps> = ({
   placement = 'right',
   width,
   height,
-  radius = 'lg',
   className,
   panelClassName,
   getContainer,
@@ -225,7 +222,6 @@ export const Drawer: React.FC<DrawerProps> = ({
   const container =
     typeof getContainer === 'function' ? getContainer() : getContainer ?? document.body;
 
-  const radiusVar = getRadiusVar(radius);
   const zStyle =
     zIndexProp !== undefined ? ({ zIndex: zIndexProp } as React.CSSProperties) : undefined;
 
@@ -246,49 +242,8 @@ export const Drawer: React.FC<DrawerProps> = ({
 
   const panelVars =
     placement === 'left' || placement === 'right'
-      ? ({
-          '--su-drawer-radius': radiusVar,
-          '--su-drawer-width': wStr,
-        } as React.CSSProperties)
-      : ({
-          '--su-drawer-radius': radiusVar,
-          '--su-drawer-height': hStr,
-        } as React.CSSProperties);
-
-  const radiusStyle = ((): React.CSSProperties => {
-    const r = radiusVar;
-    switch (placement) {
-      case 'right':
-        return {
-          borderTopLeftRadius: r,
-          borderBottomLeftRadius: r,
-          borderTopRightRadius: 0,
-          borderBottomRightRadius: 0,
-        };
-      case 'left':
-        return {
-          borderTopRightRadius: r,
-          borderBottomRightRadius: r,
-          borderTopLeftRadius: 0,
-          borderBottomLeftRadius: 0,
-        };
-      case 'top':
-        return {
-          borderBottomLeftRadius: r,
-          borderBottomRightRadius: r,
-          borderTopLeftRadius: 0,
-          borderTopRightRadius: 0,
-        };
-      case 'bottom':
-      default:
-        return {
-          borderTopLeftRadius: r,
-          borderTopRightRadius: r,
-          borderBottomLeftRadius: 0,
-          borderBottomRightRadius: 0,
-        };
-    }
-  })();
+      ? ({ '--su-drawer-width': wStr } as React.CSSProperties)
+      : ({ '--su-drawer-height': hStr } as React.CSSProperties);
 
   const panelClass =
     placement === 'left'
@@ -322,7 +277,7 @@ export const Drawer: React.FC<DrawerProps> = ({
           aria-label={!hasTitle ? '抽屉' : undefined}
           tabIndex={-1}
           className={joinClasses(panelClass, panelClassName)}
-          style={{ ...panelVars, ...radiusStyle }}
+          style={panelVars}
           onMouseDown={(e) => e.stopPropagation()}
           onTransitionEnd={onPanelTransitionEnd}
         >
