@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { componentDocs, type Example } from '../docs/components';
+import { Alert, type AlertVariant } from '../components/Alert';
 import { Badge } from '../components/Badge';
 import { Button } from '../components/Button';
+import { Callout } from '../components/Callout';
 import { FormField, Label } from '../components/FormField';
 import { Checkbox, CheckboxGroup } from '../components/Checkbox';
 import { Input } from '../components/Input';
@@ -26,10 +28,12 @@ import { Flex, Grid, Space, Stack } from '../components/Layout';
 import { IconDataNode, IconSearch } from '../icons';
 
 // 导入 AI 文档内容
+import AlertAiMd from '../components/Alert/Alert.ai.md?raw';
 import BadgeAiMd from '../components/Badge/Badge.ai.md?raw';
 import ButtonAiMd from '../components/Button/Button.ai.md?raw';
 import InputAiMd from '../components/Input/Input.ai.md?raw';
 import FormFieldAiMd from '../components/FormField/FormField.ai.md?raw';
+import CalloutAiMd from '../components/Callout/Callout.ai.md?raw';
 import CardAiMd from '../components/Card/Card.ai.md?raw';
 import ToastAiMd from '../components/Toast/Toast.ai.md?raw';
 import TypographyAiMd from '../components/Typography/Typography.ai.md?raw';
@@ -79,6 +83,86 @@ function LoadingFullscreenDemo() {
         演示全屏加载约 2 秒
       </Button>
       {visible ? <Loading fullscreen tip="请稍候…" /> : null}
+    </Stack>
+  );
+}
+
+const ALERT_DEMO_BY_VARIANT: Record<AlertVariant, { title: string; children: string }> = {
+  info: { title: '提示', children: '配置已缓存，刷新页面后生效。' },
+  success: { title: '完成', children: '已成功保存草稿。' },
+  warning: { title: '注意', children: '免费额度将在 3 天后重置。' },
+  error: { title: '错误', children: '无法连接服务器，请稍后重试。' },
+};
+
+/** Alert 四种语义：点击按钮后再展示（与 Toast 演示一致，贴近真实「事件后出提示」） */
+function AlertDemoFourKinds() {
+  const [kind, setKind] = useState<AlertVariant | null>(null);
+  return (
+    <Stack gap="md" className="max-w-lg w-full">
+      <Typography variant="caption" color="muted" noMargin>
+        点击下方按钮触发对应语义的 Alert。
+      </Typography>
+      <Space wrap size="sm">
+        <Button type="button" size="sm" variant={kind === 'info' ? 'solid' : 'soft'} color="info" onClick={() => setKind('info')}>
+          信息
+        </Button>
+        <Button type="button" size="sm" variant={kind === 'success' ? 'solid' : 'soft'} color="success" onClick={() => setKind('success')}>
+          成功
+        </Button>
+        <Button type="button" size="sm" variant={kind === 'warning' ? 'solid' : 'soft'} color="warning" onClick={() => setKind('warning')}>
+          警告
+        </Button>
+        <Button type="button" size="sm" variant={kind === 'error' ? 'solid' : 'soft'} color="error" onClick={() => setKind('error')}>
+          错误
+        </Button>
+      </Space>
+      {kind ? (
+        <Alert variant={kind} title={ALERT_DEMO_BY_VARIANT[kind].title} className="w-full">
+          {ALERT_DEMO_BY_VARIANT[kind].children}
+        </Alert>
+      ) : null}
+    </Stack>
+  );
+}
+
+/** 先点击展示，关闭后需再次点击 */
+function AlertDemoClosable() {
+  const [visible, setVisible] = useState(false);
+  return (
+    <Stack gap="sm" className="max-w-lg w-full">
+      {!visible ? (
+        <Button type="button" size="sm" variant="soft" onClick={() => setVisible(true)}>
+          显示可关闭提示
+        </Button>
+      ) : (
+        <Alert
+          variant="info"
+          closable
+          onClose={() => setVisible(false)}
+          title="可关闭"
+          className="w-full"
+        >
+          点击右侧 × 关闭；关闭后可再次点击「显示可关闭提示」重新展示。
+        </Alert>
+      )}
+    </Stack>
+  );
+}
+
+function AlertDemoBanner() {
+  const [show, setShow] = useState(false);
+  return (
+    <Stack gap="sm" className="max-w-lg w-full">
+      <Button type="button" size="sm" variant="soft" onClick={() => setShow(true)}>
+        显示通栏错误（role=&quot;alert&quot;）
+      </Button>
+      {show ? (
+        <div className="w-full overflow-hidden rounded-md border border-[var(--su-border-subtle)]">
+          <Alert variant="error" role="alert" banner title="提交失败">
+            请修正标红字段后再试。（仅关键错误使用 alert）
+          </Alert>
+        </div>
+      ) : null}
     </Stack>
   );
 }
@@ -520,6 +604,8 @@ const componentMap: Record<string, React.ElementType> = {
   Loading,
   Progress,
   Skeleton,
+  Alert,
+  Callout,
   Layout: LayoutDocPlaceholder,
 };
 
@@ -546,6 +632,8 @@ const aiDocMap: Record<string, string> = {
   Loading: LoadingAiMd,
   Progress: ProgressAiMd,
   Skeleton: SkeletonAiMd,
+  Alert: AlertAiMd,
+  Callout: CalloutAiMd,
   Layout: LayoutAiMd,
 };
 
@@ -1677,6 +1765,47 @@ export const ComponentPage: React.FC = () => {
               <Stack gap="md" className="w-full">
                 <Skeleton variant="rect" height={96} rounded />
                 <Skeleton variant="rect" height={40} active={false} />
+              </Stack>
+            )}
+          </div>
+        )}
+        {doc.name === 'Alert' && (
+          <div className="example-preview-inner flex flex-col gap-4 max-w-lg w-full">
+            {idx === 0 && <AlertDemoFourKinds />}
+            {idx === 1 && <AlertDemoClosable />}
+            {idx === 2 && <AlertDemoBanner />}
+          </div>
+        )}
+        {doc.name === 'Callout' && (
+          <div className="example-preview-inner flex flex-col gap-4 max-w-lg w-full">
+            {idx === 0 && (
+              <Stack gap="sm" className="w-full">
+                <Callout intent="default" title="说明">
+                  中性补充，不参与表单校验反馈。
+                </Callout>
+                <Callout intent="info" title="提示">
+                  该字段会展示在公开资料页。
+                </Callout>
+                <Callout intent="warning" title="注意">
+                  删除后 30 天内可从回收站恢复。
+                </Callout>
+              </Stack>
+            )}
+            {idx === 1 && (
+              <Callout intent="success" className="w-full">
+                纯正文说明块，左侧仍为成功色强调条。
+              </Callout>
+            )}
+            {idx === 2 && (
+              <Stack gap="md" className="w-full">
+                <Typography variant="body" noMargin>
+                  下文为接口约定摘要。
+                </Typography>
+                <Callout intent="info" title="API">
+                  <Typography variant="bodySmall" noMargin>
+                    所有时间戳均为 UTC ISO-8601。
+                  </Typography>
+                </Callout>
               </Stack>
             )}
           </div>

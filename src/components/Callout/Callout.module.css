@@ -1,0 +1,66 @@
+.root {
+  margin: 0;
+  padding: 12px 14px 12px 16px;
+  border-radius: var(--su-radius, 5px);
+  border: 1px solid var(--callout-border);
+  border-left-width: 4px;
+  border-left-color: var(--callout-accent);
+  background: var(--callout-bg);
+  color: var(--su-text-default);
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.title {
+  font-size: var(--su-type-caption-size);
+  line-height: var(--su-type-caption-line);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--callout-accent);
+  margin-bottom: 6px;
+}
+
+.content {
+  font-size: var(--su-type-body-sm-size);
+  line-height: var(--su-type-body-line);
+  color: var(--su-text-muted);
+}
+
+.content :where(p) {
+  margin: 0;
+}
+
+.content :where(p + p) {
+  margin-top: 0.5em;
+}
+
+.default {
+  --callout-accent: var(--su-text-muted);
+  --callout-bg: color-mix(in srgb, var(--su-bg-muted) 65%, var(--su-bg-elevated));
+  --callout-border: var(--su-border-subtle);
+}
+
+.info {
+  --callout-accent: var(--su-info-600);
+  --callout-bg: color-mix(in srgb, var(--su-info-500) 10%, var(--su-bg-elevated));
+  --callout-border: color-mix(in srgb, var(--su-info-500) 18%, var(--su-border-subtle));
+}
+
+.success {
+  --callout-accent: var(--su-success-600);
+  --callout-bg: color-mix(in srgb, var(--su-success-500) 10%, var(--su-bg-elevated));
+  --callout-border: color-mix(in srgb, var(--su-success-500) 18%, var(--su-border-subtle));
+}
+
+.warning {
+  --callout-accent: var(--su-warning-600);
+  --callout-bg: color-mix(in srgb, var(--su-warning-500) 10%, var(--su-bg-elevated));
+  --callout-border: color-mix(in srgb, var(--su-warning-500) 18%, var(--su-border-subtle));
+}
+
+.error {
+  --callout-accent: var(--su-error-600);
+  --callout-bg: color-mix(in srgb, var(--su-error-500) 10%, var(--su-bg-elevated));
+  --callout-border: color-mix(in srgb, var(--su-error-500) 18%, var(--su-border-subtle));
+}

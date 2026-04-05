@@ -43,8 +43,8 @@
 
 | # | 项 | 状态 | 备注 |
 |---|----|------|------|
-| 7 | **`Alert`**（`variant`：info/success/warning/error；标题+描述；可关闭；`role="alert"` 慎用） | **未开始** | 默认信息提示可用 **`role="status"`**；真正紧急错误再考虑 `alert` |
-| 8 | **`Callout`**（侧色条 / 左边框强调；比 Alert 更「文档/说明」向，可选无图标） | **未开始** | 与 Alert 二选一上线亦可：先 Alert 后 Callout，或合并为 Alert `appearance="callout"` |
+| 7 | **`Alert`**（`variant`：info/success/warning/error；标题+描述；可关闭；`role="alert"` 慎用） | **已完成** | 默认 **`role="status"`**；`banner` 通栏 |
+| 8 | **`Callout`**（侧色条、`aside`、说明向小标题） | **已完成** | 与 **Alert** 并存；无关闭、非 `alert` 角色 |
 
 ---
 
@@ -94,5 +94,5 @@
 
 ## 下一步建议
 
-1. 第三阶段：**Alert**、**Callout**（或合并为 Alert 的 `appearance`）。  
-2. **Alert** 与 **Callout** 若高度重叠，可先实现 **Alert + `variant`/`layout`**，再拆 Callout，避免两套并行维护。
+1. 第四阶段：**Empty**、**Result**。  
+2. 工程项：按需修复 **Form** 与 `FormInstance` 类型对齐，保证 `tsc -b` 通过。

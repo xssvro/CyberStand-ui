@@ -872,6 +872,114 @@ useEffect(() => {
     ],
   },
   {
+    name: 'Alert',
+    title: 'Alert 提示条',
+    category: '反馈',
+    description:
+      '页内常驻提示：variant 语义色、可选标题与关闭；默认 role=status，慎用 role=alert。与 Toast 区分见 Alert.ai.md。',
+    aiDocPath: '/src/components/Alert/Alert.ai.md',
+    examples: [
+      {
+        title: '四种语义（点击触发）',
+        code: `const [kind, setKind] = useState<AlertVariant | null>(null);
+const text: Record<AlertVariant, { title: string; children: string }> = {
+  info: { title: '提示', children: '配置已缓存，刷新页面后生效。' },
+  success: { title: '完成', children: '已成功保存草稿。' },
+  warning: { title: '注意', children: '免费额度将在 3 天后重置。' },
+  error: { title: '错误', children: '无法连接服务器，请稍后重试。' },
+};
+
+<Stack gap="md" className="max-w-lg w-full">
+  <Space wrap size="sm">
+    <Button size="sm" color="info" onClick={() => setKind('info')}>信息</Button>
+    <Button size="sm" color="success" onClick={() => setKind('success')}>成功</Button>
+    <Button size="sm" color="warning" onClick={() => setKind('warning')}>警告</Button>
+    <Button size="sm" color="error" onClick={() => setKind('error')}>错误</Button>
+  </Space>
+  {kind ? (
+    <Alert variant={kind} title={text[kind].title}>
+      {text[kind].children}
+    </Alert>
+  ) : null}
+</Stack>`,
+      },
+      {
+        title: '可关闭',
+        code: `const [open, setOpen] = useState(false);
+
+<>
+  {!open ? (
+    <Button size="sm" variant="soft" onClick={() => setOpen(true)}>
+      显示可关闭提示
+    </Button>
+  ) : (
+    <Alert variant="info" closable onClose={() => setOpen(false)} title="可关闭">
+      关闭后把 open 设回 false 即可再次展示。
+    </Alert>
+  )}
+</>`,
+      },
+      {
+        title: '通栏与 role=alert',
+        code: `const [show, setShow] = useState(false);
+
+<>
+  <Button size="sm" variant="soft" onClick={() => setShow(true)}>
+    显示通栏错误
+  </Button>
+  {show ? (
+    <Alert variant="error" role="alert" banner title="提交失败">
+      请修正标红字段后再试。
+    </Alert>
+  ) : null}
+</>`,
+      },
+    ],
+  },
+  {
+    name: 'Callout',
+    title: 'Callout 说明块',
+    category: '反馈',
+    description:
+      '文档/说明向 aside：左侧色条 + 可选小标题；非 Toast、非 Alert。适合文内注意事项。',
+    aiDocPath: '/src/components/Callout/Callout.ai.md',
+    examples: [
+      {
+        title: 'intent 与标题',
+        code: `<Stack gap="sm" className="max-w-lg w-full">
+  <Callout intent="default" title="说明">
+    中性补充，不参与表单校验反馈。
+  </Callout>
+  <Callout intent="info" title="提示">
+    该字段会展示在公开资料页。
+  </Callout>
+  <Callout intent="warning" title="注意">
+    删除后 30 天内可从回收站恢复。
+  </Callout>
+</Stack>`,
+      },
+      {
+        title: '无标题',
+        code: `<Callout intent="success" className="max-w-lg w-full">
+  纯正文说明块，左侧仍为成功色强调条。
+</Callout>`,
+      },
+      {
+        title: '与正文混排',
+        code: `<Stack gap="md" className="max-w-lg w-full">
+  <Typography variant="body" noMargin>
+    下文为接口约定摘要。
+  </Typography>
+  <Callout intent="info" title="API">
+    <Typography variant="bodySmall" noMargin>
+      所有时间戳均为 UTC ISO-8601。
+    </Typography>
+  </Callout>
+</Stack>`,
+      },
+    ],
+  },
+  {
     name: 'Divider',
     title: 'Divider / Separator 分割线',
     category: '布局',

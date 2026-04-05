@@ -22,6 +22,12 @@ export type { ProgressProps, ProgressSize } from './Progress';
 export { Skeleton } from './Skeleton';
 export type { SkeletonProps, SkeletonVariant } from './Skeleton';
 
+export { Alert } from './Alert';
+export type { AlertProps, AlertVariant } from './Alert';
+
+export { Callout } from './Callout';
+export type { CalloutProps, CalloutIntent } from './Callout';
+
 export { Input } from './Input';
 export type { InputProps } from './Input';
 

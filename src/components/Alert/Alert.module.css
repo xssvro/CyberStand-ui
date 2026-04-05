@@ -1,0 +1,105 @@
+.root {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: var(--su-radius, 5px);
+  border: 1px solid var(--alert-border);
+  border-left-width: 3px;
+  border-left-color: var(--alert-accent);
+  background: var(--alert-bg);
+  color: var(--su-text-default);
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.banner {
+  width: 100%;
+  border-radius: 0;
+  border-left-width: 4px;
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.title {
+  font-size: var(--su-type-body-size);
+  line-height: var(--su-type-body-line);
+  font-weight: 600;
+  color: var(--su-text-default);
+}
+
+.message {
+  font-size: var(--su-type-body-sm-size);
+  line-height: var(--su-type-body-line);
+  color: var(--su-text-muted);
+}
+
+.message :where(p) {
+  margin: 0;
+}
+
+.message :where(p + p) {
+  margin-top: 0.5em;
+}
+
+.closeBtn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: -4px -6px -4px 0;
+  padding: 6px;
+  border: none;
+  border-radius: var(--su-radius, 5px);
+  background: transparent;
+  color: var(--su-text-muted);
+  cursor: pointer;
+  transition:
+    color var(--su-transition-fast),
+    background var(--su-transition-fast);
+}
+
+.closeBtn:hover {
+  color: var(--su-text-default);
+  background: color-mix(in srgb, var(--su-text-default) 6%, transparent);
+}
+
+.closeBtn:focus-visible {
+  outline: 2px solid var(--su-focus-ring-color);
+  outline-offset: 1px;
+}
+
+.closeSvg {
+  display: block;
+}
+
+.info {
+  --alert-accent: var(--su-info-600);
+  --alert-bg: color-mix(in srgb, var(--su-info-500) 12%, var(--su-bg-elevated));
+  --alert-border: color-mix(in srgb, var(--su-info-500) 22%, var(--su-border-subtle));
+}
+
+.success {
+  --alert-accent: var(--su-success-600);
+  --alert-bg: color-mix(in srgb, var(--su-success-500) 12%, var(--su-bg-elevated));
+  --alert-border: color-mix(in srgb, var(--su-success-500) 22%, var(--su-border-subtle));
+}
+
+.warning {
+  --alert-accent: var(--su-warning-600);
+  --alert-bg: color-mix(in srgb, var(--su-warning-500) 12%, var(--su-bg-elevated));
+  --alert-border: color-mix(in srgb, var(--su-warning-500) 22%, var(--su-border-subtle));
+}
+
+.error {
+  --alert-accent: var(--su-error-600);
+  --alert-bg: color-mix(in srgb, var(--su-error-500) 12%, var(--su-bg-elevated));
+  --alert-border: color-mix(in srgb, var(--su-error-500) 22%, var(--su-border-subtle));
+}
