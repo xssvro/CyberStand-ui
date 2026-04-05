@@ -110,6 +110,9 @@ export type {
   ToastType,
 } from './Toast';
 
+export { Tooltip } from './Tooltip';
+export type { TooltipProps, TooltipPlacement } from './Tooltip';
+
 export { Typography, TypographyLink } from './Typography';
 export type {
   CopyableConfig,

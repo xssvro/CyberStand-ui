@@ -26,6 +26,7 @@ import { Progress } from '../components/Progress';
 import { Result } from '../components/Result';
 import { Skeleton } from '../components/Skeleton';
 import { toast } from '../components/Toast';
+import { Tooltip } from '../components/Tooltip';
 import { Typography, TypographyLink } from '../components/Typography';
 import { Divider, Separator } from '../components/Divider';
 import { AspectRatio } from '../components/AspectRatio';
@@ -44,6 +45,7 @@ import EmptyAiMd from '../components/Empty/Empty.ai.md?raw';
 import ResultAiMd from '../components/Result/Result.ai.md?raw';
 import CardAiMd from '../components/Card/Card.ai.md?raw';
 import ToastAiMd from '../components/Toast/Toast.ai.md?raw';
+import TooltipAiMd from '../components/Tooltip/Tooltip.ai.md?raw';
 import TypographyAiMd from '../components/Typography/Typography.ai.md?raw';
 import DividerAiMd from '../components/Divider/Divider.ai.md?raw';
 import LayoutAiMd from '../components/Layout/Layout.ai.md?raw';
@@ -519,6 +521,64 @@ function DrawerDocDemo({ idx }: { idx: number }) {
   }
 }
 
+function TooltipDocDemo({ idx }: { idx: number }) {
+  switch (idx) {
+    case 0:
+      return (
+        <div className="example-preview-inner">
+          <Tooltip title="提交当前表单">
+            <Button size="sm" color="primary" type="button">
+              提交
+            </Button>
+          </Tooltip>
+        </div>
+      );
+    case 1:
+      return (
+        <Space wrap size="sm">
+          <Tooltip title="上方" placement="top">
+            <Button size="sm" variant="soft" type="button">
+              top
+            </Button>
+          </Tooltip>
+          <Tooltip title="下方" placement="bottom">
+            <Button size="sm" variant="soft" type="button">
+              bottom
+            </Button>
+          </Tooltip>
+          <Tooltip title="左侧" placement="left">
+            <Button size="sm" variant="soft" type="button">
+              left
+            </Button>
+          </Tooltip>
+          <Tooltip title="右侧" placement="right">
+            <Button size="sm" variant="soft" type="button">
+              right
+            </Button>
+          </Tooltip>
+        </Space>
+      );
+    case 2:
+      return (
+        <div className="example-preview-inner">
+          <Tooltip title="暂无权限">
+            <span style={{ display: 'inline-flex' }}>
+              <Button size="sm" disabled style={{ pointerEvents: 'none' }} type="button">
+                不可用
+              </Button>
+            </span>
+          </Tooltip>
+        </div>
+      );
+    default:
+      return (
+        <Typography variant="body" color="muted">
+          无该示例索引
+        </Typography>
+      );
+  }
+}
+
 function CheckboxDocDemo({ idx }: { idx: number }) {
   const [skills, setSkills] = useState<string[]>(['ts']);
   const [notify, setNotify] = useState<string[]>([]);
@@ -831,6 +891,7 @@ const componentMap: Record<string, React.ElementType> = {
   Toast: ToastDocPlaceholder,
   Modal,
   Drawer,
+  Tooltip,
   Typography,
   Divider,
   AspectRatio,
@@ -864,6 +925,7 @@ const aiDocMap: Record<string, string> = {
   Toast: ToastAiMd,
   Modal: ModalAiMd,
   Drawer: DrawerAiMd,
+  Tooltip: TooltipAiMd,
   Typography: TypographyAiMd,
   Divider: DividerAiMd,
   AspectRatio: AspectRatioAiMd,
@@ -1851,6 +1913,7 @@ export const ComponentPage: React.FC = () => {
         {doc.name === 'DatePicker' && <DatePickerDocDemo idx={idx} />}
         {doc.name === 'Modal' && <ModalDocDemo idx={idx} />}
         {doc.name === 'Drawer' && <DrawerDocDemo idx={idx} />}
+        {doc.name === 'Tooltip' && <TooltipDocDemo idx={idx} />}
         {doc.name === 'Checkbox' && <CheckboxDocDemo idx={idx} />}
         {doc.name === 'Radio' && <RadioDocDemo idx={idx} />}
         {doc.name === 'Switch' && <SwitchDocDemo idx={idx} />}

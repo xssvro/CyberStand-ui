@@ -189,6 +189,10 @@
   /** Loading 遮罩背景（区块 / 全页）；与组件共用 */
   --su-loading-mask-bg: rgba(15, 23, 42, 0.48);
 
+  /** Tooltip 气泡（浅色页面上用深色条） */
+  --su-tooltip-bg: #1e293b;
+  --su-tooltip-fg: #f8fafc;
+
   /**
    * 按钮专用（浅色 · 阿基拉主色实心 / soft / 线色）
    */
@@ -339,6 +343,10 @@
   --su-border-strong: rgba(220, 235, 255, 0.16);
 
   --su-loading-mask-bg: rgba(2, 4, 12, 0.72);
+
+  /** Tooltip 气泡（深色页面上用浅色条） */
+  --su-tooltip-bg: #e8edf3;
+  --su-tooltip-fg: #0f172a;
 
   --su-focus-ring-color: rgba(33, 170, 221, 0.45);
   --su-focus-ring-glow: 0 0 14px rgba(33, 170, 221, 0.32);

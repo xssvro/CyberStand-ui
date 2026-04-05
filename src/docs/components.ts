@@ -108,6 +108,41 @@ export const componentDocs: ComponentDoc[] = [
     ],
   },
   {
+    name: 'Tooltip',
+    title: 'Tooltip 文字提示',
+    category: '通用',
+    description:
+      '悬停/聚焦说明：Portal、placement、延迟与 Esc 关闭；aria-describedby + role=tooltip；token --su-tooltip-bg/fg',
+    aiDocPath: '/src/components/Tooltip/Tooltip.ai.md',
+    examples: [
+      {
+        title: '包一层按钮',
+        code: `<Tooltip title="提交当前表单">
+  <Button size="sm" color="primary">提交</Button>
+</Tooltip>`,
+      },
+      {
+        title: 'placement',
+        code: `<Space wrap size="sm">
+  <Tooltip title="上方" placement="top"><Button size="sm" variant="soft">top</Button></Tooltip>
+  <Tooltip title="下方" placement="bottom"><Button size="sm" variant="soft">bottom</Button></Tooltip>
+  <Tooltip title="左侧" placement="left"><Button size="sm" variant="soft">left</Button></Tooltip>
+  <Tooltip title="右侧" placement="right"><Button size="sm" variant="soft">right</Button></Tooltip>
+</Space>`,
+      },
+      {
+        title: '禁用按钮（子项 pointer-events: none 以便悬停到外层）',
+        code: `<Tooltip title="暂无权限">
+  <span style={{ display: 'inline-flex' }}>
+    <Button size="sm" disabled style={{ pointerEvents: 'none' }}>
+      不可用
+    </Button>
+  </span>
+</Tooltip>`,
+      },
+    ],
+  },
+  {
     name: 'Input',
     title: 'Input 输入框',
     category: '表单',
