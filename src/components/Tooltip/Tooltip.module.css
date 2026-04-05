@@ -22,4 +22,43 @@
     0 0 0 1px rgba(15, 23, 42, 0.06);
   pointer-events: none;
   word-wrap: break-word;
+  opacity: 0;
+  transition:
+    opacity 0.14s ease-out,
+    transform 0.14s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+/* placement：未入场时沿锚点反方向微移，避免「无起始帧」 */
+.tooltip[data-placement='top'][data-entered='false'] {
+  transform: translateY(6px);
+}
+
+.tooltip[data-placement='bottom'][data-entered='false'] {
+  transform: translateY(-6px);
+}
+
+.tooltip[data-placement='left'][data-entered='false'] {
+  transform: translateX(6px);
+}
+
+.tooltip[data-placement='right'][data-entered='false'] {
+  transform: translateX(-6px);
+}
+
+.tooltip[data-entered='true'] {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tooltip {
+    transition: none;
+  }
+
+  .tooltip[data-entered='false'],
+  .tooltip[data-entered='true'] {
+    opacity: 1;
+    transform: none;
+  }
 }

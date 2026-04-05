@@ -16,6 +16,7 @@ import { Button } from 'stand-ui/components/Button';
 ## 行为说明
 
 - **触发**：触发器外层为 `span`（`inline-flex`），在 **`pointerenter` / `pointerleave`** 与 **`focus` / `blur`**（冒泡）上调度显示/隐藏；默认 **进入延迟 100ms**、**离开延迟 60ms**，减少闪烁并略缓冲移出时的间隙。
+- **动效**：`opacity` + 按 `placement` 的微位移（约 6px）过渡约 **0.14s**；入场用双 `requestAnimationFrame` 保证有过起始帧；退场在 `opacity` 的 `transitionend`（及超时兜底）后再卸载 Portal。`prefers-reduced-motion: reduce` 时无过渡、退场立即卸浮层。
 - **无障碍**：显示时为触发器设置 **`aria-describedby`** 指向气泡 `id`；气泡为 **`role="tooltip"`**。请保证触发区内有可聚焦控件时由该控件获得焦点（焦点事件会冒泡到外层）。
 - **键盘**：打开时 **`Escape`** 关闭（捕获阶段，避免与内部组件冲突）。
 - **禁用**：`disabled` 为 `true` 时不展示提示、不挂事件，仅渲染包裹层。**原生禁用控件**默认不冒泡指针事件，悬停 Tooltip 时请在子按钮上加 **`style={{ pointerEvents: 'none' }}`**（或等价 class），由外层触发器 `span` 接收悬停。

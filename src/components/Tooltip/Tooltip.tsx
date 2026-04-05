@@ -96,9 +96,15 @@ export const Tooltip = React.forwardRef<HTMLSpanElement, TooltipProps>(function 
   const triggerRef = useRef<HTMLSpanElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
+  /** 浮层仍在 DOM（含退场动画） */
+  const [mounted, setMounted] = useState(false);
+  /** 入场结束 / 退场开始前为 true，配合 CSS transition */
+  const [entered, setEntered] = useState(false);
   const [coords, setCoords] = useState({ top: 0, left: 0 });
   const showTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const hasTitle = title != null && title !== false && title !== '';
 
   const clearShowTimer = useCallback(() => {
     if (showTimerRef.current != null) {
@@ -115,13 +121,16 @@ export const Tooltip = React.forwardRef<HTMLSpanElement, TooltipProps>(function 
   }, []);
 
   const scheduleShow = useCallback(() => {
+    if (!hasTitle) return;
     clearHideTimer();
     clearShowTimer();
     showTimerRef.current = setTimeout(() => {
       showTimerRef.current = null;
+      setMounted(true);
+      setEntered(false);
       setOpen(true);
     }, mouseEnterDelay);
-  }, [clearHideTimer, clearShowTimer, mouseEnterDelay]);
+  }, [clearHideTimer, clearShowTimer, hasTitle, mouseEnterDelay]);
 
   const scheduleHide = useCallback(() => {
     clearShowTimer();
@@ -139,7 +148,54 @@ export const Tooltip = React.forwardRef<HTMLSpanElement, TooltipProps>(function 
   }, [clearHideTimer, clearShowTimer]);
 
   useLayoutEffect(() => {
-    if (!open || disabled) return;
+    if (!open || !hasTitle) return;
+    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setEntered(true);
+      return;
+    }
+    setEntered(false);
+    let r2 = 0;
+    const r1 = window.requestAnimationFrame(() => {
+      r2 = window.requestAnimationFrame(() => setEntered(true));
+    });
+    return () => {
+      window.cancelAnimationFrame(r1);
+      window.cancelAnimationFrame(r2);
+    };
+  }, [open, hasTitle]);
+
+  useLayoutEffect(() => {
+    if (open || !mounted) return;
+    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setMounted(false);
+      setEntered(false);
+      return;
+    }
+    setEntered(false);
+  }, [open, mounted]);
+
+  useEffect(() => {
+    if (open || !mounted || entered) return;
+    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
+    const id = window.setTimeout(() => setMounted(false), 200);
+    return () => window.clearTimeout(id);
+  }, [open, mounted, entered]);
+
+  const onBubbleTransitionEnd = useCallback(
+    (e: React.TransitionEvent<HTMLDivElement>) => {
+      if (e.target !== e.currentTarget) return;
+      if (e.propertyName !== 'opacity') return;
+      if (open) return;
+      setMounted(false);
+      setEntered(false);
+    },
+    [open],
+  );
+
+  useLayoutEffect(() => {
+    if (!mounted || disabled || !hasTitle) return;
     const el = triggerRef.current;
     const tip = tooltipRef.current;
     if (!el || !tip) return;
@@ -164,7 +220,7 @@ export const Tooltip = React.forwardRef<HTMLSpanElement, TooltipProps>(function 
       window.removeEventListener('scroll', update, true);
       window.removeEventListener('resize', update);
     };
-  }, [open, disabled, placement, title]);
+  }, [mounted, disabled, placement, title, hasTitle]);
 
   useEffect(() => {
     if (!open || disabled) return;
@@ -185,6 +241,15 @@ export const Tooltip = React.forwardRef<HTMLSpanElement, TooltipProps>(function 
     },
     [clearHideTimer, clearShowTimer],
   );
+
+  useLayoutEffect(() => {
+    if (!disabled) return;
+    clearShowTimer();
+    clearHideTimer();
+    setOpen(false);
+    setMounted(false);
+    setEntered(false);
+  }, [disabled, clearHideTimer, clearShowTimer]);
 
   const setTriggerRef = useCallback(
     (node: HTMLSpanElement | null) => {
@@ -207,15 +272,17 @@ export const Tooltip = React.forwardRef<HTMLSpanElement, TooltipProps>(function 
   const zStyle =
     zIndexProp !== undefined ? ({ zIndex: zIndexProp } as React.CSSProperties) : undefined;
 
-  const hasTitle = title != null && title !== false && title !== '';
   const tooltipNode =
-    open && hasTitle ? (
+    mounted && hasTitle ? (
       <div
         ref={tooltipRef}
         id={tooltipId}
         role="tooltip"
         className={join(styles.tooltip, overlayClassName)}
         style={{ ...coords, ...zStyle }}
+        data-placement={placement}
+        data-entered={entered ? 'true' : 'false'}
+        onTransitionEnd={onBubbleTransitionEnd}
       >
         {title}
       </div>
@@ -226,7 +293,7 @@ export const Tooltip = React.forwardRef<HTMLSpanElement, TooltipProps>(function 
       <span
         ref={setTriggerRef}
         className={join(styles.trigger, className)}
-        aria-describedby={open ? tooltipId : undefined}
+        aria-describedby={open && entered ? tooltipId : undefined}
         onPointerEnter={scheduleShow}
         onPointerLeave={scheduleHide}
         onFocus={scheduleShow}
