@@ -1,0 +1,55 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px 16px;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.imageWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  color: var(--su-text-subtle);
+}
+
+.imageWrap :where(svg) {
+  display: block;
+}
+
+.title {
+  margin: 0 0 8px;
+  font-size: var(--su-type-h5-size);
+  line-height: var(--su-type-h5-line);
+  font-weight: 600;
+  color: var(--su-text-default);
+}
+
+.description {
+  margin: 0;
+  max-width: 36ch;
+  font-size: var(--su-type-body-sm-size);
+  line-height: var(--su-type-body-line);
+  color: var(--su-text-muted);
+}
+
+.description :where(p) {
+  margin: 0;
+}
+
+.description :where(p + p) {
+  margin-top: 0.5em;
+}
+
+.extra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}

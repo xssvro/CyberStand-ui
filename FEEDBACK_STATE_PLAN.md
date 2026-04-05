@@ -52,8 +52,8 @@
 
 | # | 项 | 状态 | 备注 |
 |---|----|------|------|
-| 9 | **`Empty`**（插画/图标槽 + 标题 + 描述 + `extra` 操作区；`image` 可插槽或预设简笔画） | **未开始** | 文档站可用内联 SVG，避免外链图失效 |
-| 10 | **`Result`**（`status`：success / error / info / warning / 403 / 404 等；标题、副标题、`extra` 按钮组） | **未开始** | 偏整页/大区块；可内部组合 Icon + Typography + Stack |
+| 9 | **`Empty`**（`image` / `title` / `description` / `children` 操作区；内置简笔画） | **已完成** | `image={null}` 隐藏图区；`role="region"` |
+| 10 | **`Result`**（`status` + 内置图标、`title`、`subTitle`、`extra`、`children`） | **已完成** | 含 403/404；根节点 `role="status"` |
 
 ---
 
@@ -94,5 +94,5 @@
 
 ## 下一步建议
 
-1. 第四阶段：**Empty**、**Result**。  
-2. 工程项：按需修复 **Form** 与 `FormInstance` 类型对齐，保证 `tsc -b` 通过。
+1. 反馈向补充：**Modal / Dialog**、**Drawer**（与 Alert/Toast 分层）按需立项。  
+2. 工程项：修复 **Form** 与 `FormInstance` 类型对齐，保证 `tsc -b` 通过。

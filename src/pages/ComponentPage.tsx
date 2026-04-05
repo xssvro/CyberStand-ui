@@ -5,6 +5,7 @@ import { Alert, type AlertVariant } from '../components/Alert';
 import { Badge } from '../components/Badge';
 import { Button } from '../components/Button';
 import { Callout } from '../components/Callout';
+import { Empty } from '../components/Empty';
 import { FormField, Label } from '../components/FormField';
 import { Checkbox, CheckboxGroup } from '../components/Checkbox';
 import { Input } from '../components/Input';
@@ -19,13 +20,14 @@ import { FormSection } from '../components/FormSection';
 import { Card } from '../components/Card';
 import { Loading } from '../components/Loading';
 import { Progress } from '../components/Progress';
+import { Result } from '../components/Result';
 import { Skeleton } from '../components/Skeleton';
 import { toast } from '../components/Toast';
 import { Typography, TypographyLink } from '../components/Typography';
 import { Divider, Separator } from '../components/Divider';
 import { AspectRatio } from '../components/AspectRatio';
 import { Flex, Grid, Space, Stack } from '../components/Layout';
-import { IconDataNode, IconSearch } from '../icons';
+import { IconDataNode, IconPackage, IconSearch } from '../icons';
 
 // 导入 AI 文档内容
 import AlertAiMd from '../components/Alert/Alert.ai.md?raw';
@@ -34,6 +36,8 @@ import ButtonAiMd from '../components/Button/Button.ai.md?raw';
 import InputAiMd from '../components/Input/Input.ai.md?raw';
 import FormFieldAiMd from '../components/FormField/FormField.ai.md?raw';
 import CalloutAiMd from '../components/Callout/Callout.ai.md?raw';
+import EmptyAiMd from '../components/Empty/Empty.ai.md?raw';
+import ResultAiMd from '../components/Result/Result.ai.md?raw';
 import CardAiMd from '../components/Card/Card.ai.md?raw';
 import ToastAiMd from '../components/Toast/Toast.ai.md?raw';
 import TypographyAiMd from '../components/Typography/Typography.ai.md?raw';
@@ -606,6 +610,8 @@ const componentMap: Record<string, React.ElementType> = {
   Skeleton,
   Alert,
   Callout,
+  Empty,
+  Result,
   Layout: LayoutDocPlaceholder,
 };
 
@@ -634,6 +640,8 @@ const aiDocMap: Record<string, string> = {
   Skeleton: SkeletonAiMd,
   Alert: AlertAiMd,
   Callout: CalloutAiMd,
+  Empty: EmptyAiMd,
+  Result: ResultAiMd,
   Layout: LayoutAiMd,
 };
 
@@ -1807,6 +1815,86 @@ export const ComponentPage: React.FC = () => {
                   </Typography>
                 </Callout>
               </Stack>
+            )}
+          </div>
+        )}
+        {doc.name === 'Empty' && (
+          <div className="example-preview-inner flex flex-col gap-6 max-w-lg w-full">
+            {idx === 0 && (
+              <Card className="w-full">
+                <Empty title="暂无数据" description="请调整筛选或稍后再试。">
+                  <Button color="primary" size="sm">
+                    新建
+                  </Button>
+                </Empty>
+              </Card>
+            )}
+            {idx === 1 && (
+              <Card className="w-full">
+                <Empty
+                  title="仓库为空"
+                  description="导入依赖或从模板创建项目。"
+                  image={<IconPackage size={72} />}
+                >
+                  <Button size="sm" variant="soft">
+                    导入
+                  </Button>
+                </Empty>
+              </Card>
+            )}
+            {idx === 2 && (
+              <Card className="w-full">
+                <Empty title="筛选结果为空" description="当前条件下没有匹配项。" image={null} />
+              </Card>
+            )}
+          </div>
+        )}
+        {doc.name === 'Result' && (
+          <div className="example-preview-inner flex flex-col gap-8 max-w-lg w-full">
+            {idx === 0 && (
+              <Card className="w-full">
+                <Result
+                  status="success"
+                  title="提交成功"
+                  subTitle="我们已收到申请，将在 1～3 个工作日内处理。"
+                  extra={<Button color="primary" size="sm">返回首页</Button>}
+                />
+              </Card>
+            )}
+            {idx === 1 && (
+              <Card className="w-full">
+                <Result
+                  status="error"
+                  title="支付失败"
+                  subTitle="银行返回超时，请重试或更换支付方式。"
+                  extra={
+                    <Stack direction="row" gap="sm">
+                      <Button size="sm" variant="soft">
+                        联系客服
+                      </Button>
+                      <Button size="sm" color="primary">
+                        重新支付
+                      </Button>
+                    </Stack>
+                  }
+                />
+              </Card>
+            )}
+            {idx === 2 && (
+              <Card className="w-full">
+                <Result
+                  status="404"
+                  title="页面不存在"
+                  subTitle="链接可能已失效，或内容已被移除。"
+                  extra={
+                    <Button size="sm" variant="soft">
+                      返回上一页
+                    </Button>
+                  }
+                >
+                  错误码 404 · 如需帮助请联系管理员
+                </Result>
+              </Card>
             )}
           </div>
         )}

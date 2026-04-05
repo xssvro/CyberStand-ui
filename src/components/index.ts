@@ -28,6 +28,12 @@ export type { AlertProps, AlertVariant } from './Alert';
 export { Callout } from './Callout';
 export type { CalloutProps, CalloutIntent } from './Callout';
 
+export { Empty } from './Empty';
+export type { EmptyProps } from './Empty';
+
+export { Result } from './Result';
+export type { ResultProps, ResultStatus } from './Result';
+
 export { Input } from './Input';
 export type { InputProps } from './Input';
 

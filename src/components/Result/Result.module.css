@@ -1,0 +1,88 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 32px 20px;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.iconWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  line-height: 0;
+}
+
+.iconWrap :where(svg) {
+  display: block;
+}
+
+.title {
+  margin: 0 0 8px;
+  font-size: var(--su-type-h4-size);
+  line-height: var(--su-type-h4-line);
+  font-weight: 600;
+  color: var(--su-text-default);
+}
+
+.subTitle {
+  margin: 0;
+  max-width: 40ch;
+  font-size: var(--su-type-body-sm-size);
+  line-height: var(--su-type-body-line);
+  color: var(--su-text-muted);
+}
+
+.subTitle :where(p) {
+  margin: 0;
+}
+
+.subTitle :where(p + p) {
+  margin-top: 0.5em;
+}
+
+.extra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.footer {
+  margin-top: 16px;
+  max-width: 48ch;
+  font-size: var(--su-type-caption-size);
+  line-height: var(--su-type-caption-line);
+  color: var(--su-text-subtle);
+}
+
+.success .iconWrap {
+  color: var(--su-success-600);
+}
+
+.error .iconWrap {
+  color: var(--su-error-600);
+}
+
+.info .iconWrap {
+  color: var(--su-info-600);
+}
+
+.warning .iconWrap {
+  color: var(--su-warning-600);
+}
+
+.status403 .iconWrap,
+.status404 .iconWrap {
+  color: var(--su-text-muted);
+}
+
+.neutral .iconWrap {
+  color: var(--su-text-subtle);
+}

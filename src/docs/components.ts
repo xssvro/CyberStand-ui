@@ -980,6 +980,85 @@ const text: Record<AlertVariant, { title: string; children: string }> = {
     ],
   },
   {
+    name: 'Empty',
+    title: 'Empty 空状态',
+    category: '反馈',
+    description:
+      '列表/区块无数据：插图槽、标题、说明与操作区；内置简笔画。与 Toast 区分见 Empty.ai.md。',
+    aiDocPath: '/src/components/Empty/Empty.ai.md',
+    examples: [
+      {
+        title: '内置插图与操作',
+        code: `<Empty
+  title="暂无数据"
+  description="请调整筛选或稍后再试。"
+>
+  <Button color="primary" size="sm">新建</Button>
+</Empty>`,
+      },
+      {
+        title: '自定义图标',
+        code: `import { IconPackage } from 'stand-ui/icons';
+
+<Empty
+  title="仓库为空"
+  description="导入依赖或从模板创建项目。"
+  image={<IconPackage size={72} />}
+>
+  <Button size="sm" variant="soft">导入</Button>
+</Empty>`,
+      },
+      {
+        title: '无图区',
+        code: `<Empty title="筛选结果为空" description="当前条件下没有匹配项。" image={null} />`,
+      },
+    ],
+  },
+  {
+    name: 'Result',
+    title: 'Result 结果页',
+    category: '反馈',
+    description:
+      '整页/大块结果态：success/error/403/404 等内置图标与 extra 操作区。与 Toast、Empty 区分见 Result.ai.md。',
+    aiDocPath: '/src/components/Result/Result.ai.md',
+    examples: [
+      {
+        title: '成功',
+        code: `<Result
+  status="success"
+  title="提交成功"
+  subTitle="我们已收到申请，将在 1～3 个工作日内处理。"
+  extra={<Button color="primary" size="sm">返回首页</Button>}
+/>`,
+      },
+      {
+        title: '错误与双操作',
+        code: `<Result
+  status="error"
+  title="支付失败"
+  subTitle="银行返回超时，请重试或更换支付方式。"
+  extra={
+    <Stack direction="row" gap="sm">
+      <Button size="sm" variant="soft">联系客服</Button>
+      <Button size="sm" color="primary">重新支付</Button>
+    </Stack>
+  }
+/>`,
+      },
+      {
+        title: '404',
+        code: `<Result
+  status="404"
+  title="页面不存在"
+  subTitle="链接可能已失效，或内容已被移除。"
+  extra={<Button size="sm" variant="soft">返回上一页</Button>}
+>
+  错误码 404 · 如需帮助请联系管理员
+</Result>`,
+      },
+    ],
+  },
+  {
     name: 'Divider',
     title: 'Divider / Separator 分割线',
     category: '布局',
