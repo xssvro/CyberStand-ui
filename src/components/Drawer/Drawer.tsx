@@ -1,23 +1,11 @@
 import React, { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useFocusTrap } from '../overlay/focusTrap';
 import { useOverlayScrollLock } from '../overlay/useOverlayScrollLock';
 import styles from './Drawer.module.css';
 
-const FOCUSABLE_SELECTOR =
-  'a[href],button:not([disabled]),textarea:not([disabled]),input:not([disabled]),select:not([disabled]),[tabindex]:not([tabindex="-1"])';
-
 function joinClasses(...parts: Array<string | false | undefined>): string {
   return parts.filter(Boolean).join(' ');
-}
-
-function getFocusable(container: HTMLElement): HTMLElement[] {
-  const list = container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
-  return Array.from(list).filter((el) => {
-    if (el.getAttribute('aria-hidden') === 'true') return false;
-    const style = window.getComputedStyle(el);
-    if (style.visibility === 'hidden' || style.display === 'none') return false;
-    return true;
-  });
 }
 
 export type DrawerPlacement = 'left' | 'right' | 'top' | 'bottom';
@@ -87,9 +75,7 @@ export const Drawer: React.FC<DrawerProps> = ({
 }) => {
   const titleId = useId();
   const panelRef = useRef<HTMLElement>(null);
-  /** Portal 是否在 DOM：打开时为 true，关闭后在滑出结束后再置 false */
   const [mounted, setMounted] = useState(false);
-  /** 面板是否处于「展开」位姿（用于 CSS transform 过渡：打开先入画再滑入，关闭先滑出再卸载） */
   const [panelEntered, setPanelEntered] = useState(false);
 
   const requestClose = useCallback(() => {
@@ -162,62 +148,11 @@ export const Drawer: React.FC<DrawerProps> = ({
     [open],
   );
 
-  useEffect(() => {
-    if (!open || !panelEntered) return;
-    const root = panelRef.current;
-    if (!root) return;
-
-    const previousFocus = document.activeElement as HTMLElement | null;
-
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (keyboard && e.key === 'Escape') {
-        e.preventDefault();
-        e.stopPropagation();
-        requestClose();
-        return;
-      }
-      if (e.key !== 'Tab' || !root) return;
-
-      const list = getFocusable(root);
-      if (list.length === 0) {
-        e.preventDefault();
-        root.focus();
-        return;
-      }
-
-      const first = list[0];
-      const last = list[list.length - 1];
-      const active = document.activeElement as HTMLElement | null;
-
-      if (!e.shiftKey) {
-        if (active === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      } else {
-        if (active === first) {
-          e.preventDefault();
-          last.focus();
-        }
-      }
-    };
-
-    document.addEventListener('keydown', onKeyDown, true);
-
-    const id = window.requestAnimationFrame(() => {
-      const list = getFocusable(root);
-      const toFocus = list[0] ?? root;
-      toFocus.focus({ preventScroll: true });
-    });
-
-    return () => {
-      document.removeEventListener('keydown', onKeyDown, true);
-      window.cancelAnimationFrame(id);
-      if (previousFocus && typeof previousFocus.focus === 'function' && document.body.contains(previousFocus)) {
-        previousFocus.focus({ preventScroll: true });
-      }
-    };
-  }, [open, panelEntered, keyboard, requestClose]);
+  useFocusTrap({
+    active: open && panelEntered,
+    rootRef: panelRef,
+    onEscape: keyboard ? requestClose : undefined,
+  });
 
   const container =
     typeof getContainer === 'function' ? getContainer() : getContainer ?? document.body;

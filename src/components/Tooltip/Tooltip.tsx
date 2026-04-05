@@ -7,16 +7,15 @@ import React, {
   useState,
 } from 'react';
 import { createPortal } from 'react-dom';
+import type { PopperPlacement } from '../overlay/popperPosition';
+import { usePopperPosition } from '../overlay/usePopperPosition';
 import styles from './Tooltip.module.css';
-
-const GAP = 8;
-const VIEWPORT_PAD = 8;
 
 function join(...parts: Array<string | false | undefined>): string {
   return parts.filter(Boolean).join(' ');
 }
 
-export type TooltipPlacement = 'top' | 'bottom' | 'left' | 'right';
+export type TooltipPlacement = PopperPlacement;
 
 export interface TooltipProps {
   /** 提示内容 */
@@ -39,42 +38,6 @@ export interface TooltipProps {
   getPopupContainer?: () => HTMLElement;
   /** 覆盖 z-index（默认 `--su-z-tooltip`） */
   zIndex?: number;
-}
-
-function computePosition(
-  placement: TooltipPlacement,
-  trigger: DOMRect,
-  tip: DOMRect,
-): { top: number; left: number } {
-  const cx = trigger.left + trigger.width / 2;
-  const cy = trigger.top + trigger.height / 2;
-  let top = 0;
-  let left = 0;
-
-  switch (placement) {
-    case 'top':
-      left = cx - tip.width / 2;
-      top = trigger.top - tip.height - GAP;
-      break;
-    case 'bottom':
-      left = cx - tip.width / 2;
-      top = trigger.bottom + GAP;
-      break;
-    case 'left':
-      left = trigger.left - tip.width - GAP;
-      top = cy - tip.height / 2;
-      break;
-    case 'right':
-      left = trigger.right + GAP;
-      top = cy - tip.height / 2;
-      break;
-  }
-
-  const maxL = window.innerWidth - tip.width - VIEWPORT_PAD;
-  const maxT = window.innerHeight - tip.height - VIEWPORT_PAD;
-  left = Math.round(Math.max(VIEWPORT_PAD, Math.min(left, maxL)));
-  top = Math.round(Math.max(VIEWPORT_PAD, Math.min(top, maxT)));
-  return { top, left };
 }
 
 export const Tooltip = React.forwardRef<HTMLSpanElement, TooltipProps>(function Tooltip(
@@ -100,7 +63,6 @@ export const Tooltip = React.forwardRef<HTMLSpanElement, TooltipProps>(function 
   const [mounted, setMounted] = useState(false);
   /** 入场结束 / 退场开始前为 true，配合 CSS transition */
   const [entered, setEntered] = useState(false);
-  const [coords, setCoords] = useState({ top: 0, left: 0 });
   const showTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -194,33 +156,12 @@ export const Tooltip = React.forwardRef<HTMLSpanElement, TooltipProps>(function 
     [open],
   );
 
-  useLayoutEffect(() => {
-    if (!mounted || disabled || !hasTitle) return;
-    const el = triggerRef.current;
-    const tip = tooltipRef.current;
-    if (!el || !tip) return;
-
-    const update = () => {
-      const t = triggerRef.current;
-      const bubble = tooltipRef.current;
-      if (!t || !bubble) return;
-      const tr = t.getBoundingClientRect();
-      const br = bubble.getBoundingClientRect();
-      setCoords(computePosition(placement, tr, br));
-    };
-
-    update();
-    const id = window.requestAnimationFrame(() => {
-      update();
-    });
-    window.addEventListener('scroll', update, true);
-    window.addEventListener('resize', update);
-    return () => {
-      window.cancelAnimationFrame(id);
-      window.removeEventListener('scroll', update, true);
-      window.removeEventListener('resize', update);
-    };
-  }, [mounted, disabled, placement, title, hasTitle]);
+  const coords = usePopperPosition({
+    triggerRef,
+    floatingRef: tooltipRef,
+    placement,
+    enabled: !disabled && mounted && hasTitle,
+  });
 
   useEffect(() => {
     if (!open || disabled) return;

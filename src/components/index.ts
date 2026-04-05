@@ -113,6 +113,9 @@ export type {
 export { Tooltip } from './Tooltip';
 export type { TooltipProps, TooltipPlacement } from './Tooltip';
 
+export { Popover } from './Popover';
+export type { PopoverProps, PopperPlacement } from './Popover';
+
 export { Typography, TypographyLink } from './Typography';
 export type {
   CopyableConfig,

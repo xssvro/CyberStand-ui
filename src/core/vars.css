@@ -344,9 +344,9 @@
 
   --su-loading-mask-bg: rgba(2, 4, 12, 0.72);
 
-  /** Tooltip 气泡（深色页面上用浅色条） */
-  --su-tooltip-bg: #e8edf3;
-  --su-tooltip-fg: #0f172a;
+  /** Tooltip 气泡（暗色主题仍为深色底，与浅色页一致可读） */
+  --su-tooltip-bg: #0a0b0f;
+  --su-tooltip-fg: #f1f5f9;
 
   --su-focus-ring-color: rgba(33, 170, 221, 0.45);
   --su-focus-ring-glow: 0 0 14px rgba(33, 170, 221, 0.32);

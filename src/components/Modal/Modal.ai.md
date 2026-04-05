@@ -39,6 +39,7 @@ const [open, setOpen] = useState(false);
 - **Portal**：默认挂到 `document.body`；`z-index` 使用 **`--su-z-modal`**（高于下拉，低于 Toast）。
 - **遮罩**：默认 `mask` 为 `true`，使用 `--su-loading-mask-bg` + 轻微模糊；**`mask={false}`** 为非遮罩模式（无底色与模糊），仍保留**透明全屏层**以阻断背后点击，并继续支持 **`maskClosable`**（点面板外空白关闭）。若需「背后可点穿」需另做非模态方案（当前未提供）。
 - **键盘**：`Escape` 关闭（`keyboard`）；`Tab` 在对话框内循环（焦点陷阱）。
+- **退场与 DOM**：关闭时先播遮罩与面板的 **opacity 过渡**，过渡结束（或超时兜底）后再卸 Portal，与 **Drawer** 一致，避免「关即消失」的割裂感。
 - **滚动**：打开时锁定 `html`、`body` 的 `overflow`；若存在带 **`data-su-scroll-lock`** 的节点（文档站主内容 `<main class="docs-main">` 已挂载），会一并锁定并在该节点上做 **`padding-right`** 补偿，避免主列滚动条消失导致跳动。
 - **文档站布局**：整页滚动在 **`.docs-main`** 内完成，**不再**使用 `html { scrollbar-gutter: stable }`，避免「不滚动时也占一条宽度」。WebKit 下主列滚动条为**细轨道、默认透明滑块，悬停/聚焦主内容时再显色**（叠加感；Windows 下仍可能占用少量布局宽度，由系统决定）。
 - **无障碍**：`role="dialog"`、`aria-modal="true"`；有标题时 `aria-labelledby`，无标题时 `aria-label="对话框"`。

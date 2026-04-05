@@ -1,27 +1,15 @@
-import React, { useCallback, useEffect, useId, useRef } from 'react';
+import React, { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { getRadiusVar } from '../../core/stand';
+import { useFocusTrap } from '../overlay/focusTrap';
 import {
   OVERLAY_SCROLL_LOCK_SELECTOR,
   useOverlayScrollLock,
 } from '../overlay/useOverlayScrollLock';
 import styles from './Modal.module.css';
 
-const FOCUSABLE_SELECTOR =
-  'a[href],button:not([disabled]),textarea:not([disabled]),input:not([disabled]),select:not([disabled]),[tabindex]:not([tabindex="-1"])';
-
 function joinClasses(...parts: Array<string | false | undefined>): string {
   return parts.filter(Boolean).join(' ');
-}
-
-function getFocusable(container: HTMLElement): HTMLElement[] {
-  const list = container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
-  return Array.from(list).filter((el) => {
-    if (el.getAttribute('aria-hidden') === 'true') return false;
-    const style = window.getComputedStyle(el);
-    if (style.visibility === 'hidden' || style.display === 'none') return false;
-    return true;
-  });
 }
 
 export type ModalSize = 'sm' | 'md' | 'lg' | 'xl' | 'full';
@@ -120,6 +108,8 @@ export const Modal: React.FC<ModalProps> = ({
 }) => {
   const titleId = useId().replace(/:/g, '');
   const dialogRef = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
+  const [entered, setEntered] = useState(false);
 
   const requestClose = useCallback(() => {
     onOpenChange?.(false);
@@ -130,64 +120,70 @@ export const Modal: React.FC<ModalProps> = ({
     afterOpenChange?.(open);
   }, [open, afterOpenChange]);
 
-  useOverlayScrollLock(open);
+  useOverlayScrollLock(open || mounted);
+
+  useLayoutEffect(() => {
+    if (!open) return;
+
+    setMounted(true);
+
+    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setEntered(true);
+      return;
+    }
+
+    setEntered(false);
+    let raf2 = 0;
+    const raf1 = window.requestAnimationFrame(() => {
+      raf2 = window.requestAnimationFrame(() => {
+        setEntered(true);
+      });
+    });
+    return () => {
+      window.cancelAnimationFrame(raf1);
+      window.cancelAnimationFrame(raf2);
+    };
+  }, [open]);
+
+  useLayoutEffect(() => {
+    if (open) return;
+    if (!mounted) return;
+
+    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setMounted(false);
+      setEntered(false);
+      return;
+    }
+
+    setEntered(false);
+  }, [open, mounted]);
 
   useEffect(() => {
-    if (!open) return;
-    const root = dialogRef.current;
-    if (!root) return;
+    if (open || !mounted) return;
+    if (entered) return;
+    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
+    const id = window.setTimeout(() => setMounted(false), 320);
+    return () => window.clearTimeout(id);
+  }, [open, mounted, entered]);
 
-    const previousFocus = document.activeElement as HTMLElement | null;
+  const onDialogTransitionEnd = useCallback(
+    (e: React.TransitionEvent<HTMLDivElement>) => {
+      if (e.target !== e.currentTarget) return;
+      if (e.propertyName !== 'opacity') return;
+      if (open) return;
+      setMounted(false);
+      setEntered(false);
+    },
+    [open],
+  );
 
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (keyboard && e.key === 'Escape') {
-        e.preventDefault();
-        e.stopPropagation();
-        requestClose();
-        return;
-      }
-      if (e.key !== 'Tab' || !root) return;
-
-      const list = getFocusable(root);
-      if (list.length === 0) {
-        e.preventDefault();
-        root.focus();
-        return;
-      }
-
-      const first = list[0];
-      const last = list[list.length - 1];
-      const active = document.activeElement as HTMLElement | null;
-
-      if (!e.shiftKey) {
-        if (active === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      } else {
-        if (active === first) {
-          e.preventDefault();
-          last.focus();
-        }
-      }
-    };
-
-    document.addEventListener('keydown', onKeyDown, true);
-
-    const id = window.requestAnimationFrame(() => {
-      const list = getFocusable(root);
-      const toFocus = list[0] ?? root;
-      toFocus.focus({ preventScroll: true });
-    });
-
-    return () => {
-      document.removeEventListener('keydown', onKeyDown, true);
-      window.cancelAnimationFrame(id);
-      if (previousFocus && typeof previousFocus.focus === 'function' && document.body.contains(previousFocus)) {
-        previousFocus.focus({ preventScroll: true });
-      }
-    };
-  }, [open, keyboard, requestClose]);
+  useFocusTrap({
+    active: mounted && entered,
+    rootRef: dialogRef,
+    onEscape: keyboard ? requestClose : undefined,
+  });
 
   const container =
     typeof getContainer === 'function' ? getContainer() : getContainer ?? document.body;
@@ -202,7 +198,7 @@ export const Modal: React.FC<ModalProps> = ({
   const hasTitle = title != null && title !== false;
   const showHeader = hasTitle || closable;
 
-  if (!open) return null;
+  if (!open && !mounted) return null;
 
   const node = (
     <div
@@ -210,10 +206,14 @@ export const Modal: React.FC<ModalProps> = ({
       style={zStyle}
     >
       <div
-        className={joinClasses(styles.backdrop, !mask && styles.backdropPlain)}
+        className={joinClasses(
+          styles.backdrop,
+          !mask && styles.backdropPlain,
+          entered && styles.backdropEnter,
+        )}
         aria-hidden
         onMouseDown={(e) => {
-          if (!maskClosable) return;
+          if (!maskClosable || !open) return;
           if (e.target === e.currentTarget) {
             requestClose();
           }
@@ -227,7 +227,7 @@ export const Modal: React.FC<ModalProps> = ({
           aria-labelledby={hasTitle ? titleId : undefined}
           aria-label={!hasTitle ? '对话框' : undefined}
           tabIndex={-1}
-          className={joinClasses(styles.dialog, bodyClassName)}
+          className={joinClasses(styles.dialog, entered && styles.dialogEnter, bodyClassName)}
           style={
             {
               '--su-modal-max-width': maxW,
@@ -235,6 +235,7 @@ export const Modal: React.FC<ModalProps> = ({
             } as React.CSSProperties
           }
           onMouseDown={(e) => e.stopPropagation()}
+          onTransitionEnd={onDialogTransitionEnd}
         >
           {showHeader ? (
             <div

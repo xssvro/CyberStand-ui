@@ -27,6 +27,7 @@ import { Result } from '../components/Result';
 import { Skeleton } from '../components/Skeleton';
 import { toast } from '../components/Toast';
 import { Tooltip } from '../components/Tooltip';
+import { Popover } from '../components/Popover';
 import { Typography, TypographyLink } from '../components/Typography';
 import { Divider, Separator } from '../components/Divider';
 import { AspectRatio } from '../components/AspectRatio';
@@ -46,6 +47,7 @@ import ResultAiMd from '../components/Result/Result.ai.md?raw';
 import CardAiMd from '../components/Card/Card.ai.md?raw';
 import ToastAiMd from '../components/Toast/Toast.ai.md?raw';
 import TooltipAiMd from '../components/Tooltip/Tooltip.ai.md?raw';
+import PopoverAiMd from '../components/Popover/Popover.ai.md?raw';
 import TypographyAiMd from '../components/Typography/Typography.ai.md?raw';
 import DividerAiMd from '../components/Divider/Divider.ai.md?raw';
 import LayoutAiMd from '../components/Layout/Layout.ai.md?raw';
@@ -579,6 +581,58 @@ function TooltipDocDemo({ idx }: { idx: number }) {
   }
 }
 
+function PopoverDocDemo({ idx }: { idx: number }) {
+  const [open, setOpen] = useState(false);
+  const [openR, setOpenR] = useState(false);
+
+  switch (idx) {
+    case 0:
+      return (
+        <div className="example-preview-inner">
+          <Popover
+            open={open}
+            onOpenChange={setOpen}
+            content={
+              <Stack gap="sm">
+                <Typography variant="bodySmall" noMargin>
+                  可放简短说明或操作
+                </Typography>
+                <Button size="sm" type="button" onClick={() => setOpen(false)}>
+                  关闭
+                </Button>
+              </Stack>
+            }
+          >
+            <Button type="button" variant="soft" size="sm">
+              打开 Popover
+            </Button>
+          </Popover>
+        </div>
+      );
+    case 1:
+      return (
+        <div className="example-preview-inner">
+          <Popover
+            open={openR}
+            onOpenChange={setOpenR}
+            placement="right"
+            content={<Typography variant="bodySmall" noMargin>在右侧</Typography>}
+          >
+            <Button size="sm" type="button" variant="soft">
+              锚点
+            </Button>
+          </Popover>
+        </div>
+      );
+    default:
+      return (
+        <Typography variant="body" color="muted">
+          无该示例索引
+        </Typography>
+      );
+  }
+}
+
 function CheckboxDocDemo({ idx }: { idx: number }) {
   const [skills, setSkills] = useState<string[]>(['ts']);
   const [notify, setNotify] = useState<string[]>([]);
@@ -892,6 +946,7 @@ const componentMap: Record<string, React.ElementType> = {
   Modal,
   Drawer,
   Tooltip,
+  Popover,
   Typography,
   Divider,
   AspectRatio,
@@ -926,6 +981,7 @@ const aiDocMap: Record<string, string> = {
   Modal: ModalAiMd,
   Drawer: DrawerAiMd,
   Tooltip: TooltipAiMd,
+  Popover: PopoverAiMd,
   Typography: TypographyAiMd,
   Divider: DividerAiMd,
   AspectRatio: AspectRatioAiMd,
@@ -1918,6 +1974,7 @@ export const ComponentPage: React.FC = () => {
         {doc.name === 'Modal' && <ModalDocDemo idx={idx} />}
         {doc.name === 'Drawer' && <DrawerDocDemo idx={idx} />}
         {doc.name === 'Tooltip' && <TooltipDocDemo idx={idx} />}
+        {doc.name === 'Popover' && <PopoverDocDemo idx={idx} />}
         {doc.name === 'Checkbox' && <CheckboxDocDemo idx={idx} />}
         {doc.name === 'Radio' && <RadioDocDemo idx={idx} />}
         {doc.name === 'Switch' && <SwitchDocDemo idx={idx} />}

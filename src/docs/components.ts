@@ -143,6 +143,39 @@ export const componentDocs: ComponentDoc[] = [
     ],
   },
   {
+    name: 'Popover',
+    title: 'Popover 气泡层',
+    category: '通用',
+    description:
+      '非模态锚点浮层：Portal、placement、外部点击与 Esc 关闭、焦点陷阱；可交互内容；z-index --su-z-popover',
+    aiDocPath: '/src/components/Popover/Popover.ai.md',
+    examples: [
+      {
+        title: '点击切换 + 面板内按钮',
+        code: `const [open, setOpen] = useState(false);
+
+<Popover
+  open={open}
+  onOpenChange={setOpen}
+  content={
+    <Stack gap="sm">
+      <Typography variant="bodySmall" noMargin>可放简短说明或操作</Typography>
+      <Button size="sm" type="button" onClick={() => setOpen(false)}>关闭</Button>
+    </Stack>
+  }
+>
+  <Button type="button" variant="soft" size="sm">打开 Popover</Button>
+</Popover>`,
+      },
+      {
+        title: 'placement',
+        code: `<Popover open={open} onOpenChange={setOpen} placement="right" content={<span>在右侧</span>}>
+  <Button size="sm" type="button" variant="soft">锚点</Button>
+</Popover>`,
+      },
+    ],
+  },
+  {
     name: 'Input',
     title: 'Input 输入框',
     category: '表单',

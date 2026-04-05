@@ -21,7 +21,7 @@ import { Button } from 'stand-ui/components/Button';
 - **键盘**：打开时 **`Escape`** 关闭（捕获阶段，避免与内部组件冲突）。
 - **禁用**：`disabled` 为 `true` 时不展示提示、不挂事件，仅渲染包裹层。**原生禁用控件**默认不冒泡指针事件，悬停 Tooltip 时请在子按钮上加 **`style={{ pointerEvents: 'none' }}`**（或等价 class），由外层触发器 `span` 接收悬停。
 - **定位**：`placement` 为 `top` | `bottom` | `left` | `right`，按视口 **`fixed`** 定位并做边距夹紧；**滚动/缩放**时跟随更新。
-- **样式**：浅色主题为深色条、深色主题为浅色条，使用 **`--su-tooltip-bg` / `--su-tooltip-fg`**（定义在 `vars.css`）。
+- **样式**：浅色 / 暗色主题 Tooltip 均为**深色近黑底 + 浅色字**（`--su-tooltip-bg` / `--su-tooltip-fg`，见 `vars.css`）；暗色下背景略更深（`#0a0b0f`）以便浮在页面冷灰底上仍像「黑条」。
 
 ## Props
 
