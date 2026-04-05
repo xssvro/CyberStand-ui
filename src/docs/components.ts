@@ -741,6 +741,47 @@ toast.info('提示');`,
     ],
   },
   {
+    name: 'Drawer',
+    title: 'Drawer 抽屉',
+    category: '反馈',
+    description:
+      '侧滑面板：Portal、四向 placement、可选遮罩；与 Modal 同级的滚动锁定与焦点陷阱；z-index 为 --su-z-drawer',
+    aiDocPath: '/src/components/Drawer/Drawer.ai.md',
+    examples: [
+      {
+        title: '基础：右侧抽屉',
+        code: `const [open, setOpen] = useState(false);
+
+<>
+  <Button type="button" onClick={() => setOpen(true)}>打开抽屉</Button>
+  <Drawer
+    open={open}
+    onOpenChange={setOpen}
+    title="筛选"
+    footer={
+      <Button size="sm" color="primary" type="button" onClick={() => setOpen(false)}>
+        应用
+      </Button>
+    }
+  >
+    <Typography variant="bodySmall" color="muted" noMargin>抽屉正文，可滚动。</Typography>
+  </Drawer>
+</>`,
+      },
+      {
+        title: 'placement 与宽度',
+        code: `<Drawer open={openL} onOpenChange={setOpenL} title="左侧" placement="left" width={320}>…</Drawer>
+<Drawer open={openT} onOpenChange={setOpenT} title="顶部" placement="top" height="min(36vh, 280px)">…</Drawer>`,
+      },
+      {
+        title: '非遮罩模式',
+        code: `<Drawer open={open} onOpenChange={setOpen} title="无遮罩" mask={false}>
+  无暗色底，仍锁定背后滚动；点外侧空白可关（maskClosable 默认 true）。
+</Drawer>`,
+      },
+    ],
+  },
+  {
     name: 'Badge',
     title: 'Badge 角标',
     category: '反馈',

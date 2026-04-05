@@ -1,0 +1,231 @@
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: var(--su-z-drawer);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  box-sizing: border-box;
+  pointer-events: auto;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--su-loading-mask-bg, rgba(15, 23, 42, 0.48));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: su-drawer-backdrop-in 180ms ease-out forwards;
+}
+
+@keyframes su-drawer-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.backdropPlain {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  animation: none;
+  opacity: 1;
+}
+
+.shell {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  width: 100%;
+  display: flex;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.shellRight {
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: stretch;
+}
+
+.shellLeft {
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.shellTop {
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.shellBottom {
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: stretch;
+}
+
+.panel {
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--su-border-subtle);
+  background: var(--su-bg-elevated);
+  color: var(--su-text-default);
+  box-shadow: var(--su-shadow-lg);
+  box-sizing: border-box;
+  outline: none;
+  max-width: 100%;
+  max-height: 100%;
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.panelRight {
+  height: 100%;
+  max-height: 100dvh;
+  width: var(--su-drawer-width, 400px);
+  border-right: none;
+  transform: translateX(100%);
+}
+
+.panelRightOpen {
+  transform: translateX(0);
+}
+
+.panelLeft {
+  height: 100%;
+  max-height: 100dvh;
+  width: var(--su-drawer-width, 400px);
+  border-left: none;
+  transform: translateX(-100%);
+}
+
+.panelLeftOpen {
+  transform: translateX(0);
+}
+
+.panelTop {
+  width: 100%;
+  height: var(--su-drawer-height, min(40vh, 320px));
+  max-height: min(90dvh, 720px);
+  border-top: none;
+  transform: translateY(-100%);
+}
+
+.panelTopOpen {
+  transform: translateY(0);
+}
+
+.panelBottom {
+  width: 100%;
+  height: var(--su-drawer-height, min(40vh, 320px));
+  max-height: min(90dvh, 720px);
+  border-bottom: none;
+  transform: translateY(100%);
+}
+
+.panelBottomOpen {
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backdrop:not(.backdropPlain),
+  .panel {
+    animation: none;
+    transition: none;
+  }
+
+  .panelRight,
+  .panelLeft,
+  .panelTop,
+  .panelBottom {
+    transform: none;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--su-space-3);
+  flex-shrink: 0;
+  padding: var(--su-space-4) var(--su-space-4) 0;
+  min-height: 0;
+}
+
+.headerCloseOnly {
+  justify-content: flex-end;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--su-text-default);
+  flex: 1;
+  min-width: 0;
+}
+
+.closeBtn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin: -6px -8px 0 0;
+  padding: 0;
+  border: none;
+  border-radius: max(2px, calc(var(--su-drawer-radius, 8px) - 2px));
+  background: transparent;
+  color: var(--su-text-muted);
+  cursor: pointer;
+  outline: none;
+  transition:
+    background var(--su-transition-fast),
+    color var(--su-transition-fast);
+}
+
+.closeBtn:hover {
+  background: var(--su-bg-subtle);
+  color: var(--su-text-default);
+}
+
+.closeBtn:focus-visible {
+  box-shadow: var(--su-input-focus-shadow);
+  border: 1px solid var(--su-info-500);
+}
+
+.body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--su-space-4);
+  font-size: var(--su-type-body-size, 0.9375rem);
+  line-height: var(--su-type-body-line, 1.65);
+}
+
+.header + .body {
+  padding-top: var(--su-space-3);
+}
+
+.footer {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: var(--su-space-2);
+  padding: var(--su-space-3) var(--su-space-4) var(--su-space-4);
+  border-top: 1px solid var(--su-border-subtle);
+}

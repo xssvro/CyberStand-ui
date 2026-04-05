@@ -21,6 +21,7 @@ import { FormSection } from '../components/FormSection';
 import { Card } from '../components/Card';
 import { Loading } from '../components/Loading';
 import { Modal } from '../components/Modal';
+import { Drawer } from '../components/Drawer';
 import { Progress } from '../components/Progress';
 import { Result } from '../components/Result';
 import { Skeleton } from '../components/Skeleton';
@@ -58,6 +59,7 @@ import FormSectionAiMd from '../components/FormSection/FormSection.ai.md?raw';
 import FormAiMd from '../components/Form/Form.ai.md?raw';
 import LoadingAiMd from '../components/Loading/Loading.ai.md?raw';
 import ModalAiMd from '../components/Modal/Modal.ai.md?raw';
+import DrawerAiMd from '../components/Drawer/Drawer.ai.md?raw';
 import ProgressAiMd from '../components/Progress/Progress.ai.md?raw';
 import SkeletonAiMd from '../components/Skeleton/Skeleton.ai.md?raw';
 
@@ -433,6 +435,90 @@ function ModalDocDemo({ idx }: { idx: number }) {
   }
 }
 
+function DrawerDocDemo({ idx }: { idx: number }) {
+  const [open, setOpen] = useState(false);
+  const [openLeft, setOpenLeft] = useState(false);
+  const [openTop, setOpenTop] = useState(false);
+  const [openNoMask, setOpenNoMask] = useState(false);
+
+  switch (idx) {
+    case 0:
+      return (
+        <div className="example-preview-inner">
+          <Button type="button" onClick={() => setOpen(true)}>
+            打开抽屉
+          </Button>
+          <Drawer
+            open={open}
+            onOpenChange={setOpen}
+            title="筛选"
+            footer={
+              <Button size="sm" color="primary" type="button" onClick={() => setOpen(false)}>
+                应用
+              </Button>
+            }
+          >
+            <Typography variant="bodySmall" color="muted" noMargin>
+              抽屉正文，可滚动。
+            </Typography>
+          </Drawer>
+        </div>
+      );
+    case 1:
+      return (
+        <Stack gap="sm" className="max-w-md w-full">
+          <Button type="button" size="sm" variant="soft" onClick={() => setOpenLeft(true)}>
+            左侧 width=320
+          </Button>
+          <Drawer
+            open={openLeft}
+            onOpenChange={setOpenLeft}
+            title="左侧"
+            placement="left"
+            width={320}
+          >
+            <Typography variant="bodySmall" color="muted" noMargin>
+              placement=&quot;left&quot;
+            </Typography>
+          </Drawer>
+          <Button type="button" size="sm" variant="soft" onClick={() => setOpenTop(true)}>
+            顶部抽屉
+          </Button>
+          <Drawer
+            open={openTop}
+            onOpenChange={setOpenTop}
+            title="顶部"
+            placement="top"
+            height="min(36vh, 280px)"
+          >
+            <Typography variant="bodySmall" color="muted" noMargin>
+              placement=&quot;top&quot;
+            </Typography>
+          </Drawer>
+        </Stack>
+      );
+    case 2:
+      return (
+        <div className="example-preview-inner">
+          <Button type="button" variant="soft" onClick={() => setOpenNoMask(true)}>
+            非遮罩模式
+          </Button>
+          <Drawer open={openNoMask} onOpenChange={setOpenNoMask} title="无遮罩" mask={false}>
+            <Typography variant="bodySmall" color="muted" noMargin>
+              无暗色底，仍锁定背后滚动；点外侧空白可关闭。
+            </Typography>
+          </Drawer>
+        </div>
+      );
+    default:
+      return (
+        <Typography variant="body" color="muted">
+          无该示例索引
+        </Typography>
+      );
+  }
+}
+
 function CheckboxDocDemo({ idx }: { idx: number }) {
   const [skills, setSkills] = useState<string[]>(['ts']);
   const [notify, setNotify] = useState<string[]>([]);
@@ -744,6 +830,7 @@ const componentMap: Record<string, React.ElementType> = {
   Card,
   Toast: ToastDocPlaceholder,
   Modal,
+  Drawer,
   Typography,
   Divider,
   AspectRatio,
@@ -776,6 +863,7 @@ const aiDocMap: Record<string, string> = {
   Card: CardAiMd,
   Toast: ToastAiMd,
   Modal: ModalAiMd,
+  Drawer: DrawerAiMd,
   Typography: TypographyAiMd,
   Divider: DividerAiMd,
   AspectRatio: AspectRatioAiMd,
@@ -1762,6 +1850,7 @@ export const ComponentPage: React.FC = () => {
         {doc.name === 'Select' && <SelectDocDemo idx={idx} />}
         {doc.name === 'DatePicker' && <DatePickerDocDemo idx={idx} />}
         {doc.name === 'Modal' && <ModalDocDemo idx={idx} />}
+        {doc.name === 'Drawer' && <DrawerDocDemo idx={idx} />}
         {doc.name === 'Checkbox' && <CheckboxDocDemo idx={idx} />}
         {doc.name === 'Radio' && <RadioDocDemo idx={idx} />}
         {doc.name === 'Switch' && <SwitchDocDemo idx={idx} />}

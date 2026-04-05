@@ -1,11 +1,8 @@
 import React, { useCallback, useEffect, useId, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { getRadiusVar } from '../../core/stand';
-import {
-  OVERLAY_SCROLL_LOCK_SELECTOR,
-  useOverlayScrollLock,
-} from '../overlay/useOverlayScrollLock';
-import styles from './Modal.module.css';
+import { useOverlayScrollLock } from '../overlay/useOverlayScrollLock';
+import styles from './Drawer.module.css';
 
 const FOCUSABLE_SELECTOR =
   'a[href],button:not([disabled]),textarea:not([disabled]),input:not([disabled]),select:not([disabled]),[tabindex]:not([tabindex="-1"])';
@@ -24,65 +21,38 @@ function getFocusable(container: HTMLElement): HTMLElement[] {
   });
 }
 
-export type ModalSize = 'sm' | 'md' | 'lg' | 'xl' | 'full';
+export type DrawerPlacement = 'left' | 'right' | 'top' | 'bottom';
 
-const SIZE_MAX_WIDTH: Record<ModalSize, string> = {
-  sm: '400px',
-  md: '520px',
-  lg: '720px',
-  xl: '900px',
-  full: 'min(100vw - 32px, 1200px)',
-};
-
-export interface ModalProps {
-  /** 是否展示 */
+export interface DrawerProps {
   open: boolean;
-  /** 打开状态变化（与 `open` 受控配合） */
   onOpenChange?: (open: boolean) => void;
-  /** 用户触发关闭时回调（遮罩、关闭钮、Esc）；等价于 `onOpenChange(false)` 时常用 */
   onClose?: () => void;
-  /** 标题；有则挂 `aria-labelledby` */
   title?: React.ReactNode;
-  /** 主体内容 */
   children?: React.ReactNode;
-  /** 底部操作区 */
   footer?: React.ReactNode;
-  /** 是否展示右上角关闭按钮 */
   closable?: boolean;
-  /** 是否显示半透明遮罩与模糊；`false` 时仅保留透明全屏层（可配合 `maskClosable` 点空白关闭） */
   mask?: boolean;
-  /** 点击遮罩（或 `mask={false}` 时的透明层）是否关闭 */
   maskClosable?: boolean;
-  /** Esc 是否关闭 */
   keyboard?: boolean;
-  /** 是否垂直居中；`false` 时靠上留白 */
-  centered?: boolean;
-  /** 预设最大宽度 */
-  size?: ModalSize;
-  /** 覆盖最大宽度（如 `480px`、`80%`） */
+  /** 从哪一侧滑入；左右用 `width`，上下用 `height` */
+  placement?: DrawerPlacement;
+  /** 左右抽屉宽度 */
   width?: number | string;
-  /** 对话框圆角 token */
+  /** 上下抽屉高度 */
+  height?: number | string;
   radius?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
-  /** 根节点 class（含遮罩与内容外层） */
   className?: string;
-  /** 白底面板 class */
-  bodyClassName?: string;
-  /** 挂载节点，默认 `document.body` */
+  panelClassName?: string;
   getContainer?: HTMLElement | (() => HTMLElement);
-  /** 覆盖 z-index（默认 `--su-z-modal`） */
   zIndex?: number;
-  /** 打开/关闭过渡结束后通知（当前为同步切换 DOM，与打开状态一致时调用） */
   afterOpenChange?: (open: boolean) => void;
 }
 
-function resolveWidth(width: number | string | undefined, size: ModalSize): string {
-  if (width === undefined) return SIZE_MAX_WIDTH[size];
-  if (typeof width === 'number') return `${width}px`;
-  return width;
+function resolveLinearSize(value: number | string | undefined, fallback: string): string {
+  if (value === undefined) return fallback;
+  if (typeof value === 'number') return `${value}px`;
+  return value;
 }
-
-/** 页面实际滚动容器可挂此属性，打开 Modal 时一并锁定（文档站 `.docs-main` 使用） */
-export const MODAL_SCROLL_LOCK_SELECTOR = OVERLAY_SCROLL_LOCK_SELECTOR;
 
 function CloseIcon() {
   return (
@@ -97,7 +67,7 @@ function CloseIcon() {
   );
 }
 
-export const Modal: React.FC<ModalProps> = ({
+export const Drawer: React.FC<DrawerProps> = ({
   open,
   onOpenChange,
   onClose,
@@ -108,18 +78,18 @@ export const Modal: React.FC<ModalProps> = ({
   mask = true,
   maskClosable = true,
   keyboard = true,
-  centered = true,
-  size = 'md',
+  placement = 'right',
   width,
+  height,
   radius = 'lg',
-  className = '',
-  bodyClassName = '',
+  className,
+  panelClassName,
   getContainer,
   zIndex: zIndexProp,
   afterOpenChange,
 }) => {
-  const titleId = useId().replace(/:/g, '');
-  const dialogRef = useRef<HTMLDivElement>(null);
+  const titleId = useId();
+  const panelRef = useRef<HTMLElement>(null);
 
   const requestClose = useCallback(() => {
     onOpenChange?.(false);
@@ -134,7 +104,7 @@ export const Modal: React.FC<ModalProps> = ({
 
   useEffect(() => {
     if (!open) return;
-    const root = dialogRef.current;
+    const root = panelRef.current;
     if (!root) return;
 
     const previousFocus = document.activeElement as HTMLElement | null;
@@ -192,23 +162,84 @@ export const Modal: React.FC<ModalProps> = ({
   const container =
     typeof getContainer === 'function' ? getContainer() : getContainer ?? document.body;
 
-  const maxW = resolveWidth(width, size);
   const radiusVar = getRadiusVar(radius);
   const zStyle =
-    zIndexProp !== undefined
-      ? ({ zIndex: zIndexProp } as React.CSSProperties)
-      : undefined;
+    zIndexProp !== undefined ? ({ zIndex: zIndexProp } as React.CSSProperties) : undefined;
 
   const hasTitle = title != null && title !== false;
   const showHeader = hasTitle || closable;
 
+  const shellClass =
+    placement === 'left'
+      ? styles.shellLeft
+      : placement === 'top'
+        ? styles.shellTop
+        : placement === 'bottom'
+          ? styles.shellBottom
+          : styles.shellRight;
+
+  const wStr = resolveLinearSize(width, '400px');
+  const hStr = resolveLinearSize(height, 'min(40vh, 320px)');
+
+  const panelVars =
+    placement === 'left' || placement === 'right'
+      ? ({
+          '--su-drawer-radius': radiusVar,
+          '--su-drawer-width': wStr,
+        } as React.CSSProperties)
+      : ({
+          '--su-drawer-radius': radiusVar,
+          '--su-drawer-height': hStr,
+        } as React.CSSProperties);
+
+  const radiusStyle = ((): React.CSSProperties => {
+    const r = radiusVar;
+    switch (placement) {
+      case 'right':
+        return {
+          borderTopLeftRadius: r,
+          borderBottomLeftRadius: r,
+          borderTopRightRadius: 0,
+          borderBottomRightRadius: 0,
+        };
+      case 'left':
+        return {
+          borderTopRightRadius: r,
+          borderBottomRightRadius: r,
+          borderTopLeftRadius: 0,
+          borderBottomLeftRadius: 0,
+        };
+      case 'top':
+        return {
+          borderBottomLeftRadius: r,
+          borderBottomRightRadius: r,
+          borderTopLeftRadius: 0,
+          borderTopRightRadius: 0,
+        };
+      case 'bottom':
+      default:
+        return {
+          borderTopLeftRadius: r,
+          borderTopRightRadius: r,
+          borderBottomLeftRadius: 0,
+          borderBottomRightRadius: 0,
+        };
+    }
+  })();
+
+  const panelClass =
+    placement === 'left'
+      ? joinClasses(styles.panel, styles.panelLeft, open && styles.panelLeftOpen)
+      : placement === 'top'
+        ? joinClasses(styles.panel, styles.panelTop, open && styles.panelTopOpen)
+        : placement === 'bottom'
+          ? joinClasses(styles.panel, styles.panelBottom, open && styles.panelBottomOpen)
+          : joinClasses(styles.panel, styles.panelRight, open && styles.panelRightOpen);
+
   if (!open) return null;
 
   const node = (
-    <div
-      className={joinClasses(styles.root, !centered && styles.rootAlignTop, className)}
-      style={zStyle}
-    >
+    <div className={joinClasses(styles.root, className)} style={zStyle}>
       <div
         className={joinClasses(styles.backdrop, !mask && styles.backdropPlain)}
         aria-hidden
@@ -219,21 +250,16 @@ export const Modal: React.FC<ModalProps> = ({
           }
         }}
       />
-      <div className={styles.center}>
-        <div
-          ref={dialogRef}
+      <div className={joinClasses(styles.shell, shellClass)}>
+        <aside
+          ref={panelRef}
           role="dialog"
           aria-modal="true"
           aria-labelledby={hasTitle ? titleId : undefined}
-          aria-label={!hasTitle ? '对话框' : undefined}
+          aria-label={!hasTitle ? '抽屉' : undefined}
           tabIndex={-1}
-          className={joinClasses(styles.dialog, bodyClassName)}
-          style={
-            {
-              '--su-modal-max-width': maxW,
-              '--su-radius': radiusVar,
-            } as React.CSSProperties
-          }
+          className={joinClasses(panelClass, panelClassName)}
+          style={{ ...panelVars, ...radiusStyle }}
           onMouseDown={(e) => e.stopPropagation()}
         >
           {showHeader ? (
@@ -269,7 +295,7 @@ export const Modal: React.FC<ModalProps> = ({
           ) : null}
 
           {footer != null && footer !== false ? <div className={styles.footer}>{footer}</div> : null}
-        </div>
+        </aside>
       </div>
     </div>
   );
@@ -277,4 +303,4 @@ export const Modal: React.FC<ModalProps> = ({
   return createPortal(node, container);
 };
 
-Modal.displayName = 'Modal';
+Drawer.displayName = 'Drawer';

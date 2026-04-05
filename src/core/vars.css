@@ -178,6 +178,8 @@
   --su-z-fixed: 1030;
   --su-z-modal-backdrop: 1040;
   --su-z-modal: 1050;
+  /** 抽屉与 Modal 同级，后挂载者在上层 */
+  --su-z-drawer: 1050;
   --su-z-popover: 1060;
   --su-z-tooltip: 1070;
   /** 全页/区块加载遮罩；低于 Toast，避免挡住全局通知 */

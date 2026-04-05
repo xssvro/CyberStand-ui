@@ -43,6 +43,9 @@ export type { DatePickerProps } from './DatePicker';
 export { Modal, Modal as Dialog, MODAL_SCROLL_LOCK_SELECTOR } from './Modal';
 export type { ModalProps, ModalSize } from './Modal';
 
+export { Drawer } from './Drawer';
+export type { DrawerProps, DrawerPlacement } from './Drawer';
+
 export { FormField, Label } from './FormField';
 export type { FormFieldLayout, FormFieldProps, LabelProps } from './FormField';
 
