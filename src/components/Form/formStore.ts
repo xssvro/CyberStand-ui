@@ -45,6 +45,8 @@ export function getFieldsValueFromForm(el: HTMLFormElement | null): Record<strin
   return out;
 }
 
+export type FormErrorsSnapshot = Record<string, string>;
+
 export interface FormInstance {
   validateFields: (nameList?: string[]) => Promise<Record<string, unknown>>;
   getFieldsValue: () => Record<string, unknown>;
@@ -52,9 +54,15 @@ export interface FormInstance {
   setFields: (fields: Record<string, SetFieldErrorPayload>) => void;
   getFieldError: (name: string) => string | undefined;
   clearErrors: () => void;
+  /** 由 `<Form form={...}>` 在根 `form` 挂载/卸载时调用，勿在业务中直接使用 */
+  attach: (el: HTMLFormElement | null) => void;
+  /** 字段级错误变化时通知订阅方（文档站与表单重渲染用） */
+  subscribeErrors: (listener: (errors: FormErrorsSnapshot) => void) => () => void;
+  registerField: (name: string, registration: FormFieldRegistration) => void;
+  unregisterField: (name: string) => void;
 }
 
-type ErrorListener = (errors: Record<string, string>) => void;
+type ErrorListener = (errors: FormErrorsSnapshot) => void;
 
 export class FormStore implements FormInstance {
   private formEl: HTMLFormElement | null = null;

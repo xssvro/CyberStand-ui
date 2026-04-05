@@ -1,8 +1,8 @@
 import { createContext, useContext } from 'react';
-import type { FormStore } from './formStore';
+import type { FormInstance } from './formStore';
 
-export const FormRulesStoreContext = createContext<FormStore | null>(null);
+export const FormRulesStoreContext = createContext<FormInstance | null>(null);
 
-export function useFormRulesStore(): FormStore | null {
+export function useFormRulesStore(): FormInstance | null {
   return useContext(FormRulesStoreContext);
 }
