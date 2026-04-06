@@ -34,6 +34,138 @@ export function isDateInRange(iso: string, min?: string, max?: string): boolean 
   return true;
 }
 
+/** 从 `yyyy-mm-dd` 或 `yyyy-mm-ddTHH:mm` 等串取出日期键 `yyyy-mm-dd` */
+export function extractISODateKey(s: string): string | null {
+  const m = /^(\d{4}-\d{2}-\d{2})/.exec(s.trim());
+  if (!m) return null;
+  return parseISODate(m[1]) ? m[1] : null;
+}
+
+/**
+ * 仅按日期键比较（忽略同一天上的时间），适合 DatePicker 与 `min`/`max` 带 `T` 的写法。
+ */
+export function isDateKeyInRange(dayIso: string, min?: string, max?: string): boolean {
+  const minKey = min ? extractISODateKey(min) : null;
+  const maxKey = max ? extractISODateKey(max) : null;
+  if (minKey && dayIso < minKey) return false;
+  if (maxKey && dayIso > maxKey) return false;
+  return true;
+}
+
+function localDateTimeToMs(dateIso: string, timeStr: string): number | null {
+  const p = parseISOTime(timeStr);
+  if (!p) return null;
+  const d = parseISODate(dateIso);
+  if (!d) return null;
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate(), p.h, p.m, p.sec).getTime();
+}
+
+function tryParseBoundaryDateTime(s: string): { date: string; time: string } | null {
+  return parseISODateTime(s.trim().replace(' ', 'T'));
+}
+
+/** 用于面板提示：`min`/`max` 展示为短文案 */
+export function formatBoundaryHint(s: string, locale = 'zh-CN'): string {
+  const p = parseISODateTime(s.trim().replace(' ', 'T'));
+  if (p) {
+    const [Y, M, D] = p.date.split('-').map(Number);
+    const [hh, mm, ss] = p.time.split(':').map(Number);
+    const d = new Date(Y, M - 1, D, hh, mm, ss || 0);
+    return d.toLocaleString(locale, {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  }
+  const d = parseISODate(s.trim());
+  if (d) {
+    return d.toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' });
+  }
+  return s.trim();
+}
+
+/** `min` 边界对应的本地时间戳：纯日期为当日 0:00，带时间为精确时刻 */
+export function parseMinBoundaryMs(s: string): number | null {
+  const dt = tryParseBoundaryDateTime(s);
+  if (dt) return localDateTimeToMs(dt.date, dt.time);
+  const d = parseISODate(s.trim());
+  if (!d) return null;
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0).getTime();
+}
+
+/** `max` 边界对应的本地时间戳：纯日期为当日 23:59:59.999，带时间为精确时刻 */
+export function parseMaxBoundaryMs(s: string): number | null {
+  const dt = tryParseBoundaryDateTime(s);
+  if (dt) return localDateTimeToMs(dt.date, dt.time);
+  const d = parseISODate(s.trim());
+  if (!d) return null;
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate(), 23, 59, 59, 999).getTime();
+}
+
+function dayStartMs(dayIso: string): number | null {
+  const d = parseISODate(dayIso);
+  if (!d) return null;
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0).getTime();
+}
+
+function dayEndMs(dayIso: string): number | null {
+  const d = parseISODate(dayIso);
+  if (!d) return null;
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate(), 23, 59, 59, 999).getTime();
+}
+
+/**
+ * 该日是否与 [min,max] 存在任意可取的本地时刻（用于 DateTimePicker 月历格禁用逻辑）。
+ */
+export function isDayPartiallyInDateTimeRange(dayIso: string, min?: string, max?: string): boolean {
+  const d0 = dayStartMs(dayIso);
+  const d1 = dayEndMs(dayIso);
+  if (d0 == null || d1 == null) return false;
+  const lo = min != null ? parseMinBoundaryMs(min) : null;
+  const hi = max != null ? parseMaxBoundaryMs(max) : null;
+  if (lo != null && lo > d1) return false;
+  if (hi != null && hi < d0) return false;
+  return true;
+}
+
+function valueStringToMs(value: string, withSeconds: boolean): number | null {
+  const t = value.trim().replace(' ', 'T');
+  let p = parseISODateTime(t);
+  if (!p) {
+    const m = /^(\d{4}-\d{2}-\d{2})$/.exec(value.trim());
+    if (m && parseISODate(m[1])) {
+      p = { date: m[1], time: withSeconds ? '00:00:00' : '00:00' };
+    }
+  }
+  if (!p) return null;
+  let time = p.time;
+  if (time.length === 5 && withSeconds) time = `${time}:00`;
+  return localDateTimeToMs(p.date, time);
+}
+
+/** 将本地日期时间串钳制在 [min,max]（含端点）；无法解析则原样返回 */
+export function clampDateTimeString(
+  raw: string,
+  min?: string,
+  max?: string,
+  withSeconds = false,
+): string {
+  const ms = valueStringToMs(raw, withSeconds);
+  if (ms == null) return raw;
+  const lo = min != null ? parseMinBoundaryMs(min) : null;
+  const hi = max != null ? parseMaxBoundaryMs(max) : null;
+  let m = ms;
+  if (lo != null) m = Math.max(m, lo);
+  if (hi != null) m = Math.min(m, hi);
+  if (m === ms) return raw;
+  const d = new Date(m);
+  const date = toISODate(d);
+  const time = formatISOTime(d.getHours(), d.getMinutes(), d.getSeconds(), withSeconds);
+  return joinISODateTime(date, time);
+}
+
 export type CalendarCell = {
   date: Date;
   iso: string;
@@ -58,4 +190,37 @@ export function buildMonthGrid(visibleMonth: Date): CalendarCell[] {
     });
   }
   return cells;
+}
+
+/** `HH:mm` 或 `HH:mm:ss` */
+export function parseISOTime(s: string): { h: number; m: number; sec: number } | null {
+  const m = /^(\d{2}):(\d{2})(?::(\d{2}))?$/.exec(s.trim());
+  if (!m) return null;
+  const h = Number(m[1]);
+  const min = Number(m[2]);
+  const sec = m[3] !== undefined ? Number(m[3]) : 0;
+  if (h < 0 || h > 23 || min < 0 || min > 59 || sec < 0 || sec > 59) return null;
+  return { h, m: min, sec };
+}
+
+export function formatISOTime(h: number, m: number, sec = 0, withSeconds = false): string {
+  return withSeconds
+    ? `${pad2(h)}:${pad2(m)}:${pad2(sec)}`
+    : `${pad2(h)}:${pad2(m)}`;
+}
+
+/** `yyyy-mm-ddTHH:mm` 或带秒、或空格分隔 */
+export function parseISODateTime(s: string): { date: string; time: string } | null {
+  const t = s.trim();
+  const m = /^(\d{4}-\d{2}-\d{2})[T ](\d{2}:\d{2}(?::\d{2})?)$/.exec(t);
+  if (!m) return null;
+  const date = m[1];
+  const time = m[2];
+  if (!parseISODate(date)) return null;
+  if (!parseISOTime(time)) return null;
+  return { date, time };
+}
+
+export function joinISODateTime(dateIso: string, timeStr: string): string {
+  return `${dateIso}T${timeStr}`;
 }

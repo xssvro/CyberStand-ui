@@ -1,0 +1,367 @@
+.root {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  font-size: var(--su-font-size);
+  border-radius: var(--su-radius);
+  width: 100%;
+  min-height: var(--su-height);
+  box-sizing: border-box;
+  position: relative;
+}
+
+.root.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  min-height: var(--su-height);
+  padding: var(--su-padding);
+  margin: 0;
+  box-sizing: border-box;
+  border: 1px solid var(--su-border-field);
+  border-radius: var(--su-radius);
+  background: var(--su-bg-default);
+  color: var(--su-text-default);
+  font-size: inherit;
+  font-family: inherit;
+  line-height: inherit;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+  transition:
+    border-color var(--su-transition-fast),
+    box-shadow var(--su-transition-fast);
+}
+
+.trigger:disabled {
+  cursor: not-allowed;
+  background: var(--su-bg-muted);
+}
+
+.trigger:focus-visible {
+  border-color: var(--su-info-500);
+  box-shadow: var(--su-input-focus-shadow);
+}
+
+.root.default .trigger:focus-visible {
+  border-color: var(--su-info-500);
+  box-shadow: var(--su-input-focus-shadow);
+}
+
+.root.primary .trigger:focus-visible {
+  border-color: var(--su-primary-500);
+  box-shadow: var(--su-ring-primary);
+}
+
+.root.secondary .trigger:focus-visible {
+  border-color: var(--su-secondary-500);
+  box-shadow: 0 0 0 3px rgba(230, 96, 84, 0.22);
+}
+
+.root.success .trigger:focus-visible {
+  border-color: var(--su-success-500);
+  box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.2);
+}
+
+.root.warning .trigger:focus-visible {
+  border-color: var(--su-warning-500);
+  box-shadow: 0 0 0 3px rgba(255, 159, 28, 0.22);
+}
+
+.root.error:not(.disabled) .trigger {
+  border-color: var(--su-error-500);
+}
+
+.root.error .trigger:focus-visible {
+  border-color: var(--su-error-500);
+  box-shadow: 0 0 0 3px rgba(255, 0, 85, 0.22);
+}
+
+.root.info .trigger:focus-visible {
+  border-color: var(--su-info-500);
+  box-shadow: var(--su-input-focus-shadow);
+}
+
+.triggerInner {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.placeholder {
+  color: var(--su-text-muted);
+}
+
+.valueText {
+  color: var(--su-text-default);
+}
+
+/* 时间专用弹层：略收紧，不与宽触发器同宽 */
+.timePanel {
+  padding: 8px 10px;
+}
+
+.clockIcon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--su-text-muted);
+  opacity: 0.85;
+}
+
+.root.open .clockIcon {
+  color: var(--su-primary-500);
+  opacity: 1;
+}
+
+/* 时间列：固定窄宽、矮视口，占地小；滚动条隐藏，靠上下渐隐提示可滚 */
+.spinnerBoard {
+  --wheel-row: 24px;
+  --wheel-view: 120px;
+  display: grid;
+  grid-template-columns: 36px 11px 36px;
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+  align-items: stretch;
+  direction: ltr;
+  border: 1px solid var(--su-border-subtle);
+  border-radius: var(--su-radius, 6px);
+  background: var(--su-bg-elevated);
+  box-shadow: var(--su-shadow-sm);
+  overflow: hidden;
+}
+
+.spinnerBoardSeconds {
+  grid-template-columns: 32px 9px 32px 9px 32px;
+}
+
+/** 与日历并排：固定视口高度，比例接近默认滚轮 */
+.spinnerBoardFill {
+  --wheel-row: 26px;
+  --wheel-view: 132px;
+  width: fit-content;
+  max-width: 100%;
+  min-width: 0;
+  margin-inline: auto;
+  box-sizing: border-box;
+}
+
+.spinnerBoardFill .spinnerColWrap {
+  height: var(--wheel-view);
+  max-height: var(--wheel-view);
+}
+
+.spinnerBoardFill:not(.spinnerBoardSeconds) {
+  grid-template-columns: 38px 11px 38px;
+}
+
+.spinnerBoardFill.spinnerBoardSeconds {
+  grid-template-columns: 32px 9px 32px 9px 32px;
+}
+
+/** 嵌在日期时间侧栏内：与面板底色统一、冒号列收紧、整体可居中 */
+.spinnerBoardInPanel {
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  width: 100%;
+  max-width: 124px;
+  margin-inline: auto;
+}
+
+.spinnerBoardFill.spinnerBoardInPanel:not(.spinnerBoardSeconds) {
+  grid-template-columns: minmax(32px, 1fr) 5px minmax(32px, 1fr);
+}
+
+.spinnerBoardFill.spinnerBoardInPanel.spinnerBoardSeconds {
+  grid-template-columns: minmax(28px, 1fr) 4px minmax(28px, 1fr) 4px minmax(28px, 1fr);
+}
+
+.spinnerBoardInPanel .spinnerColWrap {
+  background: color-mix(in srgb, var(--su-bg-subtle) 92%, var(--su-bg-elevated));
+}
+
+.spinnerBoardInPanel .spinnerSepCell {
+  background: transparent;
+  border-inline-start: none;
+  padding: 0 1px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: -0.06em;
+  color: var(--su-text-muted);
+}
+
+.spinnerBoardInPanel .spinnerColFadeTop {
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--su-bg-subtle) 96%, var(--su-bg-elevated)) 0%,
+    transparent 100%
+  );
+}
+
+.spinnerBoardInPanel .spinnerColFadeBottom {
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--su-bg-subtle) 96%, var(--su-bg-elevated)) 0%,
+    transparent 100%
+  );
+}
+
+.spinnerColWrap {
+  position: relative;
+  min-width: 0;
+  height: var(--wheel-view);
+  max-height: var(--wheel-view);
+  background: color-mix(in srgb, var(--su-bg-subtle) 92%, var(--su-bg-elevated));
+}
+
+.spinnerCol {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  box-sizing: border-box;
+  height: 100%;
+  max-height: 100%;
+  padding-block: calc((var(--wheel-view) - var(--wheel-row)) / 2);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  overscroll-behavior: contain;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.spinnerCol:active {
+  cursor: grabbing;
+}
+
+.spinnerCol::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.spinnerColFadeTop,
+.spinnerColFadeBottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  height: 28%;
+  pointer-events: none;
+}
+
+.spinnerColFadeTop {
+  top: 0;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--su-bg-subtle) 96%, var(--su-bg-elevated)) 0%,
+    transparent 100%
+  );
+}
+
+.spinnerColFadeBottom {
+  bottom: 0;
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--su-bg-subtle) 96%, var(--su-bg-elevated)) 0%,
+    transparent 100%
+  );
+}
+
+.spinnerSepCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  margin: 0;
+  padding: 0;
+  border-inline-start: 1px solid var(--su-border-subtle);
+  background: var(--su-bg-elevated);
+  font-weight: 500;
+  font-size: 0.6875rem;
+  letter-spacing: -0.02em;
+  color: var(--su-text-subtle);
+  user-select: none;
+}
+
+.spinnerBtn {
+  flex-shrink: 0;
+  box-sizing: border-box;
+  height: var(--wheel-row);
+  min-height: var(--wheel-row);
+  padding: 0 4px;
+  margin: 0 2px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--su-text-muted);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  font-family: inherit;
+  line-height: var(--wheel-row);
+  cursor: grab;
+  outline: none;
+  text-align: center;
+  font-weight: 500;
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinnerBtn {
+    transition: none;
+  }
+}
+
+.spinnerBtn:hover:not(:disabled):not(.active) {
+  background: color-mix(in srgb, var(--su-bg-muted) 55%, transparent);
+  color: var(--su-text-default);
+}
+
+.spinnerBtn:active {
+  cursor: grabbing;
+}
+
+.spinnerBtn:focus-visible {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--su-primary-500) 28%, transparent);
+  position: relative;
+  z-index: 4;
+}
+
+.spinnerBtn.active {
+  background: var(--su-primary-100);
+  color: var(--su-primary-500);
+  font-weight: 700;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--su-primary-500) 38%, transparent);
+}
+
+[data-theme='dark'] .spinnerBtn.active {
+  color: var(--su-primary-500);
+  background: color-mix(in srgb, var(--su-primary-500) 22%, var(--su-bg-subtle));
+  font-weight: 700;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--su-primary-400) 45%, transparent);
+}
+
+.spinnerBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}

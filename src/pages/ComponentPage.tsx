@@ -9,6 +9,8 @@ import { Empty } from '../components/Empty';
 import { FormField, Label } from '../components/FormField';
 import { Checkbox, CheckboxGroup } from '../components/Checkbox';
 import { DatePicker } from '../components/DatePicker';
+import { TimePicker } from '../components/TimePicker';
+import { DateTimePicker } from '../components/DateTimePicker';
 import { Input } from '../components/Input';
 import { Radio, RadioGroup } from '../components/Radio';
 import { Select } from '../components/Select';
@@ -28,6 +30,19 @@ import { Skeleton } from '../components/Skeleton';
 import { toast } from '../components/Toast';
 import { Tooltip } from '../components/Tooltip';
 import { Popover } from '../components/Popover';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/Tabs';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+} from '../components/Breadcrumb';
+import {
+  DropdownMenu,
+  DropdownMenuDivider,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+} from '../components/DropdownMenu';
 import { Typography, TypographyLink } from '../components/Typography';
 import { Divider, Separator } from '../components/Divider';
 import { AspectRatio } from '../components/AspectRatio';
@@ -48,6 +63,11 @@ import CardAiMd from '../components/Card/Card.ai.md?raw';
 import ToastAiMd from '../components/Toast/Toast.ai.md?raw';
 import TooltipAiMd from '../components/Tooltip/Tooltip.ai.md?raw';
 import PopoverAiMd from '../components/Popover/Popover.ai.md?raw';
+import TimePickerAiMd from '../components/TimePicker/TimePicker.ai.md?raw';
+import DateTimePickerAiMd from '../components/DateTimePicker/DateTimePicker.ai.md?raw';
+import TabsAiMd from '../components/Tabs/Tabs.ai.md?raw';
+import BreadcrumbAiMd from '../components/Breadcrumb/Breadcrumb.ai.md?raw';
+import DropdownMenuAiMd from '../components/DropdownMenu/DropdownMenu.ai.md?raw';
 import TypographyAiMd from '../components/Typography/Typography.ai.md?raw';
 import DividerAiMd from '../components/Divider/Divider.ai.md?raw';
 import LayoutAiMd from '../components/Layout/Layout.ai.md?raw';
@@ -322,6 +342,180 @@ function DatePickerDocDemo({ idx }: { idx: number }) {
         <FormField label="截止日期" required className="max-w-md w-full">
           <DatePicker name="due" placeholder="请选择" />
         </FormField>
+      );
+    default:
+      return (
+        <Typography variant="body" color="muted">
+          无该示例索引
+        </Typography>
+      );
+  }
+}
+
+function TimePickerDocDemo({ idx }: { idx: number }) {
+  const [t, setT] = useState('');
+  switch (idx) {
+    case 0:
+      return (
+        <TimePicker value={t} onChange={(v) => setT(v)} placeholder="选择时间" className="max-w-xs w-full" />
+      );
+    case 1:
+      return <TimePicker minuteStep={15} placeholder="整刻钟" className="max-w-xs w-full" />;
+    default:
+      return (
+        <Typography variant="body" color="muted">
+          无该示例索引
+        </Typography>
+      );
+  }
+}
+
+function DateTimePickerDocDemo({ idx }: { idx: number }) {
+  const [v, setV] = useState('');
+  switch (idx) {
+    case 0:
+      return (
+        <DateTimePicker value={v} onChange={(x) => setV(x)} className="max-w-md w-full" />
+      );
+    case 1:
+      return (
+        <DateTimePicker min="2026-01-01" max="2026-12-31" className="max-w-md w-full" />
+      );
+    default:
+      return (
+        <Typography variant="body" color="muted">
+          无该示例索引
+        </Typography>
+      );
+  }
+}
+
+function TabsDocDemo({ idx }: { idx: number }) {
+  const [tab, setTab] = useState('a');
+  switch (idx) {
+    case 0:
+      return (
+        <Tabs value={tab} onValueChange={setTab} className="max-w-lg w-full">
+          <TabsList>
+            <TabsTrigger value="a">概览</TabsTrigger>
+            <TabsTrigger value="b">设置</TabsTrigger>
+          </TabsList>
+          <TabsContent value="a">
+            <Typography variant="bodySmall" noMargin>
+              面板 A
+            </Typography>
+          </TabsContent>
+          <TabsContent value="b">
+            <Typography variant="bodySmall" noMargin>
+              面板 B
+            </Typography>
+          </TabsContent>
+        </Tabs>
+      );
+    case 1:
+      return (
+        <Tabs defaultValue="1" variant="line" className="max-w-lg w-full">
+          <TabsList>
+            <TabsTrigger value="1">第一项</TabsTrigger>
+            <TabsTrigger value="2">第二项</TabsTrigger>
+          </TabsList>
+          <TabsContent value="1">
+            <Typography variant="bodySmall" noMargin>
+              内容 1
+            </Typography>
+          </TabsContent>
+          <TabsContent value="2">
+            <Typography variant="bodySmall" noMargin>
+              内容 2
+            </Typography>
+          </TabsContent>
+        </Tabs>
+      );
+    default:
+      return (
+        <Typography variant="body" color="muted">
+          无该示例索引
+        </Typography>
+      );
+  }
+}
+
+function BreadcrumbDocDemo({ idx }: { idx: number }) {
+  switch (idx) {
+    case 0:
+      return (
+        <Breadcrumb>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="#">首页</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink href="#">项目</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem current>详情</BreadcrumbItem>
+        </Breadcrumb>
+      );
+    case 1:
+      return (
+        <Breadcrumb>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="#">文档</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator>›</BreadcrumbSeparator>
+          <BreadcrumbItem current>本页</BreadcrumbItem>
+        </Breadcrumb>
+      );
+    default:
+      return (
+        <Typography variant="body" color="muted">
+          无该示例索引
+        </Typography>
+      );
+  }
+}
+
+function DropdownMenuDocDemo({ idx }: { idx: number }) {
+  const [open, setOpen] = useState(false);
+  switch (idx) {
+    case 0:
+      return (
+        <div className="example-preview-inner">
+          <DropdownMenu
+            open={open}
+            onOpenChange={setOpen}
+            trigger={
+              <Button size="sm" type="button" variant="soft">
+                操作
+              </Button>
+            }
+          >
+            <DropdownMenuLabel>文档</DropdownMenuLabel>
+            <DropdownMenuItem type="button">编辑</DropdownMenuItem>
+            <DropdownMenuItem type="button">复制</DropdownMenuItem>
+            <DropdownMenuDivider />
+            <DropdownMenuItem type="button" destructive>
+              删除
+            </DropdownMenuItem>
+          </DropdownMenu>
+        </div>
+      );
+    case 1:
+      return (
+        <div className="example-preview-inner">
+          <DropdownMenu
+            trigger={
+              <Button size="sm" type="button">
+                打开
+              </Button>
+            }
+          >
+            <DropdownMenuItem type="button">项 1</DropdownMenuItem>
+            <DropdownMenuItem type="button" disabled>
+              禁用
+            </DropdownMenuItem>
+          </DropdownMenu>
+        </div>
       );
     default:
       return (
@@ -947,6 +1141,11 @@ const componentMap: Record<string, React.ElementType> = {
   Drawer,
   Tooltip,
   Popover,
+  TimePicker,
+  DateTimePicker,
+  Tabs,
+  Breadcrumb,
+  DropdownMenu,
   Typography,
   Divider,
   AspectRatio,
@@ -982,6 +1181,11 @@ const aiDocMap: Record<string, string> = {
   Drawer: DrawerAiMd,
   Tooltip: TooltipAiMd,
   Popover: PopoverAiMd,
+  TimePicker: TimePickerAiMd,
+  DateTimePicker: DateTimePickerAiMd,
+  Tabs: TabsAiMd,
+  Breadcrumb: BreadcrumbAiMd,
+  DropdownMenu: DropdownMenuAiMd,
   Typography: TypographyAiMd,
   Divider: DividerAiMd,
   AspectRatio: AspectRatioAiMd,
@@ -1971,6 +2175,11 @@ export const ComponentPage: React.FC = () => {
         {doc.name === 'Textarea' && <TextareaDocDemo idx={idx} />}
         {doc.name === 'Select' && <SelectDocDemo idx={idx} />}
         {doc.name === 'DatePicker' && <DatePickerDocDemo idx={idx} />}
+        {doc.name === 'TimePicker' && <TimePickerDocDemo idx={idx} />}
+        {doc.name === 'DateTimePicker' && <DateTimePickerDocDemo idx={idx} />}
+        {doc.name === 'Tabs' && <TabsDocDemo idx={idx} />}
+        {doc.name === 'Breadcrumb' && <BreadcrumbDocDemo idx={idx} />}
+        {doc.name === 'DropdownMenu' && <DropdownMenuDocDemo idx={idx} />}
         {doc.name === 'Modal' && <ModalDocDemo idx={idx} />}
         {doc.name === 'Drawer' && <DrawerDocDemo idx={idx} />}
         {doc.name === 'Tooltip' && <TooltipDocDemo idx={idx} />}

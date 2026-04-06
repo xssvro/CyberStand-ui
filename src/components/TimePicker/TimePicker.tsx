@@ -11,14 +11,13 @@ import React, {
 import { createPortal } from 'react-dom';
 import type { StandProps } from '../../core/stand';
 import { getRadiusVar, getSizeVars } from '../../core/stand';
-import { isDateKeyInRange, parseISODate, startOfMonth } from './dateUtils';
-import { CalendarPanel } from './CalendarPanel';
-import { applyPanelPosition, type PanelPlacement } from './panelPosition';
-import styles from './DatePicker.module.css';
+import { formatISOTime, parseISOTime } from '../DatePicker/dateUtils';
+import { applyPanelPosition, type PanelPlacement } from '../DatePicker/panelPosition';
+import datePickerStyles from '../DatePicker/DatePicker.module.css';
+import { TimeSpinner } from './TimeSpinner';
+import styles from './TimePicker.module.css';
 
-type DatePickerPlacement = PanelPlacement;
-
-type DatePickerHtmlPassthrough = Pick<
+type TimePickerHtmlPassthrough = Pick<
   React.HTMLAttributes<HTMLButtonElement>,
   | 'id'
   | 'aria-invalid'
@@ -28,10 +27,10 @@ type DatePickerHtmlPassthrough = Pick<
   | 'aria-required'
 >;
 
-export interface DatePickerProps
+export interface TimePickerProps
   extends Omit<StandProps, 'variant' | 'loading'>,
-    DatePickerHtmlPassthrough {
-  /** 选中日期 `yyyy-mm-dd` */
+    TimePickerHtmlPassthrough {
+  /** `HH:mm` 或 `HH:mm:ss`（与 `withSeconds` 一致） */
   value?: string;
   defaultValue?: string;
   onChange?: (value: string, e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -39,16 +38,12 @@ export interface DatePickerProps
   disabled?: boolean;
   required?: boolean;
   name?: string;
-  /** 可选最早日 `yyyy-mm-dd` */
-  min?: string;
-  /** 可选最晚日 `yyyy-mm-dd` */
-  max?: string;
-  /** 相对触发器；`auto` 视口不足时翻到上方 */
-  placement?: DatePickerPlacement;
-  /** 挂到 `document.body`，避免 overflow 裁剪 */
+  withSeconds?: boolean;
+  minuteStep?: number;
+  placement?: PanelPlacement;
   portal?: boolean;
   panelClassName?: string;
-  /** 展示用 `toLocaleDateString` 的 locale，默认 `zh-CN` */
+  /** 展示用语，默认 `zh-CN` */
   locale?: string;
   className?: string;
   style?: React.CSSProperties;
@@ -60,7 +55,7 @@ function joinClasses(...parts: Array<string | false | undefined>): string {
 
 function createSyntheticChangeEvent(
   value: string,
-  name: string | undefined
+  name: string | undefined,
 ): React.ChangeEvent<HTMLInputElement> {
   const t = { value, name: name ?? '' } as HTMLInputElement;
   return {
@@ -82,40 +77,40 @@ function createSyntheticChangeEvent(
   } as React.ChangeEvent<HTMLInputElement>;
 }
 
-function CalendarGlyph({ className }: { className?: string }) {
+function ClockGlyph({ className }: { className?: string }) {
   return (
     <svg
       className={className}
-      width={18}
-      height={18}
+      width={16}
+      height={16}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={2}
+      strokeWidth={1.75}
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden
     >
-      <rect x={3} y={4} width={18} height={18} rx={2} />
-      <path d="M16 2v4M8 2v4M3 10h18" />
+      <circle cx={12} cy={12} r={9} />
+      <path d="M12 7v5l3 2" />
     </svg>
   );
 }
 
-export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(function DatePicker(
+export const TimePicker = forwardRef<HTMLButtonElement, TimePickerProps>(function TimePicker(
   {
     value: valueProp,
     defaultValue = '',
     onChange,
-    placeholder = '选择日期',
+    placeholder = '选择时间',
     size = 'md',
     color = 'default',
     radius = 'md',
     disabled = false,
     required = false,
     name,
-    min,
-    max,
+    withSeconds = false,
+    minuteStep = 1,
     placement = 'auto',
     portal = true,
     panelClassName,
@@ -129,11 +124,10 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(functio
     'aria-label': ariaLabel,
     'aria-required': ariaRequired,
   },
-  ref
+  ref,
 ) {
   const baseId = useId().replace(/:/g, '');
   const panelId = `${baseId}-panel`;
-  const listboxId = `${baseId}-grid`;
 
   const isControlled = valueProp !== undefined;
   const [uncontrolled, setUncontrolled] = useState(defaultValue);
@@ -144,15 +138,10 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(functio
       if (!isControlled) setUncontrolled(next);
       onChange?.(next, createSyntheticChangeEvent(next, name));
     },
-    [isControlled, onChange, name]
+    [isControlled, onChange, name],
   );
 
   const [open, setOpen] = useState(false);
-  const parsedValue = value ? parseISODate(value) : null;
-  const [visibleMonth, setVisibleMonth] = useState(() =>
-    startOfMonth(parsedValue ?? new Date())
-  );
-
   const triggerRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
 
@@ -162,62 +151,59 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(functio
       if (typeof ref === 'function') ref(node);
       else if (ref) (ref as React.MutableRefObject<HTMLButtonElement | null>).current = node;
     },
-    [ref]
+    [ref],
   );
 
   const displayText = useMemo(() => {
     if (!value) return null;
-    const d = parseISODate(value);
-    if (!d) return value;
+    const p = parseISOTime(value);
+    if (!p) return value;
     try {
-      return d.toLocaleDateString(locale, {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
+      const d = new Date();
+      d.setHours(p.h, p.m, p.sec, 0);
+      return d.toLocaleTimeString(locale, {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: withSeconds ? '2-digit' : undefined,
       });
     } catch {
       return value;
     }
-  }, [value, locale]);
+  }, [value, locale, withSeconds]);
+
+  const spinnerValue = value || formatISOTime(0, 0, 0, withSeconds);
 
   const openPanel = useCallback(() => {
     if (disabled) return;
-    setVisibleMonth(startOfMonth(parsedValue ?? new Date()));
     setOpen(true);
-  }, [disabled, parsedValue]);
+  }, [disabled]);
 
   const closePanel = useCallback(() => {
     setOpen(false);
     triggerRef.current?.focus({ preventScroll: true });
   }, []);
 
-  const pickDay = useCallback(
-    (iso: string) => {
-      if (!isDateKeyInRange(iso, min, max)) return;
-      setValue(iso);
-      closePanel();
-    },
-    [min, max, setValue, closePanel]
-  );
-
   useLayoutEffect(() => {
     if (!open) return;
     const run = () => {
       const p = panelRef.current;
       const t = triggerRef.current;
-      if (p && t) applyPanelPosition(p, t, placement, 288);
+      if (p && t) {
+        const panelMinW = withSeconds ? 138 : 108;
+        applyPanelPosition(p, t, placement, panelMinW, { matchTriggerWidth: false });
+      }
     };
     run();
-    const id = requestAnimationFrame(run);
+    const idRaf = requestAnimationFrame(run);
     const onScrollOrResize = () => run();
     window.addEventListener('scroll', onScrollOrResize, true);
     window.addEventListener('resize', onScrollOrResize);
     return () => {
-      cancelAnimationFrame(id);
+      cancelAnimationFrame(idRaf);
       window.removeEventListener('scroll', onScrollOrResize, true);
       window.removeEventListener('resize', onScrollOrResize);
     };
-  }, [open, placement]);
+  }, [open, placement, withSeconds]);
 
   useEffect(() => {
     if (!open) return;
@@ -230,17 +216,6 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(functio
     document.addEventListener('mousedown', onDoc);
     return () => document.removeEventListener('mousedown', onDoc);
   }, [open, closePanel]);
-
-  const prevOpenRef = useRef(false);
-  useLayoutEffect(() => {
-    if (open && !prevOpenRef.current && panelRef.current) {
-      const sel =
-        panelRef.current.querySelector<HTMLButtonElement>('button[data-selected="true"]') ??
-        panelRef.current.querySelector<HTMLButtonElement>('button[data-today="true"]');
-      sel?.focus({ preventScroll: true });
-    }
-    prevOpenRef.current = open;
-  }, [open]);
 
   const onTriggerKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
     if (disabled) return;
@@ -272,9 +247,9 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(functio
     <div
       ref={panelRef}
       id={panelId}
-      className={joinClasses(styles.panel, panelClassName)}
+      className={joinClasses(datePickerStyles.panel, styles.timePanel, panelClassName)}
       role="dialog"
-      aria-label="选择日期"
+      aria-label="选择时间"
       onKeyDown={(e) => {
         if (e.key === 'Escape') {
           e.preventDefault();
@@ -282,15 +257,12 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(functio
         }
       }}
     >
-      <CalendarPanel
-        visibleMonth={visibleMonth}
-        onVisibleMonthChange={setVisibleMonth}
-        selectedIso={value}
-        onSelectDay={pickDay}
-        min={min}
-        max={max}
-        locale={locale}
-        gridId={listboxId}
+      <TimeSpinner
+        value={spinnerValue}
+        onChange={setValue}
+        withSeconds={withSeconds}
+        minuteStep={minuteStep}
+        onPickComplete={closePanel}
       />
     </div>
   ) : null;
@@ -302,7 +274,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(functio
         styles[color],
         disabled && styles.disabled,
         open && styles.open,
-        className
+        className,
       )}
       style={
         {
@@ -337,11 +309,11 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(functio
             <span className={styles.placeholder}>{placeholder}</span>
           )}
         </span>
-        <CalendarGlyph className={styles.calendarIcon} />
+        <ClockGlyph className={styles.clockIcon} />
       </button>
       {portal && panel ? createPortal(panel, document.body) : panel}
     </div>
   );
 });
 
-DatePicker.displayName = 'DatePicker';
+TimePicker.displayName = 'TimePicker';

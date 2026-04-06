@@ -1,0 +1,139 @@
+.list {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 2px;
+  padding: 3px;
+  margin: 0;
+  border-radius: var(--su-radius, 5px);
+  background: var(--su-bg-subtle);
+  border: 1px solid color-mix(in srgb, var(--su-primary-500) 14%, var(--su-border-subtle));
+  list-style: none;
+}
+
+.tab {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  padding: 6px 14px;
+  margin: 0;
+  border: none;
+  border-radius: max(2px, calc(var(--su-radius, 5px) - 2px));
+  background: transparent;
+  color: var(--su-text-muted);
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: inherit;
+  line-height: 1.25;
+  cursor: pointer;
+  outline: none;
+  transition:
+    background var(--su-transition-fast),
+    color var(--su-transition-fast),
+    box-shadow var(--su-transition-fast);
+}
+
+.trigger:hover:not(:disabled):not(.active) {
+  color: var(--su-primary-600);
+  background: color-mix(in srgb, var(--su-primary-500) 8%, var(--su-bg-muted));
+}
+
+[data-theme='dark'] .trigger:hover:not(:disabled):not(.active) {
+  color: var(--su-primary-400);
+  background: color-mix(in srgb, var(--su-primary-500) 12%, var(--su-bg-muted));
+}
+
+.trigger:focus-visible {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--su-primary-500) 38%, transparent);
+}
+
+[data-theme='dark'] .trigger:focus-visible {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--su-primary-400) 42%, transparent);
+}
+
+.trigger.active {
+  background: color-mix(in srgb, var(--su-primary-500) 14%, var(--su-bg-elevated));
+  color: var(--su-primary-600);
+  font-weight: 600;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--su-primary-500) 28%, transparent),
+    0 1px 3px color-mix(in srgb, var(--su-primary-500) 8%, rgba(15, 23, 42, 0.06));
+}
+
+[data-theme='dark'] .trigger.active {
+  background: color-mix(in srgb, var(--su-primary-500) 20%, var(--su-bg-subtle));
+  color: var(--su-primary-400);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--su-primary-400) 35%, transparent);
+}
+
+.trigger:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.panel {
+  margin-top: var(--su-space-3);
+  outline: none;
+}
+
+.panel:focus-visible {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--su-primary-500) 32%, transparent);
+  border-radius: var(--su-radius-sm, 4px);
+}
+
+[data-theme='dark'] .panel:focus-visible {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--su-primary-400) 36%, transparent);
+}
+
+/* 下划线变体：整宽底边 */
+.listLine {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  padding: 0;
+  margin: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--su-primary-500) 12%, var(--su-border-default));
+  background: transparent;
+  border-radius: 0;
+  list-style: none;
+}
+
+.tabLine .trigger {
+  border-radius: var(--su-radius, 5px) var(--su-radius, 5px) 0 0;
+  margin-bottom: -1px;
+  border: 1px solid transparent;
+  border-bottom: 2px solid transparent;
+  box-shadow: none;
+}
+
+.tabLine .trigger:hover:not(:disabled):not(.active) {
+  color: var(--su-primary-600);
+  background: color-mix(in srgb, var(--su-primary-500) 6%, transparent);
+}
+
+[data-theme='dark'] .tabLine .trigger:hover:not(:disabled):not(.active) {
+  color: var(--su-primary-400);
+  background: color-mix(in srgb, var(--su-primary-500) 10%, transparent);
+}
+
+.tabLine .trigger.active {
+  background: transparent;
+  border-color: transparent;
+  border-bottom-color: var(--su-primary-500);
+  color: var(--su-primary-600);
+  font-weight: 600;
+  box-shadow: none;
+}
+
+[data-theme='dark'] .tabLine .trigger.active {
+  color: var(--su-primary-400);
+  border-bottom-color: var(--su-primary-500);
+}

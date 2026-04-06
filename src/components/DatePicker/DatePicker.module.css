@@ -118,6 +118,40 @@
   opacity: 1;
 }
 
+/** 日期时间并排等场景：收紧日历占地 */
+.calendarCompact {
+  min-width: 0;
+}
+
+.calendarCompact .header {
+  margin-bottom: var(--su-space-2);
+  gap: var(--su-space-1);
+}
+
+.calendarCompact .navBtn {
+  width: 28px;
+  height: 28px;
+}
+
+.calendarCompact .monthLabel {
+  font-size: 0.8125rem;
+}
+
+.calendarCompact .weekday {
+  font-size: 0.625rem;
+  padding: 2px 0;
+}
+
+.calendarCompact .grid {
+  gap: 2px;
+}
+
+.calendarCompact .dayBtn {
+  min-height: 28px;
+  max-height: 30px;
+  font-size: 0.6875rem;
+}
+
 .panel {
   margin: 0;
   padding: var(--su-space-3);

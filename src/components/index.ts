@@ -40,6 +40,12 @@ export type { InputProps } from './Input';
 export { DatePicker } from './DatePicker';
 export type { DatePickerProps } from './DatePicker';
 
+export { TimePicker, TimeSpinner } from './TimePicker';
+export type { TimePickerProps, TimeSpinnerProps } from './TimePicker';
+
+export { DateTimePicker } from './DateTimePicker';
+export type { DateTimePickerProps } from './DateTimePicker';
+
 export { Modal, Modal as Dialog, MODAL_SCROLL_LOCK_SELECTOR } from './Modal';
 export type { ModalProps, ModalSize } from './Modal';
 
@@ -115,6 +121,35 @@ export type { TooltipProps, TooltipPlacement } from './Tooltip';
 
 export { Popover } from './Popover';
 export type { PopoverProps, PopperPlacement } from './Popover';
+
+export {
+  DropdownMenu,
+  DropdownMenuDivider,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+} from './DropdownMenu';
+export type { DropdownMenuItemProps, DropdownMenuProps } from './DropdownMenu';
+
+export { Tabs, TabsContent, TabsList, TabsTrigger } from './Tabs';
+export type {
+  TabsContentProps,
+  TabsListProps,
+  TabsProps,
+  TabsTriggerProps,
+} from './Tabs';
+
+export {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+} from './Breadcrumb';
+export type {
+  BreadcrumbItemProps,
+  BreadcrumbLinkProps,
+  BreadcrumbProps,
+  BreadcrumbSeparatorProps,
+} from './Breadcrumb';
 
 export { Typography, TypographyLink } from './Typography';
 export type {

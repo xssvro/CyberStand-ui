@@ -11,6 +11,7 @@ const [d, setD] = useState('');
 
 ## 说明
 
+- **月历网格**：`CalendarPanel` 与 **DateTimePicker** 共用；定位逻辑在 `panelPosition.ts`。
 - **自研日历弹层**：通过 `createPortal` 挂到 `document.body`，定位方式与 `Select` 一致（`fixed` + 视口翻转）。
 - **值格式**：`yyyy-mm-dd`，与 `<input type="date">` 一致；表单提交依赖隐藏域 `input[type=hidden][name]`。
 - **选中态**：面板内选中日使用 **`--su-primary-500` / `--su-on-primary`**（主色实心）。

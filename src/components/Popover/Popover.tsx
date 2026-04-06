@@ -26,6 +26,10 @@ export interface PopoverProps {
   panelClassName?: string;
   getPopupContainer?: () => HTMLElement;
   zIndex?: number;
+  /** 浮层根节点 role；`menu` 用于下拉菜单 */
+  panelRole?: 'dialog' | 'menu';
+  /** 触发器 `aria-haspopup` */
+  ariaHasPopup?: 'dialog' | 'menu';
 }
 
 export const Popover: React.FC<PopoverProps> = ({
@@ -39,6 +43,8 @@ export const Popover: React.FC<PopoverProps> = ({
   panelClassName,
   getPopupContainer,
   zIndex: zIndexProp,
+  panelRole = 'dialog',
+  ariaHasPopup = 'dialog',
 }) => {
   const contentId = useId().replace(/:/g, '');
   const triggerRef = useRef<HTMLSpanElement>(null);
@@ -137,8 +143,8 @@ export const Popover: React.FC<PopoverProps> = ({
     <div
       ref={panelRef}
       id={contentId}
-      role="dialog"
-      aria-modal={false}
+      role={panelRole}
+      aria-modal={panelRole === 'dialog' ? false : undefined}
       className={join(styles.panel, entered && styles.panelEnter, panelClassName)}
       style={{ ...coords, ...zStyle }}
       onMouseDown={(e) => e.stopPropagation()}
@@ -155,7 +161,7 @@ export const Popover: React.FC<PopoverProps> = ({
         className={join(styles.trigger, className)}
         aria-expanded={open}
         aria-controls={mounted ? contentId : undefined}
-        aria-haspopup="dialog"
+        aria-haspopup={ariaHasPopup}
         onClick={toggle}
       >
         {children}

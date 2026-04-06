@@ -4,11 +4,12 @@
  */
 
 /** 侧边栏与首页「组件列表」分组（顺序由 COMPONENT_DOC_CATEGORY_ORDER 决定） */
-export type ComponentDocCategory = '通用' | '表单' | '布局' | '反馈';
+export type ComponentDocCategory = '通用' | '导航' | '表单' | '布局' | '反馈';
 
 /** 侧边栏分类展示顺序 */
 export const COMPONENT_DOC_CATEGORY_ORDER: ComponentDocCategory[] = [
   '通用',
+  '导航',
   '表单',
   '布局',
   '反馈',
@@ -176,6 +177,102 @@ export const componentDocs: ComponentDoc[] = [
     ],
   },
   {
+    name: 'Tabs',
+    title: 'Tabs 标签页',
+    category: '导航',
+    description:
+      '受控/非受控 value；胶囊 pills 与下划线 line；TabsList + TabsTrigger + TabsContent；方向键/Home/End 切换',
+    aiDocPath: '/src/components/Tabs/Tabs.ai.md',
+    examples: [
+      {
+        title: '胶囊',
+        code: `const [tab, setTab] = useState('a');
+<Tabs value={tab} onValueChange={setTab}>
+  <TabsList>
+    <TabsTrigger value="a">概览</TabsTrigger>
+    <TabsTrigger value="b">设置</TabsTrigger>
+  </TabsList>
+  <TabsContent value="a"><Typography variant="bodySmall" noMargin>面板 A</Typography></TabsContent>
+  <TabsContent value="b"><Typography variant="bodySmall" noMargin>面板 B</Typography></TabsContent>
+</Tabs>`,
+      },
+      {
+        title: '下划线',
+        code: `<Tabs defaultValue="1" variant="line">
+  <TabsList>
+    <TabsTrigger value="1">第一项</TabsTrigger>
+    <TabsTrigger value="2">第二项</TabsTrigger>
+  </TabsList>
+  <TabsContent value="1">内容 1</TabsContent>
+  <TabsContent value="2">内容 2</TabsContent>
+</Tabs>`,
+      },
+    ],
+  },
+  {
+    name: 'Breadcrumb',
+    title: 'Breadcrumb 面包屑',
+    category: '导航',
+    description: 'nav + ol 结构；BreadcrumbLink / 当前页 BreadcrumbItem current；自定义分隔符',
+    aiDocPath: '/src/components/Breadcrumb/Breadcrumb.ai.md',
+    examples: [
+      {
+        title: '链接 + 当前页',
+        code: `<Breadcrumb>
+  <BreadcrumbItem>
+    <BreadcrumbLink href="#">首页</BreadcrumbLink>
+  </BreadcrumbItem>
+  <BreadcrumbSeparator />
+  <BreadcrumbItem>
+    <BreadcrumbLink href="#">项目</BreadcrumbLink>
+  </BreadcrumbItem>
+  <BreadcrumbSeparator />
+  <BreadcrumbItem current>详情</BreadcrumbItem>
+</Breadcrumb>`,
+      },
+      {
+        title: '自定义分隔',
+        code: `<Breadcrumb>
+  <BreadcrumbItem><BreadcrumbLink href="#">文档</BreadcrumbLink></BreadcrumbItem>
+  <BreadcrumbSeparator>›</BreadcrumbSeparator>
+  <BreadcrumbItem current>本页</BreadcrumbItem>
+</Breadcrumb>`,
+      },
+    ],
+  },
+  {
+    name: 'DropdownMenu',
+    title: 'DropdownMenu 下拉菜单',
+    category: '导航',
+    description:
+      '薄封装 Popover：panel 即 menu、菜单项为直接子节点；DropdownMenuItem / Label / Divider；点击项后关闭',
+    aiDocPath: '/src/components/DropdownMenu/DropdownMenu.ai.md',
+    examples: [
+      {
+        title: '基础',
+        code: `const [open, setOpen] = useState(false);
+<DropdownMenu
+  open={open}
+  onOpenChange={setOpen}
+  trigger={<Button size="sm" type="button" variant="soft">操作</Button>}
+>
+  <DropdownMenuLabel>文档</DropdownMenuLabel>
+  <DropdownMenuItem type="button">编辑</DropdownMenuItem>
+  <DropdownMenuItem type="button">复制</DropdownMenuItem>
+  <DropdownMenuDivider />
+  <DropdownMenuItem type="button" destructive>删除</DropdownMenuItem>
+</DropdownMenu>`,
+      },
+      {
+        title: '非受控',
+        code: `<DropdownMenu trigger={<Button size="sm" type="button">打开</Button>}>
+  <DropdownMenuItem type="button">项 1</DropdownMenuItem>
+  <DropdownMenuItem type="button" disabled>禁用</DropdownMenuItem>
+</DropdownMenu>`,
+      },
+    ],
+  },
+  {
     name: 'Input',
     title: 'Input 输入框',
     category: '表单',
@@ -247,11 +344,49 @@ export const componentDocs: ComponentDoc[] = [
     ],
   },
   {
+    name: 'TimePicker',
+    title: 'TimePicker 时间选择',
+    category: '表单',
+    description:
+      '弹层滚动列选时、分（可选秒）；值 `HH:mm` / `HH:mm:ss`；选分钟后自动关闭；Portal 与 DatePicker 同源定位',
+    aiDocPath: '/src/components/TimePicker/TimePicker.ai.md',
+    examples: [
+      {
+        title: '基础',
+        code: `const [t, setT] = useState('');
+<TimePicker value={t} onChange={(v) => setT(v)} placeholder="选择时间" className="max-w-xs w-full" />`,
+      },
+      {
+        title: '分钟步进 15',
+        code: `<TimePicker minuteStep={15} placeholder="整刻钟" className="max-w-xs w-full" />`,
+      },
+    ],
+  },
+  {
+    name: 'DateTimePicker',
+    title: 'DateTimePicker 日期时间',
+    category: '表单',
+    description:
+      '与 TimePicker 不同：同弹层内「月历 + 时间」、底部确定；`min`/`max` 支持纯日期或完整日期时间，月历按「整日是否与区间有交集」禁用，提交时钳制到边界。TimePicker 仅时间列、选分后自动关。',
+    aiDocPath: '/src/components/DateTimePicker/DateTimePicker.ai.md',
+    examples: [
+      {
+        title: '受控',
+        code: `const [v, setV] = useState('');
+<DateTimePicker value={v} onChange={(x) => setV(x)} className="max-w-md w-full" />`,
+      },
+      {
+        title: 'min / max（日期或日期时间）',
+        code: `<DateTimePicker min="2026-01-01" max="2026-12-31T18:00" className="max-w-md w-full" />`,
+      },
+    ],
+  },
+  {
     name: 'FormField',
     title: 'FormField / Label 表单项',
     category: '表单',
     description:
-      'FormField：标签、单控件槽、说明与错误；与 Input / Textarea / Select / Switch / DatePicker 联用注入 color=error；与 CheckboxGroup / RadioGroup 注入 invalid 与 aria-labelledby。',
+      'FormField：标签、单控件槽、说明与错误；与 Input / Textarea / Select / Switch / DatePicker / TimePicker / DateTimePicker 联用注入 color=error；与 CheckboxGroup / RadioGroup 注入 invalid 与 aria-labelledby。',
     aiDocPath: '/src/components/FormField/FormField.ai.md',
     examples: [
       {

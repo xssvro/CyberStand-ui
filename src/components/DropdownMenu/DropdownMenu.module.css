@@ -1,0 +1,71 @@
+.panel {
+  min-width: 160px;
+  padding: var(--su-space-1);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: 8px 12px;
+  border: none;
+  border-radius: max(2px, calc(var(--su-radius, 5px) - 2px));
+  background: transparent;
+  color: var(--su-text-default);
+  font-size: 0.875rem;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+  transition: background var(--su-transition-fast);
+}
+
+.item:hover:not(:disabled) {
+  background: var(--su-bg-subtle);
+}
+
+.item:focus-visible {
+  background: var(--su-bg-muted);
+  box-shadow: inset 0 0 0 2px var(--su-primary-400);
+}
+
+.item:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.destructive {
+  color: var(--su-error-600);
+}
+
+[data-theme='dark'] .destructive {
+  color: var(--su-error-500);
+}
+
+.label {
+  padding: 6px 12px 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--su-text-muted);
+}
+
+.divider {
+  height: 1px;
+  margin: var(--su-space-1) 0;
+  background: var(--su-border-subtle);
+  border: none;
+  padding: 0;
+}
+
+.triggerDisabled {
+  display: inline-flex;
+  opacity: 0.5;
+  pointer-events: none;
+}
