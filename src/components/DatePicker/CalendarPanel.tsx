@@ -33,6 +33,10 @@ export interface CalendarPanelProps {
    * `datetimeDay`：该日是否与 [min,max] 在时间上仍有交集（DateTimePicker）。
    */
   rangeMode?: 'dateKey' | 'datetimeDay';
+  /** `range` 时高亮区间；单日模式仍用 `selectedIso` */
+  daySelection?: 'single' | 'range';
+  rangeStartIso?: string;
+  rangeEndIso?: string;
 }
 
 const CalendarPanelInner: React.FC<CalendarPanelProps> = ({
@@ -46,6 +50,9 @@ const CalendarPanelInner: React.FC<CalendarPanelProps> = ({
   gridId,
   compact = false,
   rangeMode = 'dateKey',
+  daySelection = 'single',
+  rangeStartIso = '',
+  rangeEndIso = '',
 }) => {
   const todayIso = useMemo(() => toISODate(new Date()), []);
 
@@ -102,22 +109,45 @@ const CalendarPanelInner: React.FC<CalendarPanelProps> = ({
             rangeMode === 'datetimeDay'
               ? isDayPartiallyInDateTimeRange(cell.iso, min, max)
               : isDateKeyInRange(cell.iso, min, max);
-          const selected = selectedIso === cell.iso;
+          const rs = (rangeStartIso ?? '').trim();
+          const re = (rangeEndIso ?? '').trim();
+          const isRangeUI = daySelection === 'range';
+          let rangeLo = '';
+          let rangeHi = '';
+          let hasBothEnds = false;
+          if (isRangeUI && rs) {
+            if (re) {
+              hasBothEnds = true;
+              rangeLo = rs <= re ? rs : re;
+              rangeHi = rs <= re ? re : rs;
+            }
+          }
+          const selected = !isRangeUI && selectedIso === cell.iso;
+          const isRangeEndpoint =
+            isRangeUI &&
+            ((hasBothEnds && (cell.iso === rangeLo || cell.iso === rangeHi)) ||
+              (!hasBothEnds && rs === cell.iso));
+          const isRangeMiddle =
+            isRangeUI && hasBothEnds && cell.iso > rangeLo && cell.iso < rangeHi;
           const isToday = cell.iso === todayIso;
+          const rangeHighlight = isRangeEndpoint || isRangeMiddle;
           return (
             <button
               key={cell.iso}
               type="button"
               data-selected={selected ? 'true' : undefined}
-              data-today={isToday && !selected ? 'true' : undefined}
+              data-range={rangeHighlight ? 'true' : undefined}
+              data-today={isToday && !selected && !rangeHighlight ? 'true' : undefined}
               disabled={!selectable}
-              aria-pressed={selected}
+              aria-pressed={isRangeUI ? rangeHighlight : selected}
               aria-current={isToday ? 'date' : undefined}
               className={joinClasses(
                 styles.dayBtn,
                 !cell.inCurrentMonth && styles.dayOutside,
                 isToday && styles.dayToday,
                 selected && styles.daySelected,
+                isRangeEndpoint && styles.dayRangeEndpoint,
+                isRangeMiddle && styles.dayRangeMiddle,
                 !selectable && styles.dayDisabled,
               )}
               onClick={() => selectable && onSelectDay(cell.iso)}

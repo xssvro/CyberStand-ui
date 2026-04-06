@@ -224,3 +224,55 @@ export function parseISODateTime(s: string): { date: string; time: string } | nu
 export function joinISODateTime(dateIso: string, timeStr: string): string {
   return `${dateIso}T${timeStr}`;
 }
+
+/** 起止日期均为 `yyyy-mm-dd`，空串表示未选 */
+export type DateRangeISO = { start: string; end: string };
+
+export function normalizeDateRangeISO(start: string, end: string): DateRangeISO {
+  const s = start.trim();
+  const e = end.trim();
+  if (!s && !e) return { start: '', end: '' };
+  if (s && !e) return parseISODate(s) ? { start: s, end: '' } : { start: s, end: '' };
+  if (!s && e) return parseISODate(e) ? { start: e, end: '' } : { start: e, end: '' };
+  if (!parseISODate(s) || !parseISODate(e)) return { start: s, end: e };
+  return s <= e ? { start: s, end: e } : { start: e, end: s };
+}
+
+export function isCompleteDateRange(r: DateRangeISO): boolean {
+  return Boolean(r.start && r.end && parseISODate(r.start) && parseISODate(r.end));
+}
+
+/** 单一隐藏域：`yyyy-mm-dd/yyyy-mm-dd` */
+export function formatDateRangeSlash(r: DateRangeISO): string {
+  if (!r.start && !r.end) return '';
+  if (r.start && r.end) return `${r.start}/${r.end}`;
+  return r.start || r.end;
+}
+
+export function parseDateRangeSlash(raw: string): DateRangeISO {
+  const t = raw.trim();
+  if (!t) return { start: '', end: '' };
+  const i = t.indexOf('/');
+  if (i === -1) return normalizeDateRangeISO(t, '');
+  return normalizeDateRangeISO(t.slice(0, i), t.slice(i + 1));
+}
+
+export function clampDateRangeToBounds(
+  r: DateRangeISO,
+  min?: string,
+  max?: string,
+): DateRangeISO {
+  if (!isCompleteDateRange(r)) return r;
+  let { start, end } = r;
+  const minKey = min ? extractISODateKey(min) : null;
+  const maxKey = max ? extractISODateKey(max) : null;
+  if (minKey) {
+    if (start < minKey) start = minKey;
+    if (end < minKey) end = minKey;
+  }
+  if (maxKey) {
+    if (end > maxKey) end = maxKey;
+    if (start > maxKey) start = maxKey;
+  }
+  return normalizeDateRangeISO(start, end);
+}

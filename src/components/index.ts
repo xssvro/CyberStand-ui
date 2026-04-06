@@ -40,6 +40,9 @@ export type { InputProps } from './Input';
 export { DatePicker } from './DatePicker';
 export type { DatePickerProps } from './DatePicker';
 
+export { DateRangePicker } from './DateRangePicker';
+export type { DateRangePickerProps, DateRangeISO } from './DateRangePicker';
+
 export { TimePicker, TimeSpinner } from './TimePicker';
 export type { TimePickerProps, TimeSpinnerProps } from './TimePicker';
 
@@ -137,6 +140,33 @@ export type {
   TabsProps,
   TabsTriggerProps,
 } from './Tabs';
+
+export {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableEmpty,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from './Table';
+export type {
+  TableBodyProps,
+  TableCaptionProps,
+  TableCellAlign,
+  TableCellProps,
+  TableEmptyProps,
+  TableFooterProps,
+  TableHeadAlign,
+  TableHeadProps,
+  TableHeaderProps,
+  TableProps,
+  TableRowProps,
+  TableShadow,
+  TableSize,
+} from './Table';
 
 export {
   Breadcrumb,

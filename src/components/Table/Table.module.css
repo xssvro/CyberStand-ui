@@ -1,0 +1,197 @@
+/**
+ * Table：外轮廓 + 横向滚动（对齐 Card 圆角）；单元格网格在 table 上
+ */
+
+/* 外框：圆角裁剪、可选边框与阴影（避免 table 直角「缺角」） */
+.root {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  border-radius: var(--su-table-outer-radius, var(--su-radius, 5px));
+  overflow: hidden;
+  background: var(--su-bg-elevated);
+  box-sizing: border-box;
+}
+
+.rootShadowSm {
+  box-shadow: var(--su-shadow-sm);
+}
+
+.scrollInner {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 0;
+  font-size: var(--su-table-font-size, 0.875rem);
+  line-height: 1.45;
+  color: var(--su-text-default);
+  background: var(--su-bg-elevated);
+  --su-table-cell-padding: 10px 14px;
+}
+
+.table.layoutFixed {
+  table-layout: fixed;
+}
+
+.table.layoutAuto {
+  table-layout: auto;
+}
+
+.sizeXs {
+  --su-table-font-size: 0.75rem;
+  --su-table-cell-padding: 6px 10px;
+}
+
+.sizeSm {
+  --su-table-font-size: 0.8125rem;
+  --su-table-cell-padding: 8px 12px;
+}
+
+.sizeMd {
+  --su-table-font-size: 0.875rem;
+  --su-table-cell-padding: 10px 14px;
+}
+
+.sizeLg {
+  --su-table-font-size: 0.9375rem;
+  --su-table-cell-padding: 12px 16px;
+}
+
+/*
+ * 带网格时改用 border-collapse: collapse + 单元格四边边框。
+ * 原先 separate + 仅右/下边框且 :last-child 去右边线，在 rowSpan 下一行单元格变少时，
+ * 「最后一个 td」往往不是视觉最右列，会缺竖线。
+ */
+.table.cellGrid {
+  border-collapse: collapse;
+  border-spacing: 0;
+  /* 外轮廓画在 table 上，与圆角 root 内切，避免 separate 方案下 root 与网格双线 */
+  border: 1px solid var(--su-border-default);
+}
+
+.cellGrid .th,
+.cellGrid .td {
+  border: 1px solid var(--su-border-subtle);
+}
+
+/* 表头与正文分界略加重（合并表头最后一行仍生效） */
+.cellGrid .thead .tr:last-child .th {
+  border-bottom-color: var(--su-border-default);
+}
+
+.thead {
+  background: color-mix(in srgb, var(--su-bg-subtle) 92%, var(--su-bg-elevated));
+}
+
+.tbody {
+  background: var(--su-bg-elevated);
+}
+
+.tfoot {
+  background: color-mix(in srgb, var(--su-bg-subtle) 72%, var(--su-bg-elevated));
+  font-weight: 500;
+}
+
+.tr {
+  transition: background-color var(--su-transition-fast);
+}
+
+.striped .tbody .tr:nth-child(even) {
+  background: color-mix(in srgb, var(--su-bg-subtle) 45%, var(--su-bg-elevated));
+}
+
+.hoverable .tbody .tr:hover {
+  background: color-mix(in srgb, var(--su-primary-500) 6%, var(--su-bg-muted));
+}
+
+[data-theme='dark'] .hoverable .tbody .tr:hover {
+  background: color-mix(in srgb, var(--su-primary-500) 10%, var(--su-bg-subtle));
+}
+
+.th {
+  padding: var(--su-table-cell-padding);
+  text-align: start;
+  font-weight: 600;
+  color: var(--su-text-default);
+  white-space: nowrap;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.td {
+  padding: var(--su-table-cell-padding);
+  text-align: start;
+  vertical-align: middle;
+  box-sizing: border-box;
+  word-break: break-word;
+  color: var(--su-text-default);
+}
+
+.alignCenter {
+  text-align: center;
+}
+
+.alignEnd {
+  text-align: end;
+}
+
+.numeric {
+  font-variant-numeric: tabular-nums;
+}
+
+.caption {
+  padding: var(--su-space-2) var(--su-space-3) var(--su-space-2);
+  caption-side: top;
+  text-align: start;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--su-text-default);
+  background: color-mix(in srgb, var(--su-bg-subtle) 55%, var(--su-bg-elevated));
+  border-block-end: 1px solid var(--su-border-subtle);
+}
+
+.cellGrid .caption {
+  border-block-end: 1px solid var(--su-border-default);
+}
+
+.emptyRow .emptyCell {
+  padding: var(--su-space-6) var(--su-space-4);
+  text-align: center;
+  vertical-align: middle;
+  color: var(--su-text-muted);
+  font-size: 0.875rem;
+}
+
+.loadingOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--su-bg-elevated) 72%, transparent);
+  pointer-events: auto;
+}
+
+[data-theme='dark'] .loadingOverlay {
+  background: color-mix(in srgb, var(--su-bg-default) 78%, transparent);
+}
+
+.stickyHeader .thead .th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: color-mix(in srgb, var(--su-bg-subtle) 94%, var(--su-bg-elevated));
+  box-shadow: 0 1px 0 var(--su-border-default);
+}
+
+[data-theme='dark'] .stickyHeader .thead .th {
+  background: color-mix(in srgb, var(--su-bg-subtle) 92%, var(--su-bg-default));
+}

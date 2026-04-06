@@ -344,6 +344,31 @@ export const componentDocs: ComponentDoc[] = [
     ],
   },
   {
+    name: 'DateRangePicker',
+    title: 'DateRangePicker 日期范围',
+    category: '表单',
+    description:
+      '单月历两次点选起止（早于起点自动交换）；区间内浅主色、端点实心；选满后关闭；值 `{ start, end }` 或隐藏域 `yyyy-mm-dd/yyyy-mm-dd`；支持 min/max 与 startName+endName',
+    aiDocPath: '/src/components/DateRangePicker/DateRangePicker.ai.md',
+    examples: [
+      {
+        title: '受控',
+        code: `const [r, setR] = useState({ start: '', end: '' });
+<DateRangePicker value={r} onChange={(v) => setR(v)} className="max-w-md w-full" />`,
+      },
+      {
+        title: '边界与双隐藏域',
+        code: `<DateRangePicker
+  min="2026-01-01"
+  max="2026-12-31"
+  startName="from"
+  endName="to"
+  className="max-w-md w-full"
+/>`,
+      },
+    ],
+  },
+  {
     name: 'TimePicker',
     title: 'TimePicker 时间选择',
     category: '表单',
@@ -1515,6 +1540,163 @@ const text: Record<AlertVariant, { title: string; children: string }> = {
     </Typography>
   </div>
 </div>`,
+      },
+    ],
+  },
+  {
+    name: 'Table',
+    title: 'Table 数据表格',
+    category: '布局',
+    description:
+      '组合式表格（原生 table）：圆角外框 + 横向滚动、bordered/shadow、loading 遮罩、TableEmpty 空状态、尺寸含 xs；排序/筛选/分页需业务或 Pagination 组合。',
+    aiDocPath: '/src/components/Table/Table.ai.md',
+    examples: [
+      {
+        title: '基础：caption + 列头 scope（shadow 外轮廓）',
+        code: `<Table bordered shadow="sm">
+  <TableCaption>最近同步任务</TableCaption>
+  <TableHeader>
+    <TableRow>
+      <TableHead scope="col">名称</TableHead>
+      <TableHead scope="col">状态</TableHead>
+      <TableHead scope="col">更新时间</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>订单同步</TableCell>
+      <TableCell>进行中</TableCell>
+      <TableCell>2026-04-06 10:00</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>库存快照</TableCell>
+      <TableCell>成功</TableCell>
+      <TableCell>2026-04-06 09:30</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>`,
+      },
+      {
+        title: '斑马纹 + 行悬停',
+        code: `<Table bordered striped hoverable>
+  <TableHeader>
+    <TableRow>
+      <TableHead scope="col">项目</TableHead>
+      <TableHead scope="col">负责人</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>官网改版</TableCell>
+      <TableCell>张三</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>数据看板</TableCell>
+      <TableCell>李四</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>支付对接</TableCell>
+      <TableCell>王五</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>`,
+      },
+      {
+        title: '小尺寸 + fixed + 数字右对齐',
+        code: `<Table size="sm" layout="fixed" bordered className="w-full max-w-xl">
+  <TableHeader>
+    <TableRow>
+      <TableHead scope="col">商品</TableHead>
+      <TableHead scope="col" align="end" numeric>单价</TableHead>
+      <TableHead scope="col" align="end" numeric>库存</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>节点 A</TableCell>
+      <TableCell align="end" numeric>199.00</TableCell>
+      <TableCell align="end" numeric>42</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>节点 B</TableCell>
+      <TableCell align="end" numeric>2,880.50</TableCell>
+      <TableCell align="end" numeric>7</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>`,
+      },
+      {
+        title: 'colSpan / rowSpan 与行表头 th',
+        code: `<Table bordered>
+  <TableHeader>
+    <TableRow>
+      <TableHead scope="col" colSpan={2}>合并表头</TableHead>
+      <TableHead scope="col">备注</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell as="th" scope="row">华东</TableCell>
+      <TableCell>上海</TableCell>
+      <TableCell rowSpan={2}>重点大区</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell as="th" scope="row">华东</TableCell>
+      <TableCell>杭州</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>`,
+      },
+      {
+        title: '放入 Card（底栏可接 Pagination）',
+        code: `<Card title="订单列表" subtitle="分页请单独使用 Pagination + 数据 slice">
+  <Table bordered striped hoverable shadow="sm">
+    <TableHeader>
+      <TableRow>
+        <TableHead scope="col">单号</TableHead>
+        <TableHead scope="col" align="end" numeric>金额</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>ORD-1001</TableCell>
+        <TableCell align="end" numeric>99.00</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</Card>`,
+      },
+      {
+        title: '加载态 loading 与空数据 TableEmpty',
+        code: `{/* 远程请求中 */}
+<Table bordered shadow="sm" loading>
+  <TableHeader>
+    <TableRow>
+      <TableHead scope="col">列 A</TableHead>
+      <TableHead scope="col">列 B</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>占位</TableCell>
+      <TableCell>数据</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+
+{/* 无数据 */}
+<Table bordered shadow="sm">
+  <TableHeader>
+    <TableRow>
+      <TableHead scope="col">名称</TableHead>
+      <TableHead scope="col">状态</TableHead>
+      <TableHead scope="col">操作</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableEmpty colSpan={3} description="暂无记录" />
+  </TableBody>
+</Table>`,
       },
     ],
   },

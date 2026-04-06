@@ -257,8 +257,17 @@
     border-color var(--su-transition-fast);
 }
 
-.dayBtn:hover:not(:disabled):not(.daySelected) {
+.dayBtn:hover:not(:disabled):not(.daySelected):not(.dayRangeEndpoint):not(.dayRangeMiddle) {
   background: var(--su-bg-subtle);
+}
+
+.dayRangeMiddle:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--su-primary-500) 22%, transparent);
+}
+
+.dayRangeEndpoint:hover:not(:disabled) {
+  background: var(--su-primary-600);
+  color: var(--su-on-primary);
 }
 
 .dayBtn:focus-visible {
@@ -275,9 +284,32 @@
   opacity: 0.65;
 }
 
-.dayToday:not(.daySelected) {
+.dayToday:not(.daySelected):not(.dayRangeEndpoint):not(.dayRangeMiddle) {
   border-color: var(--su-primary-400);
   color: var(--su-text-default);
+}
+
+.dayRangeMiddle {
+  background: color-mix(in srgb, var(--su-primary-500) 16%, transparent);
+  color: var(--su-text-default);
+  border-color: transparent;
+  border-radius: max(2px, calc(var(--su-radius, 5px) - 1px));
+  font-weight: 500;
+}
+
+.dayRangeEndpoint {
+  background: var(--su-primary-500);
+  color: var(--su-on-primary);
+  font-weight: 600;
+  border-color: var(--su-primary-600);
+}
+
+[data-theme='dark'] .dayRangeMiddle {
+  background: color-mix(in srgb, var(--su-primary-500) 22%, var(--su-bg-subtle));
+}
+
+[data-theme='dark'] .dayRangeEndpoint {
+  color: var(--su-bg-default);
 }
 
 .daySelected {

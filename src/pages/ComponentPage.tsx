@@ -9,6 +9,7 @@ import { Empty } from '../components/Empty';
 import { FormField, Label } from '../components/FormField';
 import { Checkbox, CheckboxGroup } from '../components/Checkbox';
 import { DatePicker } from '../components/DatePicker';
+import { DateRangePicker } from '../components/DateRangePicker';
 import { TimePicker } from '../components/TimePicker';
 import { DateTimePicker } from '../components/DateTimePicker';
 import { Input } from '../components/Input';
@@ -46,6 +47,17 @@ import {
 import { Typography, TypographyLink } from '../components/Typography';
 import { Divider, Separator } from '../components/Divider';
 import { AspectRatio } from '../components/AspectRatio';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableEmpty,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '../components/Table';
 import { Flex, Grid, Space, Stack } from '../components/Layout';
 import { IconDataNode, IconPackage, IconSearch } from '../icons';
 
@@ -55,6 +67,7 @@ import BadgeAiMd from '../components/Badge/Badge.ai.md?raw';
 import ButtonAiMd from '../components/Button/Button.ai.md?raw';
 import InputAiMd from '../components/Input/Input.ai.md?raw';
 import DatePickerAiMd from '../components/DatePicker/DatePicker.ai.md?raw';
+import DateRangePickerAiMd from '../components/DateRangePicker/DateRangePicker.ai.md?raw';
 import FormFieldAiMd from '../components/FormField/FormField.ai.md?raw';
 import CalloutAiMd from '../components/Callout/Callout.ai.md?raw';
 import EmptyAiMd from '../components/Empty/Empty.ai.md?raw';
@@ -72,6 +85,7 @@ import TypographyAiMd from '../components/Typography/Typography.ai.md?raw';
 import DividerAiMd from '../components/Divider/Divider.ai.md?raw';
 import LayoutAiMd from '../components/Layout/Layout.ai.md?raw';
 import AspectRatioAiMd from '../components/AspectRatio/AspectRatio.ai.md?raw';
+import TableAiMd from '../components/Table/Table.ai.md?raw';
 import TextareaAiMd from '../components/Textarea/Textarea.ai.md?raw';
 import SelectAiMd from '../components/Select/Select.ai.md?raw';
 import SpinnerAiMd from '../components/Spinner/Spinner.ai.md?raw';
@@ -342,6 +356,36 @@ function DatePickerDocDemo({ idx }: { idx: number }) {
         <FormField label="截止日期" required className="max-w-md w-full">
           <DatePicker name="due" placeholder="请选择" />
         </FormField>
+      );
+    default:
+      return (
+        <Typography variant="body" color="muted">
+          无该示例索引
+        </Typography>
+      );
+  }
+}
+
+function DateRangePickerDocDemo({ idx }: { idx: number }) {
+  const [r, setR] = useState({ start: '', end: '' });
+  switch (idx) {
+    case 0:
+      return (
+        <DateRangePicker
+          className="max-w-md w-full"
+          value={r}
+          onChange={(v) => setR(v)}
+        />
+      );
+    case 1:
+      return (
+        <DateRangePicker
+          min="2026-01-01"
+          max="2026-12-31"
+          startName="from"
+          endName="to"
+          className="max-w-md w-full"
+        />
       );
     default:
       return (
@@ -1128,12 +1172,227 @@ function RadioDocDemo({ idx }: { idx: number }) {
   }
 }
 
+function TableDocDemo({ idx }: { idx: number }) {
+  switch (idx) {
+    case 0:
+      return (
+        <div className="max-w-2xl w-full">
+          <Table bordered shadow="sm">
+            <TableCaption>最近同步任务</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead scope="col">名称</TableHead>
+                <TableHead scope="col">状态</TableHead>
+                <TableHead scope="col">更新时间</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell>订单同步</TableCell>
+                <TableCell>进行中</TableCell>
+                <TableCell>2026-04-06 10:00</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>库存快照</TableCell>
+                <TableCell>成功</TableCell>
+                <TableCell>2026-04-06 09:30</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
+      );
+    case 1:
+      return (
+        <div className="max-w-2xl w-full">
+          <Table bordered striped hoverable>
+            <TableHeader>
+              <TableRow>
+                <TableHead scope="col">项目</TableHead>
+                <TableHead scope="col">负责人</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell>官网改版</TableCell>
+                <TableCell>张三</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>数据看板</TableCell>
+                <TableCell>李四</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>支付对接</TableCell>
+                <TableCell>王五</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
+      );
+    case 2:
+      return (
+        <div className="max-w-xl w-full">
+          <Table size="sm" layout="fixed" bordered className="w-full">
+            <TableHeader>
+              <TableRow>
+                <TableHead scope="col">商品</TableHead>
+                <TableHead scope="col" align="end" numeric>
+                  单价
+                </TableHead>
+                <TableHead scope="col" align="end" numeric>
+                  库存
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell>节点 A</TableCell>
+                <TableCell align="end" numeric>
+                  199.00
+                </TableCell>
+                <TableCell align="end" numeric>
+                  42
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>节点 B</TableCell>
+                <TableCell align="end" numeric>
+                  2,880.50
+                </TableCell>
+                <TableCell align="end" numeric>
+                  7
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
+      );
+    case 3:
+      return (
+        <div className="max-w-lg w-full">
+          <Table bordered>
+            <TableHeader>
+              <TableRow>
+                <TableHead scope="col" colSpan={2}>
+                  合并表头
+                </TableHead>
+                <TableHead scope="col">备注</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell as="th" scope="row">
+                  华东
+                </TableCell>
+                <TableCell>上海</TableCell>
+                <TableCell rowSpan={2}>
+                  重点大区
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell as="th" scope="row">
+                  华东
+                </TableCell>
+                <TableCell>杭州</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
+      );
+    case 4:
+      return (
+        <div className="max-w-lg w-full">
+          <Card title="订单列表" subtitle="分页可单独使用 Pagination + 数据 slice">
+            <Table bordered striped hoverable shadow="sm">
+              <TableHeader>
+                <TableRow>
+                  <TableHead scope="col">单号</TableHead>
+                  <TableHead scope="col" align="end" numeric>
+                    金额
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell>ORD-1001</TableCell>
+                  <TableCell align="end" numeric>
+                    99.00
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>ORD-1002</TableCell>
+                  <TableCell align="end" numeric>
+                    1,280.00
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+              <TableFooter>
+                <TableRow>
+                  <TableCell colSpan={2} style={{ fontSize: '0.8125rem', color: 'var(--su-text-muted)' }}>
+                    本页小计示例；完整分页见 Pagination 组件
+                  </TableCell>
+                </TableRow>
+              </TableFooter>
+            </Table>
+          </Card>
+        </div>
+      );
+    case 5:
+      return (
+        <Stack gap="xl" className="max-w-2xl w-full">
+          <Stack gap="sm">
+            <Typography variant="caption" color="muted" noMargin>
+              loading（遮罩 + Spinner，拦截点击）
+            </Typography>
+            <Table bordered shadow="sm" loading>
+              <TableHeader>
+                <TableRow>
+                  <TableHead scope="col">列 A</TableHead>
+                  <TableHead scope="col">列 B</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell>占位</TableCell>
+                  <TableCell>数据</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </Stack>
+          <Stack gap="sm">
+            <Typography variant="caption" color="muted" noMargin>
+              空数据：TableEmpty
+            </Typography>
+            <Table bordered shadow="sm">
+              <TableHeader>
+                <TableRow>
+                  <TableHead scope="col">名称</TableHead>
+                  <TableHead scope="col">状态</TableHead>
+                  <TableHead scope="col">操作</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableEmpty colSpan={3} description="暂无记录，试试调整筛选条件" />
+              </TableBody>
+            </Table>
+          </Stack>
+        </Stack>
+      );
+    default:
+      return (
+        <Typography variant="body" color="muted">
+          无该示例索引
+        </Typography>
+      );
+  }
+}
+
 // 动态导入组件
 const componentMap: Record<string, React.ElementType> = {
   Button,
   Badge,
   Input,
   DatePicker,
+  DateRangePicker,
   FormField,
   Card,
   Toast: ToastDocPlaceholder,
@@ -1149,6 +1408,7 @@ const componentMap: Record<string, React.ElementType> = {
   Typography,
   Divider,
   AspectRatio,
+  Table,
   Textarea,
   Select,
   Checkbox,
@@ -1174,6 +1434,7 @@ const aiDocMap: Record<string, string> = {
   Badge: BadgeAiMd,
   Input: InputAiMd,
   DatePicker: DatePickerAiMd,
+  DateRangePicker: DateRangePickerAiMd,
   FormField: FormFieldAiMd,
   Card: CardAiMd,
   Toast: ToastAiMd,
@@ -1189,6 +1450,7 @@ const aiDocMap: Record<string, string> = {
   Typography: TypographyAiMd,
   Divider: DividerAiMd,
   AspectRatio: AspectRatioAiMd,
+  Table: TableAiMd,
   Textarea: TextareaAiMd,
   Select: SelectAiMd,
   Checkbox: CheckboxAiMd,
@@ -2175,6 +2437,7 @@ export const ComponentPage: React.FC = () => {
         {doc.name === 'Textarea' && <TextareaDocDemo idx={idx} />}
         {doc.name === 'Select' && <SelectDocDemo idx={idx} />}
         {doc.name === 'DatePicker' && <DatePickerDocDemo idx={idx} />}
+        {doc.name === 'DateRangePicker' && <DateRangePickerDocDemo idx={idx} />}
         {doc.name === 'TimePicker' && <TimePickerDocDemo idx={idx} />}
         {doc.name === 'DateTimePicker' && <DateTimePickerDocDemo idx={idx} />}
         {doc.name === 'Tabs' && <TabsDocDemo idx={idx} />}
@@ -2203,6 +2466,7 @@ export const ComponentPage: React.FC = () => {
         {doc.name === 'Typography' && renderTypographyExamples(example, idx)}
         {doc.name === 'Divider' && renderDividerExamples(example, idx)}
         {doc.name === 'AspectRatio' && renderAspectRatioExamples(example, idx)}
+        {doc.name === 'Table' && <TableDocDemo idx={idx} />}
         {doc.name === 'Layout' && renderLayoutExamples(example, idx)}
         {doc.name === 'Badge' && (
           <div className="example-preview-inner flex flex-col gap-4 max-w-xl">
