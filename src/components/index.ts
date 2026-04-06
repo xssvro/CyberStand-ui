@@ -168,6 +168,10 @@ export type {
   TableSize,
 } from './Table';
 
+export { Pagination } from './Pagination';
+export type { PaginationAlign, PaginationProps, PaginationSize } from './Pagination';
+export { buildPaginationItems } from './Pagination';
+
 export {
   Breadcrumb,
   BreadcrumbItem,

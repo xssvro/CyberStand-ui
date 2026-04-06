@@ -1701,6 +1701,69 @@ const text: Record<AlertVariant, { title: string; children: string }> = {
     ],
   },
   {
+    name: 'Pagination',
+    title: 'Pagination 分页',
+    category: '布局',
+    description:
+      '列表分页：受控/非受控页码与 pageSize、总数文案、每页条数、快速跳转、极简模式、省略号页码序列；与 Table 组合时对数据源 slice。',
+    aiDocPath: '/src/components/Pagination/Pagination.ai.md',
+    examples: [
+      {
+        title: '基础：受控页码 + 总数',
+        code: `const [page, setPage] = useState(1);
+const pageSize = 10;
+const total = 127;
+
+<Pagination
+  current={page}
+  pageSize={pageSize}
+  total={total}
+  onChange={(p) => setPage(p)}
+  showTotal={(range, t) => \`第 \${range[0]}-\${range[1]} 条，共 \${t} 条\`}
+/>`,
+      },
+      {
+        title: '每页条数 + 快速跳转',
+        code: `<Pagination
+  defaultCurrent={2}
+  defaultPageSize={20}
+  total={256}
+  showSizeChanger
+  showQuickJumper
+  pageSizeOptions={[10, 20, 50]}
+  onChange={(page, size) => console.log(page, size)}
+/>`,
+      },
+      {
+        title: '极简模式与单页隐藏',
+        code: `<Pagination simple total={89} pageSize={10} defaultCurrent={3} />
+<Pagination total={8} pageSize={10} hideOnSinglePage />`,
+      },
+      {
+        title: '与 Table 组合（数据 slice）',
+        code: `const pageSize = 5;
+const [page, setPage] = useState(1);
+const all = useMemo(() => itemsFromApi, []);
+const slice = useMemo(
+  () => all.slice((page - 1) * pageSize, page * pageSize),
+  [all, page],
+);
+
+<Stack gap="md" className="w-full max-w-2xl">
+  <Table bordered shadow="sm">…渲染 slice…</Table>
+  <Pagination
+    align="end"
+    current={page}
+    pageSize={pageSize}
+    total={all.length}
+    onChange={(p) => setPage(p)}
+    showTotal={(r, t) => \`共 \${t} 条\`}
+  />
+</Stack>`,
+      },
+    ],
+  },
+  {
     name: 'Layout',
     title: '布局工具 Flex / Grid / Stack / Space',
     category: '布局',

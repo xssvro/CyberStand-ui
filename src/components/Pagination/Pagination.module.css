@@ -1,0 +1,187 @@
+/**
+ * Pagination：与 Button / Table 同系 token
+ */
+
+.root {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--su-space-3);
+  color: var(--su-text-default);
+  font-size: var(--su-pagination-font, 0.875rem);
+}
+
+.alignStart {
+  justify-content: flex-start;
+}
+
+.alignCenter {
+  justify-content: center;
+}
+
+.alignEnd {
+  justify-content: flex-end;
+}
+
+.sizeSm {
+  --su-pagination-font: 0.8125rem;
+  --su-pagination-btn-min: 28px;
+  --su-pagination-btn-pad: 0 6px;
+}
+
+.sizeMd {
+  --su-pagination-font: 0.875rem;
+  --su-pagination-btn-min: 32px;
+  --su-pagination-btn-pad: 0 8px;
+}
+
+.sizeLg {
+  --su-pagination-font: 0.9375rem;
+  --su-pagination-btn-min: 36px;
+  --su-pagination-btn-pad: 0 10px;
+}
+
+.total {
+  margin-inline-end: var(--su-space-1);
+  color: var(--su-text-muted);
+  white-space: nowrap;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--su-space-1);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--su-pagination-btn-min, 32px);
+  height: var(--su-pagination-btn-min, 32px);
+  padding: var(--su-pagination-btn-pad, 0 8px);
+  margin: 0;
+  border: 1px solid var(--su-border-default);
+  border-radius: var(--su-radius, 5px);
+  background: var(--su-bg-elevated);
+  color: var(--su-text-default);
+  font-size: inherit;
+  font-family: inherit;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color var(--su-transition-fast),
+    border-color var(--su-transition-fast),
+    color var(--su-transition-fast);
+}
+
+.btn:hover:not(:disabled) {
+  border-color: var(--su-primary-500);
+  color: var(--su-primary-600);
+}
+
+[data-theme='dark'] .btn:hover:not(:disabled) {
+  color: var(--su-primary-400);
+}
+
+/* 当前页：实心主色，避免与浅底软色块混淆；hover 略加深 */
+.btn.btnActive:hover:not(:disabled) {
+  border-color: var(--su-primary-600);
+  background: var(--su-primary-600);
+  color: var(--su-on-primary);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--su-primary-500);
+  outline-offset: 2px;
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btnActive {
+  border-color: var(--su-primary-500);
+  background: var(--su-primary-500);
+  color: var(--su-on-primary);
+  font-weight: 600;
+}
+
+[data-theme='dark'] .btnActive {
+  border-color: var(--su-primary-500);
+  /* 夜间主色链上偏亮的一档，保证「激活」一眼可辨 */
+  background: var(--su-primary-600);
+  color: var(--su-on-primary);
+}
+
+[data-theme='dark'] .btn.btnActive:hover:not(:disabled) {
+  background: var(--su-primary-500);
+  border-color: var(--su-primary-400);
+  color: var(--su-on-primary);
+}
+
+.ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--su-pagination-btn-min, 32px);
+  height: var(--su-pagination-btn-min, 32px);
+  color: var(--su-text-muted);
+  user-select: none;
+  letter-spacing: 0.12em;
+}
+
+.simpleLabel {
+  padding: 0 var(--su-space-2);
+  color: var(--su-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.sizeChanger {
+  display: flex;
+  align-items: center;
+  gap: var(--su-space-2);
+  white-space: nowrap;
+  color: var(--su-text-muted);
+}
+
+.sizeChangerLabel {
+  font-size: inherit;
+}
+
+.jumper {
+  display: flex;
+  align-items: center;
+  gap: var(--su-space-2);
+  white-space: nowrap;
+  color: var(--su-text-muted);
+}
+
+.jumperInput {
+  width: 3.25rem;
+  height: var(--su-pagination-btn-min, 32px);
+  padding: 0 var(--su-space-2);
+  border: 1px solid var(--su-border-default);
+  border-radius: var(--su-radius, 5px);
+  background: var(--su-bg-elevated);
+  color: var(--su-text-default);
+  font-size: inherit;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.jumperInput:focus {
+  outline: none;
+  border-color: var(--su-primary-500);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--su-primary-500) 35%, transparent);
+}

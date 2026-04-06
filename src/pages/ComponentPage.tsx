@@ -58,6 +58,7 @@ import {
   TableHeader,
   TableRow,
 } from '../components/Table';
+import { Pagination } from '../components/Pagination';
 import { Flex, Grid, Space, Stack } from '../components/Layout';
 import { IconDataNode, IconPackage, IconSearch } from '../icons';
 
@@ -86,6 +87,7 @@ import DividerAiMd from '../components/Divider/Divider.ai.md?raw';
 import LayoutAiMd from '../components/Layout/Layout.ai.md?raw';
 import AspectRatioAiMd from '../components/AspectRatio/AspectRatio.ai.md?raw';
 import TableAiMd from '../components/Table/Table.ai.md?raw';
+import PaginationAiMd from '../components/Pagination/Pagination.ai.md?raw';
 import TextareaAiMd from '../components/Textarea/Textarea.ai.md?raw';
 import SelectAiMd from '../components/Select/Select.ai.md?raw';
 import SpinnerAiMd from '../components/Spinner/Spinner.ai.md?raw';
@@ -1386,6 +1388,107 @@ function TableDocDemo({ idx }: { idx: number }) {
   }
 }
 
+const PAGINATION_DEMO_ROWS = Array.from({ length: 23 }, (_, i) => ({
+  id: `ORD-${1001 + i}`,
+  amt: (99 + i * 17).toFixed(2),
+}));
+
+function PaginationDocDemo({ idx }: { idx: number }) {
+  const [page, setPage] = useState(1);
+  const [pageCtl, setPageCtl] = useState(2);
+  const [pageSizeCtl, setPageSizeCtl] = useState(20);
+
+  const sliced = useMemo(
+    () => PAGINATION_DEMO_ROWS.slice((page - 1) * 5, page * 5),
+    [page],
+  );
+
+  switch (idx) {
+    case 0:
+      return (
+        <div className="max-w-3xl w-full">
+          <Pagination
+            current={page}
+            pageSize={10}
+            total={127}
+            onChange={(p) => setPage(p)}
+            showTotal={(range, t) => `第 ${range[0]}-${range[1]} 条，共 ${t} 条`}
+          />
+        </div>
+      );
+    case 1:
+      return (
+        <div className="max-w-3xl w-full">
+          <Pagination
+            current={pageCtl}
+            pageSize={pageSizeCtl}
+            total={256}
+            onChange={(p, ps) => {
+              setPageCtl(p);
+              setPageSizeCtl(ps);
+            }}
+            showSizeChanger
+            showQuickJumper
+            pageSizeOptions={[10, 20, 50]}
+            showTotal={(_, t) => `共 ${t} 条`}
+          />
+        </div>
+      );
+    case 2:
+      return (
+        <Stack gap="lg" className="max-w-xl w-full">
+          <Pagination simple total={89} pageSize={10} defaultCurrent={3} />
+          <Typography variant="caption" color="muted" noMargin>
+            hideOnSinglePage（共 8 条、每页 10 条，整组件不渲染）
+          </Typography>
+          <div className="min-h-[40px] flex items-center text-sm text-[var(--su-text-muted)]">
+            <Pagination total={8} pageSize={10} hideOnSinglePage />
+            此处无分页条
+          </div>
+        </Stack>
+      );
+    case 3:
+      return (
+        <Stack gap="md" className="w-full max-w-2xl">
+          <Table bordered shadow="sm">
+            <TableHeader>
+              <TableRow>
+                <TableHead scope="col">单号</TableHead>
+                <TableHead scope="col" align="end" numeric>
+                  金额
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {sliced.map((row) => (
+                <TableRow key={row.id}>
+                  <TableCell>{row.id}</TableCell>
+                  <TableCell align="end" numeric>
+                    {row.amt}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+          <Pagination
+            align="end"
+            current={page}
+            pageSize={5}
+            total={PAGINATION_DEMO_ROWS.length}
+            onChange={(p) => setPage(p)}
+            showTotal={(r, t) => `第 ${r[0]}-${r[1]} 条，共 ${t} 条`}
+          />
+        </Stack>
+      );
+    default:
+      return (
+        <Typography variant="body" color="muted">
+          无该示例索引
+        </Typography>
+      );
+  }
+}
+
 // 动态导入组件
 const componentMap: Record<string, React.ElementType> = {
   Button,
@@ -1409,6 +1512,7 @@ const componentMap: Record<string, React.ElementType> = {
   Divider,
   AspectRatio,
   Table,
+  Pagination,
   Textarea,
   Select,
   Checkbox,
@@ -1451,6 +1555,7 @@ const aiDocMap: Record<string, string> = {
   Divider: DividerAiMd,
   AspectRatio: AspectRatioAiMd,
   Table: TableAiMd,
+  Pagination: PaginationAiMd,
   Textarea: TextareaAiMd,
   Select: SelectAiMd,
   Checkbox: CheckboxAiMd,
@@ -2467,6 +2572,7 @@ export const ComponentPage: React.FC = () => {
         {doc.name === 'Divider' && renderDividerExamples(example, idx)}
         {doc.name === 'AspectRatio' && renderAspectRatioExamples(example, idx)}
         {doc.name === 'Table' && <TableDocDemo idx={idx} />}
+        {doc.name === 'Pagination' && <PaginationDocDemo key={idx} idx={idx} />}
         {doc.name === 'Layout' && renderLayoutExamples(example, idx)}
         {doc.name === 'Badge' && (
           <div className="example-preview-inner flex flex-col gap-4 max-w-xl">
