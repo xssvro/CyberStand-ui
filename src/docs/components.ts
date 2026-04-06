@@ -1097,6 +1097,45 @@ toast.info('提示');`,
     ],
   },
   {
+    name: 'Avatar',
+    title: 'Avatar 头像',
+    category: '反馈',
+    description:
+      '用户/实体头像：图片裁切、文字缩写占位、默认人形图标；失败回退；尺寸 xs–xl、圆形/圆角、语义色底；可与 Badge 组合。',
+    aiDocPath: '/src/components/Avatar/Avatar.ai.md',
+    examples: [
+      {
+        title: '图片与尺寸',
+        code: `<Space wrap size="md" align="center">
+  <Avatar size="xs" src={url} alt="用户 A" />
+  <Avatar size="sm" src={url} alt="用户 A" />
+  <Avatar size="md" src={url} alt="用户 A" />
+  <Avatar size="lg" src={url} alt="用户 A" />
+  <Avatar size="xl" src={url} alt="用户 A" />
+</Space>`,
+      },
+      {
+        title: '文字缩写与形状',
+        code: `<Space wrap size="md" align="center">
+  <Avatar color="primary">张三</Avatar>
+  <Avatar color="info" shape="rounded">
+    AB
+  </Avatar>
+  <Avatar color="success">李</Avatar>
+</Space>`,
+      },
+      {
+        title: '语义色占位与 Badge',
+        code: `<Space wrap size="md" align="center">
+  <Avatar color="warning" />
+  <Badge dot color="error">
+    <Avatar size="sm" alt="有消息" src={url} />
+  </Badge>
+</Space>`,
+      },
+    ],
+  },
+  {
     name: 'Spinner',
     title: 'Spinner 加载指示',
     category: '反馈',

@@ -10,6 +10,9 @@ export type { BadgeProps } from './Badge';
 export { Tag } from './Tag';
 export type { TagProps, TagVariant } from './Tag';
 
+export { Avatar } from './Avatar';
+export type { AvatarProps, AvatarShape, AvatarSize } from './Avatar';
+
 export { Spinner } from './Spinner';
 export type { SpinnerProps, SpinnerSize } from './Spinner';
 

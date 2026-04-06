@@ -1,0 +1,156 @@
+/**
+ * Avatar：头像占位与图片裁切
+ */
+
+.root {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-sizing: border-box;
+  vertical-align: middle;
+  font-weight: 600;
+  line-height: 1;
+  border: 1px solid var(--su-border-subtle);
+}
+
+.sizeXs {
+  width: 24px;
+  height: 24px;
+  font-size: 10px;
+}
+
+.sizeSm {
+  width: 32px;
+  height: 32px;
+  font-size: 12px;
+}
+
+.sizeMd {
+  width: 40px;
+  height: 40px;
+  font-size: 14px;
+}
+
+.sizeLg {
+  width: 48px;
+  height: 48px;
+  font-size: 16px;
+}
+
+.sizeXl {
+  width: 64px;
+  height: 64px;
+  font-size: 20px;
+}
+
+.shapeCircle {
+  border-radius: 50%;
+}
+
+.shapeRounded {
+  border-radius: var(--su-radius, 5px);
+}
+
+.img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+}
+
+.fallbackText {
+  max-width: 100%;
+  padding: 0 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.iconFallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 55%;
+  height: 55%;
+  color: currentColor;
+  opacity: 0.85;
+}
+
+.iconFallback svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* 与 Tag soft 系一致的浅色底，用于文字/图标占位 */
+.toneDefault {
+  background: var(--su-bg-muted);
+  color: var(--su-text-default);
+}
+
+.tonePrimary {
+  background: color-mix(in srgb, var(--su-primary-500) 22%, var(--su-bg-subtle));
+  color: var(--su-primary-700);
+}
+
+.toneSecondary {
+  background: color-mix(in srgb, var(--su-secondary-500) 22%, var(--su-bg-subtle));
+  color: var(--su-secondary-700);
+}
+
+.toneSuccess {
+  background: color-mix(in srgb, var(--su-success-500) 22%, var(--su-bg-subtle));
+  color: var(--su-success-700);
+}
+
+.toneWarning {
+  background: color-mix(in srgb, var(--su-warning-500) 24%, var(--su-bg-subtle));
+  color: var(--su-warning-700);
+}
+
+.toneError {
+  background: color-mix(in srgb, var(--su-error-500) 22%, var(--su-bg-subtle));
+  color: var(--su-error-700);
+}
+
+.toneInfo {
+  background: color-mix(in srgb, var(--su-info-500) 22%, var(--su-bg-subtle));
+  color: var(--su-info-700);
+}
+
+[data-theme='dark'] .tonePrimary {
+  color: var(--su-primary-300);
+}
+
+[data-theme='dark'] .toneSecondary {
+  color: var(--su-secondary-300);
+}
+
+[data-theme='dark'] .toneSuccess {
+  color: var(--su-success-600);
+}
+
+[data-theme='dark'] .toneWarning {
+  color: var(--su-warning-500);
+}
+
+[data-theme='dark'] .toneError {
+  color: var(--su-error-400);
+}
+
+[data-theme='dark'] .toneInfo {
+  color: var(--su-info-400);
+}

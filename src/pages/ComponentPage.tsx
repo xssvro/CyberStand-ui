@@ -19,6 +19,7 @@ import { Textarea } from '../components/Textarea';
 import { Spinner } from '../components/Spinner';
 import { Switch } from '../components/Switch';
 import { Tag } from '../components/Tag';
+import { Avatar } from '../components/Avatar';
 import { Form } from '../components/Form';
 import { FormSection } from '../components/FormSection';
 import { Card } from '../components/Card';
@@ -98,6 +99,7 @@ import CheckboxAiMd from '../components/Checkbox/Checkbox.ai.md?raw';
 import RadioAiMd from '../components/Radio/Radio.ai.md?raw';
 import SwitchAiMd from '../components/Switch/Switch.ai.md?raw';
 import TagAiMd from '../components/Tag/Tag.ai.md?raw';
+import AvatarAiMd from '../components/Avatar/Avatar.ai.md?raw';
 import FormSectionAiMd from '../components/FormSection/FormSection.ai.md?raw';
 import FormAiMd from '../components/Form/Form.ai.md?raw';
 import LoadingAiMd from '../components/Loading/Loading.ai.md?raw';
@@ -111,6 +113,13 @@ const ASPECT_RATIO_DEMO_IMG_SRC =
   'data:image/svg+xml,' +
   encodeURIComponent(
     '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400"><rect fill="#0ea5e9" width="800" height="400"/><rect fill="#e11d48" x="120" y="60" width="560" height="280" rx="12"/></svg>'
+  );
+
+/** Avatar 文档预览：内联 SVG，避免外链失效 */
+const AVATAR_DEMO_IMG_SRC =
+  'data:image/svg+xml,' +
+  encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="ag" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0ea5e9"/><stop offset="1" stop-color="#e11d48"/></linearGradient></defs><rect width="100" height="100" fill="url(#ag)"/><text x="50" y="58" text-anchor="middle" fill="white" font-size="38" font-family="system-ui,sans-serif" font-weight="600">A</text></svg>'
   );
 
 /** Toast 为命令式 API，无预览组件，仅占位以通过文档路由校验 */
@@ -1608,10 +1617,54 @@ function PaginationDocDemo({ idx }: { idx: number }) {
   }
 }
 
+function AvatarDocDemo({ idx }: { idx: number }) {
+  switch (idx) {
+    case 0:
+      return (
+        <Space wrap size="md" className="items-center max-w-2xl">
+          <Avatar size="xs" src={AVATAR_DEMO_IMG_SRC} alt="演示用户" />
+          <Avatar size="sm" src={AVATAR_DEMO_IMG_SRC} alt="演示用户" />
+          <Avatar size="md" src={AVATAR_DEMO_IMG_SRC} alt="演示用户" />
+          <Avatar size="lg" src={AVATAR_DEMO_IMG_SRC} alt="演示用户" />
+          <Avatar size="xl" src={AVATAR_DEMO_IMG_SRC} alt="演示用户" />
+        </Space>
+      );
+    case 1:
+      return (
+        <Space wrap size="md" className="items-center max-w-xl">
+          <Avatar color="primary">张三</Avatar>
+          <Avatar color="info" shape="rounded">
+            AB
+          </Avatar>
+          <Avatar color="success">李</Avatar>
+        </Space>
+      );
+    case 2:
+      return (
+        <Space wrap size="md" className="items-center max-w-xl">
+          <Avatar color="warning" />
+          <Badge dot color="error">
+            <Avatar size="sm" alt="有未读消息" src={AVATAR_DEMO_IMG_SRC} />
+          </Badge>
+          <Avatar src="https://invalid.invalid/broken.png" alt="加载失败" color="error">
+            回退
+          </Avatar>
+        </Space>
+      );
+    default:
+      return (
+        <Typography variant="body" color="muted">
+          无该示例索引
+        </Typography>
+      );
+  }
+}
+
 // 动态导入组件
 const componentMap: Record<string, React.ElementType> = {
   Button,
   Badge,
+  Avatar,
   Input,
   DatePicker,
   DateRangePicker,
@@ -1655,6 +1708,7 @@ const componentMap: Record<string, React.ElementType> = {
 const aiDocMap: Record<string, string> = {
   Button: ButtonAiMd,
   Badge: BadgeAiMd,
+  Avatar: AvatarAiMd,
   Input: InputAiMd,
   DatePicker: DatePickerAiMd,
   DateRangePicker: DateRangePickerAiMd,
@@ -2693,6 +2747,7 @@ export const ComponentPage: React.FC = () => {
         {doc.name === 'Table' && <TableDocDemo key={idx} idx={idx} />}
         {doc.name === 'Pagination' && <PaginationDocDemo key={idx} idx={idx} />}
         {doc.name === 'Layout' && renderLayoutExamples(example, idx)}
+        {doc.name === 'Avatar' && <AvatarDocDemo key={idx} idx={idx} />}
         {doc.name === 'Badge' && (
           <div className="example-preview-inner flex flex-col gap-4 max-w-xl">
             {idx === 0 && (
