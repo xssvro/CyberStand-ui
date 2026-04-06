@@ -38,19 +38,19 @@
   box-sizing: border-box;
 }
 
+/* striped：实色条上轻微脉动，避免装饰性斜向渐变 */
 .fill.striped {
-  background-image: repeating-linear-gradient(
-    -60deg,
-    rgba(255, 255, 255, 0.14) 0 6px,
-    transparent 6px 12px
-  );
-  background-size: 24px 100%;
-  animation: su-progress-stripes 0.75s linear infinite;
+  animation: su-progress-pulse 1.1s ease-in-out infinite;
 }
 
-@keyframes su-progress-stripes {
-  to {
-    background-position: 24px 0;
+@keyframes su-progress-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.86;
   }
 }
 
@@ -118,6 +118,7 @@
 
   .fill.striped {
     animation: none;
+    opacity: 1;
   }
 
   .fill.indeterminate {

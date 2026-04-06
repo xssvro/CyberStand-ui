@@ -33,29 +33,24 @@
 }
 
 .active {
-  background: linear-gradient(
-    90deg,
-    var(--su-bg-muted) 0%,
-    var(--su-bg-subtle) 45%,
-    var(--su-bg-muted) 90%
-  );
-  background-size: 200% 100%;
-  animation: su-skeleton-shimmer 1.25s ease-in-out infinite;
+  background: var(--su-bg-muted);
+  animation: su-skeleton-pulse 1.15s ease-in-out infinite;
 }
 
-@keyframes su-skeleton-shimmer {
-  0% {
-    background-position: 100% 0;
+@keyframes su-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
   }
 
-  100% {
-    background-position: -100% 0;
+  50% {
+    opacity: 0.55;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .active {
     animation: none;
-    background: var(--su-bg-muted);
+    opacity: 1;
   }
 }

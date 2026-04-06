@@ -164,33 +164,29 @@
   align-self: stretch;
 }
 
+/* 左侧色条：实色语义，与 DESIGN「界面不用装饰渐变」一致 */
 .toast[data-type='default'] .accent {
-  background: linear-gradient(
-    180deg,
-    var(--su-primary-700),
-    var(--su-primary-600),
-    var(--su-primary-500)
-  );
+  background: var(--su-primary-600);
 }
 
 .toast[data-type='success'] .accent {
-  background: linear-gradient(180deg, var(--su-success-500), var(--su-success-600));
+  background: var(--su-success-600);
 }
 
 .toast[data-type='error'] .accent {
-  background: linear-gradient(180deg, var(--su-error-500), var(--su-secondary-600));
+  background: var(--su-error-600);
 }
 
 .toast[data-type='warning'] .accent {
-  background: linear-gradient(180deg, var(--su-warning-500), var(--su-warning-600));
+  background: var(--su-warning-600);
 }
 
 .toast[data-type='info'] .accent {
-  background: linear-gradient(180deg, var(--su-info-500), var(--su-info-600));
+  background: var(--su-info-600);
 }
 
 .toast[data-type='loading'] .accent {
-  background: linear-gradient(180deg, var(--su-primary-500), var(--su-info-500));
+  background: var(--su-info-600);
 }
 
 .body {

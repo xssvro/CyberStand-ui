@@ -11,7 +11,7 @@ export interface ProgressProps extends Omit<React.HTMLAttributes<HTMLDivElement>
   indeterminate?: boolean;
   size?: ProgressSize;
   color?: Color;
-  /** 斜向条纹动画（仅确定态） */
+  /** 实色条上轻微脉动（仅确定态，替代斜向条纹） */
   striped?: boolean;
   /** 右侧显示百分比文案 */
   showLabel?: boolean;
