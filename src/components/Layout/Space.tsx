@@ -4,13 +4,10 @@ import type { LayoutSpacing } from '../../core/layoutSpacing';
 
 export interface SpaceProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
   direction?: 'horizontal' | 'vertical';
-  /** 子项间距；与 `split` 同时使用时仍作用于子项与分隔之间 */
   size?: LayoutSpacing | number | string;
   wrap?: boolean;
   align?: FlexAlign;
-  /** 横向时占满一行宽度（如工具条铺满容器） */
   block?: boolean;
-  /** 插入在相邻子节点之间的节点（仍参与 flex `gap`） */
   split?: React.ReactNode;
   children: React.ReactNode;
 }

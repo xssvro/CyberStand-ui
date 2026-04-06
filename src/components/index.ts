@@ -1,6 +1,3 @@
-// CyberStand UI - 组件库入口
-// 所有组件从此文件导入
-
 export { Button } from './Button';
 export type { ButtonProps } from './Button';
 

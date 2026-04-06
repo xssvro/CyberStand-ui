@@ -23,43 +23,24 @@ const SIZE_MAX_WIDTH: Record<ModalSize, string> = {
 };
 
 export interface ModalProps {
-  /** 是否展示 */
   open: boolean;
-  /** 打开状态变化（与 `open` 受控配合） */
   onOpenChange?: (open: boolean) => void;
-  /** 用户触发关闭时回调（遮罩、关闭钮、Esc）；等价于 `onOpenChange(false)` 时常用 */
   onClose?: () => void;
-  /** 标题；有则挂 `aria-labelledby` */
   title?: React.ReactNode;
-  /** 主体内容 */
   children?: React.ReactNode;
-  /** 底部操作区 */
   footer?: React.ReactNode;
-  /** 是否展示右上角关闭按钮 */
   closable?: boolean;
-  /** 是否显示半透明遮罩与模糊；`false` 时仅保留透明全屏层（可配合 `maskClosable` 点空白关闭） */
   mask?: boolean;
-  /** 点击遮罩（或 `mask={false}` 时的透明层）是否关闭 */
   maskClosable?: boolean;
-  /** Esc 是否关闭 */
   keyboard?: boolean;
-  /** 是否垂直居中；`false` 时靠上留白 */
   centered?: boolean;
-  /** 预设最大宽度 */
   size?: ModalSize;
-  /** 覆盖最大宽度（如 `480px`、`80%`） */
   width?: number | string;
-  /** 对话框圆角 token */
   radius?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
-  /** 根节点 class（含遮罩与内容外层） */
   className?: string;
-  /** 白底面板 class */
   bodyClassName?: string;
-  /** 挂载节点，默认 `document.body` */
   getContainer?: HTMLElement | (() => HTMLElement);
-  /** 覆盖 z-index（默认 `--su-z-modal`） */
   zIndex?: number;
-  /** 打开/关闭过渡结束后通知（当前为同步切换 DOM，与打开状态一致时调用） */
   afterOpenChange?: (open: boolean) => void;
 }
 
@@ -69,7 +50,6 @@ function resolveWidth(width: number | string | undefined, size: ModalSize): stri
   return width;
 }
 
-/** 页面实际滚动容器可挂此属性，打开 Modal 时一并锁定（文档站 `.docs-main` 使用） */
 export const MODAL_SCROLL_LOCK_SELECTOR = OVERLAY_SCROLL_LOCK_SELECTOR;
 
 function CloseIcon() {

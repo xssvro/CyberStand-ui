@@ -1,24 +1,12 @@
-/**
- * 类似 Ant Design Form.Item `rules` 的子集，用于 stand-ui 内置校验。
- */
-
 export interface FormRule {
-  /** 必填；空串、仅空白（见 `whitespace`）视为未填 */
   required?: boolean;
-  /** 失败时的提示；部分内置规则有默认文案 */
   message?: string;
-  /** 为 true 时先去首尾空白再判空（配合 `required`） */
   whitespace?: boolean;
-  /** 字符串长度为 `len`；数组为元素个数 */
   len?: number;
   min?: number;
   max?: number;
   pattern?: RegExp | string;
   type?: 'string' | 'number' | 'email' | 'url';
-  /**
-   * 自定义校验；返回非空字符串表示错误文案；可 async。
-   * 第二个参数为当前字段值（已由 FormData / getValue 解析）。
-   */
   validator?: (
     rule: FormRule,
     value: unknown,
@@ -40,9 +28,6 @@ function toNumber(value: unknown): number | null {
   return Number.isFinite(n) ? n : null;
 }
 
-/**
- * 对单条 rule 对象内**同时出现的**多个约束按固定顺序执行（与 Ant Design 单对象多键行为接近）。
- */
 export async function runRules(
   value: unknown,
   rules: FormRule[] | undefined,

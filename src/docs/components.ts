@@ -1,12 +1,5 @@
-/**
- * 组件文档注册表
- * 新增组件时在此注册，文档站点会自动展示
- */
-
-/** 侧边栏与首页「组件列表」分组（顺序由 COMPONENT_DOC_CATEGORY_ORDER 决定） */
 export type ComponentDocCategory = '通用' | '导航' | '表单' | '布局' | '反馈';
 
-/** 侧边栏分类展示顺序 */
 export const COMPONENT_DOC_CATEGORY_ORDER: ComponentDocCategory[] = [
   '通用',
   '导航',
@@ -16,21 +9,14 @@ export const COMPONENT_DOC_CATEGORY_ORDER: ComponentDocCategory[] = [
 ];
 
 export interface ComponentDoc {
-  /** 组件名 */
   name: string;
-  /** 组件标题 */
   title: string;
-  /** 文档分组 */
   category: ComponentDocCategory;
-  /** 组件描述 */
   description: string;
-  /** AI文档路径 */
   aiDocPath: string;
-  /** 示例代码 */
   examples: Example[];
 }
 
-/** 按分类聚合（仅返回有组件的分类） */
 export function getComponentDocsGrouped(): {
   category: ComponentDocCategory;
   docs: ComponentDoc[];
@@ -42,9 +28,7 @@ export function getComponentDocsGrouped(): {
 }
 
 export interface Example {
-  /** 示例标题 */
   title: string;
-  /** 示例代码 */
   code: string;
 }
 
@@ -53,7 +37,7 @@ export const componentDocs: ComponentDoc[] = [
     name: 'Button',
     title: 'Button 按钮',
     category: '通用',
-    description: '用于触发操作或事件的基础组件',
+    description: 'Button',
     aiDocPath: '/src/components/Button/Button.ai.md',
     examples: [
       {
@@ -457,7 +441,7 @@ export const componentDocs: ComponentDoc[] = [
     title: 'Form 整表容器',
     category: '表单',
     description:
-      '原生 form + Context：下发 layout / size / disabled；默认 noValidate，与 FormField 控件下方 error 配合。可嵌套 FormSection、FormData 提交；RHF/Zod 见 Form.ai.md。',
+      '`<Form>`：Context 提供 layout、size、disabled；默认 `noValidate`；与 FormField 的 `error`、`rules` 配合；可嵌套 FormSection。',
     aiDocPath: '/src/components/Form/Form.ai.md',
     examples: [
       {
@@ -583,7 +567,6 @@ export const componentDocs: ComponentDoc[] = [
       return;
     }
     setErrors({});
-    // 调用接口…
   }}
 >
   <FormField label="名称" required error={errors.name}>
@@ -838,7 +821,7 @@ export const componentDocs: ComponentDoc[] = [
     name: 'Card',
     title: 'Card 卡片',
     category: '布局',
-    description: '通用容器组件，用于展示内容块',
+    description: 'Card',
     aiDocPath: '/src/components/Card/Card.ai.md',
     examples: [
       {
@@ -1310,8 +1293,7 @@ useEffect(() => {
     name: 'Alert',
     title: 'Alert 提示条',
     category: '反馈',
-    description:
-      '页内常驻提示：variant 语义色、可选标题与关闭；默认 role=status，慎用 role=alert。与 Toast 区分见 Alert.ai.md。',
+    description: '页内常驻提示；variant 语义色；可选标题与关闭；默认 `role="status"`。',
     aiDocPath: '/src/components/Alert/Alert.ai.md',
     examples: [
       {
@@ -1417,8 +1399,7 @@ const text: Record<AlertVariant, { title: string; children: string }> = {
     name: 'Empty',
     title: 'Empty 空状态',
     category: '反馈',
-    description:
-      '列表/区块无数据：插图槽、标题、说明与操作区；内置简笔画。与 Toast 区分见 Empty.ai.md。',
+    description: '列表或区块无数据占位；插图槽、标题、说明与操作区。',
     aiDocPath: '/src/components/Empty/Empty.ai.md',
     examples: [
       {
@@ -1452,8 +1433,7 @@ const text: Record<AlertVariant, { title: string; children: string }> = {
     name: 'Result',
     title: 'Result 结果页',
     category: '反馈',
-    description:
-      '整页/大块结果态：success/error/403/404 等内置图标与 extra 操作区。与 Toast、Empty 区分见 Result.ai.md。',
+    description: '整页或大块结果态；success / error / 403 / 404 等内置图标与 extra 操作区。',
     aiDocPath: '/src/components/Result/Result.ai.md',
     examples: [
       {
@@ -1758,10 +1738,7 @@ const text: Record<AlertVariant, { title: string; children: string }> = {
       },
       {
         title: '列排序 + TableToolbar 筛选（受控）',
-        code: `// 状态：sortKey、sortOrder、cycleTableSortOrder；筛选 q、dept
-// rows = useMemo(() => filter + sort 原始数据, [deps])
-
-<Stack gap="sm" className="w-full max-w-3xl">
+        code: `<Stack gap="sm" className="w-full max-w-3xl">
   <TableToolbar extra={<Button size="sm">导出</Button>}>
     <Input placeholder="搜索名称" className="max-w-[200px]" />
     <Select className="max-w-[140px]" placeholder="部门" options={[{ value: 'all', label: '全部' }]} />
@@ -1989,7 +1966,7 @@ const slice = useMemo(
     title: 'Typography 排版',
     category: '通用',
     description:
-      '语义化排版：标题层级、正文、辅助文案、引用与代码样式；支持多态标签、语义色、截断与可复制（Ant Typography 风格）',
+      '语义化排版：标题层级、正文、辅助文案、引用与代码样式；多态标签、语义色、截断与可复制。',
     aiDocPath: '/src/components/Typography/Typography.ai.md',
     examples: [
       {

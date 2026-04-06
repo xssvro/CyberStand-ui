@@ -4,31 +4,17 @@ import { getRadiusVar } from '../../core/stand';
 import styles from './Card.module.css';
 
 export interface CardProps extends Omit<StandProps, 'variant' | 'size' | 'color'> {
-  /** 卡片内容 */
   children: React.ReactNode;
-  /** 标题 */
   title?: React.ReactNode;
-  /** 副标题 */
   subtitle?: React.ReactNode;
-  /** 右上角操作 */
   extra?: React.ReactNode;
-  /** 页脚 */
   footer?: React.ReactNode;
-  /** 是否显示阴影 */
   shadow?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
-  /** 是否有边框 */
   bordered?: boolean;
-  /** 是否有悬浮效果 */
   hoverable?: boolean;
-  /** 点击事件 */
   onClick?: () => void;
 }
 
-/**
- * Card 卡片组件
- *
- * 通用容器组件，用于展示内容块
- */
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(
   (
     {

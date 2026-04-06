@@ -11,25 +11,15 @@ function join(...parts: Array<string | false | undefined>): string {
 export type TooltipPlacement = PopperPlacement;
 
 export interface TooltipProps {
-  /** 提示内容 */
   title: React.ReactNode;
-  /** 触发区域（建议单个可聚焦或可选中子节点） */
   children: React.ReactNode;
-  /** 相对触发器的方位 */
   placement?: TooltipPlacement;
-  /** 为 true 时不展示提示（常用于包一层禁用按钮） */
   disabled?: boolean;
-  /** 鼠标进入后延迟显示（ms） */
   mouseEnterDelay?: number;
-  /** 鼠标离开后延迟隐藏（ms） */
   mouseLeaveDelay?: number;
-  /** 触发器外层 class */
   className?: string;
-  /** 气泡 class */
   overlayClassName?: string;
-  /** 挂载容器，默认 `document.body` */
   getPopupContainer?: () => HTMLElement;
-  /** 覆盖 z-index（默认 `--su-z-tooltip`） */
   zIndex?: number;
 }
 
@@ -52,9 +42,7 @@ export const Tooltip = React.forwardRef<HTMLSpanElement, TooltipProps>(function 
   const triggerRef = useRef<HTMLSpanElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
-  /** 浮层仍在 DOM（含退场动画） */
   const [mounted, setMounted] = useState(false);
-  /** 入场结束 / 退场开始前为 true，配合 CSS transition */
   const [entered, setEntered] = useState(false);
   const showTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);

@@ -8,22 +8,12 @@ export type DividerColor = 'default' | 'subtle';
 export type DividerTitleAlign = 'start' | 'center' | 'end';
 
 export interface DividerProps extends Omit<React.HTMLAttributes<HTMLElement>, 'children'> {
-  /** 中间文案（仅横向有效，参考 Ant Design Divider） */
   children?: React.ReactNode;
-  /** 方向 */
   orientation?: DividerOrientation;
-  /** 线型 */
   variant?: DividerVariant;
-  /** 外边距阶梯 */
   spacing?: DividerSpacing;
-  /** 线色：default 用 border-default；subtle 更弱 */
   color?: DividerColor;
-  /** 有 children 时文案与线对齐：start | center | end */
   titleAlign?: DividerTitleAlign;
-  /**
-   * 是否为纯装饰：true 时弱化无障碍（aria-hidden / presentation）
-   * false 时暴露 `role="separator"`，与 Separator 一致
-   */
   decorative?: boolean;
 }
 
@@ -144,10 +134,6 @@ Divider.displayName = 'Divider';
 
 export type SeparatorProps = Omit<DividerProps, 'decorative'>;
 
-/**
- * 语义分割（无障碍）：固定 `decorative={false}`，默认 `role="separator"`。
- * 用于菜单、工具栏等需要读屏识别的区隔。
- */
 export const Separator = React.forwardRef<HTMLElement, SeparatorProps>(function Separator(
   { spacing = 'md', ...props },
   ref,

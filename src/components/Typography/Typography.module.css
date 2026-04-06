@@ -4,7 +4,6 @@
   font-family: inherit;
 }
 
-/* 默认块级间距（MUI / Ant 常见：标题下密、段落间略疏） */
 .root:not(.noMargin).variant-display,
 .root:not(.noMargin).variant-h1 {
   margin-bottom: 0.35em;

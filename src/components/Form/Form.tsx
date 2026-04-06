@@ -9,15 +9,9 @@ import styles from './Form.module.css';
 export type { FormLayout };
 
 export interface FormProps extends Omit<React.FormHTMLAttributes<HTMLFormElement>, 'children'> {
-  /**
-   * 由 `useForm()` 创建；挂载后可用 `validateFields` / `getFieldsValue` 等（类似 Ant Design Form）。
-   */
   form?: FormInstance;
-  /** 子级 FormField 默认布局；单字段仍可用 `layout` 覆盖 */
   layout?: FormLayout;
-  /** 子级控件默认尺寸（Input / Textarea / Select / Switch 等未自设 `size` 时生效） */
   size?: Size;
-  /** 整表禁用：合并到各 FormField / 控件 */
   disabled?: boolean;
   children: React.ReactNode;
 }
@@ -26,7 +20,6 @@ function joinClasses(...parts: Array<string | false | undefined>): string {
   return parts.filter(Boolean).join(' ');
 }
 
-/** 默认 `noValidate`：关闭浏览器原生校验气泡；配合 `form` + `rules` 或 `FormField` 的 `error`。传 `noValidate={false}` 可恢复原生行为。 */
 export const Form = forwardRef<HTMLFormElement, FormProps>(function Form(
   {
     form,

@@ -2,13 +2,9 @@ import React from 'react';
 import styles from './FormField.module.css';
 
 export interface LabelProps extends React.HTMLAttributes<HTMLElement> {
-  /** 仅 `tag="label"` 时生效 */
   htmlFor?: string;
-  /** `span` 用于 CheckboxGroup / RadioGroup 等无单一 `htmlFor` 的场景，配合 `aria-labelledby` */
   tag?: 'label' | 'span';
-  /** 显示必填星号（装饰，请配合控件 `required`） */
   required?: boolean;
-  /** 禁用态样式 */
   disabled?: boolean;
   children: React.ReactNode;
 }

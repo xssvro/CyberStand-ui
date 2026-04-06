@@ -66,7 +66,6 @@ import { Pagination } from '../components/Pagination';
 import { Flex, Grid, Space, Stack } from '../components/Layout';
 import { IconDataNode, IconPackage, IconSearch } from '../icons';
 
-// 导入 AI 文档内容
 import AlertAiMd from '../components/Alert/Alert.ai.md?raw';
 import BadgeAiMd from '../components/Badge/Badge.ai.md?raw';
 import ButtonAiMd from '../components/Button/Button.ai.md?raw';
@@ -108,28 +107,24 @@ import DrawerAiMd from '../components/Drawer/Drawer.ai.md?raw';
 import ProgressAiMd from '../components/Progress/Progress.ai.md?raw';
 import SkeletonAiMd from '../components/Skeleton/Skeleton.ai.md?raw';
 
-/** 文档预览：固定 SVG，避免外链占位图失效 */
 const ASPECT_RATIO_DEMO_IMG_SRC =
   'data:image/svg+xml,' +
   encodeURIComponent(
     '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400"><rect fill="#0ea5e9" width="800" height="400"/><rect fill="#ebdb00" x="120" y="60" width="560" height="280" rx="12"/></svg>',
   );
 
-/** Avatar 文档预览：纯色主色（与 vars 浅色 --su-primary-600 / 700、--su-on-primary 一致，无渐变） */
 const AVATAR_DEMO_IMG_SRC =
   'data:image/svg+xml,' +
   encodeURIComponent(
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#ebdb00"/><text x="50" y="58" text-anchor="middle" fill="#0a0b0f" font-size="38" font-family="system-ui,sans-serif" font-weight="600">A</text></svg>',
   );
 
-/** 宽图：左右两色块（无渐变），演示圆内 cover 裁掉两侧 */
 const AVATAR_DEMO_WIDE_SRC =
   'data:image/svg+xml,' +
   encodeURIComponent(
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 72"><rect width="110" height="72" fill="#ebdb00"/><rect x="110" width="110" height="72" fill="#d2c400"/><text x="110" y="44" text-anchor="middle" fill="#0a0b0f" font-size="15" font-family="system-ui,sans-serif" font-weight="600">WIDE</text></svg>',
   );
 
-/** 竖图：上下两色块（无渐变），演示 cover 裁切 */
 const AVATAR_DEMO_TALL_SRC =
   'data:image/svg+xml,' +
   encodeURIComponent(
@@ -144,13 +139,10 @@ const AVATAR_DOC_SIZE_META: { size: 'xs' | 'sm' | 'md' | 'lg' | 'xl'; px: string
   { size: 'xl', px: '68' },
 ];
 
-/** Toast 为命令式 API，无预览组件，仅占位以通过文档路由校验 */
 const ToastDocPlaceholder: React.FC = () => null;
 
-/** 布局工具为多个导出组件，仅占位以通过文档路由校验 */
 const LayoutDocPlaceholder: React.FC = () => null;
 
-/** Loading 全屏示例：自动关闭，避免挡住文档站 */
 function LoadingFullscreenDemo() {
   const [visible, setVisible] = useState(false);
   useEffect(() => {
@@ -178,7 +170,6 @@ const ALERT_DEMO_BY_VARIANT: Record<AlertVariant, { title: string; children: str
   error: { title: '错误', children: '无法连接服务器，请稍后重试。' },
 };
 
-/** Alert 四种语义：点击按钮后再展示（与 Toast 演示一致，贴近真实「事件后出提示」） */
 function AlertDemoFourKinds() {
   const [kind, setKind] = useState<AlertVariant | null>(null);
   return (
@@ -233,7 +224,6 @@ function AlertDemoFourKinds() {
   );
 }
 
-/** 先点击展示，关闭后需再次点击 */
 function AlertDemoClosable() {
   const [visible, setVisible] = useState(false);
   return (
@@ -1761,7 +1751,6 @@ function AvatarDocDemo({ idx }: { idx: number }) {
   }
 }
 
-// 动态导入组件
 const componentMap: Record<string, React.ElementType> = {
   Button,
   Badge,
@@ -1805,7 +1794,6 @@ const componentMap: Record<string, React.ElementType> = {
   Layout: LayoutDocPlaceholder,
 };
 
-// AI 文档映射
 const aiDocMap: Record<string, string> = {
   Button: ButtonAiMd,
   Badge: BadgeAiMd,
@@ -1849,7 +1837,6 @@ const aiDocMap: Record<string, string> = {
   Layout: LayoutAiMd,
 };
 
-/** 按表格竖线拆分单元格，忽略反引号对内的 |（避免类型列里的联合类型拆坏） */
 const splitTableCells = (line: string): string[] => {
   const cells: string[] = [];
   let cur = '';
@@ -1878,7 +1865,6 @@ const splitTableCells = (line: string): string[] => {
   return cells;
 };
 
-// 简单的 markdown 渲染函数
 const renderMarkdown = (md: string): React.ReactNode => {
   const lines = md.split('\n');
   const elements: React.ReactNode[] = [];
@@ -1929,7 +1915,6 @@ const renderMarkdown = (md: string): React.ReactNode => {
     const line = lines[i];
     const trimmed = line.trim();
 
-    // 代码块处理
     if (trimmed.startsWith('```')) {
       if (inCodeBlock) {
         flushList();
@@ -1954,14 +1939,12 @@ const renderMarkdown = (md: string): React.ReactNode => {
       continue;
     }
 
-    // 空行 - 刷新列表和表格
     if (trimmed === '') {
       flushList();
       flushTable();
       continue;
     }
 
-    // 标题
     if (trimmed.startsWith('# ')) {
       flushList();
       flushTable();
@@ -1994,9 +1977,7 @@ const renderMarkdown = (md: string): React.ReactNode => {
           {parseInlineMarkdown(trimmed.slice(5))}
         </h4>,
       );
-    }
-    // 无序列表
-    else if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+    } else if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
       flushTable();
       if (orderedItems.length > 0) {
         elements.push(
@@ -2011,9 +1992,7 @@ const renderMarkdown = (md: string): React.ReactNode => {
           {parseInlineMarkdown(trimmed.slice(2))}
         </li>,
       );
-    }
-    // 有序列表 1. xxx
-    else if (/^\d+\.\s/.test(trimmed)) {
+    } else if (/^\d+\.\s/.test(trimmed)) {
       flushTable();
       if (listItems.length > 0) {
         elements.push(
@@ -2029,11 +2008,8 @@ const renderMarkdown = (md: string): React.ReactNode => {
           {parseInlineMarkdown(text)}
         </li>,
       );
-    }
-    // 表格
-    else if (trimmed.startsWith('|')) {
+    } else if (trimmed.startsWith('|')) {
       flushList();
-      // 跳过表格分隔行 |---|---|
       if (trimmed.match(/^\|[-:\s|]+\|$/)) {
         continue;
       }
@@ -2052,9 +2028,7 @@ const renderMarkdown = (md: string): React.ReactNode => {
           ))}
         </div>,
       );
-    }
-    // 普通段落
-    else {
+    } else {
       flushList();
       flushTable();
       elements.push(
@@ -2065,21 +2039,18 @@ const renderMarkdown = (md: string): React.ReactNode => {
     }
   }
 
-  // 刷新剩余的列表和表格
   flushList();
   flushTable();
 
   return <div className="markdown-body">{elements}</div>;
 };
 
-// 行内 markdown 解析
 const parseInlineMarkdown = (text: string): React.ReactNode => {
   const parts: React.ReactNode[] = [];
   let current = '';
   let i = 0;
 
   while (i < text.length) {
-    // 行内代码 `code`
     if (text[i] === '`') {
       const endIdx = text.indexOf('`', i + 1);
       if (endIdx > i) {
@@ -2096,7 +2067,6 @@ const parseInlineMarkdown = (text: string): React.ReactNode => {
         continue;
       }
     }
-    // 加粗 **text**
     if (text.slice(i, i + 2) === '**') {
       const endIdx = text.indexOf('**', i + 2);
       if (endIdx > i) {

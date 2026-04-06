@@ -35,7 +35,6 @@ export type SelectOptionData = {
   value: string;
   label: React.ReactNode;
   disabled?: boolean;
-  /** 供 `renderOption` 使用的任意附加数据（仅 `options` 数组传入时保留） */
   meta?: unknown;
 };
 
@@ -57,7 +56,6 @@ export type SelectRenderOptionContext = {
 export interface SelectOptionProps {
   value: string;
   disabled?: boolean;
-  /** 与 children 二选一；用于纯文本项 */
   label?: React.ReactNode;
   children?: React.ReactNode;
 }
@@ -77,35 +75,20 @@ export interface SelectProps extends Omit<StandProps, 'variant'>, SelectHtmlPass
   disabled?: boolean;
   required?: boolean;
   name?: string;
-  /** 写在隐藏域；未传时为 `off` */
   autoComplete?: string;
   placeholder?: string;
-  /** 与 `children`（`Select.Option` 或原生 `<option>`）二选一 */
   options?: SelectOptionData[];
   children?: React.ReactNode;
-  /** 下拉相对触发器：`auto` 在空间不足时翻到上方 */
   placement?: SelectPlacement;
-  /** 列表区域最大高度（px 或 CSS 长度） */
   listMaxHeight?: number | string;
-  /** 是否挂到 `document.body`（默认 true，避免 overflow 裁剪） */
   portal?: boolean;
-  /** 下拉根节点额外 className */
   contentClassName?: string;
-  /** 列表项额外 className（每项都会带上，可与 renderOption 联用） */
   itemClassName?: string;
-  /** 自定义触发器展示内容 */
   renderValue?: (ctx: SelectRenderValueContext) => React.ReactNode;
-  /** 自定义每一项；默认渲染 option.label */
   renderOption?: (ctx: SelectRenderOptionContext) => React.ReactNode;
-  /** 无选项时的列表区内容 */
   empty?: React.ReactNode;
-  /** 下拉内展示搜索框并按关键字筛选（`value` 与 string/number 类型 `label` 子串匹配，可自定义 `filterOption`） */
   searchable?: boolean;
-  /** 搜索框占位符 */
   searchPlaceholder?: string;
-  /**
-   * 自定义筛选；`queryLower` 为用户输入去首尾空白并 `toLowerCase()` 后的字符串。
-   */
   filterOption?: (queryLower: string, option: SelectOptionData) => boolean;
 }
 
@@ -223,7 +206,6 @@ function parseMaxHeightPx(listMaxHeight: number | string | undefined, fallback: 
   return fallback;
 }
 
-/** 直接写 DOM，避免 setState 滞后一帧导致滚动时面板「跟不上」 */
 function applyDropdownPosition(
   listEl: HTMLElement,
   triggerEl: HTMLElement,
@@ -264,7 +246,6 @@ function applyDropdownPosition(
   }
 }
 
-/** 仅在列表容器内滚动，禁止 scrollIntoView 带动整页滚动 */
 function scrollActiveOptionIntoList(listEl: HTMLElement | null, optionId: string): void {
   if (!listEl) return;
   const optionEl = document.getElementById(optionId);
@@ -398,7 +379,6 @@ const SelectInner = forwardRef<HTMLButtonElement, SelectProps>(function SelectIn
     positionNow();
     const rafSync = requestAnimationFrame(positionNow);
 
-    /** 同步更新位置，避免 rAF 晚一帧导致滚动时面板与触发器错位 */
     const onScrollOrResize = () => {
       positionNow();
     };
@@ -697,7 +677,6 @@ const SelectInner = forwardRef<HTMLButtonElement, SelectProps>(function SelectIn
         aria-required={required || undefined}
         onMouseDown={(e) => {
           if (disabled) return;
-          // 避免浏览器因 focus 把触发器滚进视口，进而带动整页滚动
           e.preventDefault();
         }}
         onClick={() => {

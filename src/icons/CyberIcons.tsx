@@ -1,7 +1,6 @@
 import React from 'react';
 
 export type CyberIconProps = React.SVGProps<SVGSVGElement> & {
-  /** 视口边长（px） */
   size?: number;
 };
 
@@ -13,9 +12,6 @@ const hud = {
   strokeLinejoin: 'miter' as const,
 };
 
-/**
- * 线框 HUD 风格图标（参考夜之城界面：直角、细描边、无填充）
- */
 export function IconHome({ size = 24, className, ...rest }: CyberIconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" className={className} aria-hidden {...rest}>
@@ -29,7 +25,6 @@ export function IconHome({ size = 24, className, ...rest }: CyberIconProps) {
   );
 }
 
-/** 神经芯片 / AI */
 export function IconAiChip({ size = 24, className, ...rest }: CyberIconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" className={className} aria-hidden {...rest}>
@@ -42,7 +37,6 @@ export function IconAiChip({ size = 24, className, ...rest }: CyberIconProps) {
   );
 }
 
-/** 样式 / 色条均衡器 */
 export function IconPalette({ size = 24, className, ...rest }: CyberIconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" className={className} aria-hidden {...rest}>
@@ -56,7 +50,6 @@ export function IconPalette({ size = 24, className, ...rest }: CyberIconProps) {
   );
 }
 
-/** 用户轮廓 — HUD 线框（Avatar 默认占位等） */
 export function IconUserHud({ size = 24, className, ...rest }: CyberIconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" className={className} aria-hidden {...rest}>
@@ -73,7 +66,6 @@ export function IconUserHud({ size = 24, className, ...rest }: CyberIconProps) {
   );
 }
 
-/** 等距货箱 */
 export function IconPackage({ size = 24, className, ...rest }: CyberIconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" className={className} aria-hidden {...rest}>
@@ -87,7 +79,6 @@ export function IconPackage({ size = 24, className, ...rest }: CyberIconProps) {
   );
 }
 
-/** 花括号 — 类型 / 代码 */
 export function IconBraces({ size = 24, className, ...rest }: CyberIconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" className={className} aria-hidden {...rest}>
@@ -100,7 +91,6 @@ export function IconBraces({ size = 24, className, ...rest }: CyberIconProps) {
   );
 }
 
-/** 搜索 — 圆镜 + 斜向探针 */
 export function IconSearch({ size = 24, className, ...rest }: CyberIconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" className={className} aria-hidden {...rest}>
@@ -113,7 +103,6 @@ export function IconSearch({ size = 24, className, ...rest }: CyberIconProps) {
   );
 }
 
-/** 数据节点 — 提示 / 信息 */
 export function IconDataNode({ size = 24, className, ...rest }: CyberIconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" className={className} aria-hidden {...rest}>

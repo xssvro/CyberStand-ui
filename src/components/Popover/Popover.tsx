@@ -15,20 +15,15 @@ export type { PopperPlacement };
 export interface PopoverProps {
   open: boolean;
   onOpenChange?: (open: boolean) => void;
-  /** 浮层内容（可交互） */
   content: React.ReactNode;
-  /** 触发区域，点击切换开关 */
   children: React.ReactNode;
   placement?: PopperPlacement;
-  /** Esc 关闭 */
   keyboard?: boolean;
   className?: string;
   panelClassName?: string;
   getPopupContainer?: () => HTMLElement;
   zIndex?: number;
-  /** 浮层根节点 role；`menu` 用于下拉菜单 */
   panelRole?: 'dialog' | 'menu';
-  /** 触发器 `aria-haspopup` */
   ariaHasPopup?: 'dialog' | 'menu';
 }
 

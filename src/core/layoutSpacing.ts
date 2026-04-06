@@ -2,7 +2,6 @@ import type { CSSProperties } from 'react';
 
 export type LayoutSpacing = 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 
-/** 与 `vars.css` 中 `--su-space-*` 对齐，供布局组件与文档引用 */
 export const LAYOUT_SPACING_PX: Record<LayoutSpacing, string> = {
   none: '0',
   xs: '4px',

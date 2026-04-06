@@ -6,7 +6,6 @@ function joinClasses(...parts: Array<string | false | undefined>): string {
   return parts.filter(Boolean).join(' ');
 }
 
-/** 滚停后：视口垂直中线最近的一格 */
 function valueAtColumnCenter(col: HTMLElement): number | null {
   const rect = col.getBoundingClientRect();
   const cy = rect.top + rect.height / 2;
@@ -34,13 +33,9 @@ type TimeColumnProps = {
   values: number[];
   selected: number;
   onSelect: (v: number) => void;
-  /** 每次点击格子后调用（与值是否变化无关），用于 TimePicker 关弹层 */
   afterItemClick?: () => void;
 };
 
-/**
- * 单列：原生滚动 + 点击选中；滚轮/触控滑动停止后再根据中线同步一次（不与点击抢逻辑）。
- */
 function TimeColumn({
   colRef,
   activeRef,

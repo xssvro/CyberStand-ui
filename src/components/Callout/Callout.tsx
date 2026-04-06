@@ -11,16 +11,11 @@ export interface CalloutProps extends Omit<
   React.HTMLAttributes<HTMLElement>,
   'title' | 'children'
 > {
-  /** 语义强调色；`default` 为中性说明 */
   intent?: CalloutIntent;
   title?: React.ReactNode;
   children: React.ReactNode;
 }
 
-/**
- * 文档/说明向强调块：左侧色条 + 可选小标题。
- * 与 **Alert** 区分：无 `role` 默认可读性提示、无关闭按钮；适合内联说明、注意事项。
- */
 export const Callout = React.forwardRef<HTMLElement, CalloutProps>(function Callout(
   { intent = 'default', title, children, className = '', ...rest },
   ref,

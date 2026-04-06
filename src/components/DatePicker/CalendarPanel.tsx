@@ -18,22 +18,14 @@ function joinClasses(...parts: Array<string | false | undefined>): string {
 export interface CalendarPanelProps {
   visibleMonth: Date;
   onVisibleMonthChange: (d: Date) => void;
-  /** 当前选中日 `yyyy-mm-dd`，空字符串表示未选 */
   selectedIso: string;
   onSelectDay: (iso: string) => void;
   min?: string;
   max?: string;
   locale?: string;
-  /** 供 `aria-labelledby` 等引用 */
   gridId?: string;
-  /** 更小字号与格子，用于日期时间并排面板 */
   compact?: boolean;
-  /**
-   * `dateKey`：仅比较 `yyyy-mm-dd`（DatePicker；`min`/`max` 可带时间）。
-   * `datetimeDay`：该日是否与 [min,max] 在时间上仍有交集（DateTimePicker）。
-   */
   rangeMode?: 'dateKey' | 'datetimeDay';
-  /** `range` 时高亮区间；单日模式仍用 `selectedIso` */
   daySelection?: 'single' | 'range';
   rangeStartIso?: string;
   rangeEndIso?: string;

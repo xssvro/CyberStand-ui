@@ -5,11 +5,8 @@ import styles from './Spinner.module.css';
 export type SpinnerSize = 'xs' | 'sm' | 'md' | 'lg' | 'inherit';
 
 export interface SpinnerProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, 'children'> {
-  /** 像素阶梯；`inherit` 为 1em，适合嵌在 Button 内随字号缩放 */
   size?: SpinnerSize;
-  /** 描边颜色语义；`current` 等价于 `currentColor` */
   color?: Color | 'current';
-  /** 读屏文案，默认有「加载中」 */
   'aria-label'?: string;
 }
 

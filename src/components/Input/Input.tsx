@@ -3,7 +3,6 @@ import type { Size, StandProps } from '../../core/stand';
 import { getSizeVars, getRadiusVar } from '../../core/stand';
 import styles from './Input.module.css';
 
-/** 前缀与输入文字之间间距（略大于贴边，避免图标与占位挤在一起） */
 const INPUT_AFFIX_GAP: Record<Size, string> = {
   xs: '2px',
   sm: '3px',
@@ -12,7 +11,6 @@ const INPUT_AFFIX_GAP: Record<Size, string> = {
   xl: '6px',
 };
 
-/** 与 getSizeVars 一致：纵向 / 横向 padding 变量 */
 const INPUT_PAD_Y: Record<Size, string> = {
   xs: '3px',
   sm: '5px',
@@ -47,18 +45,10 @@ type InputHtmlPassthrough = Pick<
 >;
 
 export interface InputProps extends Omit<StandProps, 'variant'>, InputHtmlPassthrough {
-  /** 输入框值 */
   value?: string;
-  /** 默认值 */
   defaultValue?: string;
-  /** 占位符 */
   placeholder?: string;
-  /** 值变化回调 */
   onChange?: (value: string, e: React.ChangeEvent<HTMLInputElement>) => void;
-  /**
-   * 输入类型；`date` / `datetime-local` / `month` / `week` / `time` 保留原生值与键盘输入，
-   * 右侧原生日历/时钟图标已用 CSS 隐藏；需要点选月历请用 `DatePicker`。
-   */
   type?:
     | 'text'
     | 'password'
@@ -72,33 +62,18 @@ export interface InputProps extends Omit<StandProps, 'variant'>, InputHtmlPassth
     | 'time'
     | 'month'
     | 'week';
-  /** 前置内容 */
   prefix?: React.ReactNode;
-  /** 后置内容 */
   suffix?: React.ReactNode;
-  /** 是否只读 */
   readOnly?: boolean;
-  /** 是否必填 */
   required?: boolean;
-  /** 自动聚焦 */
   autoFocus?: boolean;
-  /** 最大长度 */
   maxLength?: number;
-  /** 最小长度 */
   minLength?: number;
-  /** 名称 */
   name?: string;
-  /** 自动完成；未传时为 `off`，减少浏览器自动填充与怪色背景 */
   autoComplete?: string;
-  /** 输入模式 */
   pattern?: string;
 }
 
-/**
- * Input 输入框组件
- *
- * 基础文本输入组件，支持多种类型和前后置内容
- */
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   (
     {

@@ -15,41 +15,24 @@ export interface PaginationProps extends Omit<
   React.HTMLAttributes<HTMLElement>,
   'onChange' | 'defaultValue'
 > {
-  /** 禁用交互 */
   disabled?: boolean;
-  /** 数据总条数 */
   total: number;
-  /** 当前页码（从 1 开始）；传入则为受控 */
   current?: number;
-  /** 非受控初始页码 */
   defaultCurrent?: number;
-  /** 每页条数；传入则为受控 */
   pageSize?: number;
-  /** 非受控初始每页条数 */
   defaultPageSize?: number;
-  /** 可选每页条数（配合 `showSizeChanger`） */
   pageSizeOptions?: number[];
-  /** 页码或 `pageSize` 变化时回调（改每页条数时页码会回到 1） */
   onChange?: (page: number, pageSize: number) => void;
-  /** 仅一页时是否不渲染 */
   hideOnSinglePage?: boolean;
-  /** 显示每页条数选择 */
   showSizeChanger?: boolean;
-  /** 显示快速跳转输入框 */
   showQuickJumper?: boolean;
-  /** 左侧总数文案，参数为 `[起始, 结束]` 与 `total` */
   showTotal?: (range: [number, number], total: number) => React.ReactNode;
-  /** 极简：仅上一页 / 页码文案 / 下一页 */
   simple?: boolean;
   size?: PaginationSize;
   align?: PaginationAlign;
-  /** 省略号两侧额外展示的页码数（不含当前页） */
   siblingDelta?: number;
-  /** `nav` 的 `aria-label` */
   navAriaLabel?: string;
-  /** 上一页按钮 `aria-label` */
   prevAriaLabel?: string;
-  /** 下一页按钮 `aria-label` */
   nextAriaLabel?: string;
 }
 

@@ -15,29 +15,17 @@ import styles from './FormField.module.css';
 export type FormFieldLayout = 'vertical' | 'horizontal';
 
 export interface FormFieldProps {
-  /** 标签文案 */
   label?: React.ReactNode;
-  /** 控件或组根节点 `id`；未传则内部生成 */
   id?: string;
-  /** 辅助说明（非错误） */
   description?: React.ReactNode;
-  /** 错误文案：`aria-invalid`；Input/Textarea/Select/Switch → `color="error"`；CheckboxGroup/RadioGroup → `invalid`。显式传入时覆盖 `rules` 校验结果（含 `null` 清空） */
   error?: React.ReactNode;
-  /** 与 `<Form form={instance}>` 配套：字段名，参与 `validateFields` 与 `getFieldsValue` */
   name?: string;
-  /** 校验规则（Ant Design `rules` 子集）；需同时传 `name` 且父级为带 `form` 的 `Form` */
   rules?: FormRule[];
-  /** 受控字段无法从 FormData 取值时，在校验阶段提供当前值 */
   getValue?: () => unknown;
-  /** 标签旁必填星号 */
   required?: boolean;
-  /** 标签与控件布局 */
   layout?: FormFieldLayout;
-  /** `layout="horizontal"` 时标签列宽度 */
   labelWidth?: string | number;
-  /** 整项禁用样式；会合并到子控件 `disabled` */
   disabled?: boolean;
-  /** 单个子节点：Input / Textarea / Select / Switch / DatePicker / CheckboxGroup / RadioGroup */
   children: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
@@ -84,7 +72,6 @@ function isRadioGroup(el: React.ReactElement): boolean {
   return typeof t === 'function' && (t as { displayName?: string }).displayName === 'RadioGroup';
 }
 
-/** 支持 `size` 且可由 Form 上下文注入的单控件 */
 function supportsStandSize(el: React.ReactElement): boolean {
   const t = el.type;
   if (t === Input || t === Textarea || t === Select || t === Switch || t === DatePicker)
