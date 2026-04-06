@@ -1548,7 +1548,7 @@ const text: Record<AlertVariant, { title: string; children: string }> = {
     title: 'Table 数据表格',
     category: '布局',
     description:
-      '组合式表格（原生 table）：圆角外框 + 横向滚动、bordered/shadow、loading 遮罩、TableEmpty 空状态、尺寸含 xs；排序/筛选/分页需业务或 Pagination 组合。',
+      '组合式表格：collapse 网格、loading/TableEmpty；TableHead 可排序（aria-sort）与 cycleTableSortOrder；TableToolbar 筛选区；分页用 Pagination。',
     aiDocPath: '/src/components/Table/Table.ai.md',
     examples: [
       {
@@ -1697,6 +1697,46 @@ const text: Record<AlertVariant, { title: string; children: string }> = {
     <TableEmpty colSpan={3} description="暂无记录" />
   </TableBody>
 </Table>`,
+      },
+      {
+        title: '列排序 + TableToolbar 筛选（受控）',
+        code: `// 状态：sortKey、sortOrder、cycleTableSortOrder；筛选 q、dept
+// rows = useMemo(() => filter + sort 原始数据, [deps])
+
+<Stack gap="sm" className="w-full max-w-3xl">
+  <TableToolbar extra={<Button size="sm">导出</Button>}>
+    <Input placeholder="搜索名称" className="max-w-[200px]" />
+    <Select className="max-w-[140px]" placeholder="部门" options={[{ value: 'all', label: '全部' }]} />
+  </TableToolbar>
+  <Table bordered shadow="sm">
+    <TableHeader>
+      <TableRow>
+        <TableHead
+          scope="col"
+          sortable
+          sortOrder={sortKey === 'name' ? sortOrder : null}
+          onSort={() => toggleSort('name')}
+          sortAriaLabel="按名称排序"
+        >
+          名称
+        </TableHead>
+        <TableHead scope="col">部门</TableHead>
+        <TableHead
+          scope="col"
+          align="end"
+          numeric
+          sortable
+          sortOrder={sortKey === 'score' ? sortOrder : null}
+          onSort={() => toggleSort('score')}
+          sortAriaLabel="按分数排序"
+        >
+          分数
+        </TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>{/* map(rows) */}</TableBody>
+  </Table>
+</Stack>`,
       },
     ],
   },

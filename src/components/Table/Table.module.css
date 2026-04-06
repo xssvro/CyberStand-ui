@@ -146,6 +146,111 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* ========== 可排序表头（受控 sortOrder + onSort） ========== */
+.sortTh {
+  vertical-align: middle;
+}
+
+.sortBtn {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-weight: 600;
+  color: inherit;
+  cursor: pointer;
+  text-align: start;
+  border-radius: max(2px, calc(var(--su-radius, 5px) - 2px));
+  transition: color var(--su-transition-fast), background-color var(--su-transition-fast);
+}
+
+.sortBtn:hover:not(:disabled) {
+  color: var(--su-primary-600);
+}
+
+[data-theme='dark'] .sortBtn:hover:not(:disabled) {
+  color: var(--su-primary-400);
+}
+
+.sortBtn:focus-visible {
+  outline: 2px solid var(--su-primary-500);
+  outline-offset: 2px;
+}
+
+.sortBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.sortBtnAlignEnd {
+  flex-direction: row-reverse;
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.sortLabel {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sortGlyphs {
+  display: inline-flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: 0;
+  line-height: 1;
+  color: var(--su-text-subtle);
+}
+
+.sortCaret {
+  display: block;
+  font-size: 7px;
+  line-height: 1;
+  transform: scaleX(0.95);
+}
+
+.sortCaretActive {
+  color: var(--su-primary-600);
+}
+
+[data-theme='dark'] .sortCaretActive {
+  color: var(--su-primary-400);
+}
+
+/* ========== 表格外筛选工具条（与 caption 二选一或同用） ========== */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--su-space-3);
+  padding: var(--su-space-2) var(--su-space-3);
+  background: color-mix(in srgb, var(--su-bg-subtle) 65%, var(--su-bg-elevated));
+  border-bottom: 1px solid var(--su-border-subtle);
+}
+
+.toolbarMain {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--su-space-2);
+  flex: 1;
+  min-width: min(100%, 10rem);
+}
+
+.toolbarExtra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--su-space-2);
+}
+
 .caption {
   padding: var(--su-space-2) var(--su-space-3) var(--su-space-2);
   caption-side: top;

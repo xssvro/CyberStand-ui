@@ -1,6 +1,10 @@
 import React, { forwardRef } from 'react';
 import { Spinner } from '../Spinner';
+import type { TableSortOrder } from './tableSort';
 import styles from './Table.module.css';
+
+export type { TableSortOrder } from './tableSort';
+export { cycleTableSortOrder } from './tableSort';
 
 function join(...parts: Array<string | false | undefined>): string {
   return parts.filter(Boolean).join(' ');
@@ -125,12 +129,67 @@ export interface TableHeadProps extends Omit<React.ThHTMLAttributes<HTMLTableCel
   align?: TableHeadAlign;
   /** 等宽数字（tabular-nums），适合金额、数量列 */
   numeric?: boolean;
+  /** 可排序列：内部为 `<button>`，并在 `th` 上写 `aria-sort` */
+  sortable?: boolean;
+  /** 受控排序方向；`null` 表示未按该列排或未激活 */
+  sortOrder?: TableSortOrder;
+  /** 点击排序按钮；多列场景下由父组件切换「当前排序列」并配合 `cycleTableSortOrder` */
+  onSort?: () => void;
+  /** 排序按钮 `aria-label` */
+  sortAriaLabel?: string;
+  /** 禁用排序交互 */
+  sortDisabled?: boolean;
+}
+
+function SortGlyphs({ order }: { order: TableSortOrder }) {
+  return (
+    <span className={styles.sortGlyphs} aria-hidden>
+      <span className={join(styles.sortCaret, order === 'asc' && styles.sortCaretActive)}>▴</span>
+      <span className={join(styles.sortCaret, order === 'desc' && styles.sortCaretActive)}>▾</span>
+    </span>
+  );
 }
 
 export const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(function TableHead(
-  { className, align = 'start', numeric, ...rest },
+  {
+    className,
+    align = 'start',
+    numeric,
+    sortable = false,
+    sortOrder = null,
+    onSort,
+    sortAriaLabel,
+    sortDisabled = false,
+    children,
+    ...rest
+  },
   ref,
 ) {
+  const hasSort = Boolean(sortable && onSort);
+
+  const ariaSort: React.AriaAttributes['aria-sort'] | undefined = !hasSort
+    ? undefined
+    : sortOrder === 'asc'
+      ? 'ascending'
+      : sortOrder === 'desc'
+        ? 'descending'
+        : 'none';
+
+  const inner = hasSort ? (
+      <button
+        type="button"
+        className={join(styles.sortBtn, align === 'end' && styles.sortBtnAlignEnd)}
+        onClick={onSort}
+        disabled={sortDisabled}
+        aria-label={sortAriaLabel}
+      >
+        <span className={styles.sortLabel}>{children}</span>
+        <SortGlyphs order={sortOrder} />
+      </button>
+    ) : (
+      children
+    );
+
   return (
     <th
       ref={ref}
@@ -139,10 +198,14 @@ export const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(functi
         align === 'center' && styles.alignCenter,
         align === 'end' && styles.alignEnd,
         numeric && styles.numeric,
+        hasSort && styles.sortTh,
         className,
       )}
+      aria-sort={ariaSort}
       {...rest}
-    />
+    >
+      {inner}
+    </th>
   );
 });
 
@@ -202,5 +265,29 @@ export const TableEmpty = forwardRef<HTMLTableRowElement, TableEmptyProps>(funct
         {children ?? description}
       </TableCell>
     </TableRow>
+  );
+});
+
+export type TableToolbarProps = React.HTMLAttributes<HTMLDivElement> & {
+  /** 右侧操作区（新建、导出等） */
+  extra?: React.ReactNode;
+};
+
+/** 表格外筛选/工具条容器，放在 `Table` 之上，与 `Stack` 组合 */
+export const TableToolbar = forwardRef<HTMLDivElement, TableToolbarProps>(function TableToolbar(
+  { className, children, extra, 'aria-label': ariaLabel = '表格工具栏', ...rest },
+  ref,
+) {
+  return (
+    <div
+      ref={ref}
+      className={join(styles.toolbar, className)}
+      role="toolbar"
+      aria-label={ariaLabel}
+      {...rest}
+    >
+      <div className={styles.toolbarMain}>{children}</div>
+      {extra ? <div className={styles.toolbarExtra}>{extra}</div> : null}
+    </div>
   );
 });

@@ -8,6 +8,8 @@ export {
   TableHead,
   TableHeader,
   TableRow,
+  TableToolbar,
+  cycleTableSortOrder,
 } from './Table';
 export type {
   TableBodyProps,
@@ -23,4 +25,6 @@ export type {
   TableRowProps,
   TableShadow,
   TableSize,
+  TableSortOrder,
+  TableToolbarProps,
 } from './Table';

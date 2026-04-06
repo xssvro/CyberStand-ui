@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { componentDocs, type Example } from '../docs/components';
 import { Alert, type AlertVariant } from '../components/Alert';
@@ -57,7 +57,10 @@ import {
   TableHead,
   TableHeader,
   TableRow,
+  TableToolbar,
+  cycleTableSortOrder,
 } from '../components/Table';
+import type { TableSortOrder } from '../components/Table';
 import { Pagination } from '../components/Pagination';
 import { Flex, Grid, Space, Stack } from '../components/Layout';
 import { IconDataNode, IconPackage, IconSearch } from '../icons';
@@ -1174,7 +1177,52 @@ function RadioDocDemo({ idx }: { idx: number }) {
   }
 }
 
+const TABLE_SORT_DEMO_SOURCE = [
+  { name: '张三', dept: '研发', score: 92 },
+  { name: '李四', dept: '产品', score: 78 },
+  { name: '王五', dept: '研发', score: 85 },
+  { name: '赵六', dept: '运营', score: 71 },
+  { name: '钱七', dept: '产品', score: 88 },
+];
+
 function TableDocDemo({ idx }: { idx: number }) {
+  const [sortKey, setSortKey] = useState<'name' | 'dept' | 'score' | null>(null);
+  const [sortOrder, setSortOrder] = useState<TableSortOrder>(null);
+  const [deptFilter, setDeptFilter] = useState('all');
+  const [nameQuery, setNameQuery] = useState('');
+
+  const toggleSort = useCallback(
+    (key: 'name' | 'dept' | 'score') => {
+      if (sortKey !== key) {
+        setSortKey(key);
+        setSortOrder('asc');
+        return;
+      }
+      const next = cycleTableSortOrder(sortOrder);
+      setSortOrder(next);
+      if (next === null) setSortKey(null);
+    },
+    [sortKey, sortOrder],
+  );
+
+  const sortedFilteredRows = useMemo(() => {
+    let list = TABLE_SORT_DEMO_SOURCE.filter((r) => deptFilter === 'all' || r.dept === deptFilter).filter(
+      (r) => !nameQuery.trim() || r.name.includes(nameQuery.trim()),
+    );
+    if (sortKey && sortOrder) {
+      list = [...list].sort((a, b) => {
+        const av = a[sortKey];
+        const bv = b[sortKey];
+        const cmp =
+          typeof av === 'number' && typeof bv === 'number'
+            ? av - bv
+            : String(av).localeCompare(String(bv), 'zh');
+        return sortOrder === 'asc' ? cmp : -cmp;
+      });
+    }
+    return list;
+  }, [deptFilter, nameQuery, sortKey, sortOrder]);
+
   switch (idx) {
     case 0:
       return (
@@ -1377,6 +1425,77 @@ function TableDocDemo({ idx }: { idx: number }) {
               </TableBody>
             </Table>
           </Stack>
+        </Stack>
+      );
+    case 6:
+      return (
+        <Stack gap="sm" className="w-full max-w-3xl">
+          <TableToolbar extra={<Button size="sm">导出</Button>}>
+            <Input
+              placeholder="搜索姓名"
+              value={nameQuery}
+              onChange={(v) => setNameQuery(v)}
+              className="max-w-[200px]"
+            />
+            <Select
+              className="min-w-[140px]"
+              value={deptFilter}
+              options={[
+                { value: 'all', label: '全部部门' },
+                { value: '研发', label: '研发' },
+                { value: '产品', label: '产品' },
+                { value: '运营', label: '运营' },
+              ]}
+              onChange={(v) => setDeptFilter(v)}
+            />
+          </TableToolbar>
+          <Table bordered shadow="sm">
+            <TableCaption>列排序与筛选（受控）</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead
+                  scope="col"
+                  sortable
+                  sortOrder={sortKey === 'name' ? sortOrder : null}
+                  onSort={() => toggleSort('name')}
+                  sortAriaLabel="按姓名排序"
+                >
+                  姓名
+                </TableHead>
+                <TableHead
+                  scope="col"
+                  sortable
+                  sortOrder={sortKey === 'dept' ? sortOrder : null}
+                  onSort={() => toggleSort('dept')}
+                  sortAriaLabel="按部门排序"
+                >
+                  部门
+                </TableHead>
+                <TableHead
+                  scope="col"
+                  align="end"
+                  numeric
+                  sortable
+                  sortOrder={sortKey === 'score' ? sortOrder : null}
+                  onSort={() => toggleSort('score')}
+                  sortAriaLabel="按分数排序"
+                >
+                  分数
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {sortedFilteredRows.map((r, i) => (
+                <TableRow key={`${r.name}-${i}`}>
+                  <TableCell>{r.name}</TableCell>
+                  <TableCell>{r.dept}</TableCell>
+                  <TableCell align="end" numeric>
+                    {r.score}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </Stack>
       );
     default:
@@ -2571,7 +2690,7 @@ export const ComponentPage: React.FC = () => {
         {doc.name === 'Typography' && renderTypographyExamples(example, idx)}
         {doc.name === 'Divider' && renderDividerExamples(example, idx)}
         {doc.name === 'AspectRatio' && renderAspectRatioExamples(example, idx)}
-        {doc.name === 'Table' && <TableDocDemo idx={idx} />}
+        {doc.name === 'Table' && <TableDocDemo key={idx} idx={idx} />}
         {doc.name === 'Pagination' && <PaginationDocDemo key={idx} idx={idx} />}
         {doc.name === 'Layout' && renderLayoutExamples(example, idx)}
         {doc.name === 'Badge' && (

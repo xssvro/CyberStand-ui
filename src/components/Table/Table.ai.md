@@ -2,9 +2,9 @@
 
 Table 提供**数据表格的视觉与语义骨架**：基于原生 `<table>` / `<thead>` / `<tbody>` 等标签的组合式子组件，使用 CSS Modules 与 `vars.css` 中的表面色、边框与字号 token，与 Card、Typography、Stack 等组件风格一致。
 
-**本版范围**：展示结构、**圆角外框**（与 Card 一致的裁剪方式，避免表格直角顶破圆角）、尺寸（含 **xs** 紧凑档）、斑马纹、边框与**单元格网格**、**`shadow="sm"`** 外轮廓、**`loading`** 遮罩、**`TableEmpty`** 空状态行、行悬停、列对齐、等宽数字、`layout`、表头 sticky。视觉与交互上对齐 **Ant Design Table / Element Plus el-table** 的常见「外框 + 加载 + 空数据」体验；仍为**组合式** API，不设 `columns` / `dataSource`。
+**本版范围**：展示结构、**圆角外框**、尺寸（含 **xs**）、斑马纹、**`border-collapse: collapse` 网格**、**`shadow` / `loading` / `TableEmpty`**、行悬停、列对齐、等宽数字、`layout`、表头 sticky；**受控约定下的列排序**（`TableHead` 的 `sortable` + `aria-sort` + 内嵌按钮）与 **筛选工具条容器 `TableToolbar`**；工具函数 **`cycleTableSortOrder`**。仍为**组合式** API，不设 `columns` / `dataSource`，**排序比较与筛选逻辑在父组件**（`useMemo` 中 `filter`/`sort`）。
 
-**不提供**：内置列排序、列筛选、行选择、虚拟滚动、分页条；分页请用独立 **Pagination** + 数据 `slice`。**排序 / 筛选**在业务层处理数据或表头内嵌控件实现；后续库内可能增加 headless 或 Pagination 联动示例。
+**不提供**：全自动 `dataSource` 排序、服务端请求封装、行选择、虚拟滚动；**分页**请用 **Pagination** + `slice`。
 
 ---
 
@@ -62,8 +62,9 @@ import {
 | `TableBody` | `<tbody>` | 数据行区域 |
 | `TableFooter` | `<tfoot>` | 汇总行、分页说明等（可选） |
 | `TableRow` | `<tr>` | 行 |
-| `TableHead` | `<th>` | 列头或角单元格；建议写 `scope="col"` |
+| `TableHead` | `<th>` | 列头；可选 **可排序**（`sortable` + `onSort` + 受控 `sortOrder`） |
 | `TableCell` | 默认 `<td>`，`as="th"` 时为 `<th>` | 数据格；行表头用 `as="th"` 并设 `scope="row"` |
+| `TableToolbar` | `<div role="toolbar">` | 表格外筛选/操作横条，与 **Input / Select / Button** 组合 |
 
 ---
 
@@ -104,9 +105,23 @@ import {
 
 | Prop | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| `align` | `'start' \| 'center' \| 'end'` | `'start'` | 文本对齐 |
+| `align` | `'start' \| 'center' \| 'end'` | `'start'` | 文本对齐；排序列 `end` 时按钮右对齐 |
 | `numeric` | `boolean` | - | 为真时施加 `font-variant-numeric: tabular-nums`，适合金额、数量列标题与数据对齐 |
+| `sortable` | `boolean` | `false` | 为真且传入 `onSort` 时，列头内渲染 **`<button type="button">`**，并在 `th` 上设置 **`aria-sort`**（`ascending` / `descending` / `none`） |
+| `sortOrder` | `TableSortOrder`（`'asc' \| 'desc' \| null`） | `null` | **受控**：当前列是否为主排序列及方向；非主列传 `null` |
+| `onSort` | `() => void` | - | 点击排序按钮；父组件内切换「排序列」或对当前列执行 **`cycleTableSortOrder`** |
+| `sortAriaLabel` | `string` | - | 排序按钮的无障碍名称，建议「按某某排序」 |
+| `sortDisabled` | `boolean` | `false` | 禁用排序按钮 |
 | 其余 | `ThHTMLAttributes` | - | **务必**为列头设置 `scope="col"`（多列分组时可配合 `colSpan` / `scope="colgroup"` 等标准用法） |
+
+### `TableToolbar`
+
+| Prop | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `children` | `ReactNode` | - | 左侧/主区：筛选控件（`Input`、`Select` 等） |
+| `extra` | `ReactNode` | - | 右侧：次要操作按钮 |
+| `aria-label` | `string` | `'表格工具栏'` | `role="toolbar"` 的可访问名称，可按业务改写 |
+| 其余 | `HTMLAttributes<HTMLDivElement>` | - | `className` 等与容器合并 |
 
 ### `TableCell`（单元格 `<td>` / `<th>`）
 
@@ -128,13 +143,79 @@ import {
 
 ---
 
+## 列排序与筛选（受控约定）
+
+### 排序状态与 `cycleTableSortOrder`
+
+从包内导出 **`TableSortOrder`**（`'asc' | 'desc' | null`）与 **`cycleTableSortOrder(prev)`**：单列点击常见三态为 **无 → 升序 → 降序 → 无**。换列时一般由父组件把 **`sortOrder` 设为 `'asc'`** 并切换 `sortKey`。
+
+```tsx
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  cycleTableSortOrder,
+} from 'stand-ui/components/Table';
+import type { TableSortOrder } from 'stand-ui/components/Table';
+
+type SortKey = 'name' | 'amount' | null;
+const [sortKey, setSortKey] = useState<SortKey>(null);
+const [sortOrder, setSortOrder] = useState<TableSortOrder>(null);
+
+const onSortColumn = (key: Exclude<SortKey, null>) => {
+  if (sortKey !== key) {
+    setSortKey(key);
+    setSortOrder('asc');
+    return;
+  }
+  const next = cycleTableSortOrder(sortOrder);
+  setSortOrder(next);
+  if (next === null) setSortKey(null);
+};
+
+// 展示用数据：useMemo 里对 rows 做 sort（勿在 render 里直接改原数组）
+```
+
+表头绑定示例：
+
+```tsx
+<TableHead
+  scope="col"
+  sortable
+  sortOrder={sortKey === 'name' ? sortOrder : null}
+  onSort={() => onSortColumn('name')}
+  sortAriaLabel="按名称排序"
+>
+  名称
+</TableHead>
+```
+
+### 筛选与 `TableToolbar`
+
+筛选条件（关键词、下拉部门等）放在 **`TableToolbar`** 内，父组件用 `useMemo` **`filter`** 数据源后再 `map` 到 `TableBody`。不要求表格内置「筛选行」——与 **Element / Ant** 一样，由页面状态驱动数据。
+
+```tsx
+<Stack gap="sm" className="w-full max-w-3xl">
+  <TableToolbar extra={<Button size="sm">导出</Button>}>
+    <Input placeholder="搜索" value={q} onChange={...} className="max-w-xs" />
+    <Select value={dept} options={[...]} onChange={...} />
+  </TableToolbar>
+  <Table bordered shadow="sm">...</Table>
+</Stack>
+```
+
+---
+
 ## 无障碍（a11y）建议
 
 1. **标题**：使用 `TableCaption` 或原生 `<caption>`，简要说明表内容。
 2. **列头**：每个列头 `TableHead` 使用 `scope="col"`。
 3. **行头**：首列若为维度名称，使用 `TableCell as="th" scope="row"`。
 4. **复杂表**：若存在多层表头或合并单元格，使用 `id` + `headers` 建立单元格与表头关联（HTML 标准）。
-5. **排序按钮**（自实现）：在 `TableHead` 内放 `Button` 时，为按钮提供清晰 `aria-label`（如「按金额排序，当前升序」）；未来若库内封装排序，可能会使用 `aria-sort`。
+5. **可排序列**：使用 `TableHead` 的 **`sortable` + `onSort` + `sortAriaLabel`** 时，库会设置 **`aria-sort`** 与按钮 `aria-label`；勿在子节点再套一层不可见的重复按钮。
 6. **仅装饰的表**：若数据关系已由周边文案说清，且表极简单，可按产品要求权衡；复杂数据表仍建议完整语义。
 
 ---
@@ -168,7 +249,7 @@ import {
     <Table bordered striped hoverable>
       ...
     </Table>
-    {/* 将来：<Pagination /> */}
+    {/* <Pagination ... /> 见 Pagination 组件 */}
   </Stack>
 </Card>
 ```
@@ -200,7 +281,7 @@ import {
 A：本库此版走**组合式 + 原生表格**，便于任意合并单元格、嵌入按钮/Checkbox、与表单混排。如需配置化渲染，可在项目内写一层薄封装。
 
 **Q：排序、筛选、分页怎么做？**  
-A：排序/筛选在父组件处理数据后 `map` 成行即可；分页用独立 Pagination + `slice` 数据。**库内后续可能增加** Pagination 与可选的 headless 表格逻辑，当前文档描述以仓库实际导出为准。
+A：**排序**：`TableHead` 受控 `sortOrder` + `cycleTableSortOrder` + `useMemo` 内 `sort`。**筛选**：`TableToolbar` + 受控 `Input`/`Select` + `useMemo` 内 `filter`。**分页**：**Pagination** + `slice`。三者均不内置请求，由业务在 `onChange`/`onSort` 里拉数或改本地状态。
 
 **Q：`layout="fixed"` 下列宽不均？**  
 A：`fixed` 下首行决定列宽；可为部分 `TableHead` / `TableCell` 设置 `style={{ width: '20%' }}` 或 `className` 控制，或对过长的 `td` 做 `truncate`（需在单元格内包一层 `overflow-hidden` 结构）。
@@ -215,7 +296,7 @@ A：`bordered` 模式使用 **`border-collapse: collapse`** 与单元格四边 `
 
 ## 类型导出
 
-从 `stand-ui/components/Table` 或包入口可导出：`TableProps`、`TableSize`、`TableHeadProps`、`TableCellProps` 及各子组件的 `*Props` 类型，便于封装业务表格组件。
+从 `stand-ui/components/Table` 或包入口可导出：`TableProps`、`TableSize`、`TableHeadProps`、`TableCellProps`、`TableToolbarProps`、**`TableSortOrder`**，以及 **`cycleTableSortOrder`**。
 
 ---
 
@@ -225,3 +306,4 @@ A：`bordered` 模式使用 **`border-collapse: collapse`** 与单元格四边 `
 - [ ] 列头 `scope="col"`；行头 `th` + `scope="row"`  
 - [ ] 大数据量时考虑分页或虚拟化（本组件不包含虚拟列表）  
 - [ ] 移动端确认横向滚动与最小列宽可读性  
+- [ ] 可排序列已设 `sortAriaLabel`，且 `aria-sort` 与数据排序方向一致  
