@@ -73,10 +73,7 @@ import { AspectRatio } from 'stand-ui/components';
 ```tsx
 <AspectRatio ratio={1} className="max-w-xs rounded-md overflow-hidden">
   <div
-    className="h-full w-full"
-    style={{
-      background: `linear-gradient(135deg, var(--su-info-500), var(--su-primary-600))`,
-    }}
+    className="h-full w-full bg-[var(--su-btn-primary-soft-bg)]"
     aria-hidden
   />
 </AspectRatio>

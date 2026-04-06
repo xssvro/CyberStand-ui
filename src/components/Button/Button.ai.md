@@ -108,8 +108,10 @@ import { Button } from 'stand-ui/components/Button';
 <Button className="my-custom-btn">自定义类</Button>
 ```
 ```css
+/* 示例：用全局 token 实色覆盖，避免装饰性渐变（与 DESIGN 一致） */
 .my-custom-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--su-btn-primary-solid-bg);
+  color: var(--su-btn-primary-solid-fg);
 }
 ```
 

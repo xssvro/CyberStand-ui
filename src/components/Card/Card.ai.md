@@ -139,14 +139,14 @@ import { Card } from 'stand-ui/components/Card';
 
 ### 覆盖内部样式
 ```css
-/* 自定义头部样式 */
+/* 自定义头部：用 token 实色（勿用装饰渐变铺头图） */
 .my-card [class*="header"] {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: var(--su-btn-primary-solid-bg);
+  color: var(--su-btn-primary-solid-fg);
 }
 
 .my-card [class*="title"] {
-  color: white;
+  color: var(--su-btn-primary-solid-fg);
 }
 ```
 
