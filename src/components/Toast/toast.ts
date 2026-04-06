@@ -1,10 +1,5 @@
 import type { ReactNode } from 'react';
-import {
-  addToast,
-  clearAll,
-  removeToast,
-  updateToast,
-} from './store';
+import { addToast, clearAll, removeToast, updateToast } from './store';
 import type { ToastType } from './store';
 
 export interface ToastOptions {
@@ -20,8 +15,7 @@ export interface ToastOptions {
 
 function push(type: ToastType, title: ReactNode, options?: ToastOptions): string {
   const duration =
-    options?.duration ??
-    (type === 'error' ? 6000 : type === 'loading' ? Infinity : 4000);
+    options?.duration ?? (type === 'error' ? 6000 : type === 'loading' ? Infinity : 4000);
   return addToast({
     type,
     title,
@@ -33,11 +27,9 @@ function push(type: ToastType, title: ReactNode, options?: ToastOptions): string
 }
 
 export const toast = Object.assign(
-  (title: ReactNode, options?: ToastOptions) =>
-    push('default', title, options),
+  (title: ReactNode, options?: ToastOptions) => push('default', title, options),
   {
-    success: (title: ReactNode, options?: ToastOptions) =>
-      push('success', title, options),
+    success: (title: ReactNode, options?: ToastOptions) => push('success', title, options),
 
     error: (title: ReactNode, options?: ToastOptions) =>
       push('error', title, {
@@ -45,11 +37,9 @@ export const toast = Object.assign(
         duration: options?.duration ?? 6000,
       }),
 
-    warning: (title: ReactNode, options?: ToastOptions) =>
-      push('warning', title, options),
+    warning: (title: ReactNode, options?: ToastOptions) => push('warning', title, options),
 
-    info: (title: ReactNode, options?: ToastOptions) =>
-      push('info', title, options),
+    info: (title: ReactNode, options?: ToastOptions) => push('info', title, options),
 
     /** 需手动 `toast.dismiss(id)` 或配合 `toast.promise` 结束 */
     loading: (title: ReactNode, options?: ToastOptions) =>
@@ -70,7 +60,7 @@ export const toast = Object.assign(
         success: ReactNode | ((data: T) => ReactNode);
         error: ReactNode | ((err: unknown) => ReactNode);
       },
-      options?: ToastOptions
+      options?: ToastOptions,
     ): Promise<T> => {
       const id = addToast({
         type: 'loading',
@@ -84,8 +74,7 @@ export const toast = Object.assign(
         const data = await promise;
         updateToast(id, {
           type: 'success',
-          title:
-            typeof msgs.success === 'function' ? msgs.success(data) : msgs.success,
+          title: typeof msgs.success === 'function' ? msgs.success(data) : msgs.success,
           duration: options?.duration ?? 4000,
         });
         return data;
@@ -98,5 +87,5 @@ export const toast = Object.assign(
         throw err;
       }
     },
-  }
+  },
 );

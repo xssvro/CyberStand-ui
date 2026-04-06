@@ -68,7 +68,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       style,
       ...props
     },
-    ref
+    ref,
   ) => {
     const sizeVars = getSizeVars(size);
     const radiusVar = getRadiusVar(radius);
@@ -78,7 +78,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       styles[color],
       disabled && styles.disabled,
       readOnly && styles.readOnly,
-      className
+      className,
     );
 
     const resizeClass =
@@ -116,8 +116,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         />
       </div>
     );
-  }
+  },
 );
 
 Textarea.displayName = 'Textarea';
-

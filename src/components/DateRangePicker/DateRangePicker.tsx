@@ -26,17 +26,11 @@ import styles from '../DatePicker/DatePicker.module.css';
 
 type DateRangePickerHtmlPassthrough = Pick<
   React.HTMLAttributes<HTMLButtonElement>,
-  | 'id'
-  | 'aria-invalid'
-  | 'aria-describedby'
-  | 'aria-labelledby'
-  | 'aria-label'
-  | 'aria-required'
+  'id' | 'aria-invalid' | 'aria-describedby' | 'aria-labelledby' | 'aria-label' | 'aria-required'
 >;
 
 export interface DateRangePickerProps
-  extends Omit<StandProps, 'variant' | 'loading'>,
-    DateRangePickerHtmlPassthrough {
+  extends Omit<StandProps, 'variant' | 'loading'>, DateRangePickerHtmlPassthrough {
   value?: DateRangeISO;
   defaultValue?: DateRangeISO;
   onChange?: (value: DateRangeISO, e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -153,7 +147,11 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
 
     const setValue = useCallback(
       (next: DateRangeISO) => {
-        const clamped = clampDateRangeToBounds(normalizeDateRangeISO(next.start, next.end), min, max);
+        const clamped = clampDateRangeToBounds(
+          normalizeDateRangeISO(next.start, next.end),
+          min,
+          max,
+        );
         if (!isControlled) setUncontrolled(clamped);
         onChange?.(clamped, createSyntheticChangeEvent(clamped, name));
       },
@@ -164,9 +162,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
     const [draft, setDraft] = useState<DateRangeISO>(EMPTY_RANGE);
 
     const parsedStart = value.start ? parseISODate(value.start) : null;
-    const [visibleMonth, setVisibleMonth] = useState(() =>
-      startOfMonth(parsedStart ?? new Date()),
-    );
+    const [visibleMonth, setVisibleMonth] = useState(() => startOfMonth(parsedStart ?? new Date()));
 
     const triggerRef = useRef<HTMLButtonElement>(null);
     const panelRef = useRef<HTMLDivElement>(null);
@@ -334,7 +330,13 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
 
     return (
       <div
-        className={joinClasses(styles.root, styles[color], disabled && styles.disabled, open && styles.open, className)}
+        className={joinClasses(
+          styles.root,
+          styles[color],
+          disabled && styles.disabled,
+          open && styles.open,
+          className,
+        )}
         style={
           {
             ...sizeVars,
@@ -345,7 +347,13 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       >
         {useSplitHidden ? (
           <>
-            <input type="hidden" name={startName} value={value.start} disabled={disabled} aria-hidden />
+            <input
+              type="hidden"
+              name={startName}
+              value={value.start}
+              disabled={disabled}
+              aria-hidden
+            />
             <input type="hidden" name={endName} value={value.end} disabled={disabled} aria-hidden />
           </>
         ) : (

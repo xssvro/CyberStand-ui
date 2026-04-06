@@ -92,22 +92,26 @@ MyComponent/
 # Button 组件 - AI 使用指南
 
 ## 快速开始
+
 \`\`\`tsx
 import { Button } from 'stand-ui/components/Button';
 <Button>点击我</Button>
 \`\`\`
 
 ## Props 完整说明
-| Prop | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| size | 'sm' \| 'md' \| 'lg' | 'md' | 尺寸 |
+
+| Prop | 类型                 | 默认值 | 说明 |
+| ---- | -------------------- | ------ | ---- |
+| size | 'sm' \| 'md' \| 'lg' | 'md'   | 尺寸 |
 
 ## 常用组合示例
+
 \`\`\`tsx
 <Button color="primary" variant="solid">主要按钮</Button>
 \`\`\`
 
 ## 样式覆盖指南
+
 ...
 ```
 

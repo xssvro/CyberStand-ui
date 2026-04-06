@@ -63,7 +63,10 @@ export const Popover: React.FC<PopoverProps> = ({
 
     setMounted(true);
 
-    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
       setEntered(true);
       return;
     }
@@ -83,7 +86,10 @@ export const Popover: React.FC<PopoverProps> = ({
     if (open) return;
     if (!mounted) return;
 
-    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
       setMounted(false);
       setEntered(false);
       return;
@@ -95,7 +101,10 @@ export const Popover: React.FC<PopoverProps> = ({
   useEffect(() => {
     if (open || !mounted) return;
     if (entered) return;
-    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
       return;
     }
     const id = window.setTimeout(() => setMounted(false), 220);

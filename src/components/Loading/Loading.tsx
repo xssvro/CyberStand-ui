@@ -19,7 +19,7 @@ export interface LoadingProps extends Omit<React.HTMLAttributes<HTMLDivElement>,
 
 export const Loading = React.forwardRef<HTMLDivElement, LoadingProps>(function Loading(
   { spinning = true, tip, fullscreen = false, children, className = '', ...rest },
-  ref
+  ref,
 ) {
   const overlay = spinning ? (
     <div
@@ -42,7 +42,7 @@ export const Loading = React.forwardRef<HTMLDivElement, LoadingProps>(function L
           styles.root,
           fullscreen && styles.fullscreenRoot,
           spinning && styles.solo,
-          className
+          className,
         )}
         {...rest}
       >

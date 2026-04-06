@@ -9,13 +9,15 @@ function join(...parts: Array<string | false | undefined>): string {
 
 function CloseGlyph() {
   return (
-    <svg className={styles.closeSvg} width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M6 6l12 12M18 6L6 18"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
+    <svg
+      className={styles.closeSvg}
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden
+    >
+      <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
 }
@@ -45,7 +47,7 @@ export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert
     className = '',
     ...rest
   },
-  ref
+  ref,
 ) {
   const [dismissed, setDismissed] = useState(false);
 
@@ -67,7 +69,9 @@ export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert
     >
       <div className={styles.body}>
         {title != null && title !== '' ? <div className={styles.title}>{title}</div> : null}
-        {children != null && children !== '' ? <div className={styles.message}>{children}</div> : null}
+        {children != null && children !== '' ? (
+          <div className={styles.message}>{children}</div>
+        ) : null}
       </div>
       {closable ? (
         <button type="button" className={styles.closeBtn} aria-label="关闭" onClick={handleClose}>

@@ -10,7 +10,7 @@ import { Button } from 'stand-ui/components/Button';
 
 <Tooltip title="保存到云端">
   <Button size="sm">保存</Button>
-</Tooltip>
+</Tooltip>;
 ```
 
 ## 行为说明
@@ -25,26 +25,26 @@ import { Button } from 'stand-ui/components/Button';
 
 ## Props
 
-| Prop | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `title` | `React.ReactNode` | （必填） | 提示内容；空字符串不渲染气泡 |
-| `children` | `React.ReactNode` | （必填） | 触发区域 |
-| `placement` | `top` / `bottom` / `left` / `right` | `top` | 相对触发器优先方位 |
-| `disabled` | `boolean` | `false` | 为 true 时不显示 |
-| `mouseEnterDelay` | `number` | `100` | 显示前延迟（ms） |
-| `mouseLeaveDelay` | `number` | `60` | 隐藏前延迟（ms） |
-| `className` | `string` | - | 触发器外层 |
-| `overlayClassName` | `string` | - | 气泡节点 |
-| `getPopupContainer` | `() => HTMLElement` | `document.body` | Portal 容器 |
-| `zIndex` | `number` | - | 覆盖整层 z-index |
+| Prop                | 类型                                | 默认值          | 说明                         |
+| ------------------- | ----------------------------------- | --------------- | ---------------------------- |
+| `title`             | `React.ReactNode`                   | （必填）        | 提示内容；空字符串不渲染气泡 |
+| `children`          | `React.ReactNode`                   | （必填）        | 触发区域                     |
+| `placement`         | `top` / `bottom` / `left` / `right` | `top`           | 相对触发器优先方位           |
+| `disabled`          | `boolean`                           | `false`         | 为 true 时不显示             |
+| `mouseEnterDelay`   | `number`                            | `100`           | 显示前延迟（ms）             |
+| `mouseLeaveDelay`   | `number`                            | `60`            | 隐藏前延迟（ms）             |
+| `className`         | `string`                            | -               | 触发器外层                   |
+| `overlayClassName`  | `string`                            | -               | 气泡节点                     |
+| `getPopupContainer` | `() => HTMLElement`                 | `document.body` | Portal 容器                  |
+| `zIndex`            | `number`                            | -               | 覆盖整层 z-index             |
 
 ## 与 Popover / Modal
 
-| 场景 | 建议 |
-|------|------|
-| 一词一句说明、图标按钮释义 | **Tooltip** |
-| 可交互浮层（菜单、表单） | **Popover**（若已有）或 **Dropdown** |
-| 阻断操作 | **Modal** |
+| 场景                       | 建议                                 |
+| -------------------------- | ------------------------------------ |
+| 一词一句说明、图标按钮释义 | **Tooltip**                          |
+| 可交互浮层（菜单、表单）   | **Popover**（若已有）或 **Dropdown** |
+| 阻断操作                   | **Modal**                            |
 
 ## 样式覆盖
 

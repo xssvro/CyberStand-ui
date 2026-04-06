@@ -29,21 +29,21 @@ import { FormField, Label } from 'stand-ui/components';
 
 ## `FormField` Props
 
-| 属性 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `label` | `ReactNode` | — | 标签；无标签时不渲染 `<label>` |
-| `id` | `string` | 自动生成 | 赋给子控件，并与标签 `htmlFor` 一致 |
-| `description` | `ReactNode` | — | 辅助说明，`id` 为 `{id}-description` |
-| `error` | `ReactNode` | — | 错误文案，**渲染在控件下方**。**若 `error !== undefined`**（含 `null`）则**优先于** **`rules`** 校验结果；未传 `error` 时展示 **`useForm` + `rules`** 产生的错误 |
-| `name` | `string` | — | 与 **`Form form={instance}`** 配套：字段名，须与子控件 **`name`**（或隐藏域）一致，参与 **`validateFields` / `setFields`** |
-| `rules` | **`FormRule[]`** | — | 声明式校验（Ant Design `rules` 子集）；需 **`name`** 且父级 **`Form`** 传入 **`form`**，详见 **`Form.ai.md`** |
-| `getValue` | `() => unknown` | — | 纯受控、**`FormData` 取不到**时在校验阶段提供当前值（如自定义 **`CheckboxGroup` 受控值**） |
-| `required` | `boolean` | `false` | 标签旁红色 `*`（装饰；请在控件上设真实 `required`） |
-| `layout` | `vertical` \| `horizontal` | 见下 | 默认 **`vertical`**；若在 **`Form`** 内且未传本属性，则继承 **`Form` 的 `layout`** |
-| `labelWidth` | `string` \| `number` | — | 仅 `horizontal`；数字视为 px，写入 `--su-form-label-width`（默认约 `7.5rem`） |
-| `disabled` | `boolean` | 见下 | 默认 **`false`**；**`Form disabled`** 时为 **`true`**；与子节点 `disabled` 合并，并弱化整项样式 |
-| `children` | `ReactNode` | **必填** | **仅一个** React 元素：`Input` / `Textarea` / `Select` / `Switch` / `CheckboxGroup` / `RadioGroup` 等 |
-| `className` / `style` | — | — | 根容器 |
+| 属性                  | 类型                       | 默认     | 说明                                                                                                                                                             |
+| --------------------- | -------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `label`               | `ReactNode`                | —        | 标签；无标签时不渲染 `<label>`                                                                                                                                   |
+| `id`                  | `string`                   | 自动生成 | 赋给子控件，并与标签 `htmlFor` 一致                                                                                                                              |
+| `description`         | `ReactNode`                | —        | 辅助说明，`id` 为 `{id}-description`                                                                                                                             |
+| `error`               | `ReactNode`                | —        | 错误文案，**渲染在控件下方**。**若 `error !== undefined`**（含 `null`）则**优先于** **`rules`** 校验结果；未传 `error` 时展示 **`useForm` + `rules`** 产生的错误 |
+| `name`                | `string`                   | —        | 与 **`Form form={instance}`** 配套：字段名，须与子控件 **`name`**（或隐藏域）一致，参与 **`validateFields` / `setFields`**                                       |
+| `rules`               | **`FormRule[]`**           | —        | 声明式校验（Ant Design `rules` 子集）；需 **`name`** 且父级 **`Form`** 传入 **`form`**，详见 **`Form.ai.md`**                                                    |
+| `getValue`            | `() => unknown`            | —        | 纯受控、**`FormData` 取不到**时在校验阶段提供当前值（如自定义 **`CheckboxGroup` 受控值**）                                                                       |
+| `required`            | `boolean`                  | `false`  | 标签旁红色 `*`（装饰；请在控件上设真实 `required`）                                                                                                              |
+| `layout`              | `vertical` \| `horizontal` | 见下     | 默认 **`vertical`**；若在 **`Form`** 内且未传本属性，则继承 **`Form` 的 `layout`**                                                                               |
+| `labelWidth`          | `string` \| `number`       | —        | 仅 `horizontal`；数字视为 px，写入 `--su-form-label-width`（默认约 `7.5rem`）                                                                                    |
+| `disabled`            | `boolean`                  | 见下     | 默认 **`false`**；**`Form disabled`** 时为 **`true`**；与子节点 `disabled` 合并，并弱化整项样式                                                                  |
+| `children`            | `ReactNode`                | **必填** | **仅一个** React 元素：`Input` / `Textarea` / `Select` / `Switch` / `CheckboxGroup` / `RadioGroup` 等                                                            |
+| `className` / `style` | —                          | —        | 根容器                                                                                                                                                           |
 
 ---
 
@@ -59,12 +59,12 @@ import { FormField, Label } from 'stand-ui/components';
 
 继承 **`HTMLAttributes<HTMLElement>`**，另：
 
-| 属性 | 类型 | 说明 |
-|------|------|------|
-| `tag` | `label` \| `span` | 默认 `label`；`span` 时不使用 `htmlFor`，用于选项组标题 |
-| `htmlFor` | `string` | 仅 `tag="label"` 时生效 |
-| `required` | `boolean` | 显示星号 |
-| `disabled` | `boolean` | 禁用态样式 |
+| 属性       | 类型              | 说明                                                    |
+| ---------- | ----------------- | ------------------------------------------------------- |
+| `tag`      | `label` \| `span` | 默认 `label`；`span` 时不使用 `htmlFor`，用于选项组标题 |
+| `htmlFor`  | `string`          | 仅 `tag="label"` 时生效                                 |
+| `required` | `boolean`         | 显示星号                                                |
+| `disabled` | `boolean`         | 禁用态样式                                              |
 
 ```tsx
 <Label htmlFor="email" required>
@@ -89,7 +89,7 @@ import { Form } from 'stand-ui/components/Form';
   <FormField label="名称" labelWidth={88}>
     <Input name="name" />
   </FormField>
-</Form>
+</Form>;
 ```
 
 ---
@@ -113,6 +113,6 @@ import { Form } from 'stand-ui/components/Form';
 
 ## 文件位置
 
-| 内容 | 路径 |
-|------|------|
+| 内容 | 路径                        |
+| ---- | --------------------------- |
 | 组件 | `src/components/FormField/` |

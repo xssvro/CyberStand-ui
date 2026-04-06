@@ -4,11 +4,11 @@
 
 ## 与 Toast / Empty
 
-| 组件 | 场景 |
-|------|------|
+| 组件       | 场景                                   |
+| ---------- | -------------------------------------- |
 | **Result** | 提交后整页结果、403/404 页、流程结束态 |
-| **Toast** | 无需占版的轻量反馈 |
-| **Empty** | 列表无数据、筛选为空 |
+| **Toast**  | 无需占版的轻量反馈                     |
+| **Empty**  | 列表无数据、筛选为空                   |
 
 ## 快速开始
 
@@ -20,22 +20,22 @@ import { Result } from 'stand-ui/components/Result';
   title="提交成功"
   subTitle="我们已收到你的申请，将在 1～3 个工作日内处理。"
   extra={<Button color="primary">返回首页</Button>}
-/>
+/>;
 ```
 
 ## Props
 
-| Prop | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `status` | `ResultStatus` | `'neutral'` | 内置图标与强调色 |
-| `icon` | `ReactNode` | 按 `status` | 完全自定义图标区 |
-| `iconSize` | `number` | `56` | 内置 SVG 视口尺寸 |
-| `title` | `ReactNode` | （必填） | 主标题（`h2`） |
-| `subTitle` | `ReactNode` | — | 副文案 |
-| `extra` | `ReactNode` | — | 主按钮区等 |
-| `children` | `ReactNode` | — | 底部次要说明（小号字） |
-| `className` | `string` | — | 根节点 |
-| `style` | `CSSProperties` | — | 根节点 |
+| Prop        | 类型            | 默认值      | 说明                   |
+| ----------- | --------------- | ----------- | ---------------------- |
+| `status`    | `ResultStatus`  | `'neutral'` | 内置图标与强调色       |
+| `icon`      | `ReactNode`     | 按 `status` | 完全自定义图标区       |
+| `iconSize`  | `number`        | `56`        | 内置 SVG 视口尺寸      |
+| `title`     | `ReactNode`     | （必填）    | 主标题（`h2`）         |
+| `subTitle`  | `ReactNode`     | —           | 副文案                 |
+| `extra`     | `ReactNode`     | —           | 主按钮区等             |
+| `children`  | `ReactNode`     | —           | 底部次要说明（小号字） |
+| `className` | `string`        | —           | 根节点                 |
+| `style`     | `CSSProperties` | —           | 根节点                 |
 
 `ResultStatus`：`'success' | 'error' | 'info' | 'warning' | '403' | '404' | 'neutral'`。
 

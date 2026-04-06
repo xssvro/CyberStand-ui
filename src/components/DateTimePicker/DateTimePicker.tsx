@@ -30,17 +30,11 @@ import rootStyles from '../TimePicker/TimePicker.module.css';
 
 type DateTimePickerHtmlPassthrough = Pick<
   React.HTMLAttributes<HTMLButtonElement>,
-  | 'id'
-  | 'aria-invalid'
-  | 'aria-describedby'
-  | 'aria-labelledby'
-  | 'aria-label'
-  | 'aria-required'
+  'id' | 'aria-invalid' | 'aria-describedby' | 'aria-labelledby' | 'aria-label' | 'aria-required'
 >;
 
 export interface DateTimePickerProps
-  extends Omit<StandProps, 'variant' | 'loading'>,
-    DateTimePickerHtmlPassthrough {
+  extends Omit<StandProps, 'variant' | 'loading'>, DateTimePickerHtmlPassthrough {
   /** `yyyy-mm-ddTHH:mm` 或带秒，与 `withSeconds` 一致 */
   value?: string;
   defaultValue?: string;
@@ -176,9 +170,7 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
     const { date: datePart } = useMemo(() => parseParts(value), [value]);
 
     const parsedDate = datePart ? parseISODate(datePart) : null;
-    const [visibleMonth, setVisibleMonth] = useState(() =>
-      startOfMonth(parsedDate ?? new Date()),
-    );
+    const [visibleMonth, setVisibleMonth] = useState(() => startOfMonth(parsedDate ?? new Date()));
 
     const [open, setOpen] = useState(false);
     const [draftTime, setDraftTime] = useState(() => (withSeconds ? '00:00:00' : '00:00'));
@@ -384,7 +376,10 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
                   onChange={setDraftTime}
                   withSeconds={withSeconds}
                   minuteStep={minuteStep}
-                  className={joinClasses(rootStyles.spinnerBoardFill, rootStyles.spinnerBoardInPanel)}
+                  className={joinClasses(
+                    rootStyles.spinnerBoardFill,
+                    rootStyles.spinnerBoardInPanel,
+                  )}
                 />
               </div>
             </div>

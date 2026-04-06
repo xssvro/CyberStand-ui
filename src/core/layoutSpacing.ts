@@ -1,13 +1,6 @@
 import type { CSSProperties } from 'react';
 
-export type LayoutSpacing =
-  | 'none'
-  | 'xs'
-  | 'sm'
-  | 'md'
-  | 'lg'
-  | 'xl'
-  | '2xl';
+export type LayoutSpacing = 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 
 /** 与 `vars.css` 中 `--su-space-*` 对齐，供布局组件与文档引用 */
 export const LAYOUT_SPACING_PX: Record<LayoutSpacing, string> = {
@@ -32,7 +25,7 @@ const SPACING_CSS: Record<LayoutSpacing, string> = {
 
 export function resolveSpacing(
   value: LayoutSpacing | number | string | undefined,
-  fallback: LayoutSpacing
+  fallback: LayoutSpacing,
 ): string {
   if (value === undefined) return SPACING_CSS[fallback];
   if (typeof value === 'number' && Number.isFinite(value)) return `${value}px`;
@@ -46,7 +39,7 @@ export function resolveSpacing(
 export function buildGapStyle(
   gap?: LayoutSpacing | number | string,
   rowGap?: LayoutSpacing | number | string,
-  columnGap?: LayoutSpacing | number | string
+  columnGap?: LayoutSpacing | number | string,
 ): Pick<CSSProperties, 'gap' | 'rowGap' | 'columnGap'> {
   const out: Pick<CSSProperties, 'gap' | 'rowGap' | 'columnGap'> = {};
   if (rowGap !== undefined || columnGap !== undefined) {

@@ -12,7 +12,7 @@ export interface StackProps extends Omit<FlexProps, 'direction' | 'align' | 'gap
 
 export const Stack = React.forwardRef<HTMLDivElement, StackProps>(function Stack(
   { direction = 'column', align = 'stretch', gap = 'md', fullWidth, style, ...rest },
-  ref
+  ref,
 ) {
   return (
     <Flex

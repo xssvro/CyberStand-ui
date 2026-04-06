@@ -223,7 +223,9 @@ body {
   color: var(--su-text-muted);
   text-decoration: none;
   font-size: 14px;
-  transition: color 0.2s, background 0.2s;
+  transition:
+    color 0.2s,
+    background 0.2s;
 }
 
 .docs-nav-icon {

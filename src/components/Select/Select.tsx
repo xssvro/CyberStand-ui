@@ -16,7 +16,7 @@ import { Input } from '../Input/Input';
 import styles from './Select.module.css';
 
 const CHEVRON_SVG = encodeURIComponent(
-  '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>'
+  '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>',
 );
 const CHEVRON_BG = `url("data:image/svg+xml,${CHEVRON_SVG}")`;
 
@@ -122,13 +122,15 @@ function isSelectOptionElement(el: React.ReactElement): boolean {
   return false;
 }
 
-function isNativeOptionElement(el: React.ReactElement): el is React.ReactElement<React.OptionHTMLAttributes<HTMLOptionElement>> {
+function isNativeOptionElement(
+  el: React.ReactElement,
+): el is React.ReactElement<React.OptionHTMLAttributes<HTMLOptionElement>> {
   return typeof el.type === 'string' && el.type === 'option';
 }
 
 function normalizeOptions(
   options: SelectProps['options'],
-  children: React.ReactNode
+  children: React.ReactNode,
 ): SelectOptionData[] {
   if (options != null && options.length > 0) {
     return options.map((o) => ({
@@ -175,7 +177,7 @@ function defaultFilterOption(queryLower: string, option: SelectOptionData): bool
 
 function createSyntheticChangeEvent(
   value: string,
-  name: string | undefined
+  name: string | undefined,
 ): React.ChangeEvent<HTMLSelectElement> {
   const t = { value, name: name ?? '' } as HTMLSelectElement;
   return {
@@ -226,7 +228,7 @@ function applyDropdownPosition(
   listEl: HTMLElement,
   triggerEl: HTMLElement,
   placement: SelectPlacement,
-  listMaxHeight: number | string | undefined
+  listMaxHeight: number | string | undefined,
 ): void {
   const rect = triggerEl.getBoundingClientRect();
   const prefMax = parseMaxHeightPx(listMaxHeight, 320);
@@ -242,7 +244,9 @@ function applyDropdownPosition(
 
   const maxH = Math.min(prefMax, openUp ? above - gap : below - gap);
   const width = Math.max(rect.width, 120);
-  const zRaw = getComputedStyle(document.documentElement).getPropertyValue('--su-z-dropdown').trim();
+  const zRaw = getComputedStyle(document.documentElement)
+    .getPropertyValue('--su-z-dropdown')
+    .trim();
   const zIndex = zRaw || '1000';
 
   listEl.style.setProperty('position', 'fixed');
@@ -306,7 +310,7 @@ const SelectInner = forwardRef<HTMLButtonElement, SelectProps>(function SelectIn
     style,
     ...ariaProps
   },
-  ref
+  ref,
 ) {
   const listId = useId().replace(/:/g, '');
   const optionsListId = `${listId}-options`;
@@ -332,7 +336,7 @@ const SelectInner = forwardRef<HTMLButtonElement, SelectProps>(function SelectIn
       if (!isControlled) setUncontrolledValue(next);
       onChange?.(next, createSyntheticChangeEvent(next, name));
     },
-    [isControlled, onChange, name]
+    [isControlled, onChange, name],
   );
 
   const [open, setOpen] = useState(false);
@@ -351,7 +355,7 @@ const SelectInner = forwardRef<HTMLButtonElement, SelectProps>(function SelectIn
       if (typeof ref === 'function') ref(node);
       else if (ref) (ref as React.MutableRefObject<HTMLButtonElement | null>).current = node;
     },
-    [ref]
+    [ref],
   );
 
   const openAt = useCallback(() => {
@@ -359,9 +363,7 @@ const SelectInner = forwardRef<HTMLButtonElement, SelectProps>(function SelectIn
     const list = displayOpts;
     const selInList = list.findIndex((o) => o.value === value);
     const start =
-      selInList >= 0 && !list[selInList]?.disabled
-        ? selInList
-        : firstEnabledIndex(list);
+      selInList >= 0 && !list[selInList]?.disabled ? selInList : firstEnabledIndex(list);
     setActiveIndex(start);
     setOpen(true);
   }, [disabled, opts.length, displayOpts, value]);
@@ -379,7 +381,7 @@ const SelectInner = forwardRef<HTMLButtonElement, SelectProps>(function SelectIn
       setValue(o.value);
       close();
     },
-    [displayOpts, setValue, close]
+    [displayOpts, setValue, close],
   );
 
   useLayoutEffect(() => {
@@ -433,19 +435,15 @@ const SelectInner = forwardRef<HTMLButtonElement, SelectProps>(function SelectIn
       setSearchQuery(v);
       const raw = v.trim().toLowerCase();
       const list =
-        raw === ''
-          ? opts
-          : opts.filter((o) => (filterOption ?? defaultFilterOption)(raw, o));
+        raw === '' ? opts : opts.filter((o) => (filterOption ?? defaultFilterOption)(raw, o));
       if (raw === '') {
         const idx = opts.findIndex((o) => o.value === value);
-        setActiveIndex(
-          idx >= 0 && !opts[idx]?.disabled ? idx : firstEnabledIndex(opts)
-        );
+        setActiveIndex(idx >= 0 && !opts[idx]?.disabled ? idx : firstEnabledIndex(opts));
       } else {
         setActiveIndex(firstEnabledIndex(list));
       }
     },
-    [opts, value, filterOption]
+    [opts, value, filterOption],
   );
 
   useLayoutEffect(() => {
@@ -548,7 +546,7 @@ const SelectInner = forwardRef<HTMLButtonElement, SelectProps>(function SelectIn
     styles[color],
     disabled && styles.disabled,
     open && styles.open,
-    className
+    className,
   );
 
   const triggerContent = renderValue ? (
@@ -599,7 +597,7 @@ const SelectInner = forwardRef<HTMLButtonElement, SelectProps>(function SelectIn
               selected && styles.optionSelected,
               active && !opt.disabled && styles.optionActive,
               opt.disabled && styles.optionDisabled,
-              itemClassName
+              itemClassName,
             )}
             onMouseEnter={() => {
               if (!opt.disabled) setActiveIndex(index);
@@ -694,9 +692,7 @@ const SelectInner = forwardRef<HTMLButtonElement, SelectProps>(function SelectIn
         aria-expanded={open}
         aria-controls={open ? (searchable ? optionsListId : listId) : undefined}
         aria-activedescendant={
-          open && displayOpts.length > 0 && !searchable
-            ? `${listId}-opt-${activeIndex}`
-            : undefined
+          open && displayOpts.length > 0 && !searchable ? `${listId}-opt-${activeIndex}` : undefined
         }
         aria-required={required || undefined}
         onMouseDown={(e) => {

@@ -23,18 +23,18 @@ import { Switch } from 'stand-ui/components';
 
 ## Props
 
-| 属性 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `checked` / `defaultChecked` | `boolean` | 非受控默认 `false` | 受控 / 非受控 |
-| `onCheckedChange` | `(checked, e) => void` | — | |
-| `disabled` | `boolean` | `false` | 禁用 |
-| `readOnly` | `boolean` | `false` | 不可切换，仍可聚焦；`aria-readonly` |
-| `size` | `sm` \| `md` | `md` | |
-| `color` | `default` \| `error` | `default` | FormField 有 `error` 时注入 `error` |
-| `label` | `ReactNode` | — | 轨右侧文案 |
-| `name` | `string` | — | 存在时渲染隐藏 `input[name]`，`checked` 时值为 `value` |
-| `value` | `string` | `on` | 开态时隐藏域取值 |
-| `id` | `string` | 内部生成 | 与 FormField `Label` 的 `htmlFor` 对齐 |
+| 属性                         | 类型                   | 默认               | 说明                                                   |
+| ---------------------------- | ---------------------- | ------------------ | ------------------------------------------------------ |
+| `checked` / `defaultChecked` | `boolean`              | 非受控默认 `false` | 受控 / 非受控                                          |
+| `onCheckedChange`            | `(checked, e) => void` | —                  |                                                        |
+| `disabled`                   | `boolean`              | `false`            | 禁用                                                   |
+| `readOnly`                   | `boolean`              | `false`            | 不可切换，仍可聚焦；`aria-readonly`                    |
+| `size`                       | `sm` \| `md`           | `md`               |                                                        |
+| `color`                      | `default` \| `error`   | `default`          | FormField 有 `error` 时注入 `error`                    |
+| `label`                      | `ReactNode`            | —                  | 轨右侧文案                                             |
+| `name`                       | `string`               | —                  | 存在时渲染隐藏 `input[name]`，`checked` 时值为 `value` |
+| `value`                      | `string`               | `on`               | 开态时隐藏域取值                                       |
+| `id`                         | `string`               | 内部生成           | 与 FormField `Label` 的 `htmlFor` 对齐                 |
 
 其余 **`button`** 可透传属性（如 `aria-*`、`className` 等）；根节点为 **`div`**，自定义宽度可写在根 `className`。
 

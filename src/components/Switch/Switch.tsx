@@ -3,16 +3,15 @@ import styles from './Switch.module.css';
 
 export type SwitchSize = 'sm' | 'md';
 
-export interface SwitchProps
-  extends Omit<
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
-    'type' | 'role' | 'aria-checked' | 'children' | 'onChange' | 'defaultChecked'
-  > {
+export interface SwitchProps extends Omit<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  'type' | 'role' | 'aria-checked' | 'children' | 'onChange' | 'defaultChecked'
+> {
   checked?: boolean;
   defaultChecked?: boolean;
   onCheckedChange?: (
     checked: boolean,
-    e: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLButtonElement>
+    e: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLButtonElement>,
   ) => void;
   /** 为 true 时不可切换，仍可获得焦点（与 disabled 视觉可区分：不整体降透明） */
   readOnly?: boolean;
@@ -48,7 +47,7 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(function Switch
     onKeyDown,
     ...rest
   },
-  ref
+  ref,
 ) {
   const uid = useId();
   const autoId = `su-sw-${uid.replace(/:/g, '')}`;
@@ -65,7 +64,7 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(function Switch
       if (!isControlled) setInternal(next);
       onCheckedChange?.(next, e);
     },
-    [checked, disabled, readOnly, isControlled, onCheckedChange]
+    [checked, disabled, readOnly, isControlled, onCheckedChange],
   );
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {

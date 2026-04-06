@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      HUSKY: 0
     steps:
       - uses: actions/checkout@v4
 
@@ -23,5 +25,14 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Build
+      - name: Format
+        run: npm run format:check
+
+      - name: Test
+        run: npm run test:run
+
+      - name: Build site
         run: npm run build
+
+      - name: Build library
+        run: npm run build:lib

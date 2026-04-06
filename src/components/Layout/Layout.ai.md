@@ -28,15 +28,15 @@ import { Flex, Grid, Stack, Space } from 'stand-ui/components';
 
 ## 间距刻度 `LayoutSpacing`
 
-| 关键字 | 约等于 | CSS 变量 |
-|--------|--------|----------|
-| `none` | 0 | — |
-| `xs` | 4px | `--su-space-1` |
-| `sm` | 8px | `--su-space-2` |
-| `md` | 12px | `--su-space-3` |
-| `lg` | 16px | `--su-space-4` |
-| `xl` | 24px | `--su-space-6` |
-| `2xl` | 32px | `--su-space-8` |
+| 关键字 | 约等于 | CSS 变量       |
+| ------ | ------ | -------------- |
+| `none` | 0      | —              |
+| `xs`   | 4px    | `--su-space-1` |
+| `sm`   | 8px    | `--su-space-2` |
+| `md`   | 12px   | `--su-space-3` |
+| `lg`   | 16px   | `--su-space-4` |
+| `xl`   | 24px   | `--su-space-6` |
+| `2xl`  | 32px   | `--su-space-8` |
 
 `gap` / `size` / `rowGap` / `columnGap` 除关键字外还支持：
 
@@ -63,16 +63,16 @@ import { LAYOUT_SPACING_PX } from 'stand-ui/core';
 
 ### Props
 
-| 属性 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `inline` | `boolean` | `false` | 行内 flex |
-| `direction` | `row` \| `row-reverse` \| `column` \| `column-reverse` | `row` | `flex-direction` |
-| `wrap` | `boolean` \| `nowrap` \| `wrap` \| `wrap-reverse` | `false` | `flex-wrap` |
-| `align` | `start` \| `end` \| `center` \| `stretch` \| `baseline` | `stretch` | `align-items` |
-| `justify` | `start` \| `end` \| `center` \| `between` \| `around` \| `evenly` | `start` | `justify-content` |
-| `alignContent` | CSS 值 | — | 多行时主轴堆叠（`wrap` 换行时常用） |
-| `gap` | `LayoutSpacing` \| `number` \| `string` | — | 统一槽距 |
-| `rowGap` / `columnGap` | 同上 | — | 与 `gap` 组合时拆分行列距 |
+| 属性                   | 类型                                                              | 默认      | 说明                                |
+| ---------------------- | ----------------------------------------------------------------- | --------- | ----------------------------------- |
+| `inline`               | `boolean`                                                         | `false`   | 行内 flex                           |
+| `direction`            | `row` \| `row-reverse` \| `column` \| `column-reverse`            | `row`     | `flex-direction`                    |
+| `wrap`                 | `boolean` \| `nowrap` \| `wrap` \| `wrap-reverse`                 | `false`   | `flex-wrap`                         |
+| `align`                | `start` \| `end` \| `center` \| `stretch` \| `baseline`           | `stretch` | `align-items`                       |
+| `justify`              | `start` \| `end` \| `center` \| `between` \| `around` \| `evenly` | `start`   | `justify-content`                   |
+| `alignContent`         | CSS 值                                                            | —         | 多行时主轴堆叠（`wrap` 换行时常用） |
+| `gap`                  | `LayoutSpacing` \| `number` \| `string`                           | —         | 统一槽距                            |
+| `rowGap` / `columnGap` | 同上                                                              | —         | 与 `gap` 组合时拆分行列距           |
 
 其余 **`div` 属性**（`className`、`style`、`onClick`、`data-*`、`aria-*` 等）**透传**。
 
@@ -106,8 +106,8 @@ import { LAYOUT_SPACING_PX } from 'stand-ui/core';
 
 ### 额外 Props
 
-| 属性 | 类型 | 默认 | 说明 |
-|------|------|------|------|
+| 属性        | 类型      | 默认    | 说明                                              |
+| ----------- | --------- | ------- | ------------------------------------------------- |
 | `fullWidth` | `boolean` | `false` | `width: 100%` + `minWidth: 0`，避免 flex 子项溢出 |
 
 ### 示例
@@ -137,16 +137,16 @@ import { LAYOUT_SPACING_PX } from 'stand-ui/core';
 
 ### Props
 
-| 属性 | 类型 | 说明 |
-|------|------|------|
-| `columns` | `number` \| `string` | 列数或模板 |
-| `rows` | `number` \| `string` | 行数或模板 |
-| `minChildWidth` | `number` \| `string` | 与 `columns` **互斥**；生成响应列 `minmax(..., 1fr)` |
-| `autoRepeat` | `fill` \| `fit` | 与 `minChildWidth` 搭配：`fill`→`auto-fill`（默认），`fit`→`auto-fit` 列拉满 |
-| `autoRows` | CSS `grid-auto-rows` | 如 `minmax(0, auto)`、`minmax(120px, auto)` |
-| `gap` / `rowGap` / `columnGap` | 同 Flex | — |
-| `alignItems` / `justifyItems` / `alignContent` / `justifyContent` | CSS | — |
-| `autoFlow` | CSS `grid-auto-flow` | — |
+| 属性                                                              | 类型                 | 说明                                                                         |
+| ----------------------------------------------------------------- | -------------------- | ---------------------------------------------------------------------------- |
+| `columns`                                                         | `number` \| `string` | 列数或模板                                                                   |
+| `rows`                                                            | `number` \| `string` | 行数或模板                                                                   |
+| `minChildWidth`                                                   | `number` \| `string` | 与 `columns` **互斥**；生成响应列 `minmax(..., 1fr)`                         |
+| `autoRepeat`                                                      | `fill` \| `fit`      | 与 `minChildWidth` 搭配：`fill`→`auto-fill`（默认），`fit`→`auto-fit` 列拉满 |
+| `autoRows`                                                        | CSS `grid-auto-rows` | 如 `minmax(0, auto)`、`minmax(120px, auto)`                                  |
+| `gap` / `rowGap` / `columnGap`                                    | 同 Flex              | —                                                                            |
+| `alignItems` / `justifyItems` / `alignContent` / `justifyContent` | CSS                  | —                                                                            |
+| `autoFlow`                                                        | CSS `grid-auto-flow` | —                                                                            |
 
 ### 示例
 
@@ -182,14 +182,14 @@ import { LAYOUT_SPACING_PX } from 'stand-ui/core';
 
 ### 额外 Props
 
-| 属性 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `direction` | `horizontal` \| `vertical` | `horizontal` | — |
-| `size` | 同 `gap` | `sm` | 槽距 |
-| `wrap` | `boolean` | `false` | 换行 |
-| `align` | 同 Flex | 见上 | 可覆盖默认对齐 |
-| `block` | `boolean` | `false` | 横向时 **`width: 100%`**，工具条铺满容器 |
-| `split` | `ReactNode` | — | 插在相邻**子节点**之间 |
+| 属性        | 类型                       | 默认         | 说明                                     |
+| ----------- | -------------------------- | ------------ | ---------------------------------------- |
+| `direction` | `horizontal` \| `vertical` | `horizontal` | —                                        |
+| `size`      | 同 `gap`                   | `sm`         | 槽距                                     |
+| `wrap`      | `boolean`                  | `false`      | 换行                                     |
+| `align`     | 同 Flex                    | 见上         | 可覆盖默认对齐                           |
+| `block`     | `boolean`                  | `false`      | 横向时 **`width: 100%`**，工具条铺满容器 |
+| `split`     | `ReactNode`                | —            | 插在相邻**子节点**之间                   |
 
 ### 示例
 
@@ -256,8 +256,8 @@ import { LAYOUT_SPACING_PX } from 'stand-ui/core';
 
 ## 文件位置
 
-| 内容 | 路径 |
-|------|------|
-| 组件 | `src/components/Layout/` |
-| 间距解析 | `src/core/layoutSpacing.ts` |
+| 内容     | 路径                                  |
+| -------- | ------------------------------------- |
+| 组件     | `src/components/Layout/`              |
+| 间距解析 | `src/core/layoutSpacing.ts`           |
 | 间距变量 | `src/core/vars.css`（`--su-space-*`） |

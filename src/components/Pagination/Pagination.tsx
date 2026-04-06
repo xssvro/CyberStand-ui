@@ -11,7 +11,10 @@ export type PaginationSize = 'sm' | 'md' | 'lg';
 
 export type PaginationAlign = 'start' | 'center' | 'end';
 
-export interface PaginationProps extends Omit<React.HTMLAttributes<HTMLElement>, 'onChange' | 'defaultValue'> {
+export interface PaginationProps extends Omit<
+  React.HTMLAttributes<HTMLElement>,
+  'onChange' | 'defaultValue'
+> {
   /** 禁用交互 */
   disabled?: boolean;
   /** 数据总条数 */

@@ -27,7 +27,7 @@ export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(function 
     'aria-hidden': ariaHidden,
     ...rest
   },
-  ref
+  ref,
 ) {
   const colorClass = color === 'current' ? styles.current : styles[color];
   const hidden = ariaHidden === true;

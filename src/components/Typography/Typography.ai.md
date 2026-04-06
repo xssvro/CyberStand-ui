@@ -23,21 +23,21 @@ import { Typography, TypographyLink } from 'stand-ui/components/Typography';
 
 未传 `as` 时的默认元素（SEO / 无障碍友好）：
 
-| variant | 默认标签 |
-|---------|----------|
-| `display` | `h1` |
-| `h1` … `h6` | `h1` … `h6` |
-| `subtitle` | `p` |
-| `lead` | `p` |
-| `bodyLarge` | `p` |
-| `body` | `p` |
-| `bodySmall` | `p` |
-| `caption` | `span` |
-| `label` | `label` |
-| `overline` | `span` |
-| `code` | `code` |
-| `blockquote` | `blockquote` |
-| `link` | `span`（仅下划线样式，**无** `href`） |
+| variant      | 默认标签                              |
+| ------------ | ------------------------------------- |
+| `display`    | `h1`                                  |
+| `h1` … `h6`  | `h1` … `h6`                           |
+| `subtitle`   | `p`                                   |
+| `lead`       | `p`                                   |
+| `bodyLarge`  | `p`                                   |
+| `body`       | `p`                                   |
+| `bodySmall`  | `p`                                   |
+| `caption`    | `span`                                |
+| `label`      | `label`                               |
+| `overline`   | `span`                                |
+| `code`       | `code`                                |
+| `blockquote` | `blockquote`                          |
+| `link`       | `span`（仅下划线样式，**无** `href`） |
 
 ### 一次列出所有 variant（速查）
 
@@ -66,15 +66,15 @@ import { Typography, TypographyLink } from 'stand-ui/components/Typography';
 
 ## 全部 `color`
 
-| 取值 | 用途提示 |
-|------|----------|
-| `default` | 主正文 |
-| `muted` | 次要说明 |
-| `subtle` | 更弱一层 |
-| `emphasis` | 强调 |
-| `inverse` | **深底**上的反色字（父级需深色背景） |
-| `primary` / `secondary` | 品牌主/次 |
-| `info` / `success` / `warning` / `error` | 状态语义 |
+| 取值                                     | 用途提示                             |
+| ---------------------------------------- | ------------------------------------ |
+| `default`                                | 主正文                               |
+| `muted`                                  | 次要说明                             |
+| `subtle`                                 | 更弱一层                             |
+| `emphasis`                               | 强调                                 |
+| `inverse`                                | **深底**上的反色字（父级需深色背景） |
+| `primary` / `secondary`                  | 品牌主/次                            |
+| `info` / `success` / `warning` / `error` | 状态语义                             |
 
 ### 色板一行展示（body 上）
 
@@ -133,10 +133,10 @@ import { Typography, TypographyLink } from 'stand-ui/components/Typography';
 
 ## `truncate` 与 `lineClamp`
 
-| Prop | 行为 |
-|------|------|
-| `truncate` | 单行省略，`white-space: nowrap` |
-| `lineClamp={n}` | 最多 n 行，多行省略 |
+| Prop            | 行为                            |
+| --------------- | ------------------------------- |
+| `truncate`      | 单行省略，`white-space: nowrap` |
+| `lineClamp={n}` | 最多 n 行，多行省略             |
 
 ```tsx
 <div style={{ maxWidth: 240 }}>
@@ -160,7 +160,9 @@ import { Typography, TypographyLink } from 'stand-ui/components/Typography';
 ```tsx
 <ul>
   <li>
-    <Typography variant="bodySmall" noMargin>列表项内紧凑一行</Typography>
+    <Typography variant="bodySmall" noMargin>
+      列表项内紧凑一行
+    </Typography>
   </li>
 </ul>
 ```
@@ -169,11 +171,11 @@ import { Typography, TypographyLink } from 'stand-ui/components/Typography';
 
 ## `copyable`
 
-| 写法 | 行为 |
-|------|------|
-| `copyable` | 等价 `copyable={true}`，复制内容从子节点**递归抽纯文本** |
-| `copyable={{ text: '...' }}` | 复制固定串，展示文案可与复制内容不同 |
-| `copyable={{ text: '...', tooltip: '...' }}` | `tooltip` 用作复制按钮 `aria-label` |
+| 写法                                         | 行为                                                     |
+| -------------------------------------------- | -------------------------------------------------------- |
+| `copyable`                                   | 等价 `copyable={true}`，复制内容从子节点**递归抽纯文本** |
+| `copyable={{ text: '...' }}`                 | 复制固定串，展示文案可与复制内容不同                     |
+| `copyable={{ text: '...', tooltip: '...' }}` | `tooltip` 用作复制按钮 `aria-label`                      |
 
 ```tsx
 <Typography variant="body" copyable>整段纯文本复制</Typography>
@@ -191,10 +193,10 @@ import { Typography, TypographyLink } from 'stand-ui/components/Typography';
 
 ## 链接：`TypographyLink` / `Typography.Link`
 
-| 需求 | 用法 |
-|------|------|
-| 真实跳转、键盘可达 | `TypographyLink` 或 `Typography.Link`（渲染 `<a>`） |
-| 仅下划线风格、无导航 | `variant="link"` + `as="span"` 等 |
+| 需求                 | 用法                                                |
+| -------------------- | --------------------------------------------------- |
+| 真实跳转、键盘可达   | `TypographyLink` 或 `Typography.Link`（渲染 `<a>`） |
+| 仅下划线风格、无导航 | `variant="link"` + `as="span"` 等                   |
 
 ```tsx
 <TypographyLink href="/app" color="info">站内</TypographyLink>
@@ -211,20 +213,30 @@ import { Typography, TypographyLink } from 'stand-ui/components/Typography';
 ## 多态 `as`（样式与语义分离）
 
 ```tsx
-{/* 视觉上像大标题，语义用 div，避免页面多个 h1 */}
+{
+  /* 视觉上像大标题，语义用 div，避免页面多个 h1 */
+}
 <Typography variant="h2" as="div" role="heading" aria-level={2}>
   弹窗/抽屉标题区
-</Typography>
-{/* 段落内辅助说明，避免 p 套 p */}
+</Typography>;
+{
+  /* 段落内辅助说明，避免 p 套 p */
+}
 <Typography variant="caption" as="span" color="muted">
   （选填）
-</Typography>
-{/* 行内代码保持语义 code */}
-<Typography variant="code" as="code" noMargin>API_KEY</Typography>
-{/* 标签语义 */}
+</Typography>;
+{
+  /* 行内代码保持语义 code */
+}
+<Typography variant="code" as="code" noMargin>
+  API_KEY
+</Typography>;
+{
+  /* 标签语义 */
+}
 <Typography variant="label" as="label" htmlFor="user-email">
   邮箱
-</Typography>
+</Typography>;
 ```
 
 ---
@@ -237,7 +249,7 @@ import { Typography, TypographyLink } from 'stand-ui/components/Typography';
 const ref = useRef<HTMLElement>(null);
 <Typography ref={ref} variant="h2" as="div">
   可测量或可滚动锚点
-</Typography>
+</Typography>;
 ```
 
 ---
@@ -275,15 +287,13 @@ const ref = useRef<HTMLElement>(null);
 ```tsx
 <article>
   <Typography variant="overline">教程</Typography>
-  <Typography variant="h1" as="h1">如何接入</Typography>
+  <Typography variant="h1" as="h1">
+    如何接入
+  </Typography>
   <Typography variant="subtitle">5 分钟上手</Typography>
   <Typography variant="lead">本文介绍安装与最小示例。</Typography>
-  <Typography variant="body">
-    第一段正文……
-  </Typography>
-  <Typography variant="blockquote">
-    「引用文档原句」
-  </Typography>
+  <Typography variant="body">第一段正文……</Typography>
+  <Typography variant="blockquote">「引用文档原句」</Typography>
   <Typography variant="bodySmall" color="muted">
     更新于 2026-03-30
   </Typography>
@@ -294,7 +304,9 @@ const ref = useRef<HTMLElement>(null);
 
 ```tsx
 <dl>
-  <Typography variant="label" as="dt" noMargin>状态</Typography>
+  <Typography variant="label" as="dt" noMargin>
+    状态
+  </Typography>
   <Typography variant="body" as="dd" noMargin color="success">
     运行中
   </Typography>
@@ -306,9 +318,13 @@ const ref = useRef<HTMLElement>(null);
 ```tsx
 <nav aria-label="面包屑">
   <Typography variant="caption" as="span" noMargin>
-    <TypographyLink href="/" color="muted">首页</TypographyLink>
+    <TypographyLink href="/" color="muted">
+      首页
+    </TypographyLink>
     {' / '}
-    <TypographyLink href="/docs" color="muted">文档</TypographyLink>
+    <TypographyLink href="/docs" color="muted">
+      文档
+    </TypographyLink>
     {' / '}
     <Typography variant="caption" as="span" color="default">
       Typography
@@ -345,7 +361,9 @@ const ref = useRef<HTMLElement>(null);
   <Typography variant="bodySmall" noMargin>
     将删除不可恢复
   </Typography>
-  <Button size="sm" color="error">删除</Button>
+  <Button size="sm" color="error">
+    删除
+  </Button>
 </div>
 ```
 
@@ -384,24 +402,24 @@ const ref = useRef<HTMLElement>(null);
 
 ## 注意事项（易踩坑）
 
-1. **`variant="link"`** 不是 `<a>`，无 `href`，爬虫/读屏不会当链接处理。  
-2. **`copyable`** 依赖 `navigator.clipboard`，非安全上下文可能失败；无复制内容时按钮会 `disabled`。  
-3. **`lineClamp` + `truncate`**：一般二选一；同时设时以 CSS 层叠为准，建议只用一个。  
-4. **`inverse`**：浅底上不要用，对比度不足。  
-5. **标题层级**：页面主标题建议唯一 `h1`；侧栏/模态里大字号用 `as="div"` + `role="heading"` 更稳。  
+1. **`variant="link"`** 不是 `<a>`，无 `href`，爬虫/读屏不会当链接处理。
+2. **`copyable`** 依赖 `navigator.clipboard`，非安全上下文可能失败；无复制内容时按钮会 `disabled`。
+3. **`lineClamp` + `truncate`**：一般二选一；同时设时以 CSS 层叠为准，建议只用一个。
+4. **`inverse`**：浅底上不要用，对比度不足。
+5. **标题层级**：页面主标题建议唯一 `h1`；侧栏/模态里大字号用 `as="div"` + `role="heading"` 更稳。
 6. **设计 token**：字号行高来自 `vars.css` 的 `--su-type-*`，换主题优先改 CSS 变量。
 
 ---
 
 ## 与常见库的对应关系（心智模型）
 
-| 本组件 | MUI | Ant Design |
-|--------|-----|------------|
-| `display` / `h1`～`h6` | `Typography` variant | `Typography.Title` level |
-| `body` / `lead` | `body1` / `body2` 等 | `Typography.Paragraph` |
+| 本组件                 | MUI                    | Ant Design                                      |
+| ---------------------- | ---------------------- | ----------------------------------------------- |
+| `display` / `h1`～`h6` | `Typography` variant   | `Typography.Title` level                        |
+| `body` / `lead`        | `body1` / `body2` 等   | `Typography.Paragraph`                          |
 | `caption` / `overline` | `caption` / `overline` | `Typography.Text type=secondary/success` 等组合 |
-| `copyable` | - | `Paragraph` 的 `copyable` |
-| `Typography.Link` | `Link` 组件 | `Typography.Link` |
+| `copyable`             | -                      | `Paragraph` 的 `copyable`                       |
+| `Typography.Link`      | `Link` 组件            | `Typography.Link`                               |
 
 ---
 

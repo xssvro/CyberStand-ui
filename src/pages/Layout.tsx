@@ -40,10 +40,7 @@ export const Layout: React.FC = () => {
           <span className="docs-theme-bar__value">{theme === 'light' ? '浅色' : '深色'}</span>
         </div>
         <nav className="docs-nav">
-          <Link 
-            to="/" 
-            className={currentPath === '/' ? 'active' : ''}
-          >
+          <Link to="/" className={currentPath === '/' ? 'active' : ''}>
             <IconHome className="docs-nav-icon" size={18} aria-hidden />
             首页
           </Link>

@@ -36,7 +36,7 @@ export interface ButtonProps extends StandProps {
 
 /**
  * Button 按钮组件
- * 
+ *
  * 用于触发操作或事件的基础组件
  */
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -58,11 +58,11 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       type = 'button',
       ...props
     },
-    ref
+    ref,
   ) => {
     const sizeVars = getSizeVars(size);
     const radiusVar = resolveButtonRadius(size, radius);
-    
+
     const classes = [
       styles.button,
       styles[variant],
@@ -82,11 +82,13 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled || loading}
         aria-busy={loading || undefined}
         onClick={onClick}
-        style={{
-          ...sizeVars,
-          '--su-radius': radiusVar,
-          ...style,
-        } as React.CSSProperties}
+        style={
+          {
+            ...sizeVars,
+            '--su-radius': radiusVar,
+            ...style,
+          } as React.CSSProperties
+        }
         {...props}
       >
         {loading && (
@@ -99,7 +101,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {!loading && rightIcon && <span className={styles.rightIcon}>{rightIcon}</span>}
       </button>
     );
-  }
+  },
 );
 
 Button.displayName = 'Button';

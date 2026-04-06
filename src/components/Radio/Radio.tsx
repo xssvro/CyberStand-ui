@@ -4,8 +4,10 @@ import styles from './Radio.module.css';
 
 export type RadioSize = 'sm' | 'md';
 
-export interface RadioProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'type' | 'onChange'> {
+export interface RadioProps extends Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  'size' | 'type' | 'onChange'
+> {
   value: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   label?: React.ReactNode;
@@ -34,7 +36,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
       required,
       ...rest
     },
-    ref
+    ref,
   ) => {
     const ctx = useContext(RadioGroupContext);
     const uid = useId();
@@ -64,7 +66,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
           styles.root,
           size === 'sm' && styles.sizeSm,
           disabled && styles.disabled,
-          className
+          className,
         )}
       >
         <input
@@ -83,7 +85,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
         {label != null && <span className={styles.text}>{label}</span>}
       </label>
     );
-  }
+  },
 );
 
 Radio.displayName = 'Radio';

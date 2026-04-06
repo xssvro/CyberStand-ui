@@ -112,28 +112,28 @@ import SkeletonAiMd from '../components/Skeleton/Skeleton.ai.md?raw';
 const ASPECT_RATIO_DEMO_IMG_SRC =
   'data:image/svg+xml,' +
   encodeURIComponent(
-    '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400"><rect fill="#0ea5e9" width="800" height="400"/><rect fill="#ebdb00" x="120" y="60" width="560" height="280" rx="12"/></svg>'
+    '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400"><rect fill="#0ea5e9" width="800" height="400"/><rect fill="#ebdb00" x="120" y="60" width="560" height="280" rx="12"/></svg>',
   );
 
 /** Avatar 文档预览：纯色主色（与 vars 浅色 --su-primary-600 / 700、--su-on-primary 一致，无渐变） */
 const AVATAR_DEMO_IMG_SRC =
   'data:image/svg+xml,' +
   encodeURIComponent(
-    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#ebdb00"/><text x="50" y="58" text-anchor="middle" fill="#0a0b0f" font-size="38" font-family="system-ui,sans-serif" font-weight="600">A</text></svg>'
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#ebdb00"/><text x="50" y="58" text-anchor="middle" fill="#0a0b0f" font-size="38" font-family="system-ui,sans-serif" font-weight="600">A</text></svg>',
   );
 
 /** 宽图：左右两色块（无渐变），演示圆内 cover 裁掉两侧 */
 const AVATAR_DEMO_WIDE_SRC =
   'data:image/svg+xml,' +
   encodeURIComponent(
-    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 72"><rect width="110" height="72" fill="#ebdb00"/><rect x="110" width="110" height="72" fill="#d2c400"/><text x="110" y="44" text-anchor="middle" fill="#0a0b0f" font-size="15" font-family="system-ui,sans-serif" font-weight="600">WIDE</text></svg>'
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 72"><rect width="110" height="72" fill="#ebdb00"/><rect x="110" width="110" height="72" fill="#d2c400"/><text x="110" y="44" text-anchor="middle" fill="#0a0b0f" font-size="15" font-family="system-ui,sans-serif" font-weight="600">WIDE</text></svg>',
   );
 
 /** 竖图：上下两色块（无渐变），演示 cover 裁切 */
 const AVATAR_DEMO_TALL_SRC =
   'data:image/svg+xml,' +
   encodeURIComponent(
-    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 220"><rect width="72" height="110" fill="#ebdb00"/><rect y="110" width="72" height="110" fill="#d2c400"/><text x="36" y="118" text-anchor="middle" fill="#0a0b0f" font-size="11" font-family="system-ui,sans-serif" font-weight="600">TALL</text></svg>'
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 220"><rect width="72" height="110" fill="#ebdb00"/><rect y="110" width="72" height="110" fill="#d2c400"/><text x="36" y="118" text-anchor="middle" fill="#0a0b0f" font-size="11" font-family="system-ui,sans-serif" font-weight="600">TALL</text></svg>',
   );
 
 const AVATAR_DOC_SIZE_META: { size: 'xs' | 'sm' | 'md' | 'lg' | 'xl'; px: string }[] = [
@@ -187,16 +187,40 @@ function AlertDemoFourKinds() {
         点击下方按钮触发对应语义的 Alert。
       </Typography>
       <Space wrap size="sm">
-        <Button type="button" size="sm" variant={kind === 'info' ? 'solid' : 'soft'} color="info" onClick={() => setKind('info')}>
+        <Button
+          type="button"
+          size="sm"
+          variant={kind === 'info' ? 'solid' : 'soft'}
+          color="info"
+          onClick={() => setKind('info')}
+        >
           信息
         </Button>
-        <Button type="button" size="sm" variant={kind === 'success' ? 'solid' : 'soft'} color="success" onClick={() => setKind('success')}>
+        <Button
+          type="button"
+          size="sm"
+          variant={kind === 'success' ? 'solid' : 'soft'}
+          color="success"
+          onClick={() => setKind('success')}
+        >
           成功
         </Button>
-        <Button type="button" size="sm" variant={kind === 'warning' ? 'solid' : 'soft'} color="warning" onClick={() => setKind('warning')}>
+        <Button
+          type="button"
+          size="sm"
+          variant={kind === 'warning' ? 'solid' : 'soft'}
+          color="warning"
+          onClick={() => setKind('warning')}
+        >
           警告
         </Button>
-        <Button type="button" size="sm" variant={kind === 'error' ? 'solid' : 'soft'} color="error" onClick={() => setKind('error')}>
+        <Button
+          type="button"
+          size="sm"
+          variant={kind === 'error' ? 'solid' : 'soft'}
+          color="error"
+          onClick={() => setKind('error')}
+        >
           错误
         </Button>
       </Space>
@@ -406,13 +430,7 @@ function DateRangePickerDocDemo({ idx }: { idx: number }) {
   const [r, setR] = useState({ start: '', end: '' });
   switch (idx) {
     case 0:
-      return (
-        <DateRangePicker
-          className="max-w-md w-full"
-          value={r}
-          onChange={(v) => setR(v)}
-        />
-      );
+      return <DateRangePicker className="max-w-md w-full" value={r} onChange={(v) => setR(v)} />;
     case 1:
       return (
         <DateRangePicker
@@ -437,7 +455,12 @@ function TimePickerDocDemo({ idx }: { idx: number }) {
   switch (idx) {
     case 0:
       return (
-        <TimePicker value={t} onChange={(v) => setT(v)} placeholder="选择时间" className="max-w-xs w-full" />
+        <TimePicker
+          value={t}
+          onChange={(v) => setT(v)}
+          placeholder="选择时间"
+          className="max-w-xs w-full"
+        />
       );
     case 1:
       return <TimePicker minuteStep={15} placeholder="整刻钟" className="max-w-xs w-full" />;
@@ -454,13 +477,9 @@ function DateTimePickerDocDemo({ idx }: { idx: number }) {
   const [v, setV] = useState('');
   switch (idx) {
     case 0:
-      return (
-        <DateTimePicker value={v} onChange={(x) => setV(x)} className="max-w-md w-full" />
-      );
+      return <DateTimePicker value={v} onChange={(x) => setV(x)} className="max-w-md w-full" />;
     case 1:
-      return (
-        <DateTimePicker min="2026-01-01" max="2026-12-31" className="max-w-md w-full" />
-      );
+      return <DateTimePicker min="2026-01-01" max="2026-12-31" className="max-w-md w-full" />;
     default:
       return (
         <Typography variant="body" color="muted">
@@ -890,7 +909,11 @@ function PopoverDocDemo({ idx }: { idx: number }) {
             open={openR}
             onOpenChange={setOpenR}
             placement="right"
-            content={<Typography variant="bodySmall" noMargin>在右侧</Typography>}
+            content={
+              <Typography variant="bodySmall" noMargin>
+                在右侧
+              </Typography>
+            }
           >
             <Button size="sm" type="button" variant="soft">
               锚点
@@ -1237,9 +1260,9 @@ function TableDocDemo({ idx }: { idx: number }) {
   );
 
   const sortedFilteredRows = useMemo(() => {
-    let list = TABLE_SORT_DEMO_SOURCE.filter((r) => deptFilter === 'all' || r.dept === deptFilter).filter(
-      (r) => !nameQuery.trim() || r.name.includes(nameQuery.trim()),
-    );
+    let list = TABLE_SORT_DEMO_SOURCE.filter(
+      (r) => deptFilter === 'all' || r.dept === deptFilter,
+    ).filter((r) => !nameQuery.trim() || r.name.includes(nameQuery.trim()));
     if (sortKey && sortOrder) {
       list = [...list].sort((a, b) => {
         const av = a[sortKey];
@@ -1365,9 +1388,7 @@ function TableDocDemo({ idx }: { idx: number }) {
                   华东
                 </TableCell>
                 <TableCell>上海</TableCell>
-                <TableCell rowSpan={2}>
-                  重点大区
-                </TableCell>
+                <TableCell rowSpan={2}>重点大区</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell as="th" scope="row">
@@ -1408,7 +1429,10 @@ function TableDocDemo({ idx }: { idx: number }) {
               </TableBody>
               <TableFooter>
                 <TableRow>
-                  <TableCell colSpan={2} style={{ fontSize: '0.8125rem', color: 'var(--su-text-muted)' }}>
+                  <TableCell
+                    colSpan={2}
+                    style={{ fontSize: '0.8125rem', color: 'var(--su-text-muted)' }}
+                  >
                     本页小计示例；完整分页见 Pagination 组件
                   </TableCell>
                 </TableRow>
@@ -1548,10 +1572,7 @@ function PaginationDocDemo({ idx }: { idx: number }) {
   const [pageCtl, setPageCtl] = useState(2);
   const [pageSizeCtl, setPageSizeCtl] = useState(20);
 
-  const sliced = useMemo(
-    () => PAGINATION_DEMO_ROWS.slice((page - 1) * 5, page * 5),
-    [page],
-  );
+  const sliced = useMemo(() => PAGINATION_DEMO_ROWS.slice((page - 1) * 5, page * 5), [page]);
 
   switch (idx) {
     case 0:
@@ -1655,7 +1676,12 @@ function AvatarDocDemo({ idx }: { idx: number }) {
                   <Typography variant="caption" color="muted" noMargin className="tabular-nums">
                     {size}
                   </Typography>
-                  <Typography variant="caption" color="subtle" noMargin className="tabular-nums text-[0.65rem] leading-tight">
+                  <Typography
+                    variant="caption"
+                    color="subtle"
+                    noMargin
+                    className="tabular-nums text-[0.65rem] leading-tight"
+                  >
                     {px}×{px}
                   </Typography>
                 </Stack>
@@ -1866,11 +1892,19 @@ const renderMarkdown = (md: string): React.ReactNode => {
 
   const flushList = () => {
     if (listItems.length > 0) {
-      elements.push(<ul key={`list-${elements.length}`} className="markdown-ul">{listItems}</ul>);
+      elements.push(
+        <ul key={`list-${elements.length}`} className="markdown-ul">
+          {listItems}
+        </ul>,
+      );
       listItems = [];
     }
     if (orderedItems.length > 0) {
-      elements.push(<ol key={`olist-${elements.length}`} className="markdown-ol">{orderedItems}</ol>);
+      elements.push(
+        <ol key={`olist-${elements.length}`} className="markdown-ol">
+          {orderedItems}
+        </ol>,
+      );
       orderedItems = [];
     }
   };
@@ -1884,7 +1918,7 @@ const renderMarkdown = (md: string): React.ReactNode => {
           style={{ ['--md-table-cols' as string]: String(Math.max(tableColCount, 1)) }}
         >
           {tableRows}
-        </div>
+        </div>,
       );
       tableRows = [];
       tableColCount = 0;
@@ -1902,10 +1936,8 @@ const renderMarkdown = (md: string): React.ReactNode => {
         flushTable();
         elements.push(
           <pre key={i} className="markdown-code">
-            <code className={codeLang ? `language-${codeLang}` : ''}>
-              {codeContent.join('\n')}
-            </code>
-          </pre>
+            <code className={codeLang ? `language-${codeLang}` : ''}>{codeContent.join('\n')}</code>
+          </pre>,
         );
         codeContent = [];
         codeLang = '';
@@ -1933,41 +1965,69 @@ const renderMarkdown = (md: string): React.ReactNode => {
     if (trimmed.startsWith('# ')) {
       flushList();
       flushTable();
-      elements.push(<h1 key={i} className="markdown-h1">{parseInlineMarkdown(trimmed.slice(2))}</h1>);
+      elements.push(
+        <h1 key={i} className="markdown-h1">
+          {parseInlineMarkdown(trimmed.slice(2))}
+        </h1>,
+      );
     } else if (trimmed.startsWith('## ')) {
       flushList();
       flushTable();
-      elements.push(<h2 key={i} className="markdown-h2">{parseInlineMarkdown(trimmed.slice(3))}</h2>);
+      elements.push(
+        <h2 key={i} className="markdown-h2">
+          {parseInlineMarkdown(trimmed.slice(3))}
+        </h2>,
+      );
     } else if (trimmed.startsWith('### ')) {
       flushList();
       flushTable();
-      elements.push(<h3 key={i} className="markdown-h3">{parseInlineMarkdown(trimmed.slice(4))}</h3>);
+      elements.push(
+        <h3 key={i} className="markdown-h3">
+          {parseInlineMarkdown(trimmed.slice(4))}
+        </h3>,
+      );
     } else if (trimmed.startsWith('#### ')) {
       flushList();
       flushTable();
-      elements.push(<h4 key={i} className="markdown-h4">{parseInlineMarkdown(trimmed.slice(5))}</h4>);
+      elements.push(
+        <h4 key={i} className="markdown-h4">
+          {parseInlineMarkdown(trimmed.slice(5))}
+        </h4>,
+      );
     }
     // 无序列表
     else if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
       flushTable();
       if (orderedItems.length > 0) {
-        elements.push(<ol key={`olist-flush-${i}`} className="markdown-ol">{orderedItems}</ol>);
+        elements.push(
+          <ol key={`olist-flush-${i}`} className="markdown-ol">
+            {orderedItems}
+          </ol>,
+        );
         orderedItems = [];
       }
       listItems.push(
-        <li key={i} className="markdown-li">{parseInlineMarkdown(trimmed.slice(2))}</li>
+        <li key={i} className="markdown-li">
+          {parseInlineMarkdown(trimmed.slice(2))}
+        </li>,
       );
     }
     // 有序列表 1. xxx
     else if (/^\d+\.\s/.test(trimmed)) {
       flushTable();
       if (listItems.length > 0) {
-        elements.push(<ul key={`ul-flush-${i}`} className="markdown-ul">{listItems}</ul>);
+        elements.push(
+          <ul key={`ul-flush-${i}`} className="markdown-ul">
+            {listItems}
+          </ul>,
+        );
         listItems = [];
       }
       const text = trimmed.replace(/^\d+\.\s*/, '');
       orderedItems.push(
-        <li key={i} className="markdown-oli">{parseInlineMarkdown(text)}</li>
+        <li key={i} className="markdown-oli">
+          {parseInlineMarkdown(text)}
+        </li>,
       );
     }
     // 表格
@@ -1986,9 +2046,11 @@ const renderMarkdown = (md: string): React.ReactNode => {
       tableRows.push(
         <div key={i} className={`markdown-table-row ${isHeader ? 'markdown-table-header' : ''}`}>
           {cells.map((cell, idx) => (
-            <div key={idx} className="markdown-table-cell">{parseInlineMarkdown(cell)}</div>
+            <div key={idx} className="markdown-table-cell">
+              {parseInlineMarkdown(cell)}
+            </div>
           ))}
-        </div>
+        </div>,
       );
     }
     // 普通段落
@@ -1996,7 +2058,9 @@ const renderMarkdown = (md: string): React.ReactNode => {
       flushList();
       flushTable();
       elements.push(
-        <p key={i} className="markdown-p">{parseInlineMarkdown(trimmed)}</p>
+        <p key={i} className="markdown-p">
+          {parseInlineMarkdown(trimmed)}
+        </p>,
       );
     }
   }
@@ -2023,7 +2087,11 @@ const parseInlineMarkdown = (text: string): React.ReactNode => {
           parts.push(current);
           current = '';
         }
-        parts.push(<code key={i} className="markdown-inline-code">{text.slice(i + 1, endIdx)}</code>);
+        parts.push(
+          <code key={i} className="markdown-inline-code">
+            {text.slice(i + 1, endIdx)}
+          </code>,
+        );
         i = endIdx + 1;
         continue;
       }
@@ -2057,7 +2125,8 @@ export const ComponentPage: React.FC = () => {
   const [activeExample, setActiveExample] = useState(0);
 
   const doc = useMemo(
-    () => (name ? componentDocs.find((d) => d.name.toLowerCase() === name.toLowerCase()) : undefined),
+    () =>
+      name ? componentDocs.find((d) => d.name.toLowerCase() === name.toLowerCase()) : undefined,
     [name],
   );
   const mapKey = doc?.name ?? '';
@@ -2080,7 +2149,7 @@ export const ComponentPage: React.FC = () => {
             <Button color="primary">主要</Button>
             <Button color="secondary">次要</Button>
             <Button color="default">中性</Button>
-          </>
+          </>,
         );
       case 1:
         return wrap(
@@ -2090,7 +2159,7 @@ export const ComponentPage: React.FC = () => {
             <Button variant="outlined">描边 outlined</Button>
             <Button variant="ghost">幽灵 ghost</Button>
             <Button variant="link">链接 link</Button>
-          </>
+          </>,
         );
       case 2:
         return wrap(
@@ -2100,7 +2169,7 @@ export const ComponentPage: React.FC = () => {
             <Button size="md">md</Button>
             <Button size="lg">lg</Button>
             <Button size="xl">xl</Button>
-          </>
+          </>,
         );
       case 3:
         return wrap(
@@ -2108,8 +2177,10 @@ export const ComponentPage: React.FC = () => {
             <Button loading>加载中</Button>
             <Button disabled>已禁用</Button>
             <Button color="error">危险 solid</Button>
-            <Button color="error" variant="outlined">危险 outlined</Button>
-          </>
+            <Button color="error" variant="outlined">
+              危险 outlined
+            </Button>
+          </>,
         );
       case 4:
         return wrap(
@@ -2119,7 +2190,7 @@ export const ComponentPage: React.FC = () => {
             <Button color="warning">warning</Button>
             <Button color="error">error</Button>
             <Button color="info">info</Button>
-          </>
+          </>,
         );
       case 5:
         return wrap(
@@ -2129,7 +2200,7 @@ export const ComponentPage: React.FC = () => {
             <Button radius="md">md</Button>
             <Button radius="lg">lg</Button>
             <Button radius="full">pill</Button>
-          </>
+          </>,
         );
       case 6:
         return (
@@ -2146,7 +2217,7 @@ export const ComponentPage: React.FC = () => {
           <>
             <Button color="primary">主要</Button>
             <Button variant="outlined">描边</Button>
-          </>
+          </>,
         );
     }
   };
@@ -2166,7 +2237,7 @@ export const ComponentPage: React.FC = () => {
             <Divider variant="dashed" />
             <Divider variant="dotted" spacing="sm" />
             <Divider color="subtle" spacing="md" />
-          </>
+          </>,
         );
       case 1:
         return col(
@@ -2176,7 +2247,7 @@ export const ComponentPage: React.FC = () => {
             <Divider titleAlign="end" variant="dashed">
               靠右
             </Divider>
-          </>
+          </>,
         );
       case 2:
         return (
@@ -2188,9 +2259,7 @@ export const ComponentPage: React.FC = () => {
             <Divider orientation="vertical" />
             <span className="text-sm">区域 B</span>
             <Separator orientation="vertical" spacing="sm" />
-            <span className="text-sm text-[var(--su-text-muted)]">
-              区域 C（Separator）
-            </span>
+            <span className="text-sm text-[var(--su-text-muted)]">区域 C（Separator）</span>
           </div>
         );
       case 3:
@@ -2204,13 +2273,13 @@ export const ComponentPage: React.FC = () => {
               与将 Divider 的 decorative 设为 false 等价
             </Typography>
             <Divider decorative={false} spacing="sm" />
-          </>
+          </>,
         );
       default:
         return col(
           <Typography variant="body" color="muted">
             无该示例索引
-          </Typography>
+          </Typography>,
         );
     }
   };
@@ -2274,10 +2343,7 @@ export const ComponentPage: React.FC = () => {
                 ratio={16 / 9}
                 className="w-full rounded-lg overflow-hidden border border-[var(--su-border-default)]"
               >
-                <div
-                  className="h-full w-full bg-[var(--su-btn-primary-soft-bg)]"
-                  aria-hidden
-                />
+                <div className="h-full w-full bg-[var(--su-btn-primary-soft-bg)]" aria-hidden />
               </AspectRatio>
             </Stack>
             <Stack gap="sm">
@@ -2384,7 +2450,12 @@ export const ComponentPage: React.FC = () => {
               <Typography variant="caption" color="muted">
                 纵向 gap
               </Typography>
-              <Flex direction="column" gap="sm" align="start" className="text-sm text-[var(--su-text-muted)]">
+              <Flex
+                direction="column"
+                gap="sm"
+                align="start"
+                className="text-sm text-[var(--su-text-muted)]"
+              >
                 <span>第一行</span>
                 <span>第二行</span>
               </Flex>
@@ -2528,7 +2599,7 @@ export const ComponentPage: React.FC = () => {
             <Typography variant="h5">h5</Typography>
             <Typography variant="h6">h6</Typography>
             <Typography variant="subtitle">subtitle 副标题说明</Typography>
-          </>
+          </>,
         );
       case 1:
         return box(
@@ -2539,7 +2610,7 @@ export const ComponentPage: React.FC = () => {
             <Typography variant="bodySmall" color="muted">
               bodySmall 偏小次要
             </Typography>
-          </>
+          </>,
         );
       case 2:
         return box(
@@ -2559,7 +2630,7 @@ export const ComponentPage: React.FC = () => {
               命令
             </Typography>
             <Typography variant="blockquote">blockquote 引用块</Typography>
-          </>
+          </>,
         );
       case 3:
         return box(
@@ -2605,7 +2676,7 @@ export const ComponentPage: React.FC = () => {
                 inverse（深色底）
               </Typography>
             </div>
-          </>
+          </>,
         );
       case 4:
         return box(
@@ -2635,7 +2706,7 @@ export const ComponentPage: React.FC = () => {
               justify 长段两端对齐（中文慎用）。这是一段用于演示 justify
               对齐方式的示例文字，需要足够长度才能看出两端对齐效果。
             </Typography>
-          </>
+          </>,
         );
       case 5:
         return box(
@@ -2649,7 +2720,7 @@ export const ComponentPage: React.FC = () => {
             <Typography variant="body" lineClamp={4} noMargin>
               lineClamp=4：第一行第二行第三行第四行，第五行起应被省略。适合卡片摘要等多行展示场景。
             </Typography>
-          </div>
+          </div>,
         );
       case 6:
         return box(
@@ -2657,16 +2728,13 @@ export const ComponentPage: React.FC = () => {
             <Typography variant="body" copyable>
               从子节点抽取纯文本复制
             </Typography>
-            <Typography
-              variant="body"
-              copyable={{ text: '固定复制内容', tooltip: '复制' }}
-            >
+            <Typography variant="body" copyable={{ text: '固定复制内容', tooltip: '复制' }}>
               展示文案可与复制内容不同
             </Typography>
             <Typography variant="caption" copyable={{ text: 'ORDER-2026-001' }}>
               订单号（点复制）
             </Typography>
-          </>
+          </>,
         );
       case 7:
         return box(
@@ -2680,7 +2748,7 @@ export const ComponentPage: React.FC = () => {
             <Typography variant="link" as="span">
               link 仅样式（非 a 标签）
             </Typography>
-          </div>
+          </div>,
         );
       case 8:
         return box(
@@ -2694,7 +2762,7 @@ export const ComponentPage: React.FC = () => {
             <Typography variant="body" color="error" role="alert">
               错误提示（本节点已设置 role=&quot;alert&quot;）
             </Typography>
-          </>
+          </>,
         );
       case 9:
         return box(
@@ -2709,7 +2777,7 @@ export const ComponentPage: React.FC = () => {
                 第二项
               </Typography>
             </li>
-          </ul>
+          </ul>,
         );
       case 10:
         return box(
@@ -2724,7 +2792,7 @@ export const ComponentPage: React.FC = () => {
             <Typography variant="bodySmall" color="muted">
               更新日期等元信息
             </Typography>
-          </article>
+          </article>,
         );
       case 11:
         return box(
@@ -2735,13 +2803,13 @@ export const ComponentPage: React.FC = () => {
             <Typography variant="body" style={{ maxWidth: '42ch' }}>
               style 限制行长（ch）：较窄段落便于阅读。
             </Typography>
-          </>
+          </>,
         );
       default:
         return box(
           <Typography variant="body" color="muted">
             无该示例索引
-          </Typography>
+          </Typography>,
         );
     }
   };
@@ -2803,11 +2871,7 @@ export const ComponentPage: React.FC = () => {
         {doc.name === 'FormSection' && <FormSectionDocDemo idx={idx} />}
         {doc.name === 'Card' && (
           <div className="max-w-md">
-            <Card 
-              title="示例卡片" 
-              subtitle="这是一个示例"
-              footer={<Button size="sm">确认</Button>}
-            >
+            <Card title="示例卡片" subtitle="这是一个示例" footer={<Button size="sm">确认</Button>}>
               卡片内容区域
             </Card>
           </div>
@@ -3074,7 +3138,11 @@ export const ComponentPage: React.FC = () => {
                   status="success"
                   title="提交成功"
                   subTitle="我们已收到申请，将在 1～3 个工作日内处理。"
-                  extra={<Button color="primary" size="sm">返回首页</Button>}
+                  extra={
+                    <Button color="primary" size="sm">
+                      返回首页
+                    </Button>
+                  }
                 />
               </Card>
             )}
@@ -3155,14 +3223,12 @@ export const ComponentPage: React.FC = () => {
                 type="button"
                 onClick={() =>
                   toast.promise(
-                    new Promise<string>((resolve) =>
-                      setTimeout(() => resolve('ok'), 1600)
-                    ),
+                    new Promise<string>((resolve) => setTimeout(() => resolve('ok'), 1600)),
                     {
                       loading: '处理中…',
                       success: '完成',
                       error: '失败',
-                    }
+                    },
                   )
                 }
               >
@@ -3183,16 +3249,10 @@ export const ComponentPage: React.FC = () => {
       </header>
 
       <div className="page-tabs">
-        <button 
-          className={activeExample === 0 ? 'active' : ''}
-          onClick={() => setActiveExample(0)}
-        >
+        <button className={activeExample === 0 ? 'active' : ''} onClick={() => setActiveExample(0)}>
           示例预览
         </button>
-        <button 
-          className={activeExample === 1 ? 'active' : ''}
-          onClick={() => setActiveExample(1)}
-        >
+        <button className={activeExample === 1 ? 'active' : ''} onClick={() => setActiveExample(1)}>
           AI 使用指南
         </button>
       </div>
@@ -3217,13 +3277,10 @@ export const ComponentPage: React.FC = () => {
               <strong>AI 使用提示</strong>
             </div>
             <p>
-              此文档位于 <code>{doc.aiDocPath}</code>，
-              AI 编码助手可以读取此文件来理解组件用法。
+              此文档位于 <code>{doc.aiDocPath}</code>， AI 编码助手可以读取此文件来理解组件用法。
             </p>
           </div>
-          <div className="ai-doc-content">
-            {renderMarkdown(aiDoc)}
-          </div>
+          <div className="ai-doc-content">{renderMarkdown(aiDoc)}</div>
         </div>
       )}
     </div>

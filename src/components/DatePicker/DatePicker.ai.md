@@ -6,7 +6,7 @@
 import { DatePicker } from 'stand-ui/components/DatePicker';
 
 const [d, setD] = useState('');
-<DatePicker value={d} onChange={(v) => setD(v)} placeholder="选择日期" />
+<DatePicker value={d} onChange={(v) => setD(v)} placeholder="选择日期" />;
 ```
 
 ## 说明
@@ -18,24 +18,24 @@ const [d, setD] = useState('');
 
 ## Props 完整说明
 
-| Prop | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `value` | `string` | - | 受控值 `yyyy-mm-dd` |
-| `defaultValue` | `string` | `''` | 非受控初始值 |
-| `onChange` | `(value, e) => void` | - | 选中日期后回调；`e` 为合成 `change` 事件 |
-| `placeholder` | `string` | `'选择日期'` | 未选时触发器文案 |
-| `min` / `max` | `string` | - | 可选范围，`yyyy-mm-dd` 字符串比较 |
-| `name` | `string` | - | 写入隐藏域，供 `FormData` 提交 |
-| `disabled` | `boolean` | `false` | 禁用 |
-| `required` | `boolean` | `false` | 映射到触发器 `aria-required` |
-| `size` | `StandProps['size']` | `'md'` | 与 Input 一致 |
-| `color` | `StandProps['color']` | `'default'` | 聚焦环与错误描边（配合 FormField） |
-| `radius` | `StandProps['radius']` | `'md'` | 圆角 |
-| `placement` | `'bottom-start' \| 'top-start' \| 'auto'` | `'auto'` | 面板相对触发器 |
-| `portal` | `boolean` | `true` | 是否 Portal 到 body |
-| `panelClassName` | `string` | - | 面板根节点 class |
-| `locale` | `string` | `'zh-CN'` | 触发器展示用 `toLocaleDateString` |
-| `id` / `aria-*` | - | - | 透传触发器 `button`，供 `label`/`FormField` 关联 |
+| Prop             | 类型                                      | 默认值       | 说明                                             |
+| ---------------- | ----------------------------------------- | ------------ | ------------------------------------------------ |
+| `value`          | `string`                                  | -            | 受控值 `yyyy-mm-dd`                              |
+| `defaultValue`   | `string`                                  | `''`         | 非受控初始值                                     |
+| `onChange`       | `(value, e) => void`                      | -            | 选中日期后回调；`e` 为合成 `change` 事件         |
+| `placeholder`    | `string`                                  | `'选择日期'` | 未选时触发器文案                                 |
+| `min` / `max`    | `string`                                  | -            | 可选范围，`yyyy-mm-dd` 字符串比较                |
+| `name`           | `string`                                  | -            | 写入隐藏域，供 `FormData` 提交                   |
+| `disabled`       | `boolean`                                 | `false`      | 禁用                                             |
+| `required`       | `boolean`                                 | `false`      | 映射到触发器 `aria-required`                     |
+| `size`           | `StandProps['size']`                      | `'md'`       | 与 Input 一致                                    |
+| `color`          | `StandProps['color']`                     | `'default'`  | 聚焦环与错误描边（配合 FormField）               |
+| `radius`         | `StandProps['radius']`                    | `'md'`       | 圆角                                             |
+| `placement`      | `'bottom-start' \| 'top-start' \| 'auto'` | `'auto'`     | 面板相对触发器                                   |
+| `portal`         | `boolean`                                 | `true`       | 是否 Portal 到 body                              |
+| `panelClassName` | `string`                                  | -            | 面板根节点 class                                 |
+| `locale`         | `string`                                  | `'zh-CN'`    | 触发器展示用 `toLocaleDateString`                |
+| `id` / `aria-*`  | -                                         | -            | 透传触发器 `button`，供 `label`/`FormField` 关联 |
 
 ## 与 FormField
 

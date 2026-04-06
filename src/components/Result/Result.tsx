@@ -26,7 +26,12 @@ function IconError({ size = 56 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 56 56" fill="none" aria-hidden>
       <circle cx="28" cy="28" r="22" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M22 22 L34 34 M34 22 L22 34" stroke="currentColor" strokeWidth="1.75" strokeLinecap="square" />
+      <path
+        d="M22 22 L34 34 M34 22 L22 34"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="square"
+      />
     </svg>
   );
 }
@@ -35,7 +40,12 @@ function IconInfo({ size = 56 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 56 56" fill="none" aria-hidden>
       <circle cx="28" cy="28" r="22" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M28 24 V38 M28 18 V20" stroke="currentColor" strokeWidth="1.75" strokeLinecap="square" />
+      <path
+        d="M28 24 V38 M28 18 V20"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="square"
+      />
     </svg>
   );
 }
@@ -50,7 +60,12 @@ function IconWarning({ size = 56 }: { size?: number }) {
         strokeLinejoin="miter"
         fill="none"
       />
-      <path d="M28 34 V36 M28 22 V28" stroke="currentColor" strokeWidth="1.75" strokeLinecap="square" />
+      <path
+        d="M28 34 V36 M28 22 V28"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="square"
+      />
     </svg>
   );
 }
@@ -73,8 +88,22 @@ function IconLock({ size = 56 }: { size?: number }) {
 function IconNotFound({ size = 56 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 56 56" fill="none" aria-hidden>
-      <circle cx="28" cy="28" r="22" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 3" opacity={0.65} />
-      <path d="M20 36 L36 20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" opacity={0.5} />
+      <circle
+        cx="28"
+        cy="28"
+        r="22"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeDasharray="3 3"
+        opacity={0.65}
+      />
+      <path
+        d="M20 36 L36 20"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="square"
+        opacity={0.5}
+      />
       <text
         x="28"
         y="31"
@@ -94,8 +123,23 @@ function IconNotFound({ size = 56 }: { size?: number }) {
 function IconNeutral({ size = 56 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 56 56" fill="none" aria-hidden>
-      <rect x="12" y="12" width="32" height="32" rx="3" stroke="currentColor" strokeWidth="1.5" opacity={0.55} />
-      <path d="M20 22 H36 M20 28 H32 M20 34 H28" stroke="currentColor" strokeWidth="1.25" strokeLinecap="square" opacity={0.45} />
+      <rect
+        x="12"
+        y="12"
+        width="32"
+        height="32"
+        rx="3"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        opacity={0.55}
+      />
+      <path
+        d="M20 22 H36 M20 28 H32 M20 34 H28"
+        stroke="currentColor"
+        strokeWidth="1.25"
+        strokeLinecap="square"
+        opacity={0.45}
+      />
     </svg>
   );
 }
@@ -156,7 +200,7 @@ export const Result = React.forwardRef<HTMLDivElement, ResultProps>(function Res
     className = '',
     ...rest
   },
-  ref
+  ref,
 ) {
   const titleId = React.useId();
   const iconNode = icon !== undefined ? icon : defaultIcon(status, iconSize);
@@ -173,7 +217,9 @@ export const Result = React.forwardRef<HTMLDivElement, ResultProps>(function Res
       <h2 id={titleId} className={styles.title}>
         {title}
       </h2>
-      {subTitle != null && subTitle !== '' ? <div className={styles.subTitle}>{subTitle}</div> : null}
+      {subTitle != null && subTitle !== '' ? (
+        <div className={styles.subTitle}>{subTitle}</div>
+      ) : null}
       {extra != null ? <div className={styles.extra}>{extra}</div> : null}
       {children != null ? <div className={styles.footer}>{children}</div> : null}
     </div>

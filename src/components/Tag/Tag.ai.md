@@ -14,14 +14,14 @@ import { Tag } from 'stand-ui/components/Tag';
 
 ## Props
 
-| Prop | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `children` | `ReactNode` | （必填） | 标签文案 |
-| `color` | `Color` | `'default'` | 语义色 |
-| `variant` | `'solid' \| 'soft' \| 'outlined'` | `'soft'` | 视觉变体 |
-| `closable` | `boolean` | `false` | 是否显示关闭按钮 |
-| `onClose` | `function` | — | 关闭时触发（需自行更新列表） |
-| `className` | `string` | — | 追加类名 |
+| Prop        | 类型                              | 默认值      | 说明                         |
+| ----------- | --------------------------------- | ----------- | ---------------------------- |
+| `children`  | `ReactNode`                       | （必填）    | 标签文案                     |
+| `color`     | `Color`                           | `'default'` | 语义色                       |
+| `variant`   | `'solid' \| 'soft' \| 'outlined'` | `'soft'`    | 视觉变体                     |
+| `closable`  | `boolean`                         | `false`     | 是否显示关闭按钮             |
+| `onClose`   | `function`                        | —           | 关闭时触发（需自行更新列表） |
+| `className` | `string`                          | —           | 追加类名                     |
 
 其余 `span` 属性可透传。
 

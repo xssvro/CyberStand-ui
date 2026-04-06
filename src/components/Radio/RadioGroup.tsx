@@ -25,34 +25,32 @@ function joinClasses(...parts: Array<string | false | undefined>): string {
   return parts.filter(Boolean).join(' ');
 }
 
-export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
-  function RadioGroup(
-    {
-      name,
-      value,
-      onValueChange,
-      disabled = false,
-      invalid = false,
-      horizontal = false,
-      children,
-      className = '',
-      ...rest
-    },
-    ref
-  ) {
-    return (
-      <RadioGroupContext.Provider value={{ name, value, disabled, invalid, onChange: onValueChange }}>
-        <div
-          ref={ref}
-          role="radiogroup"
-          className={joinClasses(styles.group, horizontal && styles.horizontal, className)}
-          {...rest}
-        >
-          {children}
-        </div>
-      </RadioGroupContext.Provider>
-    );
-  }
-);
+export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(function RadioGroup(
+  {
+    name,
+    value,
+    onValueChange,
+    disabled = false,
+    invalid = false,
+    horizontal = false,
+    children,
+    className = '',
+    ...rest
+  },
+  ref,
+) {
+  return (
+    <RadioGroupContext.Provider value={{ name, value, disabled, invalid, onChange: onValueChange }}>
+      <div
+        ref={ref}
+        role="radiogroup"
+        className={joinClasses(styles.group, horizontal && styles.horizontal, className)}
+        {...rest}
+      >
+        {children}
+      </div>
+    </RadioGroupContext.Provider>
+  );
+});
 
 RadioGroup.displayName = 'RadioGroup';

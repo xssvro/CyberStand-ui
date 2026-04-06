@@ -1,11 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useId,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import type { PopperPlacement } from '../overlay/popperPosition';
 import { usePopperPosition } from '../overlay/usePopperPosition';
@@ -111,7 +104,10 @@ export const Tooltip = React.forwardRef<HTMLSpanElement, TooltipProps>(function 
 
   useLayoutEffect(() => {
     if (!open || !hasTitle) return;
-    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
       setEntered(true);
       return;
     }
@@ -128,7 +124,10 @@ export const Tooltip = React.forwardRef<HTMLSpanElement, TooltipProps>(function 
 
   useLayoutEffect(() => {
     if (open || !mounted) return;
-    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
       setMounted(false);
       setEntered(false);
       return;
@@ -138,7 +137,10 @@ export const Tooltip = React.forwardRef<HTMLSpanElement, TooltipProps>(function 
 
   useEffect(() => {
     if (open || !mounted || entered) return;
-    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
       return;
     }
     const id = window.setTimeout(() => setMounted(false), 200);

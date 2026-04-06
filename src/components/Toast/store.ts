@@ -42,9 +42,7 @@ function emit(): void {
 
 const MAX_TOASTS = 12;
 
-export function addToast(
-  t: Omit<ToastRecord, 'id' | 'createdAt'> & { id?: string }
-): string {
+export function addToast(t: Omit<ToastRecord, 'id' | 'createdAt'> & { id?: string }): string {
   const id = t.id ?? genId();
   const record: ToastRecord = {
     ...t,
@@ -70,7 +68,7 @@ export function clearAll(): void {
 
 export function updateToast(
   id: string,
-  patch: Partial<Omit<ToastRecord, 'id' | 'createdAt'>>
+  patch: Partial<Omit<ToastRecord, 'id' | 'createdAt'>>,
 ): void {
   toasts = toasts.map((x) => (x.id === id ? { ...x, ...patch } : x));
   emit();

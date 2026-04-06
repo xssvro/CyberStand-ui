@@ -1,6 +1,6 @@
 /**
  * CyberStand UI - Core Design System
- * 
+ *
  * 面向 AI 的通用 UI 框架核心配置（多端共用 token 与类型）
  * 所有组件样式基于CSS Variables，便于主题覆盖
  */
@@ -9,14 +9,7 @@
 export type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 // 颜色主题
-export type Color = 
-  | 'default' 
-  | 'primary' 
-  | 'secondary' 
-  | 'success' 
-  | 'warning' 
-  | 'error' 
-  | 'info';
+export type Color = 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
 
 // 变体类型
 export type Variant = 'solid' | 'soft' | 'outlined' | 'ghost' | 'link';
@@ -59,12 +52,12 @@ export const getSizeVars = (size: Size = 'md'): Record<string, string> => {
 // 获取圆角CSS变量
 export const getRadiusVar = (radius: Radius = 'md'): string => {
   const radiusMap: Record<Radius, string> = {
-    'none': '0',
-    'sm': '3px',
-    'md': '5px',
-    'lg': '7px',
-    'xl': '10px',
-    'full': '9999px',
+    none: '0',
+    sm: '3px',
+    md: '5px',
+    lg: '7px',
+    xl: '10px',
+    full: '9999px',
   };
   return radiusMap[radius];
 };

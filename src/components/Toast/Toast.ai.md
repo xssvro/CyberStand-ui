@@ -39,7 +39,7 @@ toast('带副标题', {
 // 需要手动关闭按钮时
 toast('可点 × 关闭', { dismissible: true });
 
-toast.dismiss();       // 关闭全部
+toast.dismiss(); // 关闭全部
 toast.dismiss('某 id'); // 关闭单条（addToast / promise 返回的 id）
 ```
 
@@ -52,7 +52,7 @@ await toast.promise(
     loading: '提交中…',
     success: '已保存',
     error: (e) => (e instanceof Error ? e.message : '失败'),
-  }
+  },
 );
 ```
 
@@ -79,10 +79,10 @@ function Demo() {
 
 ## `<Toaster />` Props
 
-| Prop | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `position` | 见下 | `'top-center'` | 出现位置 |
-| `className` | `string` | - | 容器额外 class |
+| Prop        | 类型     | 默认           | 说明           |
+| ----------- | -------- | -------------- | -------------- |
+| `position`  | 见下     | `'top-center'` | 出现位置       |
+| `className` | `string` | -              | 容器额外 class |
 
 `position`: `'top-right'` \| `'top-center'` \| `'top-left'` \| `'bottom-right'` \| `'bottom-center'` \| `'bottom-left'`
 

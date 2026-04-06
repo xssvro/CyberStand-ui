@@ -77,7 +77,11 @@ export function useFocusTrap({ active, rootRef, onEscape }: UseFocusTrapOptions)
     return () => {
       document.removeEventListener('keydown', onKeyDown, true);
       window.cancelAnimationFrame(id);
-      if (previousFocus && typeof previousFocus.focus === 'function' && document.body.contains(previousFocus)) {
+      if (
+        previousFocus &&
+        typeof previousFocus.focus === 'function' &&
+        document.body.contains(previousFocus)
+      ) {
         previousFocus.focus({ preventScroll: true });
       }
     };

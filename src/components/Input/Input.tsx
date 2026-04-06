@@ -96,7 +96,7 @@ export interface InputProps extends Omit<StandProps, 'variant'>, InputHtmlPassth
 
 /**
  * Input 输入框组件
- * 
+ *
  * 基础文本输入组件，支持多种类型和前后置内容
  */
 export const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -125,7 +125,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       style,
       ...props
     },
-    ref
+    ref,
   ) => {
     const sizeVars = getSizeVars(size);
     const radiusVar = getRadiusVar(radius);
@@ -149,14 +149,16 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div
         className={classes}
-        style={{
-          ...sizeVars,
-          '--su-radius': radiusVar,
-          '--su-input-affix-gap': INPUT_AFFIX_GAP[size],
-          '--su-input-pad-y': INPUT_PAD_Y[size],
-          '--su-input-pad-x': INPUT_PAD_X[size],
-          ...style,
-        } as React.CSSProperties}
+        style={
+          {
+            ...sizeVars,
+            '--su-radius': radiusVar,
+            '--su-input-affix-gap': INPUT_AFFIX_GAP[size],
+            '--su-input-pad-y': INPUT_PAD_Y[size],
+            '--su-input-pad-x': INPUT_PAD_X[size],
+            ...style,
+          } as React.CSSProperties
+        }
       >
         {prefix && <span className={styles.prefix}>{prefix}</span>}
         <input
@@ -181,8 +183,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         {suffix && <span className={styles.suffix}>{suffix}</span>}
       </div>
     );
-  }
+  },
 );
 
 Input.displayName = 'Input';
-

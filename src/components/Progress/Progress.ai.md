@@ -14,17 +14,17 @@ import { Progress } from 'stand-ui/components/Progress';
 
 ## Props
 
-| Prop | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `value` | `number` | `0` | 0–100，超出会钳制 |
-| `indeterminate` | `boolean` | `false` | 为 true 时不展示具体百分比（无 `aria-valuenow`） |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | 轨道高度 |
-| `color` | `Color` | `'primary'` | 填充条语义色 |
-| `striped` | `boolean` | `false` | 斜条纹（仅确定态；不确定态不叠加） |
-| `showLabel` | `boolean` | `false` | 右侧百分比；不确定时不显示 |
-| `aria-label` | `string` | — | 读屏名称 |
-| `className` | `string` | — | 根节点 |
-| `style` | `CSSProperties` | — | 根节点 |
+| Prop            | 类型                   | 默认值      | 说明                                             |
+| --------------- | ---------------------- | ----------- | ------------------------------------------------ |
+| `value`         | `number`               | `0`         | 0–100，超出会钳制                                |
+| `indeterminate` | `boolean`              | `false`     | 为 true 时不展示具体百分比（无 `aria-valuenow`） |
+| `size`          | `'sm' \| 'md' \| 'lg'` | `'md'`      | 轨道高度                                         |
+| `color`         | `Color`                | `'primary'` | 填充条语义色                                     |
+| `striped`       | `boolean`              | `false`     | 斜条纹（仅确定态；不确定态不叠加）               |
+| `showLabel`     | `boolean`              | `false`     | 右侧百分比；不确定时不显示                       |
+| `aria-label`    | `string`               | —           | 读屏名称                                         |
+| `className`     | `string`               | —           | 根节点                                           |
+| `style`         | `CSSProperties`        | —           | 根节点                                           |
 
 其余 `div` 属性可透传。
 

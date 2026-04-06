@@ -8,25 +8,23 @@
 import { Empty } from 'stand-ui/components/Empty';
 import { IconPackage } from 'stand-ui/icons';
 
-<Empty
-  title="暂无数据"
-  description="请调整筛选条件或稍后再试。"
-  image={<IconPackage size={72} />}
->
-  <Button color="primary" size="sm">新建</Button>
-</Empty>
+<Empty title="暂无数据" description="请调整筛选条件或稍后再试。" image={<IconPackage size={72} />}>
+  <Button color="primary" size="sm">
+    新建
+  </Button>
+</Empty>;
 ```
 
 ## Props
 
-| Prop | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `image` | `ReactNode` | 内置简笔画 | 传 `null` 则不显示图区 |
-| `title` | `ReactNode` | — | 主标题 |
-| `description` | `ReactNode` | — | 辅助说明 |
-| `children` | `ReactNode` | — | 底部操作区（按钮等） |
-| `className` | `string` | — | 根节点 |
-| `style` | `CSSProperties` | — | 根节点 |
+| Prop          | 类型            | 默认值     | 说明                   |
+| ------------- | --------------- | ---------- | ---------------------- |
+| `image`       | `ReactNode`     | 内置简笔画 | 传 `null` 则不显示图区 |
+| `title`       | `ReactNode`     | —          | 主标题                 |
+| `description` | `ReactNode`     | —          | 辅助说明               |
+| `children`    | `ReactNode`     | —          | 底部操作区（按钮等）   |
+| `className`   | `string`        | —          | 根节点                 |
+| `style`       | `CSSProperties` | —          | 根节点                 |
 
 根节点为 `role="region"`，有 `title` 时 `aria-labelledby` 指向标题。
 

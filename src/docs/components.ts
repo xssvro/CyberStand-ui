@@ -1245,8 +1245,7 @@ useEffect(() => {
     name: 'Progress',
     title: 'Progress 进度条',
     category: '反馈',
-    description:
-      'role=progressbar：value 0–100、不确定态、语义色与条纹；轨道圆角与表单控件一致。',
+    description: 'role=progressbar：value 0–100、不确定态、语义色与条纹；轨道圆角与表单控件一致。',
     aiDocPath: '/src/components/Progress/Progress.ai.md',
     examples: [
       {
@@ -1376,8 +1375,7 @@ const text: Record<AlertVariant, { title: string; children: string }> = {
     name: 'Callout',
     title: 'Callout 说明块',
     category: '反馈',
-    description:
-      '文档/说明向 aside：左侧色条 + 可选小标题；非 Toast、非 Alert。适合文内注意事项。',
+    description: '文档/说明向 aside：左侧色条 + 可选小标题；非 Toast、非 Alert。适合文内注意事项。',
     aiDocPath: '/src/components/Callout/Callout.ai.md',
     examples: [
       {

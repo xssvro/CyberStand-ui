@@ -46,35 +46,35 @@ const [open, setOpen] = useState(false);
 
 ## Props 完整说明
 
-| Prop | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `open` | `boolean` | （必填） | 是否展示 |
-| `onOpenChange` | `(open: boolean) => void` | - | 受控开关 |
-| `onClose` | `() => void` | - | 关闭时回调（遮罩、关闭钮、Esc）；常与 `onOpenChange(false)` 一起用 |
-| `title` | `React.ReactNode` | - | 标题区；无标题仍可 `closable` |
-| `children` | `React.ReactNode` | - | 主体（可滚动） |
-| `footer` | `React.ReactNode` | - | 底栏，常放按钮 |
-| `closable` | `boolean` | `true` | 右上角关闭按钮 |
-| `mask` | `boolean` | `true` | 是否显示半透明遮罩与模糊；`false` 为仅透明全屏层 |
-| `maskClosable` | `boolean` | `true` | 点击遮罩或透明层是否关闭 |
-| `keyboard` | `boolean` | `true` | `Esc` 关闭 |
-| `centered` | `boolean` | `true` | 垂直居中；`false` 时靠上（约 `10vh`） |
-| `size` | `'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'` | 预设最大宽度 |
-| `width` | `number \| string` | - | 覆盖最大宽度（如 `480`、`'80%'`） |
-| `radius` | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'lg'` | 面板圆角 |
-| `className` | `string` | - | 根节点（全屏层） |
-| `bodyClassName` | `string` | - | 白色面板节点 |
-| `getContainer` | `HTMLElement \| () => HTMLElement` | `document.body` | 挂载容器 |
-| `zIndex` | `number` | - | 覆盖整层 z-index |
-| `afterOpenChange` | `(open: boolean) => void` | - | 状态变化后同步回调 |
+| Prop              | 类型                                     | 默认值          | 说明                                                               |
+| ----------------- | ---------------------------------------- | --------------- | ------------------------------------------------------------------ |
+| `open`            | `boolean`                                | （必填）        | 是否展示                                                           |
+| `onOpenChange`    | `(open: boolean) => void`                | -               | 受控开关                                                           |
+| `onClose`         | `() => void`                             | -               | 关闭时回调（遮罩、关闭钮、Esc）；常与 `onOpenChange(false)` 一起用 |
+| `title`           | `React.ReactNode`                        | -               | 标题区；无标题仍可 `closable`                                      |
+| `children`        | `React.ReactNode`                        | -               | 主体（可滚动）                                                     |
+| `footer`          | `React.ReactNode`                        | -               | 底栏，常放按钮                                                     |
+| `closable`        | `boolean`                                | `true`          | 右上角关闭按钮                                                     |
+| `mask`            | `boolean`                                | `true`          | 是否显示半透明遮罩与模糊；`false` 为仅透明全屏层                   |
+| `maskClosable`    | `boolean`                                | `true`          | 点击遮罩或透明层是否关闭                                           |
+| `keyboard`        | `boolean`                                | `true`          | `Esc` 关闭                                                         |
+| `centered`        | `boolean`                                | `true`          | 垂直居中；`false` 时靠上（约 `10vh`）                              |
+| `size`            | `'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'md'`          | 预设最大宽度                                                       |
+| `width`           | `number \| string`                       | -               | 覆盖最大宽度（如 `480`、`'80%'`）                                  |
+| `radius`          | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'lg'`          | 面板圆角                                                           |
+| `className`       | `string`                                 | -               | 根节点（全屏层）                                                   |
+| `bodyClassName`   | `string`                                 | -               | 白色面板节点                                                       |
+| `getContainer`    | `HTMLElement \| () => HTMLElement`       | `document.body` | 挂载容器                                                           |
+| `zIndex`          | `number`                                 | -               | 覆盖整层 z-index                                                   |
+| `afterOpenChange` | `(open: boolean) => void`                | -               | 状态变化后同步回调                                                 |
 
 ## 与 Toast / Alert
 
-| 场景 | 建议 |
-|------|------|
-| 需阻断操作、表单、双按钮确认 | **Modal** |
-| 全局轻提示、不打断 | **Toast** |
-| 页内常驻说明 | **Alert** / **Callout** |
+| 场景                         | 建议                    |
+| ---------------------------- | ----------------------- |
+| 需阻断操作、表单、双按钮确认 | **Modal**               |
+| 全局轻提示、不打断           | **Toast**               |
+| 页内常驻说明                 | **Alert** / **Callout** |
 
 ## 样式覆盖
 

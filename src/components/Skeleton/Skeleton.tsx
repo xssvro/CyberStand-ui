@@ -36,7 +36,7 @@ export const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(function
     style,
     ...rest
   },
-  ref
+  ref,
 ) {
   const defaultAvatar = 40;
 
@@ -84,7 +84,7 @@ export const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(function
         variant === 'rect' && styles.rect,
         variant === 'rect' && rounded && styles.rectRounded,
         active && styles.active,
-        className
+        className,
       )}
       style={{
         width: sizePx(width),

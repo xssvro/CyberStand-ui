@@ -40,7 +40,7 @@ export const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(function
     'aria-label': ariaLabel,
     ...rest
   },
-  ref
+  ref,
 ) {
   const pct = clampPct(value);
   const isIndeterminate = indeterminate === true;
@@ -70,7 +70,7 @@ export const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(function
           styles.track,
           size === 'sm' && styles.sizeSm,
           size === 'md' && styles.sizeMd,
-          size === 'lg' && styles.sizeLg
+          size === 'lg' && styles.sizeLg,
         )}
       >
         <div
@@ -78,7 +78,7 @@ export const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(function
             styles.fill,
             styles[color],
             showStripes && styles.striped,
-            isIndeterminate && styles.indeterminate
+            isIndeterminate && styles.indeterminate,
           )}
           style={
             isIndeterminate

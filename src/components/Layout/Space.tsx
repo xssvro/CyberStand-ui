@@ -28,7 +28,7 @@ export const Space = React.forwardRef<HTMLDivElement, SpaceProps>(function Space
     style,
     ...rest
   },
-  ref
+  ref,
 ) {
   const flexDirection = direction === 'horizontal' ? 'row' : 'column';
   const defaultAlign: FlexAlign = direction === 'horizontal' ? 'center' : 'stretch';

@@ -43,12 +43,7 @@ function resolveLinearSize(value: number | string | undefined, fallback: string)
 function CloseIcon() {
   return (
     <svg width={18} height={18} viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M18 6L6 18M6 6l12 12"
-        stroke="currentColor"
-        strokeWidth={2}
-        strokeLinecap="round"
-      />
+      <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth={2} strokeLinecap="round" />
     </svg>
   );
 }
@@ -94,7 +89,10 @@ export const Drawer: React.FC<DrawerProps> = ({
 
     setMounted(true);
 
-    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
       setPanelEntered(true);
       return;
     }
@@ -116,7 +114,10 @@ export const Drawer: React.FC<DrawerProps> = ({
     if (open) return;
     if (!mounted) return;
 
-    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
       setMounted(false);
       setPanelEntered(false);
       return;
@@ -128,7 +129,10 @@ export const Drawer: React.FC<DrawerProps> = ({
   useEffect(() => {
     if (open || !mounted) return;
     if (panelEntered) return;
-    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
       return;
     }
 
@@ -155,7 +159,7 @@ export const Drawer: React.FC<DrawerProps> = ({
   });
 
   const container =
-    typeof getContainer === 'function' ? getContainer() : getContainer ?? document.body;
+    typeof getContainer === 'function' ? getContainer() : (getContainer ?? document.body);
 
   const zStyle =
     zIndexProp !== undefined ? ({ zIndex: zIndexProp } as React.CSSProperties) : undefined;
@@ -218,7 +222,10 @@ export const Drawer: React.FC<DrawerProps> = ({
         >
           {showHeader ? (
             <div
-              className={joinClasses(styles.header, !hasTitle && closable && styles.headerCloseOnly)}
+              className={joinClasses(
+                styles.header,
+                !hasTitle && closable && styles.headerCloseOnly,
+              )}
             >
               {hasTitle ? (
                 typeof title === 'string' || typeof title === 'number' ? (
@@ -248,7 +255,9 @@ export const Drawer: React.FC<DrawerProps> = ({
             <div className={styles.body}>{children}</div>
           ) : null}
 
-          {footer != null && footer !== false ? <div className={styles.footer}>{footer}</div> : null}
+          {footer != null && footer !== false ? (
+            <div className={styles.footer}>{footer}</div>
+          ) : null}
         </aside>
       </div>
     </div>

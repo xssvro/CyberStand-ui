@@ -1,11 +1,4 @@
-import React, {
-  forwardRef,
-  useCallback,
-  useEffect,
-  useMemo,
-  useReducer,
-  useRef,
-} from 'react';
+import React, { forwardRef, useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
 import type { Size } from '../../core/stand';
 import type { FormLayout } from './FormContext';
 import { FormContext } from './FormContext';
@@ -45,7 +38,7 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(function Form(
     noValidate = true,
     ...rest
   },
-  ref
+  ref,
 ) {
   const innerRef = useRef<HTMLFormElement | null>(null);
   const setFormRef = useCallback(
@@ -58,7 +51,7 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(function Form(
         (ref as React.MutableRefObject<HTMLFormElement | null>).current = node;
       }
     },
-    [form, ref]
+    [form, ref],
   );
 
   const [, rerender] = useReducer((n: number) => n + 1, 0);
@@ -77,7 +70,7 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(function Form(
       size,
       disabled,
     }),
-    [layout, size, disabled]
+    [layout, size, disabled],
   );
 
   return (

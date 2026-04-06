@@ -37,14 +37,14 @@ import {
       </TableCell>
     </TableRow>
   </TableBody>
-</Table>
+</Table>;
 ```
 
 ### DOM 结构（与 Ant / Element 常见实现一致）
 
-1. **外层 `div`（`.root`）**：`border-radius: var(--su-radius)` + **`overflow: hidden`**，承担 **`shadow="sm"`**（与背景裁剪），解决表格直角顶破圆角的问题。  
-2. **加载遮罩**：`loading` 时在该层内绝对定位半透明层 + `Spinner`，`pointer-events: auto` 拦截点击。  
-3. **内层 `div`（`.scrollInner`）**：**仅横向** `overflow-x: auto`，窄屏可滑动。  
+1. **外层 `div`（`.root`）**：`border-radius: var(--su-radius)` + **`overflow: hidden`**，承担 **`shadow="sm"`**（与背景裁剪），解决表格直角顶破圆角的问题。
+2. **加载遮罩**：`loading` 时在该层内绝对定位半透明层 + `Spinner`，`pointer-events: auto` 拦截点击。
+3. **内层 `div`（`.scrollInner`）**：**仅横向** `overflow-x: auto`，窄屏可滑动。
 4. **`<table>`**：`bordered` 时使用 **`border-collapse: collapse`**，**外框 1px** 与**单元格网格**都画在 `table` / `th` / `td` 上。这样 **`colSpan` / `rowSpan` 合并后**，网格线仍与布局一致（不再依赖 `:last-child` 去右边线，避免 rowspan 下一行缺竖线）。
 
 `className` / `style` 仍传到 **`<table>`**；若要控制最外框边距，请用 **`wrapperClassName`**（或在外再包一层布局容器）。
@@ -53,18 +53,18 @@ import {
 
 ## 组件树与 HTML 对应关系
 
-| 导出组件 | 对应标签 | 职责 |
-|----------|----------|------|
-| `Table` | 外层圆角容器 + 横向滚动层 + `<table>` | 根：`size`、斑马纹、`bordered`（`table` 上外框 + `collapse` 网格）、`shadow`、`loading`、`hoverable`、`layout`、`stickyHeader`；透传标准 `table` 属性 |
-| `TableCaption` | `<caption>` | 表格标题条（顶栏背景 + 底部分割，类似工具条区） |
-| `TableEmpty` | `<tr>` 包一行合并单元格 | 空数据占位，类似 Ant `locale.emptyText` |
-| `TableHeader` | `<thead>` | 列标题区域 |
-| `TableBody` | `<tbody>` | 数据行区域 |
-| `TableFooter` | `<tfoot>` | 汇总行、分页说明等（可选） |
-| `TableRow` | `<tr>` | 行 |
-| `TableHead` | `<th>` | 列头；可选 **可排序**（`sortable` + `onSort` + 受控 `sortOrder`） |
-| `TableCell` | 默认 `<td>`，`as="th"` 时为 `<th>` | 数据格；行表头用 `as="th"` 并设 `scope="row"` |
-| `TableToolbar` | `<div role="toolbar">` | 表格外筛选/操作横条，与 **Input / Select / Button** 组合 |
+| 导出组件       | 对应标签                              | 职责                                                                                                                                                  |
+| -------------- | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Table`        | 外层圆角容器 + 横向滚动层 + `<table>` | 根：`size`、斑马纹、`bordered`（`table` 上外框 + `collapse` 网格）、`shadow`、`loading`、`hoverable`、`layout`、`stickyHeader`；透传标准 `table` 属性 |
+| `TableCaption` | `<caption>`                           | 表格标题条（顶栏背景 + 底部分割，类似工具条区）                                                                                                       |
+| `TableEmpty`   | `<tr>` 包一行合并单元格               | 空数据占位，类似 Ant `locale.emptyText`                                                                                                               |
+| `TableHeader`  | `<thead>`                             | 列标题区域                                                                                                                                            |
+| `TableBody`    | `<tbody>`                             | 数据行区域                                                                                                                                            |
+| `TableFooter`  | `<tfoot>`                             | 汇总行、分页说明等（可选）                                                                                                                            |
+| `TableRow`     | `<tr>`                                | 行                                                                                                                                                    |
+| `TableHead`    | `<th>`                                | 列头；可选 **可排序**（`sortable` + `onSort` + 受控 `sortOrder`）                                                                                     |
+| `TableCell`    | 默认 `<td>`，`as="th"` 时为 `<th>`    | 数据格；行表头用 `as="th"` 并设 `scope="row"`                                                                                                         |
+| `TableToolbar` | `<div role="toolbar">`                | 表格外筛选/操作横条，与 **Input / Select / Button** 组合                                                                                              |
 
 ---
 
@@ -72,20 +72,20 @@ import {
 
 除下表所列外，支持 React 的 `TableHTMLAttributes<HTMLTableElement>`（如 `id`、`role`、`aria-*`，以及原生 `summary` 等）。
 
-| Prop | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `size` | `'xs' \| 'sm' \| 'md' \| 'lg'` | `'md'` | 全表字号与内边距；`xs` 接近 Element 紧凑表格 |
-| `striped` | `boolean` | `false` | 仅 `tbody` 内隔行背景色 |
-| `bordered` | `boolean` | `false` | **`table` 外框 1px** + **单元格网格**（`collapse` 合并线，合并单元格边框正确） |
-| `hoverable` | `boolean` | `false` | 仅 `tbody` 行鼠标悬停背景 |
-| `layout` | `'auto' \| 'fixed'` | `'auto'` | `table-layout`；`fixed` 适合配合列宽与文本省略 |
-| `stickyHeader` | `boolean` | `false` | 表头 `position: sticky; top: 0`；需在**纵向可滚动祖先**内才明显（见下文） |
-| `loading` | `boolean` | `false` | 遮罩 + 主色 `Spinner`，`aria-busy`；拦截表体点击 |
-| `shadow` | `'none' \| 'sm'` | `'none'` | 外层 `box-shadow: var(--su-shadow-sm)`，列表页常用 |
-| `wrapperClassName` | `string` | - | 加到**最外层**圆角容器 |
-| `className` | `string` | - | 加到 `<table>` 上 |
-| `style` | `CSSProperties` | - | 加到 `<table>` 上 |
-| `children` | `ReactNode` | **必填** | 通常 `caption` + `thead` + `tbody`（+ 可选 `tfoot`） |
+| Prop               | 类型                           | 默认值   | 说明                                                                           |
+| ------------------ | ------------------------------ | -------- | ------------------------------------------------------------------------------ |
+| `size`             | `'xs' \| 'sm' \| 'md' \| 'lg'` | `'md'`   | 全表字号与内边距；`xs` 接近 Element 紧凑表格                                   |
+| `striped`          | `boolean`                      | `false`  | 仅 `tbody` 内隔行背景色                                                        |
+| `bordered`         | `boolean`                      | `false`  | **`table` 外框 1px** + **单元格网格**（`collapse` 合并线，合并单元格边框正确） |
+| `hoverable`        | `boolean`                      | `false`  | 仅 `tbody` 行鼠标悬停背景                                                      |
+| `layout`           | `'auto' \| 'fixed'`            | `'auto'` | `table-layout`；`fixed` 适合配合列宽与文本省略                                 |
+| `stickyHeader`     | `boolean`                      | `false`  | 表头 `position: sticky; top: 0`；需在**纵向可滚动祖先**内才明显（见下文）      |
+| `loading`          | `boolean`                      | `false`  | 遮罩 + 主色 `Spinner`，`aria-busy`；拦截表体点击                               |
+| `shadow`           | `'none' \| 'sm'`               | `'none'` | 外层 `box-shadow: var(--su-shadow-sm)`，列表页常用                             |
+| `wrapperClassName` | `string`                       | -        | 加到**最外层**圆角容器                                                         |
+| `className`        | `string`                       | -        | 加到 `<table>` 上                                                              |
+| `style`            | `CSSProperties`                | -        | 加到 `<table>` 上                                                              |
+| `children`         | `ReactNode`                    | **必填** | 通常 `caption` + `thead` + `tbody`（+ 可选 `tfoot`）                           |
 
 **`ref`**：转发到内层 **`<table>`**，不指向外层圆角容器。
 
@@ -103,43 +103,43 @@ import {
 
 ### `TableHead`（列头 `<th>`）
 
-| Prop | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `align` | `'start' \| 'center' \| 'end'` | `'start'` | 文本对齐；排序列 `end` 时按钮右对齐 |
-| `numeric` | `boolean` | - | 为真时施加 `font-variant-numeric: tabular-nums`，适合金额、数量列标题与数据对齐 |
-| `sortable` | `boolean` | `false` | 为真且传入 `onSort` 时，列头内渲染 **`<button type="button">`**，并在 `th` 上设置 **`aria-sort`**（`ascending` / `descending` / `none`） |
-| `sortOrder` | `TableSortOrder`（`'asc' \| 'desc' \| null`） | `null` | **受控**：当前列是否为主排序列及方向；非主列传 `null` |
-| `onSort` | `() => void` | - | 点击排序按钮；父组件内切换「排序列」或对当前列执行 **`cycleTableSortOrder`** |
-| `sortAriaLabel` | `string` | - | 排序按钮的无障碍名称，建议「按某某排序」 |
-| `sortDisabled` | `boolean` | `false` | 禁用排序按钮 |
-| 其余 | `ThHTMLAttributes` | - | **务必**为列头设置 `scope="col"`（多列分组时可配合 `colSpan` / `scope="colgroup"` 等标准用法） |
+| Prop            | 类型                                          | 默认值    | 说明                                                                                                                                     |
+| --------------- | --------------------------------------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `align`         | `'start' \| 'center' \| 'end'`                | `'start'` | 文本对齐；排序列 `end` 时按钮右对齐                                                                                                      |
+| `numeric`       | `boolean`                                     | -         | 为真时施加 `font-variant-numeric: tabular-nums`，适合金额、数量列标题与数据对齐                                                          |
+| `sortable`      | `boolean`                                     | `false`   | 为真且传入 `onSort` 时，列头内渲染 **`<button type="button">`**，并在 `th` 上设置 **`aria-sort`**（`ascending` / `descending` / `none`） |
+| `sortOrder`     | `TableSortOrder`（`'asc' \| 'desc' \| null`） | `null`    | **受控**：当前列是否为主排序列及方向；非主列传 `null`                                                                                    |
+| `onSort`        | `() => void`                                  | -         | 点击排序按钮；父组件内切换「排序列」或对当前列执行 **`cycleTableSortOrder`**                                                             |
+| `sortAriaLabel` | `string`                                      | -         | 排序按钮的无障碍名称，建议「按某某排序」                                                                                                 |
+| `sortDisabled`  | `boolean`                                     | `false`   | 禁用排序按钮                                                                                                                             |
+| 其余            | `ThHTMLAttributes`                            | -         | **务必**为列头设置 `scope="col"`（多列分组时可配合 `colSpan` / `scope="colgroup"` 等标准用法）                                           |
 
 ### `TableToolbar`
 
-| Prop | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `children` | `ReactNode` | - | 左侧/主区：筛选控件（`Input`、`Select` 等） |
-| `extra` | `ReactNode` | - | 右侧：次要操作按钮 |
-| `aria-label` | `string` | `'表格工具栏'` | `role="toolbar"` 的可访问名称，可按业务改写 |
-| 其余 | `HTMLAttributes<HTMLDivElement>` | - | `className` 等与容器合并 |
+| Prop         | 类型                             | 默认值         | 说明                                        |
+| ------------ | -------------------------------- | -------------- | ------------------------------------------- |
+| `children`   | `ReactNode`                      | -              | 左侧/主区：筛选控件（`Input`、`Select` 等） |
+| `extra`      | `ReactNode`                      | -              | 右侧：次要操作按钮                          |
+| `aria-label` | `string`                         | `'表格工具栏'` | `role="toolbar"` 的可访问名称，可按业务改写 |
+| 其余         | `HTMLAttributes<HTMLDivElement>` | -              | `className` 等与容器合并                    |
 
 ### `TableCell`（单元格 `<td>` / `<th>`）
 
-| Prop | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `as` | `'td' \| 'th'` | `'td'` | 行表头或角格使用 `as="th"`，并设置 `scope="row"` 或相应 scope |
-| `align` | `'start' \| 'center' \| 'end'` | `'start'` | 文本对齐；金额列常用 `align="end"` |
-| `numeric` | `boolean` | - | 与 `TableHead` 一致，等宽数字 |
-| 其余 | `TdHTMLAttributes` | - | 支持 `colSpan`、`rowSpan`、`headers` 等原生属性 |
+| Prop      | 类型                           | 默认值    | 说明                                                          |
+| --------- | ------------------------------ | --------- | ------------------------------------------------------------- |
+| `as`      | `'td' \| 'th'`                 | `'td'`    | 行表头或角格使用 `as="th"`，并设置 `scope="row"` 或相应 scope |
+| `align`   | `'start' \| 'center' \| 'end'` | `'start'` | 文本对齐；金额列常用 `align="end"`                            |
+| `numeric` | `boolean`                      | -         | 与 `TableHead` 一致，等宽数字                                 |
+| 其余      | `TdHTMLAttributes`             | -         | 支持 `colSpan`、`rowSpan`、`headers` 等原生属性               |
 
 ### `TableEmpty`
 
-| Prop | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `colSpan` | `number` | **必填** | 与当前表列数一致，合并为一格 |
-| `description` | `ReactNode` | `'暂无数据'` | 无 `children` 时展示 |
-| `children` | `ReactNode` | - | 自定义空状态（插图、按钮等），优先级高于 `description` |
-| 其余 | `HTMLAttributes<HTMLTableRowElement>` | - | 传到外层 `<tr>` |
+| Prop          | 类型                                  | 默认值       | 说明                                                   |
+| ------------- | ------------------------------------- | ------------ | ------------------------------------------------------ |
+| `colSpan`     | `number`                              | **必填**     | 与当前表列数一致，合并为一格                           |
+| `description` | `ReactNode`                           | `'暂无数据'` | 无 `children` 时展示                                   |
+| `children`    | `ReactNode`                           | -            | 自定义空状态（插图、按钮等），优先级高于 `description` |
+| 其余          | `HTMLAttributes<HTMLTableRowElement>` | -            | 传到外层 `<tr>`                                        |
 
 ---
 
@@ -302,8 +302,8 @@ A：`bordered` 模式使用 **`border-collapse: collapse`** 与单元格四边 `
 
 ## 检查清单（交付 / Code Review）
 
-- [ ] 有 `caption` 或等价可见标题（设计豁免除外）  
-- [ ] 列头 `scope="col"`；行头 `th` + `scope="row"`  
-- [ ] 大数据量时考虑分页或虚拟化（本组件不包含虚拟列表）  
-- [ ] 移动端确认横向滚动与最小列宽可读性  
-- [ ] 可排序列已设 `sortAriaLabel`，且 `aria-sort` 与数据排序方向一致  
+- [ ] 有 `caption` 或等价可见标题（设计豁免除外）
+- [ ] 列头 `scope="col"`；行头 `th` + `scope="row"`
+- [ ] 大数据量时考虑分页或虚拟化（本组件不包含虚拟列表）
+- [ ] 移动端确认横向滚动与最小列宽可读性
+- [ ] 可排序列已设 `sortAriaLabel`，且 `aria-sort` 与数据排序方向一致

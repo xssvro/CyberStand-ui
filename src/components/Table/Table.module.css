@@ -166,7 +166,9 @@
   cursor: pointer;
   text-align: start;
   border-radius: max(2px, calc(var(--su-radius, 5px) - 2px));
-  transition: color var(--su-transition-fast), background-color var(--su-transition-fast);
+  transition:
+    color var(--su-transition-fast),
+    background-color var(--su-transition-fast);
 }
 
 .sortBtn:hover:not(:disabled) {

@@ -123,6 +123,8 @@ export const DropdownMenuLabel: React.FC<React.HTMLAttributes<HTMLDivElement>> =
 
 DropdownMenuLabel.displayName = 'DropdownMenuLabel';
 
-export const DropdownMenuDivider: React.FC = () => <div className={styles.divider} role="separator" />;
+export const DropdownMenuDivider: React.FC = () => (
+  <div className={styles.divider} role="separator" />
+);
 
 DropdownMenuDivider.displayName = 'DropdownMenuDivider';

@@ -4,8 +4,10 @@ import styles from './Checkbox.module.css';
 
 export type CheckboxSize = 'sm' | 'md';
 
-export interface CheckboxProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'type' | 'onChange'> {
+export interface CheckboxProps extends Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  'size' | 'type' | 'onChange'
+> {
   /** 在 CheckboxGroup 内必填，作为提交值 */
   value?: string;
   onCheckedChange?: (checked: boolean, e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -35,7 +37,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       required,
       ...rest
     },
-    ref
+    ref,
   ) => {
     const ctx = useContext(CheckboxGroupContext);
     const uid = useId();
@@ -54,12 +56,11 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 
     const showError = color === 'error' || ctx?.invalid;
 
-    const checkedProps =
-      inGroup
-        ? { checked: ctx.value.includes(valueProp!) }
-        : checkedProp !== undefined
-          ? { checked: checkedProp }
-          : { defaultChecked };
+    const checkedProps = inGroup
+      ? { checked: ctx.value.includes(valueProp!) }
+      : checkedProp !== undefined
+        ? { checked: checkedProp }
+        : { defaultChecked };
 
     return (
       <label
@@ -67,7 +68,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           styles.root,
           size === 'sm' && styles.sizeSm,
           disabled && styles.disabled,
-          className
+          className,
         )}
       >
         <input
@@ -86,7 +87,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
         {label != null && <span className={styles.text}>{label}</span>}
       </label>
     );
-  }
+  },
 );
 
 Checkbox.displayName = 'Checkbox';

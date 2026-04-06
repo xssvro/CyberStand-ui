@@ -4,11 +4,11 @@
 
 ## 与 Alert / Toast
 
-| 组件 | 用途 |
-|------|------|
-| **Callout** | 文内说明、设计规范、不抢读屏焦点 |
-| **Alert** | 页内状态、可关闭、可选 `role="alert"` |
-| **Toast** | 全局瞬时反馈、`toast()` |
+| 组件        | 用途                                  |
+| ----------- | ------------------------------------- |
+| **Callout** | 文内说明、设计规范、不抢读屏焦点      |
+| **Alert**   | 页内状态、可关闭、可选 `role="alert"` |
+| **Toast**   | 全局瞬时反馈、`toast()`               |
 
 ## 快速开始
 
@@ -17,17 +17,17 @@ import { Callout } from 'stand-ui/components/Callout';
 
 <Callout intent="info" title="注意">
   该接口在 v2 中行为有变更。
-</Callout>
+</Callout>;
 ```
 
 ## Props
 
-| Prop | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `intent` | `'default' \| 'info' \| 'success' \| 'warning' \| 'error'` | `'default'` | 左边框与标题色 |
-| `title` | `ReactNode` | — | 小号大写标题行 |
-| `children` | `ReactNode` | （必填） | 正文 |
-| `className` | `string` | — | 根节点（`aside`） |
-| `style` | `CSSProperties` | — | 根节点 |
+| Prop        | 类型                                                       | 默认值      | 说明              |
+| ----------- | ---------------------------------------------------------- | ----------- | ----------------- |
+| `intent`    | `'default' \| 'info' \| 'success' \| 'warning' \| 'error'` | `'default'` | 左边框与标题色    |
+| `title`     | `ReactNode`                                                | —           | 小号大写标题行    |
+| `children`  | `ReactNode`                                                | （必填）    | 正文              |
+| `className` | `string`                                                   | —           | 根节点（`aside`） |
+| `style`     | `CSSProperties`                                            | —           | 根节点            |
 
 其余 `aside` 属性可透传。

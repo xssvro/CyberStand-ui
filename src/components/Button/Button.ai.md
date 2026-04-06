@@ -14,26 +14,27 @@ import { Button } from 'stand-ui/components/Button';
 
 ## Props 完整说明
 
-| Prop | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `children` | 可渲染子节点 | **必填** | 按钮显示内容 |
-| `size` | `Size`（xs / sm / md / lg / xl） | `'md'` | 按钮尺寸 |
-| `color` | `Color`（default、primary…） | `'primary'` | 颜色主题 |
-| `variant` | `Variant`（solid、soft…） | `'solid'` | 样式变体 |
-| `radius` | `Radius`（none～full） | `'md'` | 圆角；**默认 `'md'` 时按 `size` 阶梯**（xs/sm 约 3px → xl 约 9px），显式传入其它 `radius` 仍用全局刻度 |
-| `disabled` | `boolean` | `false` | 是否禁用 |
-| `loading` | `boolean` | `false` | 是否加载中 |
-| `block` | `boolean` | `false` | 是否块级宽度100% |
-| `leftIcon` | 可渲染子节点 | - | 左侧图标 |
-| `rightIcon` | 可渲染子节点 | - | 右侧图标 |
-| `onClick` | `(e) => void` | - | 点击事件 |
-| `type` | `'button' \| 'submit' \| 'reset'` | `'button'` | 按钮类型 |
-| `className` | `string` | - | 自定义CSS类 |
-| `style` | `CSSProperties` | - | 自定义内联样式 |
+| Prop        | 类型                              | 默认值      | 说明                                                                                                   |
+| ----------- | --------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------ |
+| `children`  | 可渲染子节点                      | **必填**    | 按钮显示内容                                                                                           |
+| `size`      | `Size`（xs / sm / md / lg / xl）  | `'md'`      | 按钮尺寸                                                                                               |
+| `color`     | `Color`（default、primary…）      | `'primary'` | 颜色主题                                                                                               |
+| `variant`   | `Variant`（solid、soft…）         | `'solid'`   | 样式变体                                                                                               |
+| `radius`    | `Radius`（none～full）            | `'md'`      | 圆角；**默认 `'md'` 时按 `size` 阶梯**（xs/sm 约 3px → xl 约 9px），显式传入其它 `radius` 仍用全局刻度 |
+| `disabled`  | `boolean`                         | `false`     | 是否禁用                                                                                               |
+| `loading`   | `boolean`                         | `false`     | 是否加载中                                                                                             |
+| `block`     | `boolean`                         | `false`     | 是否块级宽度100%                                                                                       |
+| `leftIcon`  | 可渲染子节点                      | -           | 左侧图标                                                                                               |
+| `rightIcon` | 可渲染子节点                      | -           | 右侧图标                                                                                               |
+| `onClick`   | `(e) => void`                     | -           | 点击事件                                                                                               |
+| `type`      | `'button' \| 'submit' \| 'reset'` | `'button'`  | 按钮类型                                                                                               |
+| `className` | `string`                          | -           | 自定义CSS类                                                                                            |
+| `style`     | `CSSProperties`                   | -           | 自定义内联样式                                                                                         |
 
 ## 常用组合示例
 
 ### 1. 操作按钮组合
+
 ```tsx
 // 主要操作 + 次要操作
 <div className="flex gap-2">
@@ -43,6 +44,7 @@ import { Button } from 'stand-ui/components/Button';
 ```
 
 ### 2. 危险操作
+
 ```tsx
 // 删除等危险操作使用 error 颜色
 <Button color="error" variant="soft">删除</Button>
@@ -50,18 +52,21 @@ import { Button } from 'stand-ui/components/Button';
 ```
 
 ### 3. 带图标的按钮
+
 ```tsx
 <Button leftIcon={<PlusIcon />}>新建</Button>
 <Button rightIcon={<ArrowRightIcon />}>下一步</Button>
 ```
 
 ### 4. 加载状态
+
 ```tsx
 <Button loading>提交中...</Button>
 <Button loading disabled={false}>强制加载样式</Button>
 ```
 
 ### 5. 尺寸阶梯
+
 ```tsx
 <div className="flex items-center gap-2">
   <Button size="xs">超小</Button>
@@ -73,6 +78,7 @@ import { Button } from 'stand-ui/components/Button';
 ```
 
 ### 6. 不同变体完整展示
+
 ```tsx
 // 主要按钮的各种变体
 <div className="flex gap-2">
@@ -104,9 +110,11 @@ import { Button } from 'stand-ui/components/Button';
 ```
 
 ### 通过 className 覆盖
+
 ```tsx
 <Button className="my-custom-btn">自定义类</Button>
 ```
+
 ```css
 /* 示例：用全局 token 实色覆盖，避免装饰性渐变（与 DESIGN 一致） */
 .my-custom-btn {

@@ -23,16 +23,16 @@ import { Textarea } from 'stand-ui/components';
 
 ## Props
 
-| 属性 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `rows` | `number` | `4` | 行数 |
-| `resize` | `vertical` \| `none` \| `both` | `vertical` | 拖拽调整 |
-| `value` / `defaultValue` / `placeholder` | — | — | 同原生 |
-| `onChange` | `(value, e) => void` | — | |
-| `size` / `color` / `radius` | 同 Stand | `md` / `default` / `md` | |
-| `disabled` / `readOnly` / `required` | `boolean` | — | |
-| `maxLength` / `minLength` / `name` | — | — | 透传 `textarea` |
-| `autoComplete` | `string` | **`off`** | 未传时默认关闭自动填充 |
+| 属性                                     | 类型                           | 默认                    | 说明                   |
+| ---------------------------------------- | ------------------------------ | ----------------------- | ---------------------- |
+| `rows`                                   | `number`                       | `4`                     | 行数                   |
+| `resize`                                 | `vertical` \| `none` \| `both` | `vertical`              | 拖拽调整               |
+| `value` / `defaultValue` / `placeholder` | —                              | —                       | 同原生                 |
+| `onChange`                               | `(value, e) => void`           | —                       |                        |
+| `size` / `color` / `radius`              | 同 Stand                       | `md` / `default` / `md` |                        |
+| `disabled` / `readOnly` / `required`     | `boolean`                      | —                       |                        |
+| `maxLength` / `minLength` / `name`       | —                              | —                       | 透传 `textarea`        |
+| `autoComplete`                           | `string`                       | **`off`**               | 未传时默认关闭自动填充 |
 
 无障碍相关 **`id` / `aria-*`** 透传至原生 **`textarea`**。
 

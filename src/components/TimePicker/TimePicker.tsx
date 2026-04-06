@@ -19,17 +19,11 @@ import styles from './TimePicker.module.css';
 
 type TimePickerHtmlPassthrough = Pick<
   React.HTMLAttributes<HTMLButtonElement>,
-  | 'id'
-  | 'aria-invalid'
-  | 'aria-describedby'
-  | 'aria-labelledby'
-  | 'aria-label'
-  | 'aria-required'
+  'id' | 'aria-invalid' | 'aria-describedby' | 'aria-labelledby' | 'aria-label' | 'aria-required'
 >;
 
 export interface TimePickerProps
-  extends Omit<StandProps, 'variant' | 'loading'>,
-    TimePickerHtmlPassthrough {
+  extends Omit<StandProps, 'variant' | 'loading'>, TimePickerHtmlPassthrough {
   /** `HH:mm` 或 `HH:mm:ss`（与 `withSeconds` 一致） */
   value?: string;
   defaultValue?: string;

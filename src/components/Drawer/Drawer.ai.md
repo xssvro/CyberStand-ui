@@ -33,30 +33,30 @@ const [open, setOpen] = useState(false);
 
 ## Props
 
-| Prop | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `open` | `boolean` | （必填） | 是否展示 |
-| `onOpenChange` | `(open: boolean) => void` | - | 受控开关 |
-| `onClose` | `() => void` | - | 关闭回调 |
-| `title` | `React.ReactNode` | - | 标题 |
-| `children` | `React.ReactNode` | - | 主体（可滚动） |
-| `footer` | `React.ReactNode` | - | 底栏 |
-| `closable` | `boolean` | `true` | 右上角关闭钮 |
-| `mask` | `boolean` | `true` | 半透明遮罩与模糊 |
-| `maskClosable` | `boolean` | `true` | 点遮罩/透明层关闭 |
-| `keyboard` | `boolean` | `true` | Esc 关闭 |
-| `placement` | `left` / `right` / `top` / `bottom` | `right` | 滑入边 |
-| `width` | `number` 或 `string` | `400`（px） | 左/右抽屉宽度 |
-| `height` | `number` 或 `string` | `min(40vh, 320px)` | 上/下抽屉高度 |
-| `className` | `string` | - | 根节点 |
-| `panelClassName` | `string` | - | 面板节点 |
-| `getContainer` | `HTMLElement` 或 `() => HTMLElement` | `document.body` | 挂载容器 |
-| `zIndex` | `number` | - | 覆盖 z-index |
-| `afterOpenChange` | `(open: boolean) => void` | - | 状态变化后回调 |
+| Prop              | 类型                                 | 默认值             | 说明              |
+| ----------------- | ------------------------------------ | ------------------ | ----------------- |
+| `open`            | `boolean`                            | （必填）           | 是否展示          |
+| `onOpenChange`    | `(open: boolean) => void`            | -                  | 受控开关          |
+| `onClose`         | `() => void`                         | -                  | 关闭回调          |
+| `title`           | `React.ReactNode`                    | -                  | 标题              |
+| `children`        | `React.ReactNode`                    | -                  | 主体（可滚动）    |
+| `footer`          | `React.ReactNode`                    | -                  | 底栏              |
+| `closable`        | `boolean`                            | `true`             | 右上角关闭钮      |
+| `mask`            | `boolean`                            | `true`             | 半透明遮罩与模糊  |
+| `maskClosable`    | `boolean`                            | `true`             | 点遮罩/透明层关闭 |
+| `keyboard`        | `boolean`                            | `true`             | Esc 关闭          |
+| `placement`       | `left` / `right` / `top` / `bottom`  | `right`            | 滑入边            |
+| `width`           | `number` 或 `string`                 | `400`（px）        | 左/右抽屉宽度     |
+| `height`          | `number` 或 `string`                 | `min(40vh, 320px)` | 上/下抽屉高度     |
+| `className`       | `string`                             | -                  | 根节点            |
+| `panelClassName`  | `string`                             | -                  | 面板节点          |
+| `getContainer`    | `HTMLElement` 或 `() => HTMLElement` | `document.body`    | 挂载容器          |
+| `zIndex`          | `number`                             | -                  | 覆盖 z-index      |
+| `afterOpenChange` | `(open: boolean) => void`            | -                  | 状态变化后回调    |
 
 ## 与 Modal
 
-| 场景 | 建议 |
-|------|------|
-| 需强阻断、确认、表单居中 | **Modal** |
-| 侧栏菜单、筛选、窄详情 | **Drawer** |
+| 场景                     | 建议       |
+| ------------------------ | ---------- |
+| 需强阻断、确认、表单居中 | **Modal**  |
+| 侧栏菜单、筛选、窄详情   | **Drawer** |

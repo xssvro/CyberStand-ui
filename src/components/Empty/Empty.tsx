@@ -27,7 +27,13 @@ function DefaultIllustration() {
         strokeLinecap="square"
         opacity={0.35}
       />
-      <path d="M24 12 H72" stroke="currentColor" strokeWidth="1" opacity={0.25} strokeLinecap="square" />
+      <path
+        d="M24 12 H72"
+        stroke="currentColor"
+        strokeWidth="1"
+        opacity={0.25}
+        strokeLinecap="square"
+      />
     </svg>
   );
 }
@@ -43,7 +49,7 @@ export interface EmptyProps extends Omit<React.HTMLAttributes<HTMLDivElement>, '
 
 export const Empty = React.forwardRef<HTMLDivElement, EmptyProps>(function Empty(
   { image, title, description, children, className = '', ...rest },
-  ref
+  ref,
 ) {
   const headingId = React.useId();
   const labelledBy = title != null && title !== '' ? headingId : undefined;
@@ -57,7 +63,9 @@ export const Empty = React.forwardRef<HTMLDivElement, EmptyProps>(function Empty
       {...rest}
     >
       {image !== null ? (
-        <div className={styles.imageWrap}>{image === undefined ? <DefaultIllustration /> : image}</div>
+        <div className={styles.imageWrap}>
+          {image === undefined ? <DefaultIllustration /> : image}
+        </div>
       ) : null}
       {title != null && title !== '' ? (
         <h3 id={headingId} className={styles.title}>

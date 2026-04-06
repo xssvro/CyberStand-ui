@@ -20,17 +20,11 @@ type DatePickerPlacement = PanelPlacement;
 
 type DatePickerHtmlPassthrough = Pick<
   React.HTMLAttributes<HTMLButtonElement>,
-  | 'id'
-  | 'aria-invalid'
-  | 'aria-describedby'
-  | 'aria-labelledby'
-  | 'aria-label'
-  | 'aria-required'
+  'id' | 'aria-invalid' | 'aria-describedby' | 'aria-labelledby' | 'aria-label' | 'aria-required'
 >;
 
 export interface DatePickerProps
-  extends Omit<StandProps, 'variant' | 'loading'>,
-    DatePickerHtmlPassthrough {
+  extends Omit<StandProps, 'variant' | 'loading'>, DatePickerHtmlPassthrough {
   /** 选中日期 `yyyy-mm-dd` */
   value?: string;
   defaultValue?: string;
@@ -60,7 +54,7 @@ function joinClasses(...parts: Array<string | false | undefined>): string {
 
 function createSyntheticChangeEvent(
   value: string,
-  name: string | undefined
+  name: string | undefined,
 ): React.ChangeEvent<HTMLInputElement> {
   const t = { value, name: name ?? '' } as HTMLInputElement;
   return {
@@ -129,7 +123,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(functio
     'aria-label': ariaLabel,
     'aria-required': ariaRequired,
   },
-  ref
+  ref,
 ) {
   const baseId = useId().replace(/:/g, '');
   const panelId = `${baseId}-panel`;
@@ -144,14 +138,12 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(functio
       if (!isControlled) setUncontrolled(next);
       onChange?.(next, createSyntheticChangeEvent(next, name));
     },
-    [isControlled, onChange, name]
+    [isControlled, onChange, name],
   );
 
   const [open, setOpen] = useState(false);
   const parsedValue = value ? parseISODate(value) : null;
-  const [visibleMonth, setVisibleMonth] = useState(() =>
-    startOfMonth(parsedValue ?? new Date())
-  );
+  const [visibleMonth, setVisibleMonth] = useState(() => startOfMonth(parsedValue ?? new Date()));
 
   const triggerRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -162,7 +154,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(functio
       if (typeof ref === 'function') ref(node);
       else if (ref) (ref as React.MutableRefObject<HTMLButtonElement | null>).current = node;
     },
-    [ref]
+    [ref],
   );
 
   const displayText = useMemo(() => {
@@ -197,7 +189,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(functio
       setValue(iso);
       closePanel();
     },
-    [min, max, setValue, closePanel]
+    [min, max, setValue, closePanel],
   );
 
   useLayoutEffect(() => {
@@ -302,7 +294,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(functio
         styles[color],
         disabled && styles.disabled,
         open && styles.open,
-        className
+        className,
       )}
       style={
         {

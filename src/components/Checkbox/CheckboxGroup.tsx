@@ -28,42 +28,40 @@ function joinClasses(...parts: Array<string | false | undefined>): string {
   return parts.filter(Boolean).join(' ');
 }
 
-export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
-  function CheckboxGroup(
-    {
-      name,
-      value,
-      onValueChange,
-      disabled = false,
-      invalid = false,
-      horizontal = false,
-      children,
-      className = '',
-      ...rest
-    },
-    ref
-  ) {
-    const onToggle = (v: string, checked: boolean) => {
-      if (checked) {
-        if (!value.includes(v)) onValueChange([...value, v]);
-      } else {
-        onValueChange(value.filter((x) => x !== v));
-      }
-    };
+export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(function CheckboxGroup(
+  {
+    name,
+    value,
+    onValueChange,
+    disabled = false,
+    invalid = false,
+    horizontal = false,
+    children,
+    className = '',
+    ...rest
+  },
+  ref,
+) {
+  const onToggle = (v: string, checked: boolean) => {
+    if (checked) {
+      if (!value.includes(v)) onValueChange([...value, v]);
+    } else {
+      onValueChange(value.filter((x) => x !== v));
+    }
+  };
 
-    return (
-      <CheckboxGroupContext.Provider value={{ name, value, disabled, invalid, onToggle }}>
-        <div
-          ref={ref}
-          role="group"
-          className={joinClasses(styles.group, horizontal && styles.horizontal, className)}
-          {...rest}
-        >
-          {children}
-        </div>
-      </CheckboxGroupContext.Provider>
-    );
-  }
-);
+  return (
+    <CheckboxGroupContext.Provider value={{ name, value, disabled, invalid, onToggle }}>
+      <div
+        ref={ref}
+        role="group"
+        className={joinClasses(styles.group, horizontal && styles.horizontal, className)}
+        {...rest}
+      >
+        {children}
+      </div>
+    </CheckboxGroupContext.Provider>
+  );
+});
 
 CheckboxGroup.displayName = 'CheckboxGroup';

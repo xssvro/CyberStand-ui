@@ -16,14 +16,14 @@ import { Loading } from 'stand-ui/components/Loading';
 
 ## Props
 
-| Prop | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `spinning` | `boolean` | `true` | 为 false 时仅渲染 `children`（若有） |
-| `tip` | `ReactNode` | — | 遮罩内说明文案 |
-| `fullscreen` | `boolean` | `false` | 为 true 时遮罩 `position: fixed` 铺满视口 |
-| `children` | `ReactNode` | — | 有子节点时在子树上方盖遮罩；无子节点时为独立占位块 |
-| `className` | `string` | — | 追加在根 `div` |
-| `style` | `CSSProperties` | — | 根节点样式 |
+| Prop         | 类型            | 默认值  | 说明                                               |
+| ------------ | --------------- | ------- | -------------------------------------------------- |
+| `spinning`   | `boolean`       | `true`  | 为 false 时仅渲染 `children`（若有）               |
+| `tip`        | `ReactNode`     | —       | 遮罩内说明文案                                     |
+| `fullscreen` | `boolean`       | `false` | 为 true 时遮罩 `position: fixed` 铺满视口          |
+| `children`   | `ReactNode`     | —       | 有子节点时在子树上方盖遮罩；无子节点时为独立占位块 |
+| `className`  | `string`        | —       | 追加在根 `div`                                     |
+| `style`      | `CSSProperties` | —       | 根节点样式                                         |
 
 其余 `div` 原生属性可透传。
 

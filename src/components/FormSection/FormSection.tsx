@@ -1,8 +1,10 @@
 import React, { forwardRef, useId } from 'react';
 import styles from './FormSection.module.css';
 
-export interface FormSectionProps
-  extends Omit<React.FieldsetHTMLAttributes<HTMLFieldSetElement>, 'title' | 'children'> {
+export interface FormSectionProps extends Omit<
+  React.FieldsetHTMLAttributes<HTMLFieldSetElement>,
+  'title' | 'children'
+> {
   /** 分组标题：`fieldset` 时为 `legend`，`div` 时为标题节点 */
   title: React.ReactNode;
   /** 标题下辅助说明 */
@@ -27,7 +29,7 @@ export const FormSection = forwardRef<HTMLElement, FormSectionProps>(function Fo
     style,
     ...rest
   },
-  ref
+  ref,
 ) {
   const uid = useId().replace(/:/g, '');
   const titleId = `su-fs-title-${uid}`;

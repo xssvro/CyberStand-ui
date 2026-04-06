@@ -22,35 +22,26 @@ function ratioToCss(ratio: number | string): string {
   return String(ratio);
 }
 
-export const AspectRatio = React.forwardRef<HTMLDivElement, AspectRatioProps>(
-  function AspectRatio(
-    {
-      ratio = 16 / 9,
-      objectFit = 'cover',
-      children,
-      className = '',
-      style,
-      ...rest
-    },
-    ref
-  ) {
-    return (
-      <div
-        ref={ref}
-        className={[styles.root, className].filter(Boolean).join(' ')}
-        style={
-          {
-            '--su-aspect-ratio': ratioToCss(ratio),
-            '--su-aspect-object-fit': objectFit,
-            ...style,
-          } as React.CSSProperties
-        }
-        {...rest}
-      >
-        <div className={styles.inner}>{children}</div>
-      </div>
-    );
-  }
-);
+export const AspectRatio = React.forwardRef<HTMLDivElement, AspectRatioProps>(function AspectRatio(
+  { ratio = 16 / 9, objectFit = 'cover', children, className = '', style, ...rest },
+  ref,
+) {
+  return (
+    <div
+      ref={ref}
+      className={[styles.root, className].filter(Boolean).join(' ')}
+      style={
+        {
+          '--su-aspect-ratio': ratioToCss(ratio),
+          '--su-aspect-object-fit': objectFit,
+          ...style,
+        } as React.CSSProperties
+      }
+      {...rest}
+    >
+      <div className={styles.inner}>{children}</div>
+    </div>
+  );
+});
 
 AspectRatio.displayName = 'AspectRatio';

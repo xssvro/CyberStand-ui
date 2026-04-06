@@ -45,7 +45,7 @@ export const Tag = React.forwardRef<HTMLSpanElement, TagProps>(function Tag(
     className = '',
     ...rest
   },
-  ref
+  ref,
 ) {
   const handleCloseClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -63,7 +63,13 @@ export const Tag = React.forwardRef<HTMLSpanElement, TagProps>(function Tag(
   return (
     <span
       ref={ref}
-      className={join(styles.root, styles[variant], styles[color], closable && styles.withClose, className)}
+      className={join(
+        styles.root,
+        styles[variant],
+        styles[color],
+        closable && styles.withClose,
+        className,
+      )}
       {...rest}
     >
       <span className={styles.label}>{children}</span>

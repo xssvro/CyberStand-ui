@@ -10,13 +10,13 @@
 
 ## 组件定位：什么时候用 Form？
 
-| 场景 | 建议 |
-|------|------|
-| 需要 **Enter 提交**、**FormData**、**原生 reset**、无障碍表单语义 | 用 **`Form`** |
-| 仅布局、无提交语义 | 用 **`Stack`** / **`Card`** 即可 |
-| 分组标题 + `fieldset`/`legend` | **`Form` 内嵌 `FormSection`** |
-| 单列标签在上、多列表单 | **`Form` + 默认 `layout="vertical"`** |
-| 标签在左对齐 | **`Form layout="horizontal"`**，字段上可设 **`labelWidth`** |
+| 场景                                                              | 建议                                                        |
+| ----------------------------------------------------------------- | ----------------------------------------------------------- |
+| 需要 **Enter 提交**、**FormData**、**原生 reset**、无障碍表单语义 | 用 **`Form`**                                               |
+| 仅布局、无提交语义                                                | 用 **`Stack`** / **`Card`** 即可                            |
+| 分组标题 + `fieldset`/`legend`                                    | **`Form` 内嵌 `FormSection`**                               |
+| 单列标签在上、多列表单                                            | **`Form` + 默认 `layout="vertical"`**                       |
+| 标签在左对齐                                                      | **`Form layout="horizontal"`**，字段上可设 **`labelWidth`** |
 
 ---
 
@@ -41,13 +41,7 @@ Form                    ← 整表：onSubmit、noValidate、layout/size/disable
 ## 快速开始
 
 ```tsx
-import {
-  Button,
-  Form,
-  FormField,
-  Input,
-  Stack,
-} from 'stand-ui/components';
+import { Button, Form, FormField, Input, Stack } from 'stand-ui/components';
 
 <Form
   className="max-w-lg w-full"
@@ -69,7 +63,7 @@ import {
       保存
     </Button>
   </Stack>
-</Form>
+</Form>;
 ```
 
 ---
@@ -78,15 +72,15 @@ import {
 
 除下表外，还支持 **`method`**、**`action`**、**`encType`**、**`target`** 等 **`React.FormHTMLAttributes<HTMLFormElement>`**。
 
-| 属性 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `noValidate` | `boolean` | **`true`** | 关闭浏览器原生校验**气泡**。必填/格式错误请用 **`FormField` 的 `error`**、**`rules`** 或在 **`onSubmit` 里校验**。需要原生 HTML5 气泡时传 **`noValidate={false}`**。 |
-| `form` | **`FormInstance`** | — | 由 **`useForm()`** 创建；**`await form.validateFields()`** 驱动 **`rules`**；显式 **`FormField` `error`** 优先于规则错误 |
-| `layout` | `vertical` \| `horizontal` | `vertical` | 子级 **`FormField`** 默认布局；单字段可 **`layout="horizontal"`** 覆盖 |
-| `size` | `Size` | `md` | 子级 **`Input` / `Textarea` / `Select` / `Switch`** 未自设 **`size`** 时注入 |
-| `disabled` | `boolean` | `false` | 与子项 **`disabled`** 合并（字段显式 **`disabled`** 仍为禁用） |
-| `className` / `style` | — | — | 根 **`form`**；常用 **`max-w-* w-full`** 限制最大宽度 |
-| `children` | `ReactNode` | 必填 | 任意结构；上下文仅对 **`Form` 子树**生效 |
+| 属性                  | 类型                       | 默认       | 说明                                                                                                                                                                 |
+| --------------------- | -------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `noValidate`          | `boolean`                  | **`true`** | 关闭浏览器原生校验**气泡**。必填/格式错误请用 **`FormField` 的 `error`**、**`rules`** 或在 **`onSubmit` 里校验**。需要原生 HTML5 气泡时传 **`noValidate={false}`**。 |
+| `form`                | **`FormInstance`**         | —          | 由 **`useForm()`** 创建；**`await form.validateFields()`** 驱动 **`rules`**；显式 **`FormField` `error`** 优先于规则错误                                             |
+| `layout`              | `vertical` \| `horizontal` | `vertical` | 子级 **`FormField`** 默认布局；单字段可 **`layout="horizontal"`** 覆盖                                                                                               |
+| `size`                | `Size`                     | `md`       | 子级 **`Input` / `Textarea` / `Select` / `Switch`** 未自设 **`size`** 时注入                                                                                         |
+| `disabled`            | `boolean`                  | `false`    | 与子项 **`disabled`** 合并（字段显式 **`disabled`** 仍为禁用）                                                                                                       |
+| `className` / `style` | —                          | —          | 根 **`form`**；常用 **`max-w-* w-full`** 限制最大宽度                                                                                                                |
+| `children`            | `ReactNode`                | 必填       | 任意结构；上下文仅对 **`Form` 子树**生效                                                                                                                             |
 
 ---
 
@@ -102,28 +96,21 @@ import {
 
 ### `FormRule` 支持的能力（子集）
 
-| 键 | 说明 |
-|----|------|
-| `required` / `message` | 必填 |
-| `whitespace` | 为 true 时先 trim 再判空（配合 `required`） |
-| `len` / `min` / `max` | 字符串长度或数组长度；`type: 'number'` 时对数值比较 |
-| `pattern` | 正则 |
-| `type` | `'string'` \| `'number'` \| `'email'` \| `'url'` |
-| `validator` | `(rule, value) => string \| void` 或 async |
+| 键                     | 说明                                                |
+| ---------------------- | --------------------------------------------------- |
+| `required` / `message` | 必填                                                |
+| `whitespace`           | 为 true 时先 trim 再判空（配合 `required`）         |
+| `len` / `min` / `max`  | 字符串长度或数组长度；`type: 'number'` 时对数值比较 |
+| `pattern`              | 正则                                                |
+| `type`                 | `'string'` \| `'number'` \| `'email'` \| `'url'`    |
+| `validator`            | `(rule, value) => string \| void` 或 async          |
 
 多条规则用数组：**`rules={[{ required: true }, { min: 2 }]}`**，按顺序执行，**遇错即停**。
 
 ### 示例
 
 ```tsx
-import {
-  Button,
-  Form,
-  FormField,
-  FormValidateError,
-  Input,
-  useForm,
-} from 'stand-ui/components';
+import { Button, Form, FormField, FormValidateError, Input, useForm } from 'stand-ui/components';
 
 function EmailForm() {
   const form = useForm();
@@ -163,13 +150,13 @@ function EmailForm() {
 
 ### `FormInstance` API
 
-| 方法 | 说明 |
-|------|------|
-| **`validateFields(nameList?)`** | 校验：不传参则校验所有已注册 **`name`**；传数组则只校验这些字段。成功返回 **`values`**，失败 **`throw FormValidateError`** |
-| **`getFieldsValue()`** | 从当前 **`<form>`** 的 **`FormData`** 汇总（多选同名键为数组） |
-| **`setFields({ email: { errors: ['自定义'] } })`** | 手动设错（首条文案展示在 **`FormField`**） |
-| **`resetFields(nameList?)`** | **`form.reset()`** 并清空对应（或全部）校验错误 |
-| **`getFieldError(name)`** / **`clearErrors()`** | 读单字段错 / 清空所有错 |
+| 方法                                               | 说明                                                                                                                       |
+| -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| **`validateFields(nameList?)`**                    | 校验：不传参则校验所有已注册 **`name`**；传数组则只校验这些字段。成功返回 **`values`**，失败 **`throw FormValidateError`** |
+| **`getFieldsValue()`**                             | 从当前 **`<form>`** 的 **`FormData`** 汇总（多选同名键为数组）                                                             |
+| **`setFields({ email: { errors: ['自定义'] } })`** | 手动设错（首条文案展示在 **`FormField`**）                                                                                 |
+| **`resetFields(nameList?)`**                       | **`form.reset()`** 并清空对应（或全部）校验错误                                                                            |
+| **`getFieldError(name)`** / **`clearErrors()`**    | 读单字段错 / 清空所有错                                                                                                    |
 
 ### 与手写 `error`、`RHF` 的关系
 
@@ -183,15 +170,7 @@ function EmailForm() {
 下面展示：**两个分组**、**Select**、**说明文案**、**底部主次按钮**。
 
 ```tsx
-import {
-  Button,
-  Form,
-  FormField,
-  FormSection,
-  Input,
-  Select,
-  Stack,
-} from 'stand-ui/components';
+import { Button, Form, FormField, FormSection, Input, Select, Stack } from 'stand-ui/components';
 
 <Form
   className="max-w-xl w-full"
@@ -234,7 +213,7 @@ import {
       创建
     </Button>
   </Stack>
-</Form>
+</Form>;
 ```
 
 ---
@@ -313,16 +292,14 @@ function MyControl() {
 
 ## CSS 变量
 
-| 变量 | 说明 |
-|------|------|
+| 变量            | 说明                                                                         |
+| --------------- | ---------------------------------------------------------------------------- |
 | `--su-form-gap` | **`Form` 根节点**子元素之间的 **`gap`**，默认回退 **`--su-space-4`**（16px） |
 
 示例：**略加大字段间距**
 
 ```tsx
-<Form style={{ ['--su-form-gap' as string]: 'var(--su-space-6)' }}>
-  …
-</Form>
+<Form style={{ ['--su-form-gap' as string]: 'var(--su-space-6)' }}>…</Form>
 ```
 
 ---
@@ -401,8 +378,8 @@ export function DemoForm() {
 
 ## 文件位置
 
-| 内容 | 路径 |
-|------|------|
-| 组件 | `src/components/Form/`（含 **`formStore` / `formRules` / `useForm`**） |
-| 表单项 | `src/components/FormField/` |
-| 分组 | `src/components/FormSection/` |
+| 内容   | 路径                                                                   |
+| ------ | ---------------------------------------------------------------------- |
+| 组件   | `src/components/Form/`（含 **`formStore` / `formRules` / `useForm`**） |
+| 表单项 | `src/components/FormField/`                                            |
+| 分组   | `src/components/FormSection/`                                          |

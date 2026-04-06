@@ -28,12 +28,12 @@ import { AspectRatio } from 'stand-ui/components';
 
 ## Props
 
-| 属性 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `ratio` | `number` \| `string` | `16/9` | 宽高比；数字为 CSS 数值（如 `1`、`1.777`）；字符串可为 `"16/9"`、`"4 / 3"` 等合法 `aspect-ratio` 值 |
-| `objectFit` | `contain` \| `cover` \| `fill` \| `none` \| `scale-down` | `cover` | 作用于内部 **`img` / `video` / `picture img`** |
-| `className` / `style` | — | — | 根容器；可用 `max-w-*`、`width` 控制宽度，高度随比例计算 |
-| 其余 | `HTMLAttributes<HTMLDivElement>` | — | 如 `onClick`、`data-*`、`aria-*`（根为 `div`） |
+| 属性                  | 类型                                                     | 默认    | 说明                                                                                                |
+| --------------------- | -------------------------------------------------------- | ------- | --------------------------------------------------------------------------------------------------- |
+| `ratio`               | `number` \| `string`                                     | `16/9`  | 宽高比；数字为 CSS 数值（如 `1`、`1.777`）；字符串可为 `"16/9"`、`"4 / 3"` 等合法 `aspect-ratio` 值 |
+| `objectFit`           | `contain` \| `cover` \| `fill` \| `none` \| `scale-down` | `cover` | 作用于内部 **`img` / `video` / `picture img`**                                                      |
+| `className` / `style` | —                                                        | —       | 根容器；可用 `max-w-*`、`width` 控制宽度，高度随比例计算                                            |
+| 其余                  | `HTMLAttributes<HTMLDivElement>`                         | —       | 如 `onClick`、`data-*`、`aria-*`（根为 `div`）                                                      |
 
 **子节点**：任意 React 节点；非图片/视频时自行控制铺满（如 `className="w-full h-full"` 的色块）。
 
@@ -41,12 +41,12 @@ import { AspectRatio } from 'stand-ui/components';
 
 ## `ratio` 写法
 
-| 写法 | 含义 |
-|------|------|
-| `ratio={16 / 9}` | 宽:高 ≈ 16:9 |
-| `ratio={1}` | 正方形 |
-| `ratio="16/9"` | 与上等价，由浏览器解析为比例 |
-| `ratio="4 / 3"` | 4:3 |
+| 写法             | 含义                         |
+| ---------------- | ---------------------------- |
+| `ratio={16 / 9}` | 宽:高 ≈ 16:9                 |
+| `ratio={1}`      | 正方形                       |
+| `ratio="16/9"`   | 与上等价，由浏览器解析为比例 |
+| `ratio="4 / 3"`  | 4:3                          |
 
 ---
 
@@ -72,10 +72,7 @@ import { AspectRatio } from 'stand-ui/components';
 
 ```tsx
 <AspectRatio ratio={1} className="max-w-xs rounded-md overflow-hidden">
-  <div
-    className="h-full w-full bg-[var(--su-btn-primary-soft-bg)]"
-    aria-hidden
-  />
+  <div className="h-full w-full bg-[var(--su-btn-primary-soft-bg)]" aria-hidden />
 </AspectRatio>
 ```
 
@@ -90,6 +87,6 @@ import { AspectRatio } from 'stand-ui/components';
 
 ## 文件位置
 
-| 内容 | 路径 |
-|------|------|
+| 内容 | 路径                          |
+| ---- | ----------------------------- |
 | 组件 | `src/components/AspectRatio/` |

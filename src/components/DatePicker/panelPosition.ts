@@ -18,8 +18,7 @@ export function applyPanelPosition(
   options?: ApplyPanelPositionOptions,
 ): void {
   const matchTriggerWidth = options?.matchTriggerWidth ?? true;
-  const maxWidthWhenShrink =
-    options?.maxWidth ?? 'min(calc(100vw - 16px), 320px)';
+  const maxWidthWhenShrink = options?.maxWidth ?? 'min(calc(100vw - 16px), 320px)';
   const rect = triggerEl.getBoundingClientRect();
   const gap = 6;
   const margin = 8;
@@ -30,7 +29,9 @@ export function applyPanelPosition(
     placement === 'top-start' || (placement === 'auto' && below < panelH && above > below);
   if (placement === 'bottom-start') openUp = false;
 
-  const zRaw = getComputedStyle(document.documentElement).getPropertyValue('--su-z-dropdown').trim();
+  const zRaw = getComputedStyle(document.documentElement)
+    .getPropertyValue('--su-z-dropdown')
+    .trim();
   const zIndex = zRaw || '1000';
 
   panelEl.style.setProperty('position', 'fixed');

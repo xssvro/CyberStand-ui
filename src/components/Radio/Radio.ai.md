@@ -32,27 +32,27 @@ import { Radio, RadioGroup } from 'stand-ui/components';
 
 ## Radio Props
 
-| 属性 | 说明 |
-|------|------|
-| `value` | 选项值（**必填**） |
-| `label` | 文案 |
-| `size` | `sm` \| `md` |
-| `color` | `default` \| `error` |
+| 属性                         | 说明                    |
+| ---------------------------- | ----------------------- |
+| `value`                      | 选项值（**必填**）      |
+| `label`                      | 文案                    |
+| `size`                       | `sm` \| `md`            |
+| `color`                      | `default` \| `error`    |
 | `checked` / `defaultChecked` | 仅在**无 Group** 时使用 |
-| `name` | 无 Group 时须传 |
+| `name`                       | 无 Group 时须传         |
 
 ---
 
 ## RadioGroup Props
 
-| 属性 | 说明 |
-|------|------|
-| `name` | 表单字段名 |
-| `value` | 当前选中项的 `value` |
+| 属性            | 说明                  |
+| --------------- | --------------------- |
+| `name`          | 表单字段名            |
+| `value`         | 当前选中项的 `value`  |
 | `onValueChange` | `(v: string) => void` |
-| `invalid` | 子 Radio 错误描边 |
-| `horizontal` | 横向排列 |
-| `disabled` | 整组禁用 |
+| `invalid`       | 子 Radio 错误描边     |
+| `horizontal`    | 横向排列              |
+| `disabled`      | 整组禁用              |
 
 ---
 

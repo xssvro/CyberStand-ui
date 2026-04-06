@@ -21,7 +21,9 @@ const JUSTIFY: Record<FlexJustify, React.CSSProperties['justifyContent']> = {
   evenly: 'space-evenly',
 };
 
-function wrapToCss(w: boolean | 'nowrap' | 'wrap' | 'wrap-reverse' | undefined): React.CSSProperties['flexWrap'] {
+function wrapToCss(
+  w: boolean | 'nowrap' | 'wrap' | 'wrap-reverse' | undefined,
+): React.CSSProperties['flexWrap'] {
   if (w === true || w === 'wrap') return 'wrap';
   if (w === 'wrap-reverse') return 'wrap-reverse';
   return 'nowrap';
@@ -55,7 +57,7 @@ export const Flex = React.forwardRef<HTMLDivElement, FlexProps>(function Flex(
     style,
     ...rest
   },
-  ref
+  ref,
 ) {
   return (
     <div

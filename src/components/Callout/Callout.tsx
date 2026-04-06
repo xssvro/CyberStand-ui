@@ -7,7 +7,10 @@ function join(...parts: Array<string | false | undefined>): string {
   return parts.filter(Boolean).join(' ');
 }
 
-export interface CalloutProps extends Omit<React.HTMLAttributes<HTMLElement>, 'title' | 'children'> {
+export interface CalloutProps extends Omit<
+  React.HTMLAttributes<HTMLElement>,
+  'title' | 'children'
+> {
   /** 语义强调色；`default` 为中性说明 */
   intent?: CalloutIntent;
   title?: React.ReactNode;
@@ -20,7 +23,7 @@ export interface CalloutProps extends Omit<React.HTMLAttributes<HTMLElement>, 't
  */
 export const Callout = React.forwardRef<HTMLElement, CalloutProps>(function Callout(
   { intent = 'default', title, children, className = '', ...rest },
-  ref
+  ref,
 ) {
   return (
     <aside ref={ref} className={join(styles.root, styles[intent], className)} {...rest}>

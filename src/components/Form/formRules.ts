@@ -21,7 +21,7 @@ export interface FormRule {
    */
   validator?: (
     rule: FormRule,
-    value: unknown
+    value: unknown,
   ) => void | string | undefined | Promise<void | string | undefined>;
 }
 
@@ -43,7 +43,10 @@ function toNumber(value: unknown): number | null {
 /**
  * 对单条 rule 对象内**同时出现的**多个约束按固定顺序执行（与 Ant Design 单对象多键行为接近）。
  */
-export async function runRules(value: unknown, rules: FormRule[] | undefined): Promise<string | undefined> {
+export async function runRules(
+  value: unknown,
+  rules: FormRule[] | undefined,
+): Promise<string | undefined> {
   if (!rules?.length) return undefined;
 
   for (const rule of rules) {

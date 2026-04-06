@@ -1,12 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { getComponentDocsGrouped } from '../docs/components';
-import {
-  IconAiChip,
-  IconBraces,
-  IconPackage,
-  IconPalette,
-} from '../icons';
+import { IconAiChip, IconBraces, IconPackage, IconPalette } from '../icons';
 
 const inspirations = [
   {
@@ -70,9 +65,7 @@ export const Home: React.FC = () => {
     <div className="docs-home">
       <section className="hero">
         <h1 className="docs-logo-title">CyberStand UI</h1>
-        <p className="subtitle">
-          专为 AI 与多端开发优化的通用 UI 框架
-        </p>
+        <p className="subtitle">专为 AI 与多端开发优化的通用 UI 框架</p>
         <p className="description">
           每个组件都配有详细的 AI 使用文档，让 AI 能够精准识别和生成代码。
           <br />
@@ -82,8 +75,8 @@ export const Home: React.FC = () => {
           <Link to="/component/Button" className="btn-primary">
             开始使用
           </Link>
-          <a 
-            href="https://github.com/your-org/stand-ui" 
+          <a
+            href="https://github.com/your-org/stand-ui"
             className="btn-secondary"
             target="_blank"
             rel="noreferrer"
@@ -96,15 +89,12 @@ export const Home: React.FC = () => {
       <section className="inspiration-section" aria-labelledby="inspiration-heading">
         <h2 id="inspiration-heading">灵感来源</h2>
         <p className="inspiration-intro">
-          视觉气质借赛博朋克影像与游戏传统：深色冷底、霓虹锚点、可读优先。
-          完整设计说明见仓库根目录 <strong className="inspiration-doc-ref">DESIGN.md</strong>。
+          视觉气质借赛博朋克影像与游戏传统：深色冷底、霓虹锚点、可读优先。 完整设计说明见仓库根目录{' '}
+          <strong className="inspiration-doc-ref">DESIGN.md</strong>。
         </p>
         <div className="inspiration-grid">
           {inspirations.map((item) => (
-            <article
-              key={item.id}
-              className={`inspire-card inspire-card--${item.id}`}
-            >
+            <article key={item.id} className={`inspire-card inspire-card--${item.id}`}>
               <p className="inspire-card__hint">{item.hint}</p>
               <div className={`inspire-card__titles inspire-card__titles--${item.id}`}>
                 <span className="inspire-card__zh">{item.titleZh}</span>
@@ -161,8 +151,9 @@ export const Home: React.FC = () => {
         <p className="components-preview-hint">
           侧栏与下方列表均来自 <code>src/docs/components.ts</code>。日期场景可查看{' '}
           <Link to="/component/DatePicker">DatePicker</Link>（自研月历弹层）与{' '}
-          <Link to="/component/Input">Input</Link> 的 <code>type=&quot;date&quot;</code>（无原生日历图标，纯输入）对照示例；
-          悬停说明见 <Link to="/component/Tooltip">Tooltip</Link>。
+          <Link to="/component/Input">Input</Link> 的 <code>type=&quot;date&quot;</code>
+          （无原生日历图标，纯输入）对照示例； 悬停说明见{' '}
+          <Link to="/component/Tooltip">Tooltip</Link>。
         </p>
         <div className="component-list-grouped">
           {getComponentDocsGrouped().map((group) => (
@@ -170,11 +161,7 @@ export const Home: React.FC = () => {
               <h3 className="component-category-title">{group.category}</h3>
               <div className="component-list">
                 {group.docs.map((doc) => (
-                  <Link
-                    key={doc.name}
-                    to={`/component/${doc.name}`}
-                    className="component-item"
-                  >
+                  <Link key={doc.name} to={`/component/${doc.name}`} className="component-item">
                     <h4 className="component-item-title">{doc.title}</h4>
                     <p>{doc.description}</p>
                   </Link>

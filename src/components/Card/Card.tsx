@@ -26,7 +26,7 @@ export interface CardProps extends Omit<StandProps, 'variant' | 'size' | 'color'
 
 /**
  * Card 卡片组件
- * 
+ *
  * 通用容器组件，用于展示内容块
  */
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(
@@ -47,7 +47,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
       onClick,
       ...props
     },
-    ref
+    ref,
   ) => {
     const radiusVar = getRadiusVar(radius);
 
@@ -69,10 +69,12 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
       <div
         ref={ref}
         className={classes}
-        style={{
-          '--su-radius': radiusVar,
-          ...style,
-        } as React.CSSProperties}
+        style={
+          {
+            '--su-radius': radiusVar,
+            ...style,
+          } as React.CSSProperties
+        }
         onClick={disabled ? undefined : onClick}
         {...props}
       >
@@ -89,7 +91,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
         {footer && <div className={styles.footer}>{footer}</div>}
       </div>
     );
-  }
+  },
 );
 
 Card.displayName = 'Card';

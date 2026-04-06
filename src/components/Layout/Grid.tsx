@@ -62,7 +62,7 @@ export const Grid = React.forwardRef<HTMLDivElement, GridProps>(function Grid(
     style,
     ...rest
   },
-  ref
+  ref,
 ) {
   let gridTemplateColumns: string | undefined;
   if (minChildWidth !== undefined) {

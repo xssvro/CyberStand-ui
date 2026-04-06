@@ -53,9 +53,7 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(function Table(
   ref,
 ) {
   return (
-    <div
-      className={join(styles.root, shadow === 'sm' && styles.rootShadowSm, wrapperClassName)}
-    >
+    <div className={join(styles.root, shadow === 'sm' && styles.rootShadowSm, wrapperClassName)}>
       {loading ? (
         <div className={styles.loadingOverlay} aria-busy="true" aria-live="polite">
           <Spinner size="md" color="primary" />
@@ -89,12 +87,11 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(function Table(
 
 export type TableHeaderProps = React.HTMLAttributes<HTMLTableSectionElement>;
 
-export const TableHeader = forwardRef<HTMLTableSectionElement, TableHeaderProps>(function TableHeader(
-  { className, ...rest },
-  ref,
-) {
-  return <thead ref={ref} className={join(styles.thead, className)} {...rest} />;
-});
+export const TableHeader = forwardRef<HTMLTableSectionElement, TableHeaderProps>(
+  function TableHeader({ className, ...rest }, ref) {
+    return <thead ref={ref} className={join(styles.thead, className)} {...rest} />;
+  },
+);
 
 export type TableBodyProps = React.HTMLAttributes<HTMLTableSectionElement>;
 
@@ -107,12 +104,11 @@ export const TableBody = forwardRef<HTMLTableSectionElement, TableBodyProps>(fun
 
 export type TableFooterProps = React.HTMLAttributes<HTMLTableSectionElement>;
 
-export const TableFooter = forwardRef<HTMLTableSectionElement, TableFooterProps>(function TableFooter(
-  { className, ...rest },
-  ref,
-) {
-  return <tfoot ref={ref} className={join(styles.tfoot, className)} {...rest} />;
-});
+export const TableFooter = forwardRef<HTMLTableSectionElement, TableFooterProps>(
+  function TableFooter({ className, ...rest }, ref) {
+    return <tfoot ref={ref} className={join(styles.tfoot, className)} {...rest} />;
+  },
+);
 
 export type TableRowProps = React.HTMLAttributes<HTMLTableRowElement>;
 
@@ -125,7 +121,10 @@ export const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(function 
 
 export type TableHeadAlign = 'start' | 'center' | 'end';
 
-export interface TableHeadProps extends Omit<React.ThHTMLAttributes<HTMLTableCellElement>, 'align'> {
+export interface TableHeadProps extends Omit<
+  React.ThHTMLAttributes<HTMLTableCellElement>,
+  'align'
+> {
   align?: TableHeadAlign;
   /** 等宽数字（tabular-nums），适合金额、数量列 */
   numeric?: boolean;
@@ -176,19 +175,19 @@ export const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(functi
         : 'none';
 
   const inner = hasSort ? (
-      <button
-        type="button"
-        className={join(styles.sortBtn, align === 'end' && styles.sortBtnAlignEnd)}
-        onClick={onSort}
-        disabled={sortDisabled}
-        aria-label={sortAriaLabel}
-      >
-        <span className={styles.sortLabel}>{children}</span>
-        <SortGlyphs order={sortOrder} />
-      </button>
-    ) : (
-      children
-    );
+    <button
+      type="button"
+      className={join(styles.sortBtn, align === 'end' && styles.sortBtnAlignEnd)}
+      onClick={onSort}
+      disabled={sortDisabled}
+      aria-label={sortAriaLabel}
+    >
+      <span className={styles.sortLabel}>{children}</span>
+      <SortGlyphs order={sortOrder} />
+    </button>
+  ) : (
+    children
+  );
 
   return (
     <th
@@ -211,7 +210,10 @@ export const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(functi
 
 export type TableCellAlign = 'start' | 'center' | 'end';
 
-export interface TableCellProps extends Omit<React.TdHTMLAttributes<HTMLTableCellElement>, 'align'> {
+export interface TableCellProps extends Omit<
+  React.TdHTMLAttributes<HTMLTableCellElement>,
+  'align'
+> {
   align?: TableCellAlign;
   numeric?: boolean;
   /** 行表头或角单元格时使用 `th`，请配合 `scope` */
@@ -239,14 +241,16 @@ export const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(functi
 
 export type TableCaptionProps = React.HTMLAttributes<HTMLTableCaptionElement>;
 
-export const TableCaption = forwardRef<HTMLTableCaptionElement, TableCaptionProps>(function TableCaption(
-  { className, ...rest },
-  ref,
-) {
-  return <caption ref={ref} className={join(styles.caption, className)} {...rest} />;
-});
+export const TableCaption = forwardRef<HTMLTableCaptionElement, TableCaptionProps>(
+  function TableCaption({ className, ...rest }, ref) {
+    return <caption ref={ref} className={join(styles.caption, className)} {...rest} />;
+  },
+);
 
-export interface TableEmptyProps extends Omit<React.HTMLAttributes<HTMLTableRowElement>, 'children'> {
+export interface TableEmptyProps extends Omit<
+  React.HTMLAttributes<HTMLTableRowElement>,
+  'children'
+> {
   /** 合并列数，须与列数一致 */
   colSpan: number;
   children?: React.ReactNode;

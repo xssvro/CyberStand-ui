@@ -204,9 +204,7 @@ export function parseISOTime(s: string): { h: number; m: number; sec: number } |
 }
 
 export function formatISOTime(h: number, m: number, sec = 0, withSeconds = false): string {
-  return withSeconds
-    ? `${pad2(h)}:${pad2(m)}:${pad2(sec)}`
-    : `${pad2(h)}:${pad2(m)}`;
+  return withSeconds ? `${pad2(h)}:${pad2(m)}:${pad2(sec)}` : `${pad2(h)}:${pad2(m)}`;
 }
 
 /** `yyyy-mm-ddTHH:mm` 或带秒、或空格分隔 */
@@ -257,11 +255,7 @@ export function parseDateRangeSlash(raw: string): DateRangeISO {
   return normalizeDateRangeISO(t.slice(0, i), t.slice(i + 1));
 }
 
-export function clampDateRangeToBounds(
-  r: DateRangeISO,
-  min?: string,
-  max?: string,
-): DateRangeISO {
+export function clampDateRangeToBounds(r: DateRangeISO, min?: string, max?: string): DateRangeISO {
   if (!isCompleteDateRange(r)) return r;
   let { start, end } = r;
   const minKey = min ? extractISODateKey(min) : null;

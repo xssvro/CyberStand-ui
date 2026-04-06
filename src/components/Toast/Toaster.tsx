@@ -29,13 +29,7 @@ function isBottomPosition(p: ToasterPosition): boolean {
   return p.startsWith('bottom');
 }
 
-function ToastItem({
-  toast: t,
-  position,
-}: {
-  toast: ToastRecord;
-  position: ToasterPosition;
-}) {
+function ToastItem({ toast: t, position }: { toast: ToastRecord; position: ToasterPosition }) {
   const [exiting, setExiting] = useState(false);
   const liRef = useRef<HTMLLIElement>(null);
   const removedRef = useRef(false);
@@ -62,8 +56,7 @@ function ToastItem({
   }, [exiting, t.id]);
 
   const live = t.type === 'error' ? 'assertive' : 'polite';
-  const hasDescription =
-    t.description != null && t.description !== '';
+  const hasDescription = t.description != null && t.description !== '';
 
   return (
     <li
@@ -78,14 +71,10 @@ function ToastItem({
       <span className={styles.accent} aria-hidden />
       <div className={styles.body}>
         <div className={styles.titleRow}>
-          {t.type === 'loading' && (
-            <span className={styles.spinner} aria-hidden />
-          )}
+          {t.type === 'loading' && <span className={styles.spinner} aria-hidden />}
           <div className={styles.title}>{t.title}</div>
         </div>
-        {hasDescription && (
-          <div className={styles.description}>{t.description}</div>
-        )}
+        {hasDescription && <div className={styles.description}>{t.description}</div>}
       </div>
       {t.dismissible && (
         <button
@@ -111,15 +100,8 @@ function ToastItem({
 
 const emptyToasts: ToastRecord[] = [];
 
-export const Toaster: React.FC<ToasterProps> = ({
-  position = 'top-center',
-  className = '',
-}) => {
-  const list = useSyncExternalStore(
-    subscribe,
-    getToasts,
-    () => emptyToasts
-  );
+export const Toaster: React.FC<ToasterProps> = ({ position = 'top-center', className = '' }) => {
+  const list = useSyncExternalStore(subscribe, getToasts, () => emptyToasts);
 
   const node = (
     <ul

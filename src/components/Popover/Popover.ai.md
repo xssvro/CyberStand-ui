@@ -25,7 +25,7 @@ const [open, setOpen] = useState(false);
   <Button type="button" variant="soft" size="sm">
     打开
   </Button>
-</Popover>
+</Popover>;
 ```
 
 ## 行为说明
@@ -39,23 +39,23 @@ const [open, setOpen] = useState(false);
 
 ## Props
 
-| Prop | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `open` | `boolean` | （必填） | 是否展开 |
-| `onOpenChange` | `(open: boolean) => void` | - | 状态回调 |
-| `content` | `React.ReactNode` | （必填） | 浮层内容 |
-| `children` | `React.ReactNode` | （必填） | 触发区域 |
-| `placement` | `top` / `bottom` / `left` / `right` | `bottom` | 相对锚点 |
-| `keyboard` | `boolean` | `true` | Esc 关闭 |
-| `className` | `string` | - | 触发器外层 |
-| `panelClassName` | `string` | - | 面板 |
-| `getPopupContainer` | `() => HTMLElement` | `document.body` | Portal |
-| `zIndex` | `number` | - | 覆盖 z-index |
+| Prop                | 类型                                | 默认值          | 说明         |
+| ------------------- | ----------------------------------- | --------------- | ------------ |
+| `open`              | `boolean`                           | （必填）        | 是否展开     |
+| `onOpenChange`      | `(open: boolean) => void`           | -               | 状态回调     |
+| `content`           | `React.ReactNode`                   | （必填）        | 浮层内容     |
+| `children`          | `React.ReactNode`                   | （必填）        | 触发区域     |
+| `placement`         | `top` / `bottom` / `left` / `right` | `bottom`        | 相对锚点     |
+| `keyboard`          | `boolean`                           | `true`          | Esc 关闭     |
+| `className`         | `string`                            | -               | 触发器外层   |
+| `panelClassName`    | `string`                            | -               | 面板         |
+| `getPopupContainer` | `() => HTMLElement`                 | `document.body` | Portal       |
+| `zIndex`            | `number`                            | -               | 覆盖 z-index |
 
 ## 与 Tooltip / Modal
 
-| 场景 | 建议 |
-|------|------|
-| 只读短提示、悬停 | **Tooltip** |
+| 场景               | 建议        |
+| ------------------ | ----------- |
+| 只读短提示、悬停   | **Tooltip** |
 | 菜单、轻表单、过滤 | **Popover** |
-| 阻断、确认 | **Modal** |
+| 阻断、确认         | **Modal**   |

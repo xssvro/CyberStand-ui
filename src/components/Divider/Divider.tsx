@@ -38,110 +38,107 @@ const SPACING_CLASS: Record<DividerSpacing, string> = {
   lg: styles.spacingLg,
 };
 
-export const Divider = React.forwardRef<HTMLElement, DividerProps>(
-  function Divider(
-    {
-      children,
-      orientation = 'horizontal',
-      variant = 'solid',
-      spacing = 'md',
-      color = 'default',
-      titleAlign = 'center',
-      decorative = true,
-      className = '',
-      style,
-      ...rest
-    },
-    ref
-  ) {
-    const isVertical = orientation === 'vertical';
-    const hasLabel = Boolean(children) && !isVertical;
+export const Divider = React.forwardRef<HTMLElement, DividerProps>(function Divider(
+  {
+    children,
+    orientation = 'horizontal',
+    variant = 'solid',
+    spacing = 'md',
+    color = 'default',
+    titleAlign = 'center',
+    decorative = true,
+    className = '',
+    style,
+    ...rest
+  },
+  ref,
+) {
+  const isVertical = orientation === 'vertical';
+  const hasLabel = Boolean(children) && !isVertical;
 
-    const variantClass =
-      variant !== 'solid' ? styles[variant as 'dashed' | 'dotted'] : '';
-    const spacingClass = SPACING_CLASS[spacing];
-    const orientClass = isVertical ? styles.vertical : styles.horizontal;
-    const colorClass = color === 'subtle' ? styles.colorSubtle : '';
+  const variantClass = variant !== 'solid' ? styles[variant as 'dashed' | 'dotted'] : '';
+  const spacingClass = SPACING_CLASS[spacing];
+  const orientClass = isVertical ? styles.vertical : styles.horizontal;
+  const colorClass = color === 'subtle' ? styles.colorSubtle : '';
 
-    const a11yProps: React.HTMLAttributes<HTMLElement> = decorative
-      ? { 'aria-hidden': true }
-      : {
-          role: 'separator',
-          'aria-orientation': isVertical ? 'vertical' : 'horizontal',
-        };
+  const a11yProps: React.HTMLAttributes<HTMLElement> = decorative
+    ? { 'aria-hidden': true }
+    : {
+        role: 'separator',
+        'aria-orientation': isVertical ? 'vertical' : 'horizontal',
+      };
 
-    if (hasLabel) {
-      const alignClass =
-        titleAlign === 'start'
-          ? styles.alignStart
-          : titleAlign === 'end'
-            ? styles.alignEnd
-            : styles.alignCenter;
-
-      return (
-        <div
-          ref={ref as React.Ref<HTMLDivElement>}
-          className={joinClasses(
-            styles.withLabel,
-            orientClass,
-            variantClass,
-            spacingClass,
-            colorClass,
-            alignClass,
-            className
-          )}
-          style={style}
-          {...(decorative
-            ? { 'aria-hidden': true }
-            : { role: 'separator', 'aria-orientation': 'horizontal' as const })}
-          {...rest}
-        >
-          <span className={styles.line} aria-hidden />
-          <span className={styles.text}>{children}</span>
-          <span className={styles.line} aria-hidden />
-        </div>
-      );
-    }
-
-    if (isVertical) {
-      return (
-        <div
-          ref={ref as React.Ref<HTMLDivElement>}
-          className={joinClasses(
-            styles.root,
-            orientClass,
-            variantClass,
-            spacingClass,
-            colorClass,
-            className
-          )}
-          style={style}
-          {...a11yProps}
-          {...rest}
-        />
-      );
-    }
+  if (hasLabel) {
+    const alignClass =
+      titleAlign === 'start'
+        ? styles.alignStart
+        : titleAlign === 'end'
+          ? styles.alignEnd
+          : styles.alignCenter;
 
     return (
-      <hr
-        ref={ref as React.Ref<HTMLHRElement>}
+      <div
+        ref={ref as React.Ref<HTMLDivElement>}
         className={joinClasses(
-          styles.root,
+          styles.withLabel,
           orientClass,
           variantClass,
           spacingClass,
           colorClass,
-          className
+          alignClass,
+          className,
         )}
         style={style}
         {...(decorative
           ? { 'aria-hidden': true }
           : { role: 'separator', 'aria-orientation': 'horizontal' as const })}
         {...rest}
+      >
+        <span className={styles.line} aria-hidden />
+        <span className={styles.text}>{children}</span>
+        <span className={styles.line} aria-hidden />
+      </div>
+    );
+  }
+
+  if (isVertical) {
+    return (
+      <div
+        ref={ref as React.Ref<HTMLDivElement>}
+        className={joinClasses(
+          styles.root,
+          orientClass,
+          variantClass,
+          spacingClass,
+          colorClass,
+          className,
+        )}
+        style={style}
+        {...a11yProps}
+        {...rest}
       />
     );
   }
-);
+
+  return (
+    <hr
+      ref={ref as React.Ref<HTMLHRElement>}
+      className={joinClasses(
+        styles.root,
+        orientClass,
+        variantClass,
+        spacingClass,
+        colorClass,
+        className,
+      )}
+      style={style}
+      {...(decorative
+        ? { 'aria-hidden': true }
+        : { role: 'separator', 'aria-orientation': 'horizontal' as const })}
+      {...rest}
+    />
+  );
+});
 
 Divider.displayName = 'Divider';
 
@@ -151,10 +148,11 @@ export type SeparatorProps = Omit<DividerProps, 'decorative'>;
  * 语义分割（无障碍）：固定 `decorative={false}`，默认 `role="separator"`。
  * 用于菜单、工具栏等需要读屏识别的区隔。
  */
-export const Separator = React.forwardRef<HTMLElement, SeparatorProps>(
-  function Separator({ spacing = 'md', ...props }, ref) {
-    return <Divider ref={ref} decorative={false} spacing={spacing} {...props} />;
-  }
-);
+export const Separator = React.forwardRef<HTMLElement, SeparatorProps>(function Separator(
+  { spacing = 'md', ...props },
+  ref,
+) {
+  return <Divider ref={ref} decorative={false} spacing={spacing} {...props} />;
+});
 
 Separator.displayName = 'Separator';

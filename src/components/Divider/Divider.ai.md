@@ -13,16 +13,16 @@ import { Divider, Separator } from 'stand-ui/components';
 
 ## Props（Divider）
 
-| 属性 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `orientation` | `'horizontal' \| 'vertical'` | `'horizontal'` | 方向；有 `children` 时仅横向有效 |
-| `variant` | `'solid' \| 'dashed' \| 'dotted'` | `'solid'` | 线型 |
-| `spacing` | `'none' \| 'sm' \| 'md' \| 'lg'` | `'md'` | 外边距阶梯 |
-| `color` | `'default' \| 'subtle'` | `'default'` | 线色 |
-| `titleAlign` | `'start' \| 'center' \| 'end'` | `'center'` | 有 `children` 时文案与线对齐 |
-| `decorative` | `boolean` | `true` | `false` 时与 Separator 语义一致 |
-| `children` | `ReactNode` | — | 中间文案（仅横向） |
-| `className` / `style` | — | — | 扩展样式 |
+| 属性                  | 类型                              | 默认           | 说明                             |
+| --------------------- | --------------------------------- | -------------- | -------------------------------- |
+| `orientation`         | `'horizontal' \| 'vertical'`      | `'horizontal'` | 方向；有 `children` 时仅横向有效 |
+| `variant`             | `'solid' \| 'dashed' \| 'dotted'` | `'solid'`      | 线型                             |
+| `spacing`             | `'none' \| 'sm' \| 'md' \| 'lg'`  | `'md'`         | 外边距阶梯                       |
+| `color`               | `'default' \| 'subtle'`           | `'default'`    | 线色                             |
+| `titleAlign`          | `'start' \| 'center' \| 'end'`    | `'center'`     | 有 `children` 时文案与线对齐     |
+| `decorative`          | `boolean`                         | `true`         | `false` 时与 Separator 语义一致  |
+| `children`            | `ReactNode`                       | —              | 中间文案（仅横向）               |
+| `className` / `style` | —                                 | —              | 扩展样式                         |
 
 **Separator** 继承除 `decorative` 外的 props，且固定 **`decorative={false}`**；默认 **`spacing="md"`**。
 

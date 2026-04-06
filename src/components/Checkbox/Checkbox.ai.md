@@ -28,28 +28,28 @@ import { Checkbox, CheckboxGroup } from 'stand-ui/components';
 
 ## Checkbox Props
 
-| 属性 | 说明 |
-|------|------|
-| `value` | 在 **CheckboxGroup** 内**必填**，为提交值 |
-| `checked` / `defaultChecked` | 单独使用时的受控 / 非受控 |
-| `onCheckedChange` | `(checked, e) => void` |
-| `label` | 文案 |
-| `size` | `sm` \| `md` |
-| `color` | `default` \| `error` |
-| `name` | 单独使用时原生 `name` |
+| 属性                         | 说明                                      |
+| ---------------------------- | ----------------------------------------- |
+| `value`                      | 在 **CheckboxGroup** 内**必填**，为提交值 |
+| `checked` / `defaultChecked` | 单独使用时的受控 / 非受控                 |
+| `onCheckedChange`            | `(checked, e) => void`                    |
+| `label`                      | 文案                                      |
+| `size`                       | `sm` \| `md`                              |
+| `color`                      | `default` \| `error`                      |
+| `name`                       | 单独使用时原生 `name`                     |
 
 ---
 
 ## CheckboxGroup Props
 
-| 属性 | 说明 |
-|------|------|
-| `name` | 表单字段名 |
-| `value` | 已选中的 `value[]` |
-| `onValueChange` | `(next: string[]) => void` |
-| `invalid` | 为 true 时子 Checkbox 错误描边 |
-| `horizontal` | 子项横向排列 |
-| `disabled` | 整组禁用 |
+| 属性            | 说明                           |
+| --------------- | ------------------------------ |
+| `name`          | 表单字段名                     |
+| `value`         | 已选中的 `value[]`             |
+| `onValueChange` | `(next: string[]) => void`     |
+| `invalid`       | 为 true 时子 Checkbox 错误描边 |
+| `horizontal`    | 子项横向排列                   |
+| `disabled`      | 整组禁用                       |
 
 ---
 

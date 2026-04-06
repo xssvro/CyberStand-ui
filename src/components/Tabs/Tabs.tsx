@@ -128,10 +128,7 @@ export const TabsTrigger = React.forwardRef<HTMLButtonElement, TabsTriggerProps>
     };
 
     return (
-      <li
-        className={join(variant === 'line' ? styles.tabLine : styles.tab)}
-        role="presentation"
-      >
+      <li className={join(variant === 'line' ? styles.tabLine : styles.tab)} role="presentation">
         <button
           {...rest}
           ref={mergeRef}
@@ -179,30 +176,31 @@ export interface TabsContentProps extends React.HTMLAttributes<HTMLDivElement> {
   forceMount?: boolean;
 }
 
-export const TabsContent = React.forwardRef<HTMLDivElement, TabsContentProps>(
-  function TabsContent({ className, value, children, forceMount, hidden, ...rest }, ref) {
-    const { value: selected, baseId } = useTabsContext('TabsContent');
-    const active = selected === value;
-    const tabId = `${baseId}-tab-${value}`;
-    const panelId = `${baseId}-panel-${value}`;
+export const TabsContent = React.forwardRef<HTMLDivElement, TabsContentProps>(function TabsContent(
+  { className, value, children, forceMount, hidden, ...rest },
+  ref,
+) {
+  const { value: selected, baseId } = useTabsContext('TabsContent');
+  const active = selected === value;
+  const tabId = `${baseId}-tab-${value}`;
+  const panelId = `${baseId}-panel-${value}`;
 
-    if (!forceMount && !active) return null;
+  if (!forceMount && !active) return null;
 
-    return (
-      <div
-        ref={ref}
-        role="tabpanel"
-        id={panelId}
-        aria-labelledby={tabId}
-        hidden={hidden ?? !active}
-        className={join(styles.panel, className)}
-        tabIndex={0}
-        {...rest}
-      >
-        {children}
-      </div>
-    );
-  },
-);
+  return (
+    <div
+      ref={ref}
+      role="tabpanel"
+      id={panelId}
+      aria-labelledby={tabId}
+      hidden={hidden ?? !active}
+      className={join(styles.panel, className)}
+      tabIndex={0}
+      {...rest}
+    >
+      {children}
+    </div>
+  );
+});
 
 TabsContent.displayName = 'TabsContent';

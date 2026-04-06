@@ -6,17 +6,17 @@
 
 ## 1. 相关路径速查
 
-| 用途 | 路径 |
-|------|------|
-| 组件实现 | `src/components/<ComponentName>/` |
-| 组件库统一导出 | `src/components/index.ts` |
-| 设计 token（颜色、背景、文案、阴影、圆角等） | `src/core/vars.css` |
-| 通用类型与尺寸/圆角工具 | `src/core/stand.ts`、`src/core/index.ts` |
-| 文档站组件注册（侧边栏 + 示例代码块） | `src/docs/components.ts` |
-| 文档站页面（预览、Markdown 渲染、Tab） | `src/pages/ComponentPage.tsx` |
-| 文档站布局与全局样式 | `src/pages/Layout.tsx`、`src/pages/docs.css` |
-| 自制 SVG 图标（HUD / 赛博风） | `src/icons/` |
-| 设计理念与影像参照 | `DESIGN.md` |
+| 用途                                         | 路径                                         |
+| -------------------------------------------- | -------------------------------------------- |
+| 组件实现                                     | `src/components/<ComponentName>/`            |
+| 组件库统一导出                               | `src/components/index.ts`                    |
+| 设计 token（颜色、背景、文案、阴影、圆角等） | `src/core/vars.css`                          |
+| 通用类型与尺寸/圆角工具                      | `src/core/stand.ts`、`src/core/index.ts`     |
+| 文档站组件注册（侧边栏 + 示例代码块）        | `src/docs/components.ts`                     |
+| 文档站页面（预览、Markdown 渲染、Tab）       | `src/pages/ComponentPage.tsx`                |
+| 文档站布局与全局样式                         | `src/pages/Layout.tsx`、`src/pages/docs.css` |
+| 自制 SVG 图标（HUD / 赛博风）                | `src/icons/`                                 |
+| 设计理念与影像参照                           | `DESIGN.md`                                  |
 
 ---
 
@@ -93,17 +93,17 @@ import { Button } from 'stand-ui/components/Button';
 
 新增组件要在文档站出现，需完成以下步骤（缺一可能导致 404 或无预览）：
 
-1. **`src/docs/components.ts`**  
+1. **`src/docs/components.ts`**
    - 在 `componentDocs` 数组中追加一项：`name`（路由段，与文件夹名一致）、`title`、**`category`**（`通用` | `导航` | `表单` | `布局` | `反馈`，侧边栏与首页按 `COMPONENT_DOC_CATEGORY_ORDER` 分组）、`description`、`aiDocPath`、`examples`（多组 `title` + `code` 字符串）。
 
-2. **`src/pages/ComponentPage.tsx`**  
-   - `import` 组件（若需预览）。  
-   - `import XxxAiMd from '../components/Xxx/Xxx.ai.md?raw'`。  
-   - **`componentMap`**：`name` → 组件。若组件**无 UI**（如纯命令式 API），可设占位组件 `() => null` 并加注释说明。  
-   - **`aiDocMap`**：`name` → raw 字符串变量。  
+2. **`src/pages/ComponentPage.tsx`**
+   - `import` 组件（若需预览）。
+   - `import XxxAiMd from '../components/Xxx/Xxx.ai.md?raw'`。
+   - **`componentMap`**：`name` → 组件。若组件**无 UI**（如纯命令式 API），可设占位组件 `() => null` 并加注释说明。
+   - **`aiDocMap`**：`name` → raw 字符串变量。
    - **`renderExample`**：按 `doc.name === 'Xxx'` 分支编写交互预览；示例索引与 `examples` 数组下标对应（`idx`）。
 
-3. **`src/components/index.ts`**  
+3. **`src/components/index.ts`**
    - 导出组件与类型。
 
 ---
@@ -135,14 +135,14 @@ import { Button } from 'stand-ui/components/Button';
 
 ## 10. 参考文件
 
-| 说明 | 文件 |
-|------|------|
-| 组件 + Props + AI 文档范例 | `src/components/Button/` |
-| 注册表范例 | `src/docs/components.ts` |
-| 文档页集成范例 | `src/pages/ComponentPage.tsx` |
-| Token 全集 | `src/core/vars.css` |
-| 设计叙事 | `DESIGN.md` |
+| 说明                       | 文件                          |
+| -------------------------- | ----------------------------- |
+| 组件 + Props + AI 文档范例 | `src/components/Button/`      |
+| 注册表范例                 | `src/docs/components.ts`      |
+| 文档页集成范例             | `src/pages/ComponentPage.tsx` |
+| Token 全集                 | `src/core/vars.css`           |
+| 设计叙事                   | `DESIGN.md`                   |
 
 ---
 
-*文档版本随仓库迭代；若与代码冲突，以 `vars.css` 与组件源码为准。*
+_文档版本随仓库迭代；若与代码冲突，以 `vars.css` 与组件源码为准。_

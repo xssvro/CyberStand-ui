@@ -19,7 +19,7 @@ function joinClasses(...parts: Array<string | false | undefined>): string {
 
 export const Label = React.forwardRef<HTMLElement, LabelProps>(function Label(
   { tag = 'label', required = false, disabled = false, className = '', children, htmlFor, ...rest },
-  ref
+  ref,
 ) {
   const cls = joinClasses(styles.label, disabled && styles.disabled, className);
 

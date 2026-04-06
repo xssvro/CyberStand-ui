@@ -40,7 +40,7 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(function Badg
     'aria-label': ariaLabelProp,
     ...rest
   },
-  ref
+  ref,
 ) {
   const showNumber = !dot && count !== undefined && (showZero || count > 0);
   const showDot = dot;
