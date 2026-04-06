@@ -183,7 +183,9 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
     const [open, setOpen] = useState(false);
     const [draftTime, setDraftTime] = useState(() => (withSeconds ? '00:00:00' : '00:00'));
     const draftTimeRef = useRef(draftTime);
-    draftTimeRef.current = draftTime;
+    useEffect(() => {
+      draftTimeRef.current = draftTime;
+    }, [draftTime]);
     const triggerRef = useRef<HTMLButtonElement>(null);
     const panelRef = useRef<HTMLDivElement>(null);
 
@@ -253,7 +255,7 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
     }, [value, locale, withSeconds]);
 
     const timeSpinnerValue = useMemo(() => {
-      let t = draftTime;
+      const t = draftTime;
       if (!t) return withSeconds ? '00:00:00' : '00:00';
       return t.length === 5 && withSeconds ? `${t}:00` : t;
     }, [draftTime, withSeconds]);

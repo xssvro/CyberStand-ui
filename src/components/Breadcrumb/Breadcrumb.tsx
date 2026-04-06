@@ -46,7 +46,7 @@ export const BreadcrumbItem = React.forwardRef<HTMLLIElement, BreadcrumbItemProp
 
 BreadcrumbItem.displayName = 'BreadcrumbItem';
 
-export interface BreadcrumbLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {}
+export type BreadcrumbLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement>;
 
 export const BreadcrumbLink = React.forwardRef<HTMLAnchorElement, BreadcrumbLinkProps>(
   function BreadcrumbLink({ className, ...rest }, ref) {

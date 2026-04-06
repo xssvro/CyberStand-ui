@@ -49,7 +49,7 @@ function initialsFromText(text: string): string {
   const t = text.trim();
   if (!t) return '';
   if (t.length <= 2) return t.toUpperCase();
-  const ascii = /^[\x00-\x7F]+$/.test(t);
+  const ascii = Array.from(t).every((ch) => (ch.codePointAt(0) ?? 0) < 0x80);
   return ascii ? t.slice(0, 2).toUpperCase() : t.slice(0, 2);
 }
 

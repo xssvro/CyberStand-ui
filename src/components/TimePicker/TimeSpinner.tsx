@@ -52,10 +52,15 @@ function TimeColumn({
   const settleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const suppressClickRef = useRef(false);
   const selectedRef = useRef(selected);
-  selectedRef.current = selected;
-
   const onSelectRef = useRef(onSelect);
-  onSelectRef.current = onSelect;
+
+  useEffect(() => {
+    selectedRef.current = selected;
+  }, [selected]);
+
+  useEffect(() => {
+    onSelectRef.current = onSelect;
+  }, [onSelect]);
 
   const flushScrollSelection = useCallback(() => {
     const el = colRef.current;
@@ -120,7 +125,9 @@ function TimeColumn({
         drag.moved = true;
         try {
           el.setPointerCapture(ev.pointerId);
-        } catch {}
+        } catch {
+          /* capture 不可用时忽略 */
+        }
       }
       el.scrollTop = drag.startScroll + (drag.startY - ev.clientY);
       ev.preventDefault();
@@ -132,7 +139,9 @@ function TimeColumn({
       if (drag.captured) {
         try {
           el.releasePointerCapture(ev.pointerId);
-        } catch {}
+        } catch {
+          /* capture 不可用时忽略 */
+        }
       }
       drag.active = false;
       drag.captured = false;
@@ -233,7 +242,7 @@ export const TimeSpinner: React.FC<TimeSpinnerProps> = ({
     (patch: Partial<{ h: number; m: number; sec: number }>) => {
       const h = patch.h ?? parsed.h;
       let m = patch.m ?? parsed.m;
-      let sec = patch.sec ?? parsed.sec;
+      const sec = patch.sec ?? parsed.sec;
       if (minutes.length && !minutes.includes(m)) {
         m = minutes.reduce((prev, cur) => (Math.abs(cur - m) < Math.abs(prev - m) ? cur : prev));
       }

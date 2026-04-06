@@ -15,7 +15,10 @@ export function useDismissOnOutsidePress({
   onDismiss: () => void;
 }): void {
   const onDismissRef = useRef(onDismiss);
-  onDismissRef.current = onDismiss;
+
+  useEffect(() => {
+    onDismissRef.current = onDismiss;
+  }, [onDismiss]);
 
   useEffect(() => {
     if (!enabled) return;

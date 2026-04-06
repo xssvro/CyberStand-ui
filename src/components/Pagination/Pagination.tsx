@@ -136,15 +136,15 @@ export const Pagination = React.forwardRef<HTMLElement, PaginationProps>(functio
     setJumpDraft('');
   }, [jumpDraft, setPage, totalPages]);
 
-  if (hideOnSinglePage && total > 0 && totalPages <= 1) {
-    return null;
-  }
-
   const range = getRange(page, pageSize, total);
   const sizeOptions = useMemo(
     () => pageSizeOptions.map((n) => ({ value: String(n), label: `${n} 条/页` })),
     [pageSizeOptions],
   );
+
+  if (hideOnSinglePage && total > 0 && totalPages <= 1) {
+    return null;
+  }
 
   const prevDisabled = disabled || page <= 1 || totalPages <= 0;
   const nextDisabled = disabled || totalPages <= 0 || page >= totalPages;

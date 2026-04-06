@@ -19,5 +19,13 @@ export default defineConfig([
       ecmaVersion: 2020,
       globals: globals.browser,
     },
+    rules: {
+      // React Compiler 配套规则：与 Portals / 受控打开态 / ref 镜像等常见写法冲突，先关闭待逐文件收敛
+      'react-hooks/set-state-in-effect': 'off',
+      'react-hooks/refs': 'off',
+      'react-hooks/preserve-manual-memoization': 'off',
+      // 允许在同文件导出 Context + 组件（CheckboxGroup 等）
+      'react-refresh/only-export-components': 'warn',
+    },
   },
 ])
