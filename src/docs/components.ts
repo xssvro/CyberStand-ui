@@ -1549,11 +1549,7 @@ const text: Record<AlertVariant, { title: string; children: string }> = {
   <Stack gap="sm">
     <Typography variant="caption" color="muted">16 : 9</Typography>
     <AspectRatio ratio={16 / 9} className="w-full rounded-lg overflow-hidden border border-[var(--su-border-default)]">
-      <div
-        className="h-full w-full"
-        style={{ background: 'linear-gradient(135deg, var(--su-info-500), var(--su-primary-600))' }}
-        aria-hidden
-      />
+      <div className="h-full w-full bg-[var(--su-btn-primary-soft-bg)]" aria-hidden />
     </AspectRatio>
   </Stack>
 
