@@ -1,25 +1,25 @@
 /**
  * CyberStand UI — CSS Variables
- * 默认：浅色日间（冷灰底 + 《阿基拉》警示红主色 + 青蓝信息 + 珊瑚次要）
- * data-theme="dark"：赛博夜城（夜城黄主色 #fcee0a、深冷色底，与改前一致）
+ * 默认：浅色日间（冷灰底 + 夜城黄主色、青蓝信息 + 珊瑚次要）
+ * data-theme="dark"：赛博夜城（夜城黄主色 #fcee0a、深冷色底）
  */
 
 :root {
-  /* ========== 主色：《阿基拉》— 日间为克制深玫红 / 酒红（白底可读） ========== */
-  --su-primary-50: #fff5f5;
-  --su-primary-100: #ffe4e8;
-  --su-primary-200: #fecdd6;
-  --su-primary-300: #fda4b5;
-  --su-primary-400: #fb7189;
-  --su-primary-500: #e11d48;
-  --su-primary-600: #9f1239;
-  --su-primary-700: #881337;
-  --su-primary-800: #6b0f2b;
-  --su-primary-900: #3c0514;
-  --su-on-primary: #fffafb;
+  /* ========== 主色：夜城黄系（浅色实心略亮于旧版土黄，仍用近黑字保证对比） ========== */
+  --su-primary-50: #fffef2;
+  --su-primary-100: #fffacc;
+  --su-primary-200: #fff59e;
+  --su-primary-300: #ffec5c;
+  --su-primary-400: #fce91a;
+  --su-primary-500: #f5e014;
+  --su-primary-600: #ebdb00;
+  --su-primary-700: #d2c400;
+  --su-primary-800: #a89800;
+  --su-primary-900: #6b5f00;
+  --su-on-primary: #0a0b0f;
 
-  /* Checkbox 选中对勾：与主色 / 错误底保证对比（日间主色深、对勾浅） */
-  --su-checkbox-checked-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23ffffff' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 8l3 3 7-7'/%3E%3C/svg%3E");
+  /* Checkbox：主色底为黄，对勾用深色（同 --su-on-primary） */
+  --su-checkbox-checked-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%230a0b0f' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 8l3 3 7-7'/%3E%3C/svg%3E");
   --su-checkbox-error-checked-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23ffffff' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 8l3 3 7-7'/%3E%3C/svg%3E");
 
   /* ========== 次要色：珊瑚（日间略压暗，保证与灰底对比） ========== */
@@ -87,7 +87,7 @@
   --su-text-default: #1e293b;
   --su-text-muted: #64748b;
   --su-text-subtle: #94a3b8;
-  --su-text-emphasis: #9f1239;
+  --su-text-emphasis: #ca8a04;
   --su-text-inverse: #f8fafc;
 
   --su-doc-code-fg: #0e7490;
@@ -164,13 +164,13 @@
     0 0 0 1px rgba(15, 23, 42, 0.05);
   --su-shadow-lg:
     0 12px 28px -6px rgba(15, 23, 42, 0.12),
-    0 0 0 1px rgba(159, 18, 57, 0.07);
+    0 0 0 1px rgba(235, 219, 0, 0.22);
   --su-shadow-xl:
     0 20px 40px -10px rgba(15, 23, 42, 0.14),
-    0 0 0 1px rgba(159, 18, 57, 0.08);
+    0 0 0 1px rgba(235, 219, 0, 0.24);
 
   /** 主色焦点环（Input primary 等） */
-  --su-ring-primary: 0 0 0 3px rgba(159, 18, 57, 0.22);
+  --su-ring-primary: 0 0 0 3px rgba(235, 219, 0, 0.35);
 
   --su-z-base: 0;
   --su-z-dropdown: 1000;
@@ -194,16 +194,16 @@
   --su-tooltip-fg: #f8fafc;
 
   /**
-   * 按钮专用（浅色 · 阿基拉主色实心 / soft / 线色）
+   * 按钮专用（浅色 · 夜城黄主色阶梯）
    */
-  --su-btn-primary-solid-bg: #8b1532;
-  --su-btn-primary-solid-hover: #72112a;
-  --su-btn-primary-solid-fg: #fff8f9;
-  --su-btn-primary-soft-bg: #fce8ed;
-  --su-btn-primary-soft-hover: #f9d9e1;
-  --su-btn-primary-soft-fg: #5c0f24;
-  --su-btn-primary-line: #8b1532;
-  --su-btn-primary-outline-hover-bg: #fdf4f6;
+  --su-btn-primary-solid-bg: var(--su-primary-600);
+  --su-btn-primary-solid-hover: var(--su-primary-700);
+  --su-btn-primary-solid-fg: var(--su-on-primary);
+  --su-btn-primary-soft-bg: var(--su-primary-100);
+  --su-btn-primary-soft-hover: var(--su-primary-200);
+  --su-btn-primary-soft-fg: var(--su-primary-900);
+  --su-btn-primary-line: var(--su-primary-700);
+  --su-btn-primary-outline-hover-bg: var(--su-primary-50);
 
   --su-btn-secondary-solid-bg: #5c4946;
   --su-btn-secondary-solid-hover: #4f3f3c;
@@ -253,7 +253,7 @@
 
 /* ========== 赛博夜间：完整覆盖色板与阴影 ========== */
 [data-theme='dark'] {
-  /* 主色：夜之城黄（深色模式非阿基拉，保持赛博黄锚点） */
+  /* 主色：夜之城黄（与浅色同一语义，明度针对暗底） */
   --su-primary-50: #1c1a0f;
   --su-primary-100: #2d2814;
   --su-primary-200: #3f3818;

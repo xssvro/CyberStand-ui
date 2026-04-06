@@ -24,21 +24,6 @@ body {
   background: var(--su-bg-page);
 }
 
-[data-theme='light'] .docs-layout {
-  background:
-    radial-gradient(ellipse 92% 52% at 50% -6%, rgba(2, 132, 199, 0.05), transparent 52%),
-    radial-gradient(ellipse 65% 42% at 100% 100%, rgba(159, 18, 57, 0.045), transparent 48%),
-    var(--su-bg-page);
-}
-
-[data-theme='dark'] .docs-layout {
-  background:
-    radial-gradient(ellipse 90% 55% at 50% -8%, rgba(120, 160, 255, 0.055), transparent 52%),
-    radial-gradient(ellipse 70% 45% at 100% 100%, rgba(33, 170, 221, 0.045), transparent 48%),
-    radial-gradient(ellipse 50% 35% at 0% 80%, rgba(230, 96, 84, 0.04), transparent 45%),
-    var(--su-bg-page);
-}
-
 .docs-sidebar {
   width: 260px;
   background: var(--su-bg-elevated);
@@ -252,10 +237,10 @@ body {
 }
 
 .docs-nav a.active {
-  background: color-mix(in srgb, var(--su-primary-600) 14%, transparent);
-  color: var(--su-primary-600);
+  background: var(--su-btn-primary-soft-bg);
+  color: var(--su-btn-primary-line);
   font-weight: 500;
-  border-right: 3px solid var(--su-primary-600);
+  border-right: 3px solid var(--su-btn-primary-line);
 }
 
 [data-theme='light'] .docs-nav a:hover {
@@ -535,9 +520,9 @@ body {
   color: var(--su-text-muted);
 }
 
-/* 《银翼杀手》— 电光青 + Orbitron */
+/* 《银翼杀手》— 电光青 + Orbitron（纯色条，与语义 token 对齐） */
 .inspire-card--blade-runner::before {
-  background: linear-gradient(180deg, #5ee7df, #21aadd);
+  background: var(--su-info-500);
 }
 
 .inspire-card--blade-runner .inspire-card__zh {
@@ -559,7 +544,7 @@ body {
 
 /* 《银翼杀手 2049》— 橙色（废土雾中的琥珀光）+ Bebas Neue */
 .inspire-card--blade-runner-2049::before {
-  background: linear-gradient(180deg, #ffb347, #e85d04, #c24100);
+  background: var(--su-warning-600);
 }
 
 .inspire-card--blade-runner-2049 .inspire-card__zh {
@@ -589,7 +574,7 @@ body {
 }
 
 .inspire-card--akira::before {
-  background: linear-gradient(180deg, #ff6b6b, #ff003c);
+  background: var(--su-error-500);
 }
 
 .inspire-card--akira .inspire-card__zh {
@@ -620,7 +605,7 @@ body {
 
 /* 《攻壳机动队》— 青绿 HUD + Rajdhani */
 .inspire-card--ghost-in-the-shell::before {
-  background: linear-gradient(180deg, #00f5d4, #00c9a7);
+  background: var(--su-success-500);
 }
 
 .inspire-card--ghost-in-the-shell .inspire-card__zh {
@@ -643,7 +628,7 @@ body {
 
 /* 《铳梦》— 粉色（机体与梦的偏振）+ Rajdhani */
 .inspire-card--gunnm::before {
-  background: linear-gradient(180deg, #ffc2e2, #f472b6, #db2777);
+  background: var(--su-secondary-500);
 }
 
 .inspire-card--gunnm .inspire-card__zh {
@@ -666,7 +651,7 @@ body {
 
 /* 《赛博朋克 2077》— 品牌黄 + Audiowide */
 .inspire-card--cp2077::before {
-  background: linear-gradient(180deg, #fcee0a, #ff2a6d, #21aadd);
+  background: var(--su-primary-600);
 }
 
 .inspire-card--cp2077 .inspire-card__zh {
@@ -945,6 +930,17 @@ body {
   width: 100%;
 }
 
+/* Avatar 文档：演示图为纯色主色，预览区用浮起底、去内阴影，避免与主色块对比发闷 */
+.component-page--avatar .example-preview {
+  background: var(--su-bg-elevated);
+  border-color: var(--su-border-default);
+  box-shadow: none;
+}
+
+[data-theme='dark'] .component-page--avatar .example-preview {
+  box-shadow: none;
+}
+
 .example-card .code-block {
   border-radius: 10px;
 }
@@ -1002,8 +998,8 @@ body {
 }
 
 .info-box code {
-  background: color-mix(in srgb, var(--su-primary-600) 12%, transparent);
-  color: var(--su-primary-600);
+  background: var(--su-btn-primary-soft-bg);
+  color: var(--su-btn-primary-line);
   padding: 2px 6px;
   border-radius: 4px;
   font-family: monospace;
@@ -1131,8 +1127,8 @@ body {
 }
 
 .markdown-inline-code {
-  background: color-mix(in srgb, var(--su-primary-600) 10%, transparent);
-  color: var(--su-primary-600);
+  background: var(--su-btn-primary-soft-bg);
+  color: var(--su-btn-primary-line);
   padding: 2px 5px;
   border-radius: 4px;
   font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;

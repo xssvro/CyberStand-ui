@@ -77,6 +77,26 @@ export function IconPalette({ size = 24, className, ...rest }: CyberIconProps) {
   );
 }
 
+/** 用户轮廓 — HUD 线框（Avatar 默认占位等） */
+export function IconUserHud({ size = 24, className, ...rest }: CyberIconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden
+      {...rest}
+    >
+      <g {...hud}>
+        <circle cx="12" cy="8.75" r="3.35" />
+        <path d="M6.25 19.5c0-4.1 2.55-6.25 5.75-6.25s5.75 2.15 5.75 6.25" />
+        <path d="M3.5 3.5h2.75M17.75 3.5H20.5M3.5 20.5h2.75M17.75 20.5H20.5" strokeWidth={1} opacity={0.38} />
+      </g>
+    </svg>
+  );
+}
+
 /** 等距货箱 */
 export function IconPackage({ size = 24, className, ...rest }: CyberIconProps) {
   return (

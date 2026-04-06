@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import type { Color } from '../../core/stand';
+import { IconUserHud } from '../../icons';
 import styles from './Avatar.module.css';
 
 function join(...parts: Array<string | false | undefined>): string {
@@ -35,20 +36,21 @@ const TONE: Record<Color, string> = {
   info: styles.toneInfo,
 };
 
+/** 与 Avatar 尺寸匹配的 HUD 图标像素（略小于外框，留白呼吸） */
+const HUD_ICON_PX: Record<AvatarSize, number> = {
+  xs: 13,
+  sm: 16,
+  md: 20,
+  lg: 25,
+  xl: 32,
+};
+
 function initialsFromText(text: string): string {
   const t = text.trim();
   if (!t) return '';
   if (t.length <= 2) return t.toUpperCase();
   const ascii = /^[\x00-\x7F]+$/.test(t);
   return ascii ? t.slice(0, 2).toUpperCase() : t.slice(0, 2);
-}
-
-function DefaultUserGlyph() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-      <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-    </svg>
-  );
 }
 
 export const Avatar = React.forwardRef<HTMLSpanElement, AvatarProps>(function Avatar(
@@ -83,6 +85,8 @@ export const Avatar = React.forwardRef<HTMLSpanElement, AvatarProps>(function Av
     return '用户头像';
   }, [showImg, alt, children]);
 
+  const hudSize = HUD_ICON_PX[size];
+
   function renderFallbackBody(): React.ReactNode {
     if (typeof children === 'string' || typeof children === 'number') {
       const ini = initialsFromText(String(children));
@@ -93,7 +97,7 @@ export const Avatar = React.forwardRef<HTMLSpanElement, AvatarProps>(function Av
         <span className={styles.iconFallback}>{icon}</span>
       ) : (
         <span className={styles.iconFallback}>
-          <DefaultUserGlyph />
+          <IconUserHud size={hudSize} />
         </span>
       );
     }
@@ -105,7 +109,7 @@ export const Avatar = React.forwardRef<HTMLSpanElement, AvatarProps>(function Av
     }
     return (
       <span className={styles.iconFallback}>
-        <DefaultUserGlyph />
+        <IconUserHud size={hudSize} />
       </span>
     );
   }
@@ -115,6 +119,7 @@ export const Avatar = React.forwardRef<HTMLSpanElement, AvatarProps>(function Av
       ref={ref}
       className={join(
         styles.root,
+        showImg && styles.withImage,
         size === 'xs' && styles.sizeXs,
         size === 'sm' && styles.sizeSm,
         size === 'md' && styles.sizeMd,

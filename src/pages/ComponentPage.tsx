@@ -112,15 +112,37 @@ import SkeletonAiMd from '../components/Skeleton/Skeleton.ai.md?raw';
 const ASPECT_RATIO_DEMO_IMG_SRC =
   'data:image/svg+xml,' +
   encodeURIComponent(
-    '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400"><rect fill="#0ea5e9" width="800" height="400"/><rect fill="#e11d48" x="120" y="60" width="560" height="280" rx="12"/></svg>'
+    '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400"><rect fill="#0ea5e9" width="800" height="400"/><rect fill="#ebdb00" x="120" y="60" width="560" height="280" rx="12"/></svg>'
   );
 
-/** Avatar 文档预览：内联 SVG，避免外链失效 */
+/** Avatar 文档预览：纯色主色（与 vars 浅色 --su-primary-600 / 700、--su-on-primary 一致，无渐变） */
 const AVATAR_DEMO_IMG_SRC =
   'data:image/svg+xml,' +
   encodeURIComponent(
-    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="ag" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0ea5e9"/><stop offset="1" stop-color="#e11d48"/></linearGradient></defs><rect width="100" height="100" fill="url(#ag)"/><text x="50" y="58" text-anchor="middle" fill="white" font-size="38" font-family="system-ui,sans-serif" font-weight="600">A</text></svg>'
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#ebdb00"/><text x="50" y="58" text-anchor="middle" fill="#0a0b0f" font-size="38" font-family="system-ui,sans-serif" font-weight="600">A</text></svg>'
   );
+
+/** 宽图：左右两色块（无渐变），演示圆内 cover 裁掉两侧 */
+const AVATAR_DEMO_WIDE_SRC =
+  'data:image/svg+xml,' +
+  encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 72"><rect width="110" height="72" fill="#ebdb00"/><rect x="110" width="110" height="72" fill="#d2c400"/><text x="110" y="44" text-anchor="middle" fill="#0a0b0f" font-size="15" font-family="system-ui,sans-serif" font-weight="600">WIDE</text></svg>'
+  );
+
+/** 竖图：上下两色块（无渐变），演示 cover 裁切 */
+const AVATAR_DEMO_TALL_SRC =
+  'data:image/svg+xml,' +
+  encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 220"><rect width="72" height="110" fill="#ebdb00"/><rect y="110" width="72" height="110" fill="#d2c400"/><text x="36" y="118" text-anchor="middle" fill="#0a0b0f" font-size="11" font-family="system-ui,sans-serif" font-weight="600">TALL</text></svg>'
+  );
+
+const AVATAR_DOC_SIZE_META: { size: 'xs' | 'sm' | 'md' | 'lg' | 'xl'; px: string }[] = [
+  { size: 'xs', px: '26' },
+  { size: 'sm', px: '34' },
+  { size: 'md', px: '42' },
+  { size: 'lg', px: '52' },
+  { size: 'xl', px: '68' },
+];
 
 /** Toast 为命令式 API，无预览组件，仅占位以通过文档路由校验 */
 const ToastDocPlaceholder: React.FC = () => null;
@@ -1621,13 +1643,66 @@ function AvatarDocDemo({ idx }: { idx: number }) {
   switch (idx) {
     case 0:
       return (
-        <Space wrap size="md" className="items-center max-w-2xl">
-          <Avatar size="xs" src={AVATAR_DEMO_IMG_SRC} alt="演示用户" />
-          <Avatar size="sm" src={AVATAR_DEMO_IMG_SRC} alt="演示用户" />
-          <Avatar size="md" src={AVATAR_DEMO_IMG_SRC} alt="演示用户" />
-          <Avatar size="lg" src={AVATAR_DEMO_IMG_SRC} alt="演示用户" />
-          <Avatar size="xl" src={AVATAR_DEMO_IMG_SRC} alt="演示用户" />
-        </Space>
+        <Stack gap="lg" className="w-full max-w-3xl">
+          <Stack gap="sm">
+            <Typography variant="caption" color="muted" noMargin>
+              尺寸阶梯 · 同一方图 · <code>object-fit: cover</code>
+            </Typography>
+            <Flex wrap gap="lg" className="items-end">
+              {AVATAR_DOC_SIZE_META.map(({ size, px }) => (
+                <Stack key={size} gap="xs" className="items-center min-w-[52px]">
+                  <Avatar size={size} src={AVATAR_DEMO_IMG_SRC} alt="演示用户" />
+                  <Typography variant="caption" color="muted" noMargin className="tabular-nums">
+                    {size}
+                  </Typography>
+                  <Typography variant="caption" color="subtle" noMargin className="tabular-nums text-[0.65rem] leading-tight">
+                    {px}×{px}
+                  </Typography>
+                </Stack>
+              ))}
+            </Flex>
+          </Stack>
+          <Divider />
+          <Stack gap="sm">
+            <Typography variant="caption" color="muted" noMargin>
+              形状（均为 <code>md</code>）
+            </Typography>
+            <Flex wrap gap="xl" className="items-end">
+              <Stack gap="xs" className="items-center">
+                <Avatar size="md" shape="circle" src={AVATAR_DEMO_IMG_SRC} alt="圆形" />
+                <Typography variant="caption" color="muted" noMargin>
+                  circle
+                </Typography>
+              </Stack>
+              <Stack gap="xs" className="items-center">
+                <Avatar size="md" shape="rounded" src={AVATAR_DEMO_IMG_SRC} alt="圆角" />
+                <Typography variant="caption" color="muted" noMargin>
+                  rounded
+                </Typography>
+              </Stack>
+            </Flex>
+          </Stack>
+          <Divider />
+          <Stack gap="sm">
+            <Typography variant="caption" color="muted" noMargin>
+              非方图 · <code>cover</code> 居中裁切（可见宽/竖构图在圆内的取舍）
+            </Typography>
+            <Flex wrap gap="xl" className="items-end">
+              <Stack gap="xs" className="items-center">
+                <Avatar size="lg" shape="circle" src={AVATAR_DEMO_WIDE_SRC} alt="横向示意" />
+                <Typography variant="caption" color="muted" noMargin>
+                  横向构图
+                </Typography>
+              </Stack>
+              <Stack gap="xs" className="items-center">
+                <Avatar size="lg" shape="circle" src={AVATAR_DEMO_TALL_SRC} alt="竖向示意" />
+                <Typography variant="caption" color="muted" noMargin>
+                  竖向构图
+                </Typography>
+              </Stack>
+            </Flex>
+          </Stack>
+        </Stack>
       );
     case 1:
       return (
@@ -2200,11 +2275,7 @@ export const ComponentPage: React.FC = () => {
                 className="w-full rounded-lg overflow-hidden border border-[var(--su-border-default)]"
               >
                 <div
-                  className="h-full w-full"
-                  style={{
-                    background:
-                      'linear-gradient(135deg, var(--su-info-500), var(--su-primary-600))',
-                  }}
+                  className="h-full w-full bg-[var(--su-btn-primary-soft-bg)]"
                   aria-hidden
                 />
               </AspectRatio>
@@ -3105,7 +3176,7 @@ export const ComponentPage: React.FC = () => {
   };
 
   return (
-    <div className="component-page">
+    <div className={`component-page component-page--${doc.name.toLowerCase()}`}>
       <header className="page-header">
         <h1>{doc.title}</h1>
         <p>{doc.description}</p>

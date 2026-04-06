@@ -2,6 +2,7 @@ export {
   IconHome,
   IconAiChip,
   IconPalette,
+  IconUserHud,
   IconPackage,
   IconBraces,
   IconSearch,

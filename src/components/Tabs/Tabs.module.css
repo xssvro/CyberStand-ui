@@ -7,7 +7,7 @@
   margin: 0;
   border-radius: var(--su-radius, 5px);
   background: var(--su-bg-subtle);
-  border: 1px solid color-mix(in srgb, var(--su-primary-500) 14%, var(--su-border-subtle));
+  border: 1px solid var(--su-border-default);
   list-style: none;
 }
 
@@ -28,7 +28,8 @@
   border: none;
   border-radius: max(2px, calc(var(--su-radius, 5px) - 2px));
   background: transparent;
-  color: var(--su-text-muted);
+  /* 不用 text-muted，胶囊内对比更清晰 */
+  color: var(--su-gray-600);
   font-size: 0.875rem;
   font-weight: 500;
   font-family: inherit;
@@ -41,37 +42,38 @@
     box-shadow var(--su-transition-fast);
 }
 
+[data-theme='dark'] .trigger {
+  color: var(--su-gray-500);
+}
+
 .trigger:hover:not(:disabled):not(.active) {
-  color: var(--su-primary-600);
-  background: color-mix(in srgb, var(--su-primary-500) 8%, var(--su-bg-muted));
+  color: var(--su-gray-800);
+  background: var(--su-bg-muted);
 }
 
 [data-theme='dark'] .trigger:hover:not(:disabled):not(.active) {
-  color: var(--su-primary-400);
-  background: color-mix(in srgb, var(--su-primary-500) 12%, var(--su-bg-muted));
+  color: var(--su-text-default);
+  background: var(--su-bg-muted);
 }
 
 .trigger:focus-visible {
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--su-primary-500) 38%, transparent);
+  box-shadow: 0 0 0 2px var(--su-focus-ring-color);
 }
 
-[data-theme='dark'] .trigger:focus-visible {
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--su-primary-400) 42%, transparent);
-}
-
+/* 胶囊选中：浅底用深字，避免亮黄字贴淡黄底发虚 */
 .trigger.active {
-  background: color-mix(in srgb, var(--su-primary-500) 14%, var(--su-bg-elevated));
-  color: var(--su-primary-600);
+  background: var(--su-bg-elevated);
+  color: var(--su-text-default);
   font-weight: 600;
-  box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--su-primary-500) 28%, transparent),
-    0 1px 3px color-mix(in srgb, var(--su-primary-500) 8%, rgba(15, 23, 42, 0.06));
+  box-shadow: var(--su-shadow-sm);
 }
 
 [data-theme='dark'] .trigger.active {
-  background: color-mix(in srgb, var(--su-primary-500) 20%, var(--su-bg-subtle));
-  color: var(--su-primary-400);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--su-primary-400) 35%, transparent);
+  background: var(--su-bg-muted);
+  color: var(--su-primary-600);
+  box-shadow:
+    0 0 0 1px var(--su-border-default),
+    0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .trigger:disabled {
@@ -85,12 +87,8 @@
 }
 
 .panel:focus-visible {
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--su-primary-500) 32%, transparent);
+  box-shadow: 0 0 0 2px var(--su-focus-ring-color);
   border-radius: var(--su-radius-sm, 4px);
-}
-
-[data-theme='dark'] .panel:focus-visible {
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--su-primary-400) 36%, transparent);
 }
 
 /* 下划线变体：整宽底边 */
@@ -100,7 +98,7 @@
   gap: 0;
   padding: 0;
   margin: 0;
-  border-bottom: 1px solid color-mix(in srgb, var(--su-primary-500) 12%, var(--su-border-default));
+  border-bottom: 1px solid var(--su-border-default);
   background: transparent;
   border-radius: 0;
   list-style: none;
@@ -115,25 +113,25 @@
 }
 
 .tabLine .trigger:hover:not(:disabled):not(.active) {
-  color: var(--su-primary-600);
-  background: color-mix(in srgb, var(--su-primary-500) 6%, transparent);
+  color: var(--su-gray-800);
+  background: var(--su-bg-muted);
 }
 
 [data-theme='dark'] .tabLine .trigger:hover:not(:disabled):not(.active) {
-  color: var(--su-primary-400);
-  background: color-mix(in srgb, var(--su-primary-500) 10%, transparent);
+  color: var(--su-text-default);
+  background: transparent;
 }
 
 .tabLine .trigger.active {
   background: transparent;
   border-color: transparent;
   border-bottom-color: var(--su-primary-500);
-  color: var(--su-primary-600);
+  color: var(--su-text-default);
   font-weight: 600;
   box-shadow: none;
 }
 
 [data-theme='dark'] .tabLine .trigger.active {
-  color: var(--su-primary-400);
+  color: var(--su-primary-600);
   border-bottom-color: var(--su-primary-500);
 }

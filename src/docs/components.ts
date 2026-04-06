@@ -1106,13 +1106,38 @@ toast.info('提示');`,
     examples: [
       {
         title: '图片与尺寸',
-        code: `<Space wrap size="md" align="center">
-  <Avatar size="xs" src={url} alt="用户 A" />
-  <Avatar size="sm" src={url} alt="用户 A" />
-  <Avatar size="md" src={url} alt="用户 A" />
-  <Avatar size="lg" src={url} alt="用户 A" />
-  <Avatar size="xl" src={url} alt="用户 A" />
-</Space>`,
+        code: `<Stack gap="lg">
+  <Flex wrap gap="lg" className="items-end">
+    <Stack gap="xs" className="items-center">
+      <Avatar size="xs" src={url} alt="用户" />
+      <Typography variant="caption" color="muted" noMargin>xs · 26</Typography>
+    </Stack>
+    <Stack gap="xs" className="items-center">
+      <Avatar size="sm" src={url} alt="用户" />
+      <Typography variant="caption" color="muted" noMargin>sm · 34</Typography>
+    </Stack>
+    <Stack gap="xs" className="items-center">
+      <Avatar size="md" src={url} alt="用户" />
+      <Typography variant="caption" color="muted" noMargin>md · 42</Typography>
+    </Stack>
+    <Stack gap="xs" className="items-center">
+      <Avatar size="lg" src={url} alt="用户" />
+      <Typography variant="caption" color="muted" noMargin>lg · 52</Typography>
+    </Stack>
+    <Stack gap="xs" className="items-center">
+      <Avatar size="xl" src={url} alt="用户" />
+      <Typography variant="caption" color="muted" noMargin>xl · 68</Typography>
+    </Stack>
+  </Flex>
+  <Space wrap size="lg" align="center">
+    <Avatar size="md" shape="circle" src={url} alt="圆形" />
+    <Avatar size="md" shape="rounded" src={url} alt="圆角" />
+  </Space>
+  <Space wrap size="lg" align="center">
+    <Avatar size="lg" shape="circle" src={wideUrl} alt="横向构图" />
+    <Avatar size="lg" shape="circle" src={tallUrl} alt="竖向构图" />
+  </Space>
+</Stack>`,
       },
       {
         title: '文字缩写与形状',
@@ -1550,14 +1575,14 @@ const text: Record<AlertVariant, { title: string; children: string }> = {
   <Stack gap="sm">
     <Typography variant="caption" color="muted">cover（裁切铺满）</Typography>
     <AspectRatio ratio={16 / 9} objectFit="cover" className="w-full max-w-md rounded-md overflow-hidden">
-      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400'%3E%3Crect fill='%230ea5e9' width='800' height='400'/%3E%3Crect fill='%23e11d48' x='120' y='60' width='560' height='280' rx='12'/%3E%3C/svg%3E" alt="" />
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400'%3E%3Crect fill='%230ea5e9' width='800' height='400'/%3E%3Crect fill='%23ebdb00' x='120' y='60' width='560' height='280' rx='12'/%3E%3C/svg%3E" alt="" />
     </AspectRatio>
   </Stack>
 
   <Stack gap="sm">
     <Typography variant="caption" color="muted">contain（完整显示）</Typography>
     <AspectRatio ratio={16 / 9} objectFit="contain" className="w-full max-w-md rounded-md overflow-hidden bg-[var(--su-bg-muted)]">
-      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400'%3E%3Crect fill='%230ea5e9' width='800' height='400'/%3E%3Crect fill='%23e11d48' x='120' y='60' width='560' height='280' rx='12'/%3E%3C/svg%3E" alt="" />
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400'%3E%3Crect fill='%230ea5e9' width='800' height='400'/%3E%3Crect fill='%23ebdb00' x='120' y='60' width='560' height='280' rx='12'/%3E%3C/svg%3E" alt="" />
     </AspectRatio>
   </Stack>
 </Stack>`,
